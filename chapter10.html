@@ -1,0 +1,1189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-5459430-3");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<meta http-equiv="Content-Type" content="text/html;charset=us-ascii" />
+<title>IYOCGwP, Chapter 10 - Tic Tac Toe</title>
+<link rel="stylesheet" href="inventbook.css" type="text/css" media="all" />
+</head>
+<body class='chapter10body'>
+
+<table border='0' width='100%'><tr><td><a href='chapter9.html'>Go to Chapter 9 - Hangman</a></td><td align='right'><a href='chapter11.html'>Go to Chapter 11 - Bagels</a></td></tr></table>
+<div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
+
+
+<div style='height: 350px;'><img src='images/chap10.png'></div>
+
+<div class='inthischapter'><h3 id="TopicsCoveredInThisChapter">Topics Covered In This Chapter:</h3>
+<ul>
+<li>Artificial Intelligence</li>
+<li>List References</li>
+<li>Short-Circuit Evaluation</li>
+<li>The <span class='m'>None</span> Value</li>
+</ul></div>
+
+<p>We will now create a Tic Tac Toe game where the player plays against a simple artificial intelligence. An <span class='term'>artificial intelligence</span> (or <span class='term'>AI</span>) is a computer program that can intelligently respond to the player's moves. This game doesn't introduce any complicated new concepts. We will see that the artificial intelligence that plays Tic Tac Toe is really just a few lines of code.</p>
+
+<p>Tic Tac Toe is a simple game to play with a paper and pencil between two people. One player is X and the other player is O. On a simple nine square grid (which we call the board), the players take turns placing their X or O) on the board. If a player gets three of their marks on the board in a row, column or one of the two diagonals, they win.</p>
+
+<p>Most games of Tic Tac Toe end in a draw, which happens when the board is filled up with neither player having three marks in a row. Instead of a second human player, our artificial intelligence will make moves against the user. You can learn more about Tic Tac Toe from Wikipedia: <a href='http://en.wikipedia.org/wiki/Tic-tac-toe'>http://en.wikipedia.org/wiki/Tic-tac-toe</a></p>
+
+<p>While this chapter may not introduce many new programming concepts, it does make use of our existing programming knowledge to make an intelligent Tic Tac Toe player. Let's get started by looking at a sample run of the program. The player makes their move by entering the number of the space they wish to go. These numbers are in the same places as the number keys on your keyboard's keypad (see Figure 10-2).</p>
+
+<h2 id="SampleRunofTicTacToe">Sample Run of Tic Tac Toe</h2>
+
+<div class='samplerun'>
+Welcome to Tic Tac Toe!<br />
+Do you want to be X or O?<br />
+<span class='sampleruninput'>X</span><br />
+The computer will go first.<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;O&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+-----------<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+-----------<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+What is your next move? (1-9)<br />
+<span class='sampleruninput'>3</span><br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;O&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+-----------<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+-----------<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;O&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;X<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+What is your next move? (1-9)<br />
+<span class='sampleruninput'>4</span><br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;O&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;O<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+-----------<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;X&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+-----------<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;O&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;X<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+What is your next move? (1-9)<br />
+<span class='sampleruninput'>5</span><br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+-----------<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;X&nbsp;|&nbsp;X&nbsp;|<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+-----------<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;O&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;X<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+The computer has beaten you! You lose.<br />
+Do you want to play again? (yes or no)<br />
+<span class='sampleruninput'>no</span><br />
+</div>
+
+<h2 id="SourceCodeofTicTacToe">Source Code of Tic Tac Toe</h2>
+
+<p>In a new file editor window, type in this source code and save it as <i>tictactoe.py</i>. Then run the game by pressing F5. You do not need to type in this program before reading this chapter. You can also download the source code by visiting the website at the URL <a href='http://inventwithpython.com/chapter10'>http://inventwithpython.com/chapter10</a> and following the instructions on the webpage.</p>
+
+
+<div class='sourcecode'><span class='sourcecodeHeader'>tictactoe.py</span><br /><span class='sourcecodeSubHeader'>This code can be downloaded from <a href='http://inventwithpython.com/tictactoe.py'>http://inventwithpython.com/tictactoe.py</a><br />If you get errors after typing this code in, compare it to the book's code with the online diff tool at <a href='http://inventwithpython.com/diff'>http://inventwithpython.com/diff</a> or email the author at <a href="mailto:al@inventwithpython.com">al@inventwithpython.com</a></span><br /><ol start='1'>
+<li># Tic Tac Toe</li>
+<li></li>
+<li>import random</li>
+<li></li>
+<li>def drawBoard(board):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# This function prints out the board that it was passed.</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# "board" is a list of 10 strings representing the board (ignore index 0)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print(' ' + board[7] + ' | ' + board[8] + ' | ' + board[9])</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('-----------')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print(' ' + board[4] + ' | ' + board[5] + ' | ' + board[6])</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('-----------')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print(' ' + board[1] + ' | ' + board[2] + ' | ' + board[3])</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|')</li>
+<li></li>
+<li>def inputPlayerLetter():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Let's the player type which letter they want to be.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns a list with the player's letter as the first item, and the computer's letter as the second.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;letter = ''</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while not (letter == 'X' or letter == 'O'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Do you want to be X or O?')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;letter = input().upper()</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# the first element in the list is the player's letter, the second is the computer's letter.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if letter == 'X':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return ['X', 'O']</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return ['O', 'X']</li>
+<li></li>
+<li>def whoGoesFirst():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Randomly choose the player who goes first.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if random.randint(0, 1) == 0:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 'computer'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 'player'</li>
+<li></li>
+<li>def playAgain():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# This function returns True if the player wants to play again, otherwise it returns False.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Do you want to play again? (yes or no)')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return input().lower().startswith('y')</li>
+<li></li>
+<li>def makeMove(board, letter, move):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;board[move] = letter</li>
+<li></li>
+<li>def isWinner(bo, le):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Given a board and a player's letter, this function returns True if that player has won.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# We use bo instead of board and le instead of letter so we don't have to type as much.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return ((bo[7] == le and bo[8] == le and bo[9] == le) or # across the top</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[4] == le and bo[5] == le and bo[6] == le) or # across the middle</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[1] == le and bo[2] == le and bo[3] == le) or # across the bottom</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[7] == le and bo[4] == le and bo[1] == le) or # down the left side</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[8] == le and bo[5] == le and bo[2] == le) or # down the middle</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[9] == le and bo[6] == le and bo[3] == le) or # down the right side</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[7] == le and bo[5] == le and bo[3] == le) or # diagonal</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[9] == le and bo[5] == le and bo[1] == le)) # diagonal</li>
+<li></li>
+<li>def getBoardCopy(board):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Make a duplicate of the board list and return it the duplicate.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;dupeBoard = []</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in board:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dupeBoard.append(i)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return dupeBoard</li>
+<li></li>
+<li>def isSpaceFree(board, move):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Return true if the passed move is free on the passed board.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return board[move] == ' '</li>
+<li></li>
+<li>def getPlayerMove(board):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Let the player type in his move.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;move = ' '</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while move not in '1 2 3 4 5 6 7 8 9'.split() or not isSpaceFree(board, int(move)):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('What is your next move? (1-9)')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move = input()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return int(move)</li>
+<li></li>
+<li>def chooseRandomMoveFromList(board, movesList):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns a valid move from the passed list on the passed board.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns None if there is no valid move.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;possibleMoves = []</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in movesList:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isSpaceFree(board, i):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;possibleMoves.append(i)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if len(possibleMoves) != 0:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return random.choice(possibleMoves)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return None</li>
+<li></li>
+<li>def getComputerMove(board, computerLetter):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Given a board and the computer's letter, determine where to move and return that move.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if computerLetter == 'X':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;playerLetter = 'O'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;playerLetter = 'X'</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Here is our algorithm for our Tic Tac Toe AI:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# First, check if we can win in the next move</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in range(1, 10):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;copy = getBoardCopy(board)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isSpaceFree(copy, i):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;makeMove(copy, computerLetter, i)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isWinner(copy, computerLetter):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return i</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Check if the player could win on his next move, and block them.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in range(1, 10):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;copy = getBoardCopy(board)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isSpaceFree(copy, i):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;makeMove(copy, playerLetter, i)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isWinner(copy, playerLetter):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return i</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Try to take one of the corners, if they are free.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;move = chooseRandomMoveFromList(board, [1, 3, 7, 9])</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if move != None:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return move</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Try to take the center, if it is free.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if isSpaceFree(board, 5):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 5</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Move on one of the sides.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return chooseRandomMoveFromList(board, [2, 4, 6, 8])</li>
+<li></li>
+<li>def isBoardFull(board):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Return True if every space on the board has been taken. Otherwise return False.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in range(1, 10):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isSpaceFree(board, i):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return True</li>
+<li></li>
+<li></li>
+<li>print('Welcome to Tic Tac Toe!')</li>
+<li></li>
+<li>while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Reset the board</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;theBoard = [' '] * 10</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;playerLetter, computerLetter = inputPlayerLetter()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;turn = whoGoesFirst()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('The ' + turn + ' will go first.')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;gameIsPlaying = True</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while gameIsPlaying:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if turn == 'player':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Player's turn.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawBoard(theBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move = getPlayerMove(theBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;makeMove(theBoard, playerLetter, move)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isWinner(theBoard, playerLetter):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawBoard(theBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Hooray! You have won the game!')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gameIsPlaying = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isBoardFull(theBoard):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawBoard(theBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('The game is a tie!')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;turn = 'computer'</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Computer's turn.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move = getComputerMove(theBoard, computerLetter)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;makeMove(theBoard, computerLetter, move)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isWinner(theBoard, computerLetter):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawBoard(theBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('The computer has beaten you! You lose.')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gameIsPlaying = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isBoardFull(theBoard):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawBoard(theBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('The game is a tie!')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;turn = 'player'</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if not playAgain():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+</ol></div>
+
+<h2 id="DesigningtheProgram">Designing the Program</h2>
+
+<p class='centeredImageP'><img src='images/10-1.png' alt='' class='centeredImage' /><br />
+Figure 10-1: Flow chart for Tic Tac Toe</p>
+
+<p>Tic Tac Toe is a very easy and short game to play on paper. In our Tic Tac Toe computer game, we'll let the player choose if they want to be X or O, randomly choose who goes first, and then let the player and computer take turns making moves on the board. Figure <span class='nw'>10-1</span> is what a flow chart of Tic Tac Toe could look like.</p>
+
+<p>You can see a lot of the boxes on the left side of the chart are what happens during the player's turn. The right side of the chart shows what happens on the computer's turn. The player has an extra box for drawing the board because the computer doesn't need the board printed on the screen. After the player or computer makes a move, we check if they won or caused a tie, and then the game switches turns. After the game is over, we ask the player if they want to play again.</p>
+
+<h3 id="RepresentingtheBoardasData">Representing the Board as Data</h3>
+
+<p>First, we need to figure out how we are going to represent the board as a variable. On paper, the Tic Tac Toe board is drawn as a pair of horizontal lines and a pair of vertical lines, with either an X, O, or empty space in each of the nine spaces.</p>
+
+<p>In our program, we are going to represent the Tic Tac Toe board as a list of strings. Each string will represent one of the nine positions on the board. We will give a number to each of the spaces on the board. To make it easier to remember which index in the list is for which piece, we will mirror the numbers on the keypad of our keyboard. See Figure 10-2.</p>
+
+
+<p class='centeredImageP'><img src='images/10-2.png' alt='' class='centeredImage' /><br />
+Figure 10-2: The board will be numbered like the keyboard's number pad.</p>
+
+<p>The strings will either be <span class='m'>'X'</span> for the X player, <span class='m'>'O'</span> for the O player, or a space string <span class='m nw'>' '</span> to mark a spot on the board where no one has marked yet. The index of the string in the list will also be the number of the space on the board.</p>
+
+<p>So if we had a list with ten strings named <span class='m'>board</span>, then <span class='m'>board[7]</span> would be the top-left square on the board (either an X, O, or blank space). <span class='m'>board[5]</span> would be the very center. When the player types in which place they want to move, they will type a number from 1 to 9. (Because there is no 0 on the keypad, we will just ignore the string at index <span class='m'>0</span> in our list.)</p>
+
+<h2 id="GameAI">Game AI</h2>
+
+<p style='float: right;' class='centeredImageP'><img src='images/10-3.png' alt='' class='centeredImage' /><br />
+Figure 10-3: Locations of the side, corner, and center places.</p>
+
+<p>When we talk about how our AI behaves, we will be talking about which types of spaces on the board it will move on. Just to be clear, we will label three types of spaces on the Tic Tac Toe board: corners, sides, and the center. Figure 10-3 is a chart of what each space is:</p>
+
+<p>The AI for this game will follow a simple algorithm. An <span class='term'>algorithm</span> is a series of instructions to compute something. This is a loose definition of algorithm. A single program can make use of several different algorithms. An algorithm, like a complete program, can be represented with a flow chart. In the case of our Tic Tac Toe AI's algorithm, the series of steps will determine which is the best place to move. (See Figure <span class='nw'>10-4</span>.) There is nothing in the code that says, "These lines are an algorithm." like there is with a function's def-block. We just consider the AI algorithm as all the code that is used in our program that determines the AI's next move.</p>
+
+<p>Our algorithm will have the following steps:</p>
+
+<ol>
+<li>First, see if there is a move the computer can make that will win the game. If there is, take that move. Otherwise, go to step 2.</li>
+<li>See if there is a move the player can make that will cause the computer to lose the game. If there is, we should move there to block the player. Otherwise, go to step 3.</li>
+<li>Check if any of the corner spaces (spaces 1, 3, 7, or 9) are free. (We always want to take a corner piece instead of the center or a side piece.) If no corner piece is free, then go to step 4.</li>
+<li>Check if the center is free. If so, move there. If it isn't, then go to step 5.</li>
+<li>Move on any of the side pieces (spaces 2, 4, 6, or 8). There are no more steps, because if we have reached step 5 the side spaces are the only spaces left.</li>
+</ol>
+
+<p>This all takes place in the "Get computer's move." box on our flow chart. We could add this information to our flow chart like this:</p>
+
+
+<p class='centeredImageP'><img src='images/10-4.png' alt='' class='centeredImage' /><br />
+Figure 10-4: The five steps of the "Get computer's move" algorithm.<br />The arrows leaving go to the "Check if computer won" box.</p>
+
+<p>We will implement this algorithm as code in our <span class='m'>getComputerMove()</span> function, and the other functions that <span class='m'>getComputerMove()</span> calls.</p>
+
+<h2 id="HowtheCodeWorksLines1to81">How the Code Works: Lines 1 to 81</h2>
+
+<p>Now that we know about how we want the program to work, let's look at what each line does.</p>
+
+<h3 id="TheStartoftheProgram">The Start of the Program</h3>
+
+<div class='sourcecode'><ol start='1'>
+<li># Tic Tac Toe</li>
+<li></li>
+<li>import random</li>
+</ol></div>
+
+<p>The first couple of lines are a comment and importing the <span class='m'>random</span> module so we can use the <span class='m'>randint()</span> function in our game.</p>
+
+<h3 class='pagebreaker' id="PrintingtheBoardontheScreen">Printing the Board on the Screen</h3>
+
+<div class='sourcecode'><ol start='5'>
+<li>def drawBoard(board):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# This function prints out the board that it was passed.</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# "board" is a list of 10 strings representing the board (ignore index 0)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print(' ' + board[7] + ' | ' + board[8] + ' | ' + board[9])</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('-----------')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print(' ' + board[4] + ' | ' + board[5] + ' | ' + board[6])</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('-----------')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print(' ' + board[1] + ' | ' + board[2] + ' | ' + board[3])</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|')</li>
+</ol></div>
+
+<p>This function will print out the game board, marked as directed by the <span class='m'>board</span> parameter. Remember that our board is represented as a list of ten strings, where the string at index <span class='m'>1</span> is the mark on space 1 on the Tic Tac Toe board. (And remember that we ignore the string at index <span class='m'>0</span>, because the spaces are labeled with numbers 1 to 9.) Many of our functions will work by passing the board as a list of ten strings to our functions. Be sure to get the spacing right in the strings, otherwise the board will look funny when it is printed on the screen.</p>
+
+<p>Just as an example, here are some values that the <span class='m'>board</span> parameter could have (on the left side of the table) and what the <span class='m'>drawBoard()</span> function would print out (on the right):</p>
+
+<table class='simpletable' style='text-align: center;'>
+<caption>Table 10-1: Examples of values of <span class='m'>board</span> and output from <span class='m'>drawBoard(board)</span> calls.</caption>
+
+<tr><th class='simpletd m' style='font-family: serif;'><span class='m'>board</span> value</th><th class='simpletd m' style='font-family: serif;'><span class='m'>drawBoard(board)</span> output</th></tr>
+
+<tr><td class='simpletd m'>[' ', ' ', ' ', ' ', 'X',<br />&nbsp;'O', ' ', 'X', ' ', 'O']</td><td class='simpletd m'>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;X&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;O&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+-----------<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+
+&nbsp;X&nbsp;|&nbsp;O&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+-----------<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+
+</td></tr>
+
+<tr><td class='simpletd m'>[' ', 'O', 'O', ' ', ' ',<br />&nbsp;'X', ' ', ' ', ' ', ' ']</td><td class='simpletd m'>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+-----------<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+
+&nbsp;&nbsp;&nbsp;|&nbsp;X&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+-----------<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+</td></tr>
+
+<tr><td class='simpletd m'>[' ', ' ', ' ', ' ', ' ',<br />&nbsp;' ', ' ', ' ', ' ', ' ']</td><td class='simpletd m'>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+-----------<br/>
+
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+-----------<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+</td></tr>
+
+<tr><td class='simpletd m'>[' ', 'X', 'X', 'X', 'X',<br />&nbsp;'X', 'X', 'X', 'X', 'X']</td><td class='simpletd m'>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+
+-----------<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+-----------<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+
+&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+</td></tr>
+
+<tr><td class='simpletd m'>['0', '1', '2', '3', '4',<br />'5', '6', '7', '8', '9']</td><td class='simpletd m'>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;7&nbsp;|&nbsp;8&nbsp;|&nbsp;9&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+
+-----------<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;4&nbsp;|&nbsp;5&nbsp;|&nbsp;6&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+-----------<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+
+&nbsp;1&nbsp;|&nbsp;2&nbsp;|&nbsp;3&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<br/>
+</td></tr>
+</table>
+
+<p>The second to last board filled with X's could not possibly have happened (unless the X player skipped all of the O player's turns!) And the last board has strings of digits instead of X and O, which are invalid strings for the board. But the <span class='m'>drawBoard()</span> function doesn't care. It just prints the <span class='m'>board</span> parameter that it was passed. Computer programs only do exactly what you tell them, even if you tell them the wrong things to do. We will just make sure these invalid strings are not put into the passed list in the first place.</p>
+
+<h3 id="LettingthePlayerbeXorO">Letting the Player be X or O</h3>
+
+<div class='sourcecode'><ol start='21'>
+<li>def inputPlayerLetter():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Let's the player type which letter they want to be.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns a list with the player's letter as the first item, and the computer's letter as the second.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;letter = ''</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while not (letter == 'X' or letter == 'O'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Do you want to be X or O?')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;letter = input().upper()</li>
+</ol></div>
+
+<p>The <span class='m'>inputPlayerLetter()</span> is a simple function. It asks if the player wants to be X or O, and will keep asking the player (with the <span class='m'>while</span> loop) until the player types in an X or O. Notice on line 26 that we automatically change the string returned by the call to <span class='m'>input()</span> to uppercase letters with the <span class='m'>upper()</span> string method.</p>
+
+<p>The <span class='m'>while</span> loop's condition contains parentheses, which means the expression inside the parentheses is evaluated first. If the <span class='m'>letter</span> variable was set to <span class='m'>'X'</span>, the expression would evaluate like this:</p>
+
+<div class='sourceblurb'>
+while not (letter == 'X' or letter == 'O'):<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/downarrow.png' alt='A downward arrow' /><br />
+while not ('X' == 'X' or 'X' == 'O'):<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/downarrow.png' alt='A downward arrow' /><br />
+while not (True or False):<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/downarrow.png' alt='A downward arrow' /><br />
+while not (True):<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/downarrow.png' alt='A downward arrow' /><br />
+while not True:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/downarrow.png' alt='A downward arrow' /><br />
+while False:<br />
+</div>
+
+<p>As you can see, if <span class='m'>letter</span> has the value <span class='m'>'X'</span> or <span class='m'>'O'</span>, then the loop's condition will be <span class='m'>False</span> and lets the program execution continue.</p>
+
+<div class='sourcecode'><ol start='29'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# the first element in the list is the player's letter, the second is the computer's letter.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if letter == 'X':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return ['X', 'O']</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return ['O', 'X']</li>
+</ol></div>
+
+<p>This function returns a list with two items. The first item (that is, the string at index <span class='m'>0</span>) will be the player's letter, and the second item (that is, the string at index <span class='m'>1</span>) will be the computer's letter. This <span class='m'>if</span>-<span class='m'>else</span> statement chooses the appropriate list to return.</p>
+
+<h3 id="DecidingWhoGoesFirst">Deciding Who Goes First</h3>
+
+<div class='sourcecode'><ol start='35'>
+<li>def whoGoesFirst():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Randomly choose the player who goes first.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if random.randint(0, 1) == 0:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 'computer'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 'player'</li>
+</ol></div>
+
+<p>The <span class='m'>whoGoesFirst()</span> function does a virtual coin flip to determine who goes first, the computer or the player. Instead of flipping an actual coin, this code gets a random number of either <span class='m'>0</span> or <span class='m'>1</span> by calling the <span class='m'>random.randint()</span> function. If this function call returns a 0, the <span class='m'>whoGoesFirst()</span> function returns the string <span class='m'>'computer'</span>. Otherwise, the function returns the string <span class='m'>'player'</span>. The code that calls this function will use the return value to know who will make the first move of the game.</p>
+
+<h3 id="AskingthePlayertoPlayAgain">Asking the Player to Play Again</h3>
+
+<div class='sourcecode'><ol start='42'>
+<li>def playAgain():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# This function returns True if the player wants to play again, otherwise it returns False.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Do you want to play again? (yes or no)')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return input().lower().startswith('y')</li>
+</ol></div>
+
+<p>The <span class='m'>playAgain()</span> function asks the player if they want to play another game. The function returns <span class='m'>True</span> if the player types in <span class='m'>'yes'</span> or <span class='m'>'YES'</span> or <span class='m'>'y'</span> or anything that begins with the letter Y. For any other response, the function returns <span class='m'>False</span>. The order of the method calls on line 45 is important. The return value from the call to the <span class='m'>input()</span> function is a string that has its <span class='m'>lower()</span> method called on it. The <span class='m'>lower()</span> method returns another string (the lowercase string) and that string has its <span class='m'>startswith()</span> method called on it, passing the argument <span class='m'>'y'</span>.</p>
+
+<p>There is no loop, because we assume that if the user entered anything besides a string that begins with <span class='m'>'y'</span>, they want to stop playing. So, we only ask the player once.</p>
+
+<h3 id="PlacingamarkontheBoard">Placing a mark on the Board</h3>
+
+<div class='sourcecode'><ol start='47'>
+<li>def makeMove(board, letter, move):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;board[move] = letter</li>
+</ol></div>
+
+<p>The <span class='m'>makeMove()</span> function is very simple and only one line. The parameters are a list with ten strings named <span class='m'>board</span>, one of the player's letters (either <span class='m'>'X'</span> or <span class='m'>'O'</span>) named <span class='m'>letter</span>, and a place on the board where that player wants to go (which is an integer from <span class='m'>1</span> to <span class='m'>9</span>) named <span class='m'>move</span>.</p>
+
+<p>But wait a second. You might think that this function doesn't do much. It seems to change one of the items in the <span class='m'>board</span> list to the value in <span class='m'>letter</span>. But because this code is in a function, the <span class='m'>board</span> parameter will be forgotten when we exit this function and leave the function's scope.</p>
+
+<p>Actually, this is not the case. This is because lists (and dictionaries) are special when you pass them as arguments to functions. This is because you pass a reference to the list (or dictionary) and not the list itself. Let's learn about the difference between lists and list references.</p>
+
+<h2 id="ListReferences">List References</h2>
+
+<p>Try entering the following into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = 42<br />
+&gt;&gt;&gt; cheese = spam<br />
+&gt;&gt;&gt; spam = 100<br />
+&gt;&gt;&gt; spam<br />
+100<br />
+&gt;&gt;&gt; cheese<br />
+42<br />
+</div>
+
+<p>This makes sense from what we know so far. We assign <span class='m'>42</span> to the <span class='m'>spam</span> variable, and then we copy the value in <span class='m'>spam</span> and assign it to the variable <span class='m'>cheese</span>. When we later change the value in <span class='m'>spam</span> to <span class='m'>100</span>, this doesn't affect the value in <span class='m'>cheese</span>. This is because <span class='m'>spam</span> and <span class='m'>cheese</span> are different variables that store different values.</p>
+
+<p>But lists don't work this way. When you assign a list to a variable with the <span class='m'>=</span> sign, you are actually assigning a list reference to the variable. A <span class='term'>reference</span> is a value that points to some bit of data, and a <span class='term'>list reference</span> is a value that points to a list. Here is some code that will make this easier to understand. Type this into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = [0, 1, 2, 3, 4, 5]<br />
+&gt;&gt;&gt; cheese = spam<br />
+&gt;&gt;&gt; cheese[1] = 'Hello!'<br />
+&gt;&gt;&gt; spam<br />
+[0, 'Hello!', 2, 3, 4, 5]<br />
+&gt;&gt;&gt; cheese<br />
+[0, 'Hello!', 2, 3, 4, 5]<br />
+</div>
+
+<p>This looks odd. The code only changed the <span class='m'>cheese</span> list, but it seems that both the <span class='m'>cheese</span> and <span class='m'>spam</span> lists have changed.</p>
+
+<p>Notice that the line <span class='m'>cheese = spam</span> copies the <i>list reference</i> in <span class='m'>spam</span> to <span class='m'>cheese</span>, instead of copying the <i>list value</i> itself. This is because the value stored in the <span class='m'>spam</span> variable is a list <i>reference</i>, and not the list <i>value</i> itself. This means that the values stored in both <span class='m'>spam</span> and <span class='m'>cheese</span> refer to the same list. There is only one list because the list was not copied, the reference to the list was copied. So when you modify <span class='m'>cheese</span> in the <span class='m'>cheese[1] = 'Hello!'</span> line, you are modifying the same list that <span class='m'>spam</span> refers to. This is why <span class='m'>spam</span> seems to have the same list value that <span class='m'>cheese</span> does.</p>
+
+<p>Remember that variables are like boxes that contain values. List variables don't actually contain lists at all, they contain references to lists. Here are some pictures that explain what happens in the code you just typed in:</p>
+
+
+<p class='centeredImageP'><img src='images/10-5.png' alt='' class='centeredImage' /><br />
+Figure 10-5: Variables do no store lists, but rather references to lists.</p>
+
+<p>On the first line, the actual list is not contained in the <span class='m'>spam</span> variable but a reference to the list. The list itself is not stored in any variable.</p>
+
+
+<p class='centeredImageP'><img src='images/10-6.png' alt='' class='centeredImage' /><br />
+Figure 10-6: Two variables store two references to the same list.</p>
+
+<p>When you assign the reference in <span class='m'>spam</span> to <span class='m'>cheese</span>, the <span class='m'>cheese</span> variable contains a copy of the reference in <span class='m'>spam</span>. Now both <span class='m'>cheese</span> and <span class='m'>spam</span> refer to the same list.</p>
+
+<p class='centeredImageP'><img src='images/10-7.png' alt='' class='centeredImage' /><br />
+Figure 10-7: Changing the list changes all variables with references to that list.</p>
+
+<p>When you alter the list that <span class='m'>cheese</span> refers to, the list that <span class='m'>spam</span> refers to is also changed because they are the same list. If you want <span class='m'>spam</span> and <span class='m'>cheese</span> to store two different lists, you have to create two different lists instead of copying a reference:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = [0, 1, 2, 3, 4, 5]<br />
+&gt;&gt;&gt; cheese = [0, 1, 2, 3, 4, 5]<br />
+</div>
+
+<p>In the above example, <span class='m'>spam</span> and <span class='m'>cheese</span> have two different lists stored in them (even though these lists are identical in content). Now if you modify one of the lists, it will not affect the other because <span class='m'>spam</span> and <span class='m'>cheese</span> have references to two different lists:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = [0, 1, 2, 3, 4, 5]<br />
+&gt;&gt;&gt; cheese = [0, 1, 2, 3, 4, 5]<br />
+&gt;&gt;&gt; cheese[1] = 'Hello!'<br />
+&gt;&gt;&gt; spam<br />
+[0, 1, 2, 3, 4, 5]<br />
+&gt;&gt;&gt; cheese<br />
+[0, 'Hello!', 2, 3, 4, 5]<br />
+</div>
+
+
+<p>Figure 10-8 shows how the two references point to two different lists:</p>
+
+<p class='centeredImageP'><img src='images/10-8.png' alt='' class='centeredImage' /><br />
+Figure 10-8: Two variables each storing references to two different lists.</p>
+
+<p>Dictionaries work in the same way. Dictionaries do not store values, they store references to values. These are called <span class='term'>dictionary references</span> (or you can call both dictionary references and list references by the plain name, "reference".)</p>
+
+<h3 class='pagebreaker' id="UsingListReferencesinmakeMove">Using List References in <span class='m'>makeMove()</span></h3>
+
+<p>Let's go back to the <span class='m'>makeMove()</span> function:</p>
+
+<div class='sourcecode'><ol start='47'>
+<li>def makeMove(board, letter, move):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;board[move] = letter</li>
+</ol></div>
+
+<p>When we pass a list value as the argument for the <span class='m'>board</span> parameter, the function's local variable is a copy of the reference, not a copy of the list itself. The <span class='m'>letter</span> and <span class='m'>move</span> parameters are copies of the string and integer values that we pass. Since they are copies, if we modify <span class='m'>letter</span> or <span class='m'>move</span> in this function, the original variables we used when we called <span class='m'>makeMove()</span> would not be modified. Only the copies would be modified.</p>
+
+<p>But a copy of the reference still refers to the same list that the original reference refers to. So if we make changes to <span class='m'>board</span> in this function, the original list is modified. When we exit the <span class='m'>makeMove()</span> function, the copy of the reference is forgotten along with the other parameters. But since we were actually changing the original list, those changes remain after we exit the function. This is how the <span class='m'>makeMove()</span> function modifies the list that a reference of is passed.</p>
+
+<h3 id="CheckingifthePlayerHasWon">Checking if the Player Has Won</h3>
+
+<div class='sourcecode'><ol start='50'>
+<li>def isWinner(bo, le):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Given a board and a player's letter, this function returns True if that player has won.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# We use bo instead of board and le instead of letter so we don't have to type as much.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return ((bo[7] == le and bo[8] == le and bo[9] == le) or # across the top</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[4] == le and bo[5] == le and bo[6] == le) or # across the middle</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[1] == le and bo[2] == le and bo[3] == le) or # across the bottom</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[7] == le and bo[4] == le and bo[1] == le) or # down the left side</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[8] == le and bo[5] == le and bo[2] == le) or # down the middle</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[9] == le and bo[6] == le and bo[3] == le) or # down the right side</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[7] == le and bo[5] == le and bo[3] == le) or # diagonal</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[9] == le and bo[5] == le and bo[1] == le)) # diagonal</li>
+</ol></div>
+
+<p>Lines 53 to 60 in the <span class='m'>isWinner()</span> function are actually one very long <span class='m'>if</span> statement. We use <span class='m'>bo</span> and <span class='m'>le</span> for the board and letter parameters so that we have less to type in this function. (This is a trick programmers sometimes use to reduce the amount they need to type. Be sure to add a comment that explains this though, otherwise you may forget what <span class='m'>bo</span> and <span class='m'>le</span> are supposed to mean.)</p>
+
+<p>There are eight possible ways to win at Tic Tac Toe. You can have a line across the top, middle, and bottom. Or you can have a line down the left, middle, or right. And you can have either of the two diagonals. Note that each line of the condition checks if the three spaces are equal to the letter provided (combined with the <span class='m'>and</span> operator) and we use the <span class='m'>or</span> operator to combine the eight different ways to win. This means only one of the eight ways must be true in order for us to say that the player who owns letter in <span class='m'>le</span> is the winner.</p>
+
+<p>Let's pretend that <span class='m'>le</span> is <span class='m'>'O'</span>, and the board looks like this:</p>
+
+
+<div class='sourceblurb'>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;X&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+-----------<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;X&nbsp;|<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+-----------<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O<br />
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+</div>
+
+
+<p>If the board looks like that, then <span class='m'>bo</span> must be equal to <span class='m'>[' ', 'O', 'O', 'O', ' ', 'X', ' ', 'X', ' ', ' ']</span>. Here is how the expression after the return keyword on line 53 would evaluate:</p>
+
+<div class='sourceblurb' style='font-size: 70%'>
+<ol start='53'>
+
+<p style='font-family: serif; font-size: 143%'>Here is the expression as it is in the code:</p>
+
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return ((bo[7] == le and bo[8] == le and bo[9] == le) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[4] == le and bo[5] == le and bo[6] == le) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[1] == le and bo[2] == le and bo[3] == le) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[7] == le and bo[4] == le and bo[1] == le) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[8] == le and bo[5] == le and bo[2] == le) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[9] == le and bo[6] == le and bo[3] == le) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[7] == le and bo[5] == le and bo[3] == le) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(bo[9] == le and bo[5] == le and bo[1] == le))</li>
+</ol>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/downarrow.png' alt='A downward arrow' />
+<ol start='53'>
+<p style='font-family: serif; font-size: 143%'>First Python will replace the variable <span class='m'>bo</span> with the value inside of it:</p>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return (('X' == 'O' and ' ' == 'O' and ' ' == 'O') or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(' ' == 'O' and 'X' == 'O' and ' ' == 'O') or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;('O' == 'O' and 'O' == 'O' and 'O' == 'O') or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;('X' == 'O' and ' ' == 'O' and 'O' == 'O') or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(' ' == 'O' and 'X' == 'O' and 'O' == 'O') or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(' ' == 'O' and ' ' == 'O' and 'O' == 'O') or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;('X' == 'O' and 'X' == 'O' and 'O' == 'O') or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(' ' == 'O' and 'X' == 'O' and 'O' == 'O'))</li>
+</ol>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/downarrow.png' alt='A downward arrow' />
+<ol start='53'>
+<p style='font-family: serif; font-size: 143%'>Next, Python will evaluate all those <span class='m'>==</span> comparisons inside the parentheses to a Boolean value:</p>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return ((False and False and False) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(False and False and False) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(True and True and True) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(False and False and True) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(False and False and True) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(False and False and True) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(False and False and True) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(False and False and True))</li>
+</ol>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/downarrow.png' alt='A downward arrow' />
+<ol start='53'>
+<p style='font-family: serif; font-size: 143%'>Then the Python interpreter will evaluate all those expressions inside the parentheses:</p>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return ((False) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(False) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(True) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(False) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(False) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(False) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(False) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;(False))</li>
+</ol>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/downarrow.png' alt='A downward arrow' />
+<ol start='53'>
+<p style='font-family: serif; font-size: 143%'>Since now there is only one value inside the parentheses, we can get rid of them:</p>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return (False or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;False or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;True or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;False or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;False or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;False or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;False or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;False)</li>
+</ol>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/downarrow.png' alt='A downward arrow' />
+<ol start='53'>
+<p style='font-family: serif; font-size: 143%'>Now we evaluate the expression that is connecter by all those <span class='m'>or</span> operators:</p>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return (True)</li>
+</ol>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/downarrow.png' alt='A downward arrow' />
+<ol start='53'>
+<p style='font-family: serif; font-size: 143%'>Once again, we get rid of the parentheses, and we are left with one value:</p>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return True</li>
+</ol>
+</div>
+
+
+<p>So given those values for <span class='m'>bo</span> and <span class='m'>le</span>, the expression would evaluate to <span class='m'>True</span>. Remember that the value of <span class='m'>le</span> matters. If <span class='m'>le</span> is <span class='m'>'O'</span> and X has won the game, the <span class='m'>isWinner()</span> would return <span class='m'>False</span>.</p>
+
+<h3 id="DuplicatingtheBoardData">Duplicating the Board Data</h3>
+
+<div class='sourcecode'><ol start='62'>
+<li>def getBoardCopy(board):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Make a duplicate of the board list and return it the duplicate.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;dupeBoard = []</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in board:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dupeBoard.append(i)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return dupeBoard</li>
+</ol></div>
+
+<p>The <span class='m'>getBoardCopy()</span> function is here so that we can easily make a copy of a given 10-string list that represents a Tic Tac Toe board in our game. There are times that we will want our AI algorithm to make temporary modifications to a temporary copy of the board without changing the original board. In that case, we call this function to make a copy of the board's list. The actual new list is created on line 64, with the blank list brackets <span class='m'>[]</span>.</p>
+
+<p>Line 64 actually creates a brand new list and stores a reference to it in <span class='m'>dupeBoard</span>. But the list stored in <span class='m'>dupeBoard</span> is just an empty list. The <span class='m'>for</span> loop will go through the board parameter, appending a copy of the string values in the original board to our duplicate board. Finally, after the loop, we will return the <span class='m'>dupeBoard</span> variable's reference to the duplicate board. So you can see how the <span class='m'>getBoardCopy()</span> function is building up a copy of the original board and returning a reference to this new board, and not the original one.</p>
+
+<h3 id="CheckingifaSpaceontheBoardisFree">Checking if a Space on the Board is Free</h3>
+
+<div class='sourcecode'><ol start='71'>
+<li>def isSpaceFree(board, move):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Return true if the passed move is free on the passed board.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return board[move] == ' '</li>
+</ol></div>
+
+
+<p>This is a simple function that, given a Tic Tac Toe board and a possible move, will return if that move is available or not. Remember that free spaces on our board lists are marked as a single space string.</p>
+
+<h3 id="LettingthePlayerEnterTheirMove">Letting the Player Enter Their Move</h3>
+
+<div class='sourcecode'><ol start='75'>
+<li>def getPlayerMove(board):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Let the player type in his move.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;move = ' '</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while move not in '1 2 3 4 5 6 7 8 9'.split() or not isSpaceFree(board, int(move)):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('What is your next move? (1-9)')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move = input()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return int(move)</li>
+</ol></div>
+
+<p>The <span class='m'>getPlayerMove()</span> function asks the player to enter the number for the space they wish to move. The function makes sure that they enter a space that is a valid space (an integer 1 through 9). It also checks that the space that is not already taken, given the Tic Tac Toe board passed to the function in the <span class='m'>board</span> parameter.</p>
+
+<p>The two lines of code inside the <span class='m'>while</span> loop simply ask the player to enter a number from 1 to 9. The loop's condition will keep looping, that is, it will keep asking the player for a space, as long as the condition is <span class='m'>True</span>. The condition is <span class='m'>True</span> if either of the expressions on the <i>left</i> or <i>right</i> side of the <span class='m'>or</span> keyword is <span class='m'>True</span>.</p>
+
+<p>The expression on the <i>left</i> side checks if the move that the player entered is equal to <span class='m'>'1'</span>, <span class='m'>'2'</span>, <span class='m'>'3'</span>, and so on up to <span class='m'>'9'</span> by creating a list with these strings (with the <span class='m'>split()</span> method) and checking if move is in this list. <span class='m'>'1 2 3 4 5 6 7 8 9'.split()</span> evaluates to be the same as <span class='m'>['1', '2', '3', '4', '5', '6', '7', '8', '9']</span>, but it easier to type.</p>
+
+<p>The expression on the <i>right</i> side checks if the move that the player entered is a free space on the board. It checks this by calling the <span class='m'>isSpaceFree()</span> function we just wrote. Remember that <span class='m'>isSpaceFree()</span> will return <span class='m'>True</span> if the move we pass is available on the board. Note that <span class='m'>isSpaceFree()</span> expects an integer for <span class='m'>move</span>, so we use the <span class='m'>int()</span> function to evaluate an integer form of <span class='m'>move</span>.</p>
+
+<p>We add the <span class='m'>not</span> operators to both sides so that the condition will be <span class='m'>True</span> when both of these requirements are unfulfilled. This will cause the loop to ask the player again and again until they enter a proper move.</p>
+
+<p>Finally, on line 81, we will return the integer form of whatever move the player entered. Remember that <span class='m'>input()</span> returns a string, so we will want to use the <span class='m'>int()</span> function to evaluate the string as an integer.</p>
+
+<h2 id="ShortCircuitEvaluation">Short-Circuit Evaluation</h2>
+
+<p>You may have noticed there is a possible problem in our <span class='m'>getPlayerMove()</span> function. What if the player typed in <span class='m'>'X'</span> or some other non-integer string? The <span class='m'>move not in '1 2 3 4 5 6 7 8 9'.split()</span> expression on the left side of or would return <span class='m'>False</span> as expected, and then we would evaluate the expression on the right side of the <span class='m'>or</span> operator. But when we pass <span class='m'>'X'</span> (which would be the value in <span class='m'>move</span>) to the <span class='m'>int()</span> function, <span class='m'>int('X')</span> would give us an error. It gives us this error because the <span class='m'>int()</span> function can only take strings of number characters, like <span class='m'>'9'</span> or <span class='m'>'0'</span>, not strings like <span class='m'>'X'</span>.</p>
+
+<p>As an example of this kind of error, try entering this into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; int('42')<br />
+42<br />
+&gt;&gt;&gt; int('X')<br />
+<br />
+Traceback (most recent call last):<br />
+&nbsp;&nbsp;File "&lt;pyshell#3&gt;", line 1, in &lt;module&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;int('X')<br />
+ValueError: invalid literal for int() with base 10: 'X'<br />
+</div>
+
+<p>But when you play our Tic Tac Toe game and try entering <span class='m'>'X'</span> for your move, this error doesn't happen. The reason is because the <span class='m'>while</span> loop's condition is being short-circuited.</p>
+
+<p>What <span class='term'>short-circuiting</span> means is that because the expression on the left side of the or keyword (<span class='m'>move not in '1 2 3 4 5 6 7 8 9'.split()</span>) evaluates to <span class='m'>True</span>, the Python interpreter knows that the entire expression will evaluate to <span class='m'>True</span>. It doesn't matter if the expression on the right side of the <span class='m'>or</span> keyword evaluates to <span class='m'>True</span> or <span class='m'>False</span>, because only one value on the side of the <span class='m'>or</span> operator needs to be <span class='m'>True</span>.</p>
+
+<p>Think about it: The expression <span class='m'>True or False</span> evaluates to <span class='m'>True</span> and the expression <span class='m'>True or True</span> also evaluates to <span class='m'>True</span>. If the value on the left side is <span class='m'>True</span>, it doesn't matter what the value is on the right side. So Python stops checking the rest of the expression and doesn't even bother evaluating the <span class='m'>not isSpaceFree(board, int(move))</span> part. This means the <span class='m'>int()</span> and the <span class='m'>isSpaceFree()</span> functions are never called as long as <span class='m'>move not in '1 2 3 4 5 6 7 8 9'.split()</span> is <span class='m'>True</span>.</p>
+
+<p>This works out well for us, because if the expression on the right side is <span class='m'>True</span> then <span class='m'>move</span> is not a string in number form. That would cause <span class='m'>int()</span> to give us an error. The only times <span class='m'>move not in '1 2 3 4 5 6 7 8 9'.split()</span> evaluates to <span class='m'>False</span> are when <span class='m'>move</span> is not a single-digit string. In that case, the call to <span class='m'>int()</span> would not give us an error.</p>
+
+<h3 id="AnExampleofShortCircuitEvaluation">An Example of Short-Circuit Evaluation</h3>
+
+<p>Here's a short program that gives a good example of short-circuiting. Open a new file in the IDLE editor and type in this program, save it as <i>truefalsefizz.py</i>, then press F5 to run it. Don't add the numbers down the left side of the program, those just appear in this book to make the program's explanation easier to understand. The function calls in <b>bold</b> are the function calls that are evaluated.</p>
+
+<div class='sourceblurb'><span class='sourcecodeHeader'>truefalsefizz.py</span><br /><span class='sourcecodeSubHeader'>This code can be downloaded from <a href='http://inventwithpython.com/truefalsefizz.py'>http://inventwithpython.com/truefalsefizz.py</a><br />If you get errors after typing this code in, compare it to the book's code with the online diff tool at <a href='http://inventwithpython.com/diff'>http://inventwithpython.com/diff</a> or email the author at <a href="mailto:al@inventwithpython.com">al@inventwithpython.com</a></span><br /><ol start='1'>
+<li>def TrueFizz(message):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print(message)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return True</li>
+<li></li>
+<li>def FalseFizz(message):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print(message)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return False</li>
+<li></li>
+<li>if <b>FalseFizz('Cats')</b> or <b>TrueFizz('Dogs')</b>:</li>
+<li>&nbsp;&nbsp;&nbsp;print('Step 1')</li>
+<li></li>
+<li>if <b>TrueFizz('Hello')</b> or TrueFizz('Goodbye'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Step 2')</li>
+<li></li>
+<li>if <b>TrueFizz('Spam')</b> and <b>TrueFizz('Cheese')</b>:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Step 3')</li>
+<li></li>
+<li>if <b>FalseFizz('Red')</b> and TrueFizz('Blue'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Step 4')</li>
+</ol></div>
+
+
+<p>When you run this program, you can see the output (the letters on the left side have been added to make the output's explanation easier to understand):</p>
+
+<div class='sourceblurb'><ol style='list-style-type:upper-alpha'>
+<li>Cats</li>
+<li>Dogs</li>
+<li>Step 1</li>
+<li>Hello</li>
+<li>Step 2</li>
+<li>Spam</li>
+<li>Cheese</li>
+<li>Step 3</li>
+<li>Red</li>
+</ol></div>
+
+<p>This small program has two functions: <span class='m'>TrueFizz()</span> and <span class='m'>FalseFizz()</span>. <span class='m nw'>TrueFizz()</span> will display a message and return the value <span class='m'>True</span>, while <span class='m'>FalseFizz()</span> will display a message and return the value <span class='m'>False</span>. This lets us determine if these functions are being called, or if these functions are being skipped due to short-circuiting.</p>
+
+<h3 id="TheFirstifStatement">The First <span class='m'>if</span> Statement (Cats and Dogs)</h3>
+
+<p>The first <span class='m'>if</span> statement on line 9 in our small program will first evaluate <span class='m'>TrueFizz()</span>. We know this happens because <span class='m'>Cats</span> is printed to the screen (on line A in the output). The entire expression could still be <span class='m'>True</span> if the expression to the right of the or keyword is <span class='m'>True</span>. So the call <span class='m'>TrueFizz('Dogs')</span> on line 9 is evaluated, <span class='m'>Dogs</span> is printed to the screen (on line B in the output) and <span class='m'>True</span> is returned. On line 9, the <span class='m'>if</span> statement's condition evaluates to <span class='m'>False or True</span>, which in turn evaluates to <span class='m'>True</span>. <span class='m'>'Step 1'</span> is then printed to the screen. No short-circuiting took place for this expression's evaluation.</p>
+
+<h3 id="TheSecondifStatement">The Second <span class='m'>if</span> Statement (Hello and Goodbye)</h3>
+
+<p>The second <span class='m'>if</span> statement on line 12 also has short-circuiting. This is because when we call <span class='m'>TrueFizz('Hello')</span> on line 12, it prints <span class='m'>Hello</span> (see line D in the output) and returns <span class='m'>True</span>. The Python interpreter doesn't call <span class='m'>TrueFizz('Goodbye')</span> because it doesn't matter what is on the right side of the <span class='m'>or</span> keyword. You can tell it is not called because <span class='m'>Goodbye</span> is not printed to the screen. The <span class='m'>if</span> statement's condition is <span class='m'>True</span>, so <span class='m'>'Step 2'</span> is printed to the screen (see line E).</p>
+
+<h3 id="TheThirdifStatement">The Third <span class='m'>if</span> Statement (Spam and Cheese)</h3>
+
+<p>The third <span class='m'>if</span> statement on line 15 does not have short-circuiting. The call to <span class='m nw'>TrueFizz('Spam')</span> returns <span class='m'>True</span>, but we do not know if the entire condition is <span class='m'>True</span> or <span class='m'>False</span> because of the <span class='m'>and</span> operator. So Python will call <span class='m'>TrueFizz('Cheese')</span>, which prints <span class='m'>Cheese</span> and returns <span class='m'>True</span>. The <span class='m'>if</span> statement's condition is evaluated to <span class='m'>True and True</span>, which in turn evaluates to <span class='m'>True</span>. Because the condition is <span class='m'>True</span>, <span class='m'>'Step 3'</span> is printed to the screen (see line H).</p>
+
+<h3 id="TheFourthifStatement">The Fourth <span class='m'>if</span> Statement (Red and Blue)</h3>
+
+<p>The fourth <span class='m'>if</span> statement on line 18 does have short-circuiting. The <span class='m'>FalseFizz('Red')</span> call prints <span class='m'>Red</span> (see line I in the output) and returns <span class='m'>False</span>. Because the left side of the <span class='m'>and</span> keyword is <span class='m'>False</span>, it does not matter if the right side is <span class='m'>True or False</span>, the condition will evaluate to <span class='m'>False</span> anyway. So <span class='m'>TrueFizz('Blue')</span> is not called and <span class='m'>Blue</span> does not appear on the screen. Because the <span class='m'>if</span> statement's condition evaluated to <span class='m'>False</span>, <span class='m'>'Step 4'</span> is also not printed to the screen.</p>
+
+<p>Short-circuiting can happen for any expression that includes the Boolean operators <span class='m'>and</span> and <span class='m'>or</span>. It is important to remember that this can happen; otherwise you may find that some function calls in the expression are never called and you will not understand why.</p>
+
+<h2 id="HowtheCodeWorksLines83to94">How the Code Works: Lines 83 to 94</h2>
+
+<h3 id="ChoosingaMovefromaListofMoves">Choosing a Move from a List of Moves</h3>
+
+<div class='sourcecode'><ol start='83'>
+<li>def chooseRandomMoveFromList(board, movesList):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns a valid move from the passed list on the passed board.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns None if there is no valid move.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;possibleMoves = []</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in movesList:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isSpaceFree(board, i):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;possibleMoves.append(i)</li>
+</ol></div>
+
+<p>The <span class='m'>chooseRandomMoveFromList()</span> function will be of use to us when we are implementing the code for our AI. The first parameter <span class='m'>board</span> is the 10-string list that represents a Tic Tac Toe board. The second parameter movesList is a list of integers that represent possible moves. For example, if <span class='m'>movesList</span> is <span class='m'>[1, 3, 7, 9]</span>, that means we should return the number for one of the corner spaces on the board.</p>
+
+<p>The <span class='m'>chooseRandomMoveFromList()</span> function will then choose one of those moves from the <span class='m'>possibleMoves</span> list. It also makes sure that the move that it chooses is not already taken. To do this, we create a blank list and assign it to <span class='m'>possibleMoves</span>. The <span class='m'>for</span> loop will go through the list of moves passed to this function in <span class='m'>movesList</span>. If that move is available (which we figure out with a call to <span class='m'>isSpaceFree()</span>), then we add it to <span class='m'>possibleMoves</span> with the <span class='m'>append()</span> method.</p>
+
+<div class='sourcecode'><ol start='91'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if len(possibleMoves) != 0:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return random.choice(possibleMoves)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return None</li>
+</ol></div>
+
+<p>At this point, the <span class='m'>possibleMoves</span> list has all of the moves that were in <span class='m'>movesList</span> that are also free spaces on the board represented by <span class='m'>board</span>. If the list is not empty, then there is at least one possible move that can be made on the board.</p>
+
+<p>This list might be empty. For example, if <span class='m'>movesList</span> was <span class='m'>[1, 3, 7, 9]</span> but the board represented by the <span class='m'>board</span> parameter had all the corner spaces already taken, the <span class='m'>possibleMoves</span> list would have been empty.</p>
+
+<p>If <span class='m'>possibleMoves</span> is empty, then <span class='m'>len(possibleMoves)</span> will evaluate to <span class='m'>0</span> and the code in the else-block will execute. Notice that it returns something called <span class='m'>None</span>.</p>
+
+<h2 class='pagebreaker' id="TheNoneValue">The <span class='m'>None</span> Value</h2>
+
+<p><span class='m'>None</span> is a special value that you can assign to a variable. The <span class='term'><span class='m'>None</span> value</span> represents the lack of a value. <span class='m'>None</span> is the only value of the data type NoneType. (Just like the Boolean data type has only two values, the NoneType data type has only one value, <span class='m'>None</span>.) It can be very useful to use the <span class='m'>None</span> value when you need a value that means "does not exist". For example, say you had a variable named <span class='m'>quizAnswer</span> which holds the user's answer to some True-False pop quiz question. You could set <span class='m'>quizAnswer</span> to <span class='m'>None</span> if the user skipped the question and did not answer it. Using <span class='m'>None</span> would be better because if you set it to <span class='m'>True</span> or <span class='m'>False</span> before assigning the value of the user's answer, it may look like the user gave an answer the question even though they didn't.</p>
+
+<p>Calls to functions that do not return anything (that is, they exit by reaching the end of the function and not from a return statement) will evaluate to <span class='m'>None</span>. The <span class='m'>None</span> value is written <b>without</b> quotes and with a capital "N" and lowercase "one".</p>
+
+<h2 id="HowtheCodeWorksLines96to187">How the Code Works: Lines 96 to 187</h2>
+
+<h3 id="CreatingtheComputersArtificialIntelligence">Creating the Computer's Artificial Intelligence</h3>
+
+<div class='sourcecode'><ol start='96'>
+<li>def getComputerMove(board, computerLetter):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Given a board and the computer's letter, determine where to move and return that move.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if computerLetter == 'X':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;playerLetter = 'O'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;playerLetter = 'X'</li>
+</ol></div>
+
+<p>The <span class='m'>getComputerMove()</span> function is where our AI will be coded. The arguments are a Tic Tac Toe board (in the <span class='m'>board</span> parameter) and which letter the computer is (either <span class='m'>'X'</span> or <span class='m'>'O'</span> in the <span class='m'>computerLetter</span> parameter). The first few lines simply assign the other letter to a variable named <span class='m'>playerLetter</span>. This lets us use the same code, no matter who is X and who is O. This function will return the integer <span class='m'>1</span> to <span class='m'>9</span> that represents which space the computer will move.</p>
+
+<p>Remember how our algorithm works: First, see if there is a move the computer can make that will win the game. If there is, take that move. Otherwise, go to the second step.</p>
+
+<p>Second, see if there is a move the player can make that will cause the computer to lose the game. If there is, we should move there to block the player. Otherwise, go to the third step.</p>
+
+<p>Third, check if any of the corner spaces (spaces 1, 3, 7, or 9) are free. (We always want to take a corner piece instead of the center or a side piece.) If no corner piece is free, then go to the fourth step.</p>
+
+<p>Fourth, check if the center is free. If so, move there. If it isn't, then go to the fifth step.</p>
+
+<p>Fifth, move on any of the side pieces (spaces 2, 4, 6, or 8). There are no more steps, because if we have reached this step then the side spaces are the only spaces left.</p>
+
+<h3 id="TheComputerChecksifitCanWininOneMove">The Computer Checks if it Can Win in One Move</h3>
+
+<div class='sourcecode'><ol start='103'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Here is our algorithm for our Tic Tac Toe AI:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# First, check if we can win in the next move</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in range(1, 10):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;copy = getBoardCopy(board)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isSpaceFree(copy, i):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;makeMove(copy, computerLetter, i)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isWinner(copy, computerLetter):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return i</li>
+</ol></div>
+
+<p>More than anything, if the computer can win in the next move, the computer should immediately make that winning move. We will do this by trying each of the nine spaces on the board with a <span class='m'>for</span> loop. The first line in the loop (line 106) makes a copy of the <span class='m'>board</span> list. We want to make a move on the copy of the board, and then see if that move results in the computer winning. We don't want to modify the original Tic Tac Toe board, which is why we make a call to <span class='m'>getBoardCopy()</span>. We check if the space we will move is free, and if so, we move on that space and see if this results in winning. If it does, we return that space's integer.</p>
+
+<p>If moving on none of the spaces results in winning, then the loop will finally end and we move on to line 112.</p>
+
+
+<h3 id="TheComputerChecksifthePlayerCanWininOneMove">The Computer Checks if the Player Can Win in One Move</h3>
+
+<div class='sourcecode'><ol start='112'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Check if the player could win on his next move, and block them.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in range(1, 10):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;copy = getBoardCopy(board)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isSpaceFree(copy, i):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;makeMove(copy, playerLetter, i)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isWinner(copy, playerLetter):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return i</li>
+</ol></div>
+
+<p>At this point, we know we cannot win in one move. So we want to make sure the human player cannot win in one more move. The code is very similar, except on the copy of the board, we place the player's letter before calling the <span class='m'>isWinner()</span> function. If there is a position the player can move that will let them win, the computer should move there to block that move.</p>
+
+<p>If the human player cannot win in one more move, the <span class='m'>for</span> loop will eventually stop and execution continues on to line 120.</p>
+
+<h3 id="CheckingtheCornerCenterandSideSpacesinthatOrder">Checking the Corner, Center, and Side Spaces (in that Order)</h3>
+
+<div class='sourcecode'><ol start='120'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Try to take one of the corners, if they are free.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;move = chooseRandomMoveFromList(board, [1, 3, 7, 9])</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if move != None:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return move</li>
+</ol></div>
+
+<p>Our call to <span class='m'>chooseRandomMoveFromList()</span> with the list of <span class='m'>[1, 3, 7, 9]</span> will ensure that it returns the integer for one of the corner spaces. (Remember, the corner spaces are represented by the integers <span class='m'>1</span>, <span class='m'>3</span>, <span class='m'>7</span>, and <span class='m'>9</span>.) If all the corner spaces are taken, our <span class='m'>chooseRandomMoveFromList()</span> function will return the <span class='m'>None</span> value. In that case, we will move on to line 125.</p>
+
+<div class='sourcecode'><ol start='125'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Try to take the center, if it is free.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if isSpaceFree(board, 5):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 5</li>
+</ol></div>
+
+<p>If none of the corners are available, we will try to move on the center space if it is free. If the center space is not free, the execution moves on to line 129.</p>
+
+<div class='sourcecode'><ol start='129'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Move on one of the sides.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return chooseRandomMoveFromList(board, [2, 4, 6, 8])</li>
+</ol></div>
+
+<p>This code also makes a call to <span class='m'>chooseRandomMoveFromList()</span>, except we pass it a list of the side spaces (<span class='m'>[2, 4, 6, 8]</span>). We know that this function will not return <span class='m'>None</span>, because the side spaces are the only spaces we have not yet checked. This is the end of the <span class='m'>getComputerMove()</span> function and our AI algorithm.</p>
+
+<h3 id="CheckingiftheBoardisFull">Checking if the Board is Full</h3>
+
+<div class='sourcecode'><ol start='132'>
+<li>def isBoardFull(board):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Return True if every space on the board has been taken. Otherwise return False.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in range(1, 10):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isSpaceFree(board, i):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return True</li>
+</ol></div>
+
+<p>The last function we will write is <span class='m'>isBoardFull()</span>, which returns <span class='m'>True</span> if the 10-string list board argument it was passed has an <span class='m'>'X'</span> or <span class='m'>'O'</span> in every index (except for index <span class='m'>0</span>, which is just a placeholder that we ignore). If there is at least one space in <span class='m'>board</span> that is set to a single space <span class='m'>' '</span> then it will return <span class='m'>False</span>.</p>
+
+<p>The <span class='m'>for</span> loop will let us check spaces 1 through 9 on the Tic Tac Toe board. (Remember that <span class='m'>range(1, 10)</span> will make the <span class='m'>for</span> loop iterate over the integers <span class='m'>1</span>, <span class='m'>2</span>, <span class='m'>3</span>, <span class='m'>4</span>, <span class='m'>5</span>, <span class='m'>6</span>, <span class='m'>7</span>, <span class='m'>8</span>, and <span class='m'>9</span>.) As soon as it finds a free space in the board (that is, when <span class='m'>isSpaceFree(board, i)</span> returns <span class='m'>True</span>), the <span class='m'>isBoardFull()</span> function will return <span class='m'>False</span>.</p>
+
+<p>If execution manages to go through every iteration of the loop, we will know that none of the spaces are free. So at that point (on line 137), we will execute <span class='m'>return True</span>.</p>
+
+<h3 id="TheStartoftheGame">The Start of the Game</h3>
+
+<div class='sourcecode'><ol start='140'>
+<li>print('Welcome to Tic Tac Toe!')</li>
+</ol></div>
+
+<p>Line 140 is the first line that isn't inside of a function, so it is the first line of code that is executed when we run this program.</p>
+
+<div class='sourcecode'><ol start='142'>
+<li>while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Reset the board</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;theBoard = [' '] * 10</li>
+</ol></div>
+
+<p>This <span class='m'>while</span> loop has <span class='m'>True</span> for the condition, so that means we will keep looping in this loop until we encounter a <span class='m'>break</span> statement. Line 144 sets up the main Tic Tac Toe board that we will use, named <span class='m'>theBoard</span>. It is a 10-string list, where each string is a single space ' '. Remember the little trick using the multiplication operator with a list to replicate it: <span class='m'>[' '] * 10</span>. That evaluates to <span class='m'>[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']</span>, but is shorter for us to type <span class='m'>[' '] * 10</span>.</p>
+
+<h3 id="DecidingthePlayersMarkandWhoGoesFirst">Deciding the Player's Mark and Who Goes First</h3>
+
+<div class='sourcecode'><ol start='145'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;playerLetter, computerLetter = inputPlayerLetter()</li>
+</ol></div>
+
+<p>The <span class='m'>inputPlayerLetter()</span> function lets the player type in whether they want to be X or O. The function returns a 2-string list, either <span class='m'>['X', 'O']</span> or <span class='m'>['O', 'X']</span>. We use the multiple assignment trick here that we learned in the Hangman chapter. If <span class='m'>inputPlayerLetter()</span> returns <span class='m'>['X', 'O']</span>, then <span class='m'>playerLetter</span> is set to <span class='m'>'X'</span> and <span class='m'>computerLetter</span> is set to 'O'. If <span class='m'>inputPlayerLetter()</span> returns <span class='m'>['O', 'X']</span>, then <span class='m'>playerLetter</span> is set to 'O' and <span class='m'>computerLetter</span> is set to 'X'.</p>
+
+<div class='sourcecode'><ol start='146'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;turn = whoGoesFirst()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('The ' + turn + ' will go first.')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;gameIsPlaying = True</li>
+</ol></div>
+
+<p>The <span class='m'>whoGoesFirst()</span> function randomly decides who goes first, and returns either the string <span class='m'>'player'</span> or the string <span class='m'>'computer'</span>. On line 147, we tell the player who will go first. The <span class='m'>gameIsPlayer</span> variable is what we will use to keep track of whether the game has been won, lost, tied or if it is the other player's turn.</p>
+
+<h3 id="RunningthePlayersTurn">Running the Player's Turn</h3>
+
+<div class='sourcecode'><ol start='150'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while gameIsPlaying:</li>
+</ol></div>
+
+<p>This is a loop that will keep going back and forth between the player's turn and the computer's turn, as long as <span class='m'>gameIsPlaying</span> is set to <span class='m'>True</span>.</p>
+
+<div class='sourcecode'><ol start='151'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if turn == 'player':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Player's turn.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawBoard(theBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move = getPlayerMove(theBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;makeMove(theBoard, playerLetter, move)</li>
+</ol></div>
+
+<p>The turn variable was originally set by the <span class='m'>whoGoesFirst()</span> call on line 146). It is either set to <span class='m'>'player'</span> or <span class='m'>'computer'</span>. If <span class='m'>turn</span> contains the string <span class='m'>'computer'</span>, then the condition is <span class='m'>False</span> and execution will jump down to line 169.</p>
+
+<p>The first thing we do when it is the player's turn (according to the flow chart we drew at the beginning of this chapter) is show the board to the player. Calling the <span class='m'>drawBoard()</span> and passing the <span class='m'>theBoard</span> variable will print the board on the screen. We then let the player type in his move by calling our <span class='m'>getPlayerMove()</span> function, and set the move on the board by calling our <span class='m'>makeMove()</span> function.</p>
+
+<div class='sourcecode'><ol start='157'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isWinner(theBoard, playerLetter):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawBoard(theBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Hooray! You have won the game!')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gameIsPlaying = False</li>
+</ol></div>
+
+<p>Now that the player has made his move, our program should check if they have won the game with this move. If the <span class='m'>isWinner()</span> function returns <span class='m'>True</span>, we should show them the winning board (the previous call to <span class='m'>drawBoard()</span> shows the board <i>before</i> they made the winning move) and print a message telling them they have won.</p>
+
+<p>Then we set <span class='m'>gameIsPlaying</span> to <span class='m'>False</span> so that execution does not continue on to the computer's turn.</p>
+
+<div class='sourcecode'><ol start='161'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isBoardFull(theBoard):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawBoard(theBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('The game is a tie!')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+</ol></div>
+
+<p>If the player did not win with his last move, then maybe his last move filled up the entire board and we now have a tie. In this else-block, we check if the board is full with a call to the <span class='m'>isBoardFull()</span> function. If it returns <span class='m'>True</span>, then we should draw the board by calling <span class='m'>drawBoard()</span> and tell the player a tie has occurred. The <span class='m'>break</span> statement will break us out of the <span class='m'>while</span> loop we are in and jump down to line 186.</p>
+
+<h3 id="RunningtheComputersTurn">Running the Computer's Turn</h3>
+
+<div class='sourcecode'><ol start='166'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;turn = 'computer'</li>
+</ol></div>
+
+<p>If the player has not won or tied the game, then we should just set the <span class='m'>turn</span> variable to <span class='m'>'computer'</span> so that when this <span class='m'>while</span> loop loops back to the start it will execute the code for the computer's turn.</p>
+
+<div class='sourcecode'><ol start='169'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+</ol></div>
+
+<p>If the <span class='m'>turn</span> variable was not set to <span class='m'>'player'</span> for the condition on line 151, then we know it is the computer's turn and the code in this else-block will execute. This code is very similar to the code for the player's turn, except the computer does not need the board printed on the screen so we skip calling the <span class='m'>drawBoard()</span> function.</p>
+
+<div class='sourcecode'><ol start='170'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Computer's turn.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move = getComputerMove(theBoard, computerLetter)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;makeMove(theBoard, computerLetter, move)</li>
+</ol></div>
+
+<p>The code above is almost identical to the code for the player's turn on lines 154 and 155.</p>
+
+<div class='sourcecode'><ol start='174'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isWinner(theBoard, computerLetter):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawBoard(theBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('The computer has beaten you! You lose.')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gameIsPlaying = False</li>
+</ol></div>
+
+<p>We want to check if the computer won with its last move. The reason we call <span class='m'>drawBoard()</span> here is because the player will want to see what move the computer made to win the game. We then set <span class='m'>gameIsPlaying</span> to <span class='m'>False</span> so that the game does not continue. Notice that lines 174 to 177 are almost identical to lines 157 to 160.</p>
+
+<div class='sourcecode'><ol start='178'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isBoardFull(theBoard):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawBoard(theBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('The game is a tie!')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+</ol></div>
+<p>The lines of code above are identical to the code on lines 162 to 165. The only difference is this is a check for a tied game after the computer has moved, instead of the player.</p>
+
+<div class='sourcecode'><ol start='183'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;turn = 'player'</li>
+</ol></div>
+
+<p>If the game is neither won nor tied, it then becomes the player's turn. There are no more lines of code inside the <span class='m'>while</span> loop, so execution would jump back to the <span class='m'>while</span> statement on line 150.</p>
+
+<div class='sourcecode'><ol start='186'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if not playAgain():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+</ol></div>
+
+<p>These lines of code are located immediately after the while-block started by the <span class='m'>while</span> statement on line 150. Remember, we would only exit out of that <span class='m'>while</span> loop if it's condition (the <span class='m'>gameIsPlaying</span> variable) was <span class='m'>False</span>. <span class='m'>gameIsPlaying</span> is set to <span class='m'>False</span> when the game has ended, so at this point we are going to ask the player if they want to play again.</p>
+
+<p>Remember, when we evaluate the condition in this <span class='m'>if</span> statement, we call the <span class='m'>playAgain()</span> function which will let the user type in if they want to play or not. <span class='m'>playAgain()</span> will return <span class='m'>True</span> if the player typed something that began with a <span class='m'>'y'</span> like <span class='m'>'yes'</span> or <span class='m'>'y'</span>. Otherwise <span class='m'>playAgain()</span> will return <span class='m'>False</span>.</p>
+
+<p>If <span class='m'>playAgain()</span> returns <span class='m'>False</span>, then the <span class='m'>if</span> statement's condition is <span class='m'>True</span> (because of the <span class='m'>not</span> operator that reverses the Boolean value) and we execute the break statement. That breaks us out of the <span class='m'>while</span> loop that was started on line 142. But there are no more lines of code after that while-block, so the program terminates.</p>
+
+<h2 class='pagebreaker' id="SummaryCreatingGamePlayingArtificialIntelligences">Summary: Creating Game-Playing Artificial Intelligences</h2>
+
+<p>Creating a program that can play a game comes down to carefully considering all the possible situations the AI can be in and how it should respond in each of those situations. Our Tic Tac Toe AI is fairly simple because there are not many possible moves in Tic Tac Toe compared to a game like chess or checkers.</p>
+
+<p>Our AI simply blocks the players move if the player is about to win. If the player is not about to win, it checks if any possible move can allow itself to win. Then the AI simply chooses any available corner space, then the center space, then the side spaces. This is a simple algorithm for the computer to follow.</p>
+
+<p>The key to implementing our AI is by making copies of the board data and simulating moves on the copy. That way, the AI code can see if a move will result in a win or loss. Then the AI can make that move on the real board. This type of simulation is very effective at predicting what is a good move or not.</p>
+
+
+
+<table border='0' width='100%'><tr><td><a href='chapter9.html'>Go to Chapter 9 - Hangman</a></td><td align='right'><a href='chapter11.html'>Go to Chapter 11 - Bagels</a></td></tr></table>
+<div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
+
+
+
+
+</body>
+</html>

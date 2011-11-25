@@ -1,0 +1,324 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html lang="en">
+
+<head>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-5459430-3");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+	<title>Invent with Python</title>
+	<meta name="author" content="Al Sweigart">
+	<link rel="stylesheet" type="text/css" href="../inventweb.css" /></head>
+
+<body>
+		<div id='header'>
+		</div>
+
+
+	  <div id='mainarea'>
+			<div id='sidebar'>
+				<ul>
+	<li><a href="../index.html">Home</a></li>
+	<li><a href="../chapters/">Read It!</a></li>
+	<li><a href="http://www.amazon.com/gp/product/0982106017?ie=UTF8&tag=playwithpyth-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=0982106017">Buy the Book</a></li>
+	<!--<li><a href="#">Forum</a></li>-->
+	<li><a href="../blog/">Book's Blog</a></li>
+	<br/>
+	<li><a href="../chapters/">Chapters</a></li>
+	<li><a href="../source/">Source</a></li>
+	<li><a href="../resources/">Resources</a></li>
+	<li><a href="../traces/" >Traces</a></li>
+	<li><a href="../diff/" >Diff Tool</a></li>
+	<li><a href="../videos/" >Videos</a></li>
+	<li><a href="../extra/" >Extra Content</a></li>
+	<br/>
+	<li><a href="../about.html">About the Author</a></li>
+	<li><a href="http://coffeeghost.net" >Author's Blog</a></li>
+	<div><br /><form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+	<input type="hidden" name="cmd" value="_s-xclick">
+	<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+	">
+	<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+	<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+	</form>
+	</div>
+
+
+
+</ul>
+ 			</div>
+
+			<div id='contentarea'>
+<h1>Chapter 13 - Sonar</h1>
+
+<h3>Chapter Content and Source Code</h3>
+<p><a href="../chapter13.html" style="text-decoration: underline; font-size: 200%;">Read Chapter 13 - Sonar</a></p>
+
+<p>Download the source for <a href="../sonar.py">sonar.py</a>.</p>
+
+<p>Or you can copy and paste the code from here:<br />
+<textarea style="width: 100%; height:200px"># Sonar
+
+import random
+import sys
+
+def drawBoard(board):
+    # Draw the board data structure.
+
+    hline = '    ' # initial space for the numbers down the left side of the board
+    for i in range(1, 6):
+        hline += (' ' * 9) + str(i)
+
+    # print the numbers across the top
+    print(hline)
+    print('   ' + ('0123456789' * 6))
+    print()
+
+    # print each of the 15 rows
+    for i in range(15):
+        # single-digit numbers need to be padded with an extra space
+        if i < 10:
+            extraSpace = ' '
+        else:
+            extraSpace = ''
+        print('%s%s %s %s' % (extraSpace, i, getRow(board, i), i))
+
+    # print the numbers across the bottom
+    print()
+    print('   ' + ('0123456789' * 6))
+    print(hline)
+
+
+def getRow(board, row):
+    # Return a string from the board data structure at a certain row.
+    boardRow = ''
+    for i in range(60):
+        boardRow += board[i][row]
+    return boardRow
+
+def getNewBoard():
+    # Create a new 60x15 board data structure.
+    board = []
+    for x in range(60): # the main list is a list of 60 lists
+        board.append([])
+        for y in range(15): # each list in the main list has 15 single-character strings
+            # use different characters for the ocean to make it more readable.
+            if random.randint(0, 1) == 0:
+                board[x].append('~')
+            else:
+                board[x].append('`')
+    return board
+
+def getRandomChests(numChests):
+    # Create a list of chest data structures (two-item lists of x, y int coordinates)
+    chests = []
+    for i in range(numChests):
+        chests.append([random.randint(0, 59), random.randint(0, 14)])
+    return chests
+
+def isValidMove(x, y):
+    # Return True if the coordinates are on the board, otherwise False.
+    return x >= 0 and x <= 59 and y >= 0 and y <= 14
+
+def makeMove(board, chests, x, y):
+    # Change the board data structure with a sonar device character. Remove treasure chests
+    # from the chests list as they are found. Return False if this is an invalid move.
+    # Otherwise, return the string of the result of this move.
+    if not isValidMove(x, y):
+        return False
+
+    smallestDistance = 100 # any chest will be closer than 100.
+    for cx, cy in chests:
+        if abs(cx - x) > abs(cy - y):
+            distance = abs(cx - x)
+        else:
+            distance = abs(cy - y)
+
+        if distance < smallestDistance: # we want the closest treasure chest.
+            smallestDistance = distance
+
+    if smallestDistance == 0:
+        # xy is directly on a treasure chest!
+        chests.remove([x, y])
+        return 'You have found a sunken treasure chest!'
+    else:
+        if smallestDistance < 10:
+            board[x][y] = str(smallestDistance)
+            return 'Treasure detected at a distance of %s from the sonar device.' % (smallestDistance)
+        else:
+            board[x][y] = 'O'
+            return 'Sonar did not detect anything. All treasure chests out of range.'
+
+
+def enterPlayerMove():
+    # Let the player type in her move. Return a two-item list of int xy coordinates.
+    print('Where do you want to drop the next sonar device? (0-59 0-14) (or type quit)')
+    while True:
+        move = input()
+        if move.lower() == 'quit':
+            print('Thanks for playing!')
+            sys.exit()
+
+        move = move.split()
+        if len(move) == 2 and move[0].isdigit() and move[1].isdigit() and isValidMove(int(move[0]), int(move[1])):
+            return [int(move[0]), int(move[1])]
+        print('Enter a number from 0 to 59, a space, then a number from 0 to 14.')
+
+
+def playAgain():
+    # This function returns True if the player wants to play again, otherwise it returns False.
+    print('Do you want to play again? (yes or no)')
+    return input().lower().startswith('y')
+
+
+def showInstructions():
+    print('''Instructions:
+You are the captain of the Simon, a treasure-hunting ship. Your current mission
+is to find the three sunken treasure chests that are lurking in the part of the
+ocean you are in and collect them.
+
+To play, enter the coordinates of the point in the ocean you wish to drop a
+sonar device. The sonar can find out how far away the closest chest is to it.
+For example, the d below marks where the device was dropped, and the 2's
+represent distances of 2 away from the device. The 4's represent
+distances of 4 away from the device.
+
+    444444444
+    4       4
+    4 22222 4
+    4 2   2 4
+    4 2 d 2 4
+    4 2   2 4
+    4 22222 4
+    4       4
+    444444444
+Press enter to continue...''')
+    input()
+
+    print('''For example, here is a treasure chest (the c) located a distance of 2 away
+from the sonar device (the d):
+
+    22222
+    c   2
+    2 d 2
+    2   2
+    22222
+
+The point where the device was dropped will be marked with a 2.
+
+The treasure chests don't move around. Sonar devices can detect treasure
+chests up to a distance of 9. If all chests are out of range, the point
+will be marked with O
+
+If a device is directly dropped on a treasure chest, you have discovered
+the location of the chest, and it will be collected. The sonar device will
+remain there.
+
+When you collect a chest, all sonar devices will update to locate the next
+closest sunken treasure chest.
+Press enter to continue...''')
+    input()
+    print()
+
+
+print('S O N A R !')
+print()
+print('Would you like to view the instructions? (yes/no)')
+if input().lower().startswith('y'):
+    showInstructions()
+
+while True:
+    # game setup
+    sonarDevices = 16
+    theBoard = getNewBoard()
+    theChests = getRandomChests(3)
+    drawBoard(theBoard)
+    previousMoves = []
+
+    while sonarDevices > 0:
+        # Start of a turn:
+
+        # sonar device/chest status
+        if sonarDevices > 1: extraSsonar = 's'
+        else: extraSsonar = ''
+        if len(theChests) > 1: extraSchest = 's'
+        else: extraSchest = ''
+        print('You have %s sonar device%s left. %s treasure chest%s remaining.' % (sonarDevices, extraSsonar, len(theChests), extraSchest))
+
+        x, y = enterPlayerMove()
+        previousMoves.append([x, y]) # we must track all moves so that sonar devices can be updated.
+
+        moveResult = makeMove(theBoard, theChests, x, y)
+        if moveResult == False:
+            continue
+        else:
+            if moveResult == 'You have found a sunken treasure chest!':
+                # update all the sonar devices currently on the map.
+                for x, y in previousMoves:
+                    makeMove(theBoard, theChests, x, y)
+            drawBoard(theBoard)
+            print(moveResult)
+
+        if len(theChests) == 0:
+            print('You have found all the sunken treasure chests! Congratulations and good game!')
+            break
+
+        sonarDevices -= 1
+
+    if sonarDevices == 0:
+        print('We\'ve run out of sonar devices! Now we have to turn the ship around and head')
+        print('for home with treasure chests still out there! Game over.')
+        print('    The remaining chests were here:')
+        for x, y in theChests:
+            print('    %s, %s' % (x, y))
+
+    if not playAgain():
+        sys.exit()
+</textarea>
+</p>
+
+<!--
+<h3>Online Trace Tool</h3>
+<p><a href="../traces/CONTENT.html">Trace through the source code online.</a></p>
+-->
+
+<h3>Online Diff Tool</h3>
+<p>If you've typed in the source code, but are seeing errors, you can compare your code to the book's code with the <a href="../diff/index.html?p=sonar">online diff tool</a>.</p>
+
+<!--
+<h3>Videos</h3>
+<p>This chapter has the following videos:
+<h3>CONTENTVIDEOTITLE</h3>
+COPYEMBEDVIDEOHERE
+</p>
+-->
+
+<!--
+<h3>Downloadable Resources</h3>
+<p>This chapter has the following downloadable resources:<br />
+<a href="../">CONTENT</a>
+</p>
+-->
+
+
+<p class='copyright'>
+Copyright &copy; 2008, 2009, 2010 by Albert Sweigart<br/>
+<span class='important'>"Invent Your Own Computer Games with Python" 2nd Edition is free to copy and distribute</span> under the Creative Commons <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/us/'>Attribution-Noncommercial-Share Alike 3.0 United States License</a>.<br/>
+<a href='http://creativecommons.org/licenses/by-nc-sa/3.0/us/'><img src='../images/88x31.png' border='0'></a>
+</p>
+			</div>
+		</div>
+
+		<br/><br/><br/><br/>
+
+	</div>
+</body>
+
+</html>

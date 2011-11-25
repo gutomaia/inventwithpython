@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-5459430-3");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<meta http-equiv="Content-Type" content="text/html;charset=us-ascii" />
+<title>IYOCGwP, Chapter 5 - Jokes</title>
+<link rel="stylesheet" href="inventbook.css" type="text/css" media="all" />
+</head>
+<body class='chapter5body'>
+
+<table border='0' width='100%'><tr><td><a href='chapter4.html'>Go to Chapter 4 - Guess the Number</a></td><td align='right'><a href='chapter6.html'>Go to Chapter 6 - Dragon Realm</a></td></tr></table>
+<div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
+
+
+<div style='height: 350px;'><img src='images/chap5.png'></div>
+
+<div class='inthischapter'><h3 id="TopicsCoveredInThisChapter">Topics Covered In This Chapter:</h3>
+<ul>
+<li>Using <span class='m'>print()</span>'s <span class='m'>end</span> keyword argument to skip newlines.</li>
+<li>Escape characters.</li>
+<li>Using single quotes and double quotes for strings.</li>
+</ul></div>
+
+<h2 id="MaketheMostofprint">Make the Most of <span class='m'>print()</span></h2>
+
+<p>Most of the games in this book will have simple text for input and output. The input is typed by the user on the keyboard and entered to the computer. The output is the text displayed on the screen. In Python, the <span class='m'>print()</span> function can be used for displaying textual output on the screen. We've learned how the basics of using the <span class='m'>print()</span> function, but there is more to learn about how strings and <span class='m'>print()</span> work in Python.</p>
+
+<!--
+
+<p>But before we go into learning more about <span class='m'>print()</span>, let's talk about how programs run on the computer. This is a very brief description, but it can give you an idea of what actually happens on your computer when you run your Python programs.</p>
+
+<h2 id="HowProgramsRunonComputers">How Programs Run on Computers</h2>
+
+<p>The computer you use runs a very large program, called the <span class='term'>operating system</span>. Your operating system (called an OS for short, pronounced like the letters, "oh-ess") may be Windows, Mac OS X, Linux or another one. The OS is a program that runs other programs called <span class='term'>applications</span> like a web browser, word processor, email client, or computer games. The OS makes it easy for programmers to write applications and games that can run on different models of computers made up of different hardware.</p>
+
+<p><span class='term'>Hardware</span> includes the parts of the computer that you can touch (the monitor, or the keyboard and mouse, or a printer). <span class='term'>Software</span> is another name for programs like the OS or applications or games that run on the computer. Think of the computer as if it were a book. The book's hardware would be the cover and paper pages and even the ink on the page (the things you can touch.) The book's software would be the story and characters that the book describes. Using software or playing games that were made by someone else is like reading a book of stories that was written by another person. But writing software (such as your own games) is like writing your own stories.</p>
+
+<p>It would be very difficult for programmers to make their programs run on several different pieces of hardware. For example, when you write your games, you don't need to know how to make text appear on all the different monitors made by all the different companies in the world. Your program just has a <span class='m'>print()</span> function, which tells the OS to figure out how to make it appear on the monitor no matter what brand or type of monitor the user has.</p>
+
+<h3 id="ProgrammingLanguages">Programming Languages</h3>
+
+<p>The OS makes running programs easy on us, but it still only knows a language called <span class='term'>machine code</span>. Machine code has some very, very, very basic instructions that are simple enough for computer's main microchip (called the <span class='term'>CPU</span> ("see-pee-you"), or <span class='term'>Central Processing Unit</span>) to understand. Writing programs in the machine code language is very long and boring.</p>
+
+<p>Machine code is written in ones and zeros and look like pages and pages of this: 10101101 00110000 11000000. These instructions aren't very easy for humans to work with. <span class='term'>Assembly language</span> gives instructions names like MOV, JMP, PUSH, or XOR. This makes reading and writing the instructions easier but putting them together in a program is still long and complicated.</p>
+
+<p>This is where <span class='term'>higher-level programming languages</span> come in. High-level languages include Python, Java, C++, Pascal, Perl, Basic, and many others. These languages take care of many of the details of machine code. A programmer writes her program in a higher-level language like Python, and then a program called the <span class='term'>interpreter</span> translates this language into machine code that the computer executes. Even though our "Hello world!" program was just one line long when written in Python, it would be several hundred or a few thousand lines in machine code.</p>
+
+<p>The interpreter is the program you downloaded from <a href='http://www.python.org'>http://www.python.org</a> and installed in chapter 1. That download also included a program called IDLE, which is the program we type our code into. When we run a program in the file editor, or type an instruction into the interactive shell, the IDLE program sends that source code to the Python interpreter for translation. The interpreter translates it into machine code, and then the CPU understands how to run the program.</p>
+
+<p>Whew! That was a lot of information. As computers get faster and faster, they also become more and more complicated. To manage all of this complexity, programmers started to write programs that would help them write new programs! One of these programs is the Python interpreter that you are using. This is kind of like using a stone axe to help build a hammer, and then a hammer to help build a electric drill and other power tools, and then using those power tools to build a large bulldozer.</p>
+
+<p>The reason I am explaining all of this is so that you understand that when you write code in Python, it is being passed to another program called the Python interpreter, which then translates it so that the operating system and computer can run your code.</p>
+
+-->
+
+<!--<p>This next program is simpler compared to the "Guess the Number" game in chapter 4. Open a new file editor window by clicking on <span class='menuname'>File</span>, then clicking on <span class='menuname'>New Window</span> and enter this source code:</p>-->
+
+<h2 id="SampleRunofJokes">Sample Run of Jokes</h2>
+
+
+<div class='samplerun'>
+What do you get when you cross a snowman with a vampire?<br/>
+<br/>
+Frostbite!<br/>
+<br/>
+What do dentists call an astronaut's cavity?<br/>
+<br/>
+A black hole!<br/>
+<br/>
+Knock knock.<br/>
+<br/>
+Who's there?<br/>
+<br/>
+Interrupting cow.<br/>
+<br/>
+Interrupting cow wh-MOO!<br/>
+</div>
+
+
+<h2 id="JokesSourceCode">Joke's Source Code</h2>
+
+<p>Here is the source code for our short jokes program. Type it into the file editor and save it as <i>jokes.py</i>. If you do not want to type this code in, you can also download the source code from this book's website at the URL <a href='http://inventwithpython.com/chapter5'>http://inventwithpython.com/chapter5</a>.</p>
+
+<p><b>Important Note!</b> Be sure to run this program with Python 3, and not Python 2. The programs in this book use Python 3, and you'll get errors if you try to run them with Python 2. You can click on <span class='menuname'>Help</span> and then <span class='menuname'>About IDLE</span> to find out what version of Python you have.</p>
+
+<div class='sourcecode'><span class='sourcecodeHeader'>jokes.py</span><br /><span class='sourcecodeSubHeader'>This code can be downloaded from <a href='http://inventwithpython.com/jokes.py'>http://inventwithpython.com/jokes.py</a><br />If you get errors after typing this code in, compare it to the book's code with the online diff tool at <a href='http://inventwithpython.com/diff'>http://inventwithpython.com/diff</a> or email the author at <a href="mailto:al@inventwithpython.com">al@inventwithpython.com</a></span><br /><ol start='1'>
+<li>print('What do you get when you cross a snowman with a vampire?')</li>
+<li>input()</li>
+<li>print('Frostbite!')</li>
+<li>print()</li>
+<li>print('What do dentists call a astronaut\'s cavity?')</li>
+<li>input()</li>
+<li>print('A black hole!')</li>
+<li>print()</li>
+<li>print('Knock knock.')</li>
+<li>input()</li>
+<li>print("Who's there?")</li>
+<li>input()</li>
+<li>print('Interrupting cow.')</li>
+<li>input()</li>
+<li>print('Interrupting cow wh', end='')</li>
+<li>print('-MOO!')</li>
+</ol></div>
+
+<p>Don't worry if you don't understand everything in the program. Just save and run the program. Remember, if your program has bugs in it, you can use the online diff tool at <a href='http://inventwithpython.com/chapter5'>http://inventwithpython.com/chapter5</a>.</p>
+
+<h2 id="HowtheCodeWorks">How the Code Works</h2>
+
+<p>Let's look at the code more carefully.</p>
+
+<div class='sourcecode'><ol start='1'>
+<li>print('What do you get when you cross a snowman with a vampire?')</li>
+<li>input()</li>
+<li>print('Frostbite!')</li>
+<li>print()</li>
+</ol></div>
+
+<p>Here we have three <span class='m'>print()</span> function calls. Because we don't want to tell the player what the joke's punch line is, we have a call to the <span class='m'>input()</span> function after the first <span class='m nw'>print()</span>. The player can read the first line, press Enter, and then read the punch line.</p>
+
+<p>The user can still type in a string and hit Enter, but because we aren't storing this string in any variable, the program will just forget about it and move to the next line of code.</p>
+
+<p>The last <span class='m'>print()</span> function call has no string argument. This tells the program to just print a blank line. Blank lines can be useful to keep our text from being bunched up together.</p>
+
+<h2 id="EscapeCharacters">Escape Characters</h2>
+
+<div class='sourcecode'><ol start='5'>
+<li>print('What do dentists call a astronaut\'s cavity?')</li>
+<li>input()</li>
+<li>print('A black hole!')</li>
+<li>print()</li>
+</ol></div>
+
+<p>In the first <span class='m'>print()</span>above, you'll notice that we have a slash right before the single quote (that is, the apostrophe). This backslash ( \ is a backslash, / is a forward slash) tells us that the letter right after it is an <span class='term'>escape character</span>. An escape character helps us print out letters that are hard to enter into the source code. There are several different escape characters, but in our call to <span class='m'>print()</span> the escape character is the single quote.</p>
+
+<p>We have to have the single quote escape character because otherwise the Python interpreter would think that this quote meant the end of the string. But we want this quote to be a part of the string. When we print this string, the backslash will not show up.</p>
+
+<h3 id="SomeOtherEscapeCharacters">Some Other Escape Characters</h3>
+
+<p>What if you really want to display a backslash? This line of code would not work:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; print('He flew away in a green\teal helicopter.')<br />
+</div>
+
+<p>That <span class='m'>print()</span> function call would show up as:</p>
+
+<div class='sourceblurb'>
+He flew away in a green&nbsp;&nbsp;&nbsp;&nbsp;eal helicopter.<br />
+</div>
+
+<p>This is because the "t" in "teal" was seen as an escape character since it came after a backslash. The escape character t simulates pushing the Tab key on your keyboard. Escape characters are there so that strings can have characters that cannot be typed in.</p>
+
+<p>Instead, try this line:</p>
+
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; print('He flew away in a green\\teal helicopter.')<br />
+</div>
+
+<p>Here is a list of escape characters in Python:</p>
+
+<table class='simpletable centertable' style='text-align: center; width: 350px;'>
+<caption>Table 5-1: Escape Characters</caption>
+<tr><th class='simpletd'>Escape Character</th><th class='simpletd'>What Is Actually Printed</th></tr>
+<tr><td class='simpletd m'>\\</td><td class='simpletd'>Backslash (\)</td></tr>
+<tr><td class='simpletd m'>\'</td><td class='simpletd'>Single quote (')</td></tr>
+<tr><td class='simpletd m'>\"</td><td class='simpletd'>Double quote (")</td></tr>
+<tr><td class='simpletd m'>\n</td><td class='simpletd'>Newline</td></tr>
+<tr><td class='simpletd m'>\t</td><td class='simpletd'>Tab</td></tr>
+</table>
+
+<h2 id="QuotesandDoubleQuotes">Quotes and Double Quotes</h2>
+
+<p>Strings don't always have to be in between single quotes in Python. You can also put them in between double quotes. These two lines print the same thing:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; print('Hello world')<br />
+Hello world<br />
+&gt;&gt;&gt; print("Hello world")<br />
+Hello world<br />
+</div>
+
+<p>But you cannot mix quotes. This line will give you an error if you try to use them:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; print('Hello world")<br />
+SyntaxError: EOL while scanning single-quoted string<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>I like to use single quotes because I don't have to hold down the shift key on the keyboard to type them. It's easier to type, and the computer doesn't care either way.</p>
+
+<p>But remember, just like you have to use the escape character \' to have a single quote in a string surrounded by single quotes, you need the escape character \" to have a double quote in a string surrounded by double quotes. For example, look at these two lines:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; print('I asked to borrow Abe\'s car for a week. He said, "Sure."')<br />
+I asked to borrow Abe's car for a week. He said, "Sure."<br />
+&gt;&gt;&gt; print("He said, \"I can't believe you let him borrow your car.\"")<br />
+He said, "I can't believe you let him borrow your car."<br />
+<br />
+</div>
+
+<p>Did you notice that in the single quote strings you do not need to escape double quotes, and in the double quote strings you do not need to escape single quotes? The Python interpreter is smart enough to know that if a string starts with one type of quote, the other type of quote doesn't mean the string is ending.</p>
+
+<h2 id="TheendKeywordArgument">The <span class='m'>end</span> Keyword Argument</h2>
+
+<div class='sourcecode'><ol start='9'>
+<li>print('Knock knock.')</li>
+<li>input()</li>
+<li>print("Who's there?")</li>
+<li>input()</li>
+<li>print('Interrupting cow.')</li>
+<li>input()</li>
+<li>print('Interrupting cow wh', end='')</li>
+<li>print('-MOO!')</li>
+</ol></div>
+
+<p>Did you notice the second parameter on line 15's <span class='m'>print()</span>? Normally, <span class='m'>print()</span> adds a newline character to the end of the string it prints. (This is why a blank <span class='m'>print()</span> function will just print a newline.) But the <span class='m'>print()</span> function can optionally have a second parameter (which has the name end.) The blank string we are passing is called a <span class='term'>keyword argument</span>. The <span class='m'>end</span> parameter has a specific name, and to pass an argument to this specific parameter we need to use the <span class='m'>end=</span> syntax.</p>
+
+<p>Notice that when you type the keyword and the keyword argument, you use only one = sign. It is <span class='m'>end=''</span>, and not <span class='m'>end==''</span>.
+
+<p>By passing a blank string for the end we tell the <span class='m'>print()</span> function to not add a newline at the end of the string, but instead add a blank string. This is why <span class='m'>'-MOO!'</span> appears next to the previous line, instead of on its own line. There was no newline printed after the <span class='m'>'Interrupting cow wh'</span> string.</p>
+
+<h2 id="Summary">Summary</h2>
+
+<!--<p>This chapter briefly covered how software (including our Python programs) runs on your computer. Python is a higher-level programming language that the Python interpreter (that is, the Python software you have downloaded and installed) converts into machine language. Machine language are the 1s and 0s that make up instructions that your computer can understand and process.</p>-->
+
+<p>This chapter explores the different ways you can use the <span class='m'>print()</span> function. Escape characters are used for characters that are difficult or impossible to type into the code with the keyboard. Escape characters are typed into strings beginning with a backslash \ followed by a single letter for the escape character. For example, \n would be a newline. To include a backslash in a string, you would use the escape character \\.</p>
+
+<p>The <span class='m'>print()</span> function automatically appends a newline character to the end of the string we pass it to be displayed on the screen. Most of the time, this is a helpful shortcut. But sometimes we don't want a newline character at the end. To change this, we pass the <span class='m'>end</span> keyword argument with a blank string. For example, to print "spam" to the screen without a newline character, you would call <span class='m'>print('spam', end='')</span>.</p>
+
+<p>By adding this level of control to the text we display on the screen, we have much more flexible ways to display text on the screen the exact way we want to.</p>
+
+
+
+
+<table border='0' width='100%'><tr><td><a href='chapter4.html'>Go to Chapter 4 - Guess the Number</a></td><td align='right'><a href='chapter6.html'>Go to Chapter 6 - Dragon Realm</a></td></tr></table>
+<div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
+
+
+
+
+
+
+
+</body>
+</html>

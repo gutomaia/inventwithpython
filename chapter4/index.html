@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html lang="en">
+
+<head>
+<script type="text/javascript" src="../sourceCodes.js"></script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-5459430-3");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+	<title>Invent with Python</title>
+	<meta name="author" content="Al Sweigart">
+	<link rel="stylesheet" type="text/css" href="../inventweb.css" /></head>
+
+<body onload="document.getElementById('src1').value=sourceCodes['guess'];">
+		<div id='header'>
+		</div>
+
+
+	  <div id='mainarea'>
+			<div id='sidebar'>
+				<ul>
+	<li><a href="../index.html">Home</a></li>
+	<li><a href="../chapters/">Read It!</a></li>
+	<li><a href="http://www.amazon.com/gp/product/0982106017?ie=UTF8&tag=playwithpyth-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=0982106017">Buy the Book</a></li>
+	<!--<li><a href="#">Forum</a></li>-->
+	<li><a href="../blog/">Book's Blog</a></li>
+	<br/>
+	<li><a href="../chapters/">Chapters</a></li>
+	<li><a href="../source/">Source</a></li>
+	<li><a href="../resources/">Resources</a></li>
+	<li><a href="../traces/" >Traces</a></li>
+	<li><a href="../diff/" >Diff Tool</a></li>
+	<li><a href="../videos/" >Videos</a></li>
+	<li><a href="../extra/" >Extra Content</a></li>
+	<br/>
+	<li><a href="../about.html">About the Author</a></li>
+	<li><a href="http://coffeeghost.net" >Author's Blog</a></li>
+	<div><br /><form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+	<input type="hidden" name="cmd" value="_s-xclick">
+	<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----MIIHPwYJKoZIhvcNAQcEoIIHMDCCBywCAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYCgxPYQJv3Obo0bDfmsrZC9NE7NgomnCSQYzv/qoo+SXiFnbdf4mEmccT4S+0nqLTLu/9k3rkoQtk3a/5bIjBrzgO372uHrT8gmkhvF08XSyS2EJ4wzFCkvRJJTcXskj9Wu3Fy5x5WQfiJQBuYvTOBpBdALM1pR4isBk3s4Js3MljELMAkGBSsOAwIaBQAwgbwGCSqGSIb3DQEHATAUBggqhkiG9w0DBwQIeOPj/1/T33qAgZjwQw5CrNvgceyGdLNX3he0m8Z/vB/gZrTN9Fsy1gqd55nsqvF9mz3g4tESgYR1fZ1z4dbp+VWihXs8wDt8+Gf+VFRGbqKBb8Ehf8viIKdwq0oBlJ8PqIZg2BbfgFWtTNiduFUaxikJsI99cmUCGKyMS6YUb9H6RWxs7hdWRLSi5JCBI7JrDKRXh1rQ7Fyul/axzyXbJd3K6qCCA4cwggODMIIC7KADAgECAgEAMA0GCSqGSIb3DQEBBQUAMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbTAeFw0wNDAyMTMxMDEzMTVaFw0zNTAyMTMxMDEzMTVaMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAwUdO3fxEzEtcnI7ZKZL412XvZPugoni7i7D7prCe0AtaHTc97CYgm7NsAtJyxNLixmhLV8pyIEaiHXWAh8fPKW+R017+EmXrr9EaquPmsVvTywAAE1PMNOKqo2kl4Gxiz9zZqIajOm1fZGWcGS0f5JQ2kBqNbvbg2/Za+GJ/qwUCAwEAAaOB7jCB6zAdBgNVHQ4EFgQUlp98u8ZvF71ZP1LXChvsENZklGswgbsGA1UdIwSBszCBsIAUlp98u8ZvF71ZP1LXChvsENZklGuhgZSkgZEwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tggEAMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEFBQADgYEAgV86VpqAWuXvX6Oro4qJ1tYVIT5DgWpE692Ag422H7yRIr/9j/iKG4Thia/Oflx4TdL+IFJBAyPK9v6zZNZtBgPBynXb048hsP16l2vi0k5Q2JKiPDsEfBhGI+HnxLXEaUWAcVfCsQFvd2A1sxRr67ip5y2wwBelUecP3AjJ+YcxggGaMIIBlgIBATCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwCQYFKw4DAhoFAKBdMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTA5MTAwODIxMjUzNVowIwYJKoZIhvcNAQkEMRYEFI3IhaXiNtG/+5ZEYOHqSsAgYHXGMA0GCSqGSIb3DQEBAQUABIGAOfyAIJVkJnivbfGpRWAncl+2+4JMV+9OKY+4G+NxDNEYEXlZTgoxRMSgI68s4DwqBt8gnxD2hlUapPccwBSTWLgJRzs/weWaGjx5e/uoylM4cNzvO0HOXKGjqUCV1NySB2uDUgvo/WyS6rupK21TSeljRswRLF4PUMQhkYf1KiM=-----END PKCS7-----
+	">
+	<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+	<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+	</form>
+	</div>
+
+
+
+</ul>
+ 			</div>
+
+			<div id='contentarea'>
+<h1>Chapter 4 - Guess the Number</h1>
+
+<h3>Chapter Content and Source Code</h3>
+<p><a href="../chapter4.html" style="text-decoration: underline; font-size: 200%;">Read Chapter 4 - Guess the Number</a></p>
+
+<p>Download the source for <a href="../guess.py">guess.py</a>.</p>
+
+<p>Or you can copy and paste the code from here:<br />
+<textarea style="width: 100%; height:200px" id='src1'></textarea>
+</p>
+
+
+<h3>Online Trace Tool</h3>
+<p><a href="../traces/guess.html">Trace through the source code online.</a> (There is also a <a href="../traces/guess2.html">second online trace</a>.)</p>
+
+
+<h3>Online Diff Tool</h3>
+<p>If you've typed in the source code, but are seeing errors, you can compare your code to the book's code with the <a href="../diff/index.html?p=guess">online diff tool</a>.</p>
+
+<!--
+<h3>Videos</h3>
+<p>This chapter has the following videos:
+<h3>CONTENTVIDEOTITLE</h3>
+COPYEMBEDVIDEOHERE
+</p>
+-->
+
+
+
+<p class='copyright'>
+Copyright &copy; 2008, 2009, 2010 by Albert Sweigart<br/>
+<span class='important'>"Invent Your Own Computer Games with Python" 2nd Edition is free to copy and distribute</span> under the Creative Commons <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/us/'>Attribution-Noncommercial-Share Alike 3.0 United States License</a>.<br/>
+<a href='http://creativecommons.org/licenses/by-nc-sa/3.0/us/'><img src='../images/88x31.png' border='0'></a>
+</p>
+			</div>
+		</div>
+
+		<br/><br/><br/><br/>
+
+	</div>
+</body>
+
+</html>

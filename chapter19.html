@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-5459430-3");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<meta http-equiv="Content-Type" content="text/html;charset=us-ascii" />
+<title>IYOCGwP, Chapter 19 - Sound and Images</title>
+<link rel="stylesheet" href="inventbook.css" type="text/css" media="all" />
+</head>
+<body class='chapter19body'>
+
+<table border='0' width='100%'><tr><td><a href='chapter18.html'>Go to Chapter 18 - Collision Detection and Input</a></td><td align='right'><a href='chapter20.html'>Go to Chapter 20 - Dodger</a></td></tr></table>
+<div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
+
+
+<div style='height: 350px;'><img src='images/chap19.png'></div>
+
+<div class='inthischapter'><h3 id="TopicsCoveredInThisChapter">Topics Covered In This Chapter:</h3>
+<ul>
+<li>Image and Sound Files</li>
+<li>Drawing Sprites</li>
+<li>The pygame.image.load() Function</li>
+<li>The pygame.mixer.Sound Data Type</li>
+<li>The pygame.mixer.music Module</li>
+</ul></div>
+
+<p>In the last two chapters, we've learned how to make GUI programs that have graphics and can accept input from the keyboard and mouse. We've also learned how to draw shapes in different colors on the screen. In this chapter, we will learn how to show pictures and images (called sprites) and play sounds and music in our games.</p>
+
+<p>A <span class='term'>sprite</span> is a name for a single two-dimensional image that is used as part of the graphics on the screen. Here are some example sprites:</p>
+
+
+<p class='centeredImageP'><img src='images/19-1.png' alt='' class='centeredImage' /><br />Figure 19-1: Some examples of sprites.
+</p>
+
+<p>This is an example of sprites being used in a complete scene.</p>
+
+<p class='centeredImageP'><img src='images/19-2.png' alt='' class='centeredImage' /><br />Figure 19-2: An example of a complete scene, with sprites drawn on top of a background.
+</p>
+<p>The sprite images are drawn on top of the background. Notice that we can flip the sprite image horizontally so that the sprites are facing the other way. We can draw the same sprite image multiple times on the same window. We can also resize the sprites to be larger or smaller than the original sprite image. The background image can also be considered one large sprite.</p>
+
+<p>The next program we make will demonstrate how to play sounds and draw sprites using Pygame.</p>
+
+<h2 id="ImageandSoundFiles">Image and Sound Files</h2>
+
+<p>Sprites are stored in image files on your computer. There are several different image formats that Pygame can use. You can tell what format an image file uses by looking at the end of the file name (after the last period). This is called the <span class='term'>file extension</span>. For example, the file <i>happy.png</i> is in the PNG format. The image formats Pygame supports include BMP, PNG, JPG (and JPEG), and GIF.</p>
+
+<p>You can download images from your web browser. On most web browsers, you just have to right-click on the image in the web page and select Save from the menu that appears. Remember where on the hard drive you saved the image file. You can also create your own images with a drawing program like MS Paint or Tux Paint.</p>
+
+<p>The sound file formats that Pygame supports are MID, WAV, and MP3. You can download sound effects from the Internet just like image files, as long as the sound effects are in one of these three formats. If you have a microphone, you can also record sounds with your computer yourself and use them in your games.</p>
+
+<h2 id="SpritesandSoundsProgram">Sprites and Sounds Program</h2>
+
+<p>This program is the same as the Keyboard and Mouse Input program from the last chapter. However, in this program we will use sprites instead of plain looking squares. We will use a sprite of a little man instead of the white player square, and a sprite of cherries instead of the green food squares. We also play background music and a sound effect when the player sprite eats one of the cherry sprites.</p>
+
+<h2 id="TheSpritesandSoundsProgramsSourceCode">The Sprites and Sounds Program's Source Code</h2>
+
+<p>If you know how to use graphics software such as Photoshop or MS Paint, you can draw your own images and use the image files in your games. If you don't know how to use these programs, you can just download graphics from websites and use those image files instead. The same applies for music and sound files. You can also find images on web sites or images from a digital camera. You can download the image and sound files from this book's website at <a href='http://inventwithpython.com/resources/'>http://inventwithpython.com/resources/</a>. You can download the source code in this chapter from the URL <a href='http://inventwithpython.com/chapter19'>http://inventwithpython.com/chapter19</a>.</p>
+
+<div class='sourcecode'><span class='sourcecodeHeader'>spritesAndSounds.py</span><br /><span class='sourcecodeSubHeader'>This code can be downloaded from <a href='http://inventwithpython.com/spritesAndSounds.py'>http://inventwithpython.com/spritesAndSounds.py</a><br />If you get errors after typing this code in, compare it to the book's code with the online diff tool at <a href='http://inventwithpython.com/diff'>http://inventwithpython.com/diff</a> or email the author at <a href="mailto:al@inventwithpython.com">al@inventwithpython.com</a></span><br /><br /><ol start='1'>
+<li>import pygame, sys, time, random</li>
+<li>from pygame.locals import *</li>
+<li></li>
+<li><span class='comment'># set up pygame</span></li>
+<li>pygame.init()</li>
+<li>mainClock = pygame.time.Clock()</li>
+<li></li>
+<li><span class='comment'># set up the window</span></li>
+<li>WINDOWWIDTH = 400</li>
+<li>WINDOWHEIGHT = 400</li>
+<li>windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), 0, 32)</li>
+<li>pygame.display.set_caption('Sprites and Sound')</li>
+<li></li>
+<li><span class='comment'># set up the colors</span></li>
+<li>BLACK = (0, 0, 0)</li>
+<li></li>
+<li><span class='comment'># set up the block data structure</span></li>
+<li>player = pygame.Rect(300, 100, 40, 40)</li>
+<li>playerImage = pygame.image.load('player.png')</li>
+<li>playerStretchedImage = pygame.transform.scale(playerImage, (40, 40))</li>
+<li>foodImage = pygame.image.load('cherry.png')</li>
+<li>foods = []</li>
+<li>for i in range(20):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;foods.append(pygame.Rect(random.randint(0, WINDOWWIDTH - 20), random.randint(0, WINDOWHEIGHT - 20), 20, 20))</li>
+<li></li>
+<li>foodCounter = 0</li>
+<li>NEWFOOD = 40</li>
+<li></li>
+<li><span class='comment'># set up keyboard variables</span></li>
+<li>moveLeft = False</li>
+<li>moveRight = False</li>
+<li>moveUp = False</li>
+<li>moveDown = False</li>
+<li></li>
+<li>MOVESPEED = 6</li>
+<li></li>
+<li><span class='comment'># set up music</span></li>
+<li>pickUpSound = pygame.mixer.Sound('pickup.wav')</li>
+<li>pygame.mixer.music.load('background.mid')</li>
+<li>pygame.mixer.music.play(-1, 0.0)</li>
+<li>musicPlaying = True</li>
+<li></li>
+<li><span class='comment'># run the game loop</span></li>
+<li>while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># check for the QUIT event</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for event in pygame.event.get():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.type == QUIT:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pygame.quit()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.exit()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.type == KEYDOWN:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># change the keyboard variables</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_LEFT or event.key == ord('a'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveRight = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveLeft = True</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_RIGHT or event.key == ord('d'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveLeft = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveRight = True</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_UP or event.key == ord('w'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveDown = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveUp = True</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_DOWN or event.key == ord('s'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveUp = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveDown = True</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.type == KEYUP:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_ESCAPE:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pygame.quit()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.exit()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_LEFT or event.key == ord('a'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveLeft = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_RIGHT or event.key == ord('d'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveRight = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_UP or event.key == ord('w'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveUp = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_DOWN or event.key == ord('s'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveDown = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == ord('x'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player.top = random.randint(0, WINDOWHEIGHT - player.height)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player.left = random.randint(0, WINDOWWIDTH - player.width)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == ord('m'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if musicPlaying:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pygame.mixer.music.stop()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pygame.mixer.music.play(-1, 0.0)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;musicPlaying = not musicPlaying</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.type == MOUSEBUTTONUP:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foods.append(pygame.Rect(event.pos[0] - 10, event.pos[1] - 10, 20, 20))</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;foodCounter += 1</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if foodCounter &gt;= NEWFOOD:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># add new food</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foodCounter = 0</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foods.append(pygame.Rect(random.randint(0, WINDOWWIDTH - 20), random.randint(0, WINDOWHEIGHT - 20), 20, 20))</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># draw the black background onto the surface</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;windowSurface.fill(BLACK)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># move the player</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if moveDown and player.bottom &lt; WINDOWHEIGHT:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player.top += MOVESPEED</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if moveUp and player.top &gt; 0:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player.top -= MOVESPEED</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if moveLeft and player.left &gt; 0:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player.left -= MOVESPEED</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if moveRight and player.right &lt; WINDOWWIDTH:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player.right += MOVESPEED</li>
+<li></li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># draw the block onto the surface</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;windowSurface.blit(playerStretchedImage, player)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># check if the block has intersected with any food squares.</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for food in foods[:]:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if player.colliderect(food):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foods.remove(food)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player = pygame.Rect(player.left, player.top, player.width + 2, player.height + 2)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;playerStretchedImage = pygame.transform.scale(playerImage, (player.width, player.height))</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if musicPlaying:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pickUpSound.play()</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># draw the food</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for food in foods:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;windowSurface.blit(foodImage, food)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># draw the window onto the screen</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;pygame.display.update()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;mainClock.tick(40)</li>
+</ol></div>
+
+<p class='centeredImageP'><img src='images/19-3.png' alt='' class='centeredImage' height='410'/><br />Figure 19-3: The Sprites and Sounds game.
+</p>
+
+<h2 id="SettingUptheWindowandtheDataStructure">Setting Up the Window and the Data Structure</h2>
+
+<p>Most of the code in this program was explained in the previous chapter, so we will only focus on the parts that add sprites and sound.</p>
+
+<div class='sourcecode'><ol start='12'>
+<li>pygame.display.set_caption('Sprites and Sound')</li>
+</ol></div>
+
+<p>First, let's set the caption of the title bar to a string that describes this program on line 12. Pass the string <span class='m'>'Sprites and Sound'</span> to the <span class='m'>pygame.display.set_caption()</span> function.</p>
+
+<div class='sourcecode'><ol start='17'>
+<li><span class='comment'># set up the block data structure</span></li>
+<li>player = pygame.Rect(300, 100, 40, 40)</li>
+<li>playerImage = pygame.image.load('player.png')</li>
+<li>playerStretchedImage = pygame.transform.scale(playerImage, (40, 40))</li>
+<li>foodImage = pygame.image.load('cherry.png')</li>
+</ol></div>
+
+<p>We are going to use three different variables to represent the player, unlike the previous programs that just used one. The <span class='m'>player</span> variable will store a <span class='m'>Rect</span> object that keeps track of where and how big the player is. The <span class='m'>player</span> variable doesn't contain the player's image, just the player's size and location. At the beginning of the program, the top left corner of the player will be located at (300, 100) and the player will have a height and width of 40 pixels to start.</p>
+
+<p>The second variable that represents the player will be <span class='m'>playerImage</span>. The <span class='m'>pygame.image.load()</span> function is passed a string of the filename of the image to load. The return value of <span class='m'>pygame.image.load()</span> is a <span class='m'>Surface</span> object that has the image in the image file drawn on its surface. We store this <span class='m'>Surface</span> object inside of <span class='m'>playerImage</span>.</p>
+
+<h2 id="ThepygametransformscaleFunction">The <span class='m'>pygame.transform.scale()</span> Function</h2>
+
+<p>On line 20, we will use a new function in the <span class='m'>pygame.transform</span> module. The <span class='m'>pygame.transform.scale()</span> function can shrink or enlarge a sprite. The first argument is a <span class='m'>pygame.Surface</span> object with the image drawn on it. The second argument is a tuple for the new width and height of the image in the first argument. The <span class='m'>pygame.transform.scale()</span> function returns a <span class='m'>pygame.Surface</span> object with the image drawn at a new size. We will store the original image in the <span class='m'>playerImage</span> variable but the stretched image in the <span class='m'>playerStretchedImage</span> variable.</p>
+
+<p>On line 21, we call <span class='m'>pygame.image.load()</span> again to create a <span class='m'>Surface</span> object with the cherry image drawn on it.</p>
+
+<p>Be sure that you have the <i>player.png</i> and <i>cherry.png</i> file in the same directory as the <i>spritesAndSounds.py</i> file, otherwise Pygame will not be able to find them and will give an error.</p>
+
+<p>The <span class='m'>Surface</span> objects that are stored in <span class='m'>playerImage</span> and <span class='m'>foodImage</span> are the same as the <span class='m'>Surface</span> object we use for the window. In our game, we will blit these surfaces onto the window's surface to create the window that the user sees. This is exactly the same as the when we got a <span class='m'>Surface</span> object returned from the <span class='m'>render()</span> method for <span class='m'>Font</span> objects in our Hello World program. In order to actually display the text, we had to blit this <span class='m'>Surface</span> object (which the text was drawn on) to the window's <span class='m'>Surface</span> object. (And then, of course, call the <span class='m'>update()</span> method on the window's <span class='m'>Surface</span> object.)</p>
+
+<h3 id="SettingUptheMusicandSounds">Setting Up the Music and Sounds</h3>
+
+<div class='sourcecode'><ol start='37'>
+<li><span class='comment'># set up music</span></li>
+<li>pickUpSound = pygame.mixer.Sound('pickup.wav')</li>
+<li>pygame.mixer.music.load('background.mid')</li>
+<li>pygame.mixer.music.play(-1, 0.0)</li>
+<li>musicPlaying = True</li>
+</ol></div>
+
+<p>Next we need to load the sound files. There are two modules for sound in Pygame. The <span class='m'>pygame.mixer</span> module is responsible for playing short sound effects during the game. The <span class='m'>pygame.mixer.music</span> module is used for playing the background music.</p>
+
+<p>We will call the <span class='m'>pygame.mixer.Sound()</span> constructor function to create a <span class='m'>pygame.mixer.Sound</span> object (which we will simply call a <span class='m'>Sound</span> object). This object has a <span class='m'>play()</span> method that when called will play the sound effect.</p>
+
+<p>On line 39 we call <span class='m'>pygame.mixer.music.load()</span> to load the background music. We will start playing the background music immediately by calling <span class='m'>pygame.mixer.music.play()</span>. The first parameter tells Pygame how many times to play the background music after the first time we play it. So passing <span class='m'>5</span> will cause Pygame to play the background music 6 times over. If you pass <span class='m'>-1</span> for the first parameter, the background music will repeat itself forever.</p>
+
+<p>The second parameter to <span class='m'>pygame.mixer.music.play()</span> tells at what point in the sound file to start playing. Passing <span class='m'>0.0</span> will play the background music starting from the very beginning. If you passed <span class='m'>2.5</span> for the second parameter, this will cause the background music to start playing two and half seconds after the start of the music.</p>
+
+<p>Finally, we have a simple Boolean variable named <span class='m'>musicPlaying</span> that will tell our program if it should play the background music and sound effects or not. It is nice to give the player the option to run the program without the sound playing.</p>
+
+<h3 id="TogglingtheSoundOnandOff">Toggling the Sound On and Off</h3>
+
+<div class='sourcecode'><ol start='79'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == ord('m'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if musicPlaying:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pygame.mixer.music.stop()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pygame.mixer.music.play(-1, 0.0)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;musicPlaying = not musicPlaying</li>
+</ol></div>
+
+<p>We will check if the user has pressed the M key. The M key will turn the background music on or off. If <span class='m'>musicPlaying</span> is set to <span class='m'>True</span>, then that means the background music is currently playing and we should stop the music by calling <span class='m'>pygame.mixer.music.stop()</span>. If <span class='m'>musicPlaying</span> is set to <span class='m'>False</span>, then that means the background music is not currently playing and should be started by calling <span class='m'>pygame.mixer.music.play()</span>. The parameters we pass to the <span class='m'>pygame.mixer.music.play()</span> function are the same as we passed on line 40.</p>
+
+<p>Finally, no matter what, we want to toggle the value in <span class='m'>musicPlaying</span>. <span class='term'>Toggling</span> a Boolean value means we set it to the opposite of its current value. The line <span class='m'>musicPlaying = not musicPlaying</span> will set the variable to <span class='m'>False</span> if it is currently <span class='m'>True</span> or set it to <span class='m'>True</span> if it is currently <span class='m'>False</span>. Think of toggling as what happens when you flip a light switch on or off.</p>
+
+<p>Toggling the value in <span class='m'>musicPlaying</span> will ensure that the next time the user presses the M key, it will do the opposite of what it did before.</p>
+
+<h3 id="DrawingthePlayerontheWindow">Drawing the Player on the Window</h3>
+
+<div class='sourcecode'><ol start='109'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># draw the block onto the surface</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;windowSurface.blit(playerStretchedImage, player)</li>
+</ol></div>
+
+<p>Remember that the value stored in <span class='m'>playerStretchedImage</span> is a <span class='m'>Surface</span> object. "Blitting" is the process of drawing the contents of one <span class='m'>Surface</span> object to another <span class='m'>Surface</span> object. In this case, we want to draw the sprite of the player onto the window's <span class='m'>Surface</span> object (which is stored in <span class='m'>windowSurface</span>). (Also remember that the surface used to display on the screen is the <span class='m'>Surface</span> object that is returned by <span class='m'>pygame.display.set_caption()</span>.)</p>
+
+<p>The second parameter to the <span class='m'>blit()</span> method is a <span class='m'>Rect</span> object that specifies where the sprite should be blitted. The <span class='m'>Rect</span> object stored in <span class='m'>player</span> is what keeps track of the position of the player in the window.</p>
+
+<h3 id="CheckingifthePlayerHasCollidedwithCherries">Checking if the Player Has Collided with Cherries</h3>
+
+<div class='sourcecode'><ol start='114'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if player.colliderect(food):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foods.remove(food)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player = pygame.Rect(player.left, player.top, player.width + 2, player.height + 2)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;playerStretchedImage = pygame.transform.scale(playerImage, (player.width, player.height))</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if musicPlaying:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pickUpSound.play()</li>
+</ol></div>
+
+<p>This code is similar to the code in the previous programs. But here we are adding a couple of new lines. We want to call the <span class='m'>play()</span> method on the Sound object stored in the <span class='m'>pickUpSound</span> variable. But we only want to do this if <span class='m'>musicPlaying</span> is set to <span class='m'>True</span> (which tells us that the sound turned on).</p>
+
+<p>When the player eats one of the cherries, we are going to enlarge the size of the player by two pixels in height and width. On line 116, we create a new <span class='m'>Rect</span> object to store in the player variable which will have the same sizes as the old <span class='m'>Rect</span> object stored in player. Except the width and height of the new <span class='m'>Rect</span> object will be 2 pixels larger.</p>
+
+<p>When the <span class='m'>Rect</span> object that represents the position and size of the player, but the image of the player is stored in a <span class='m'>playerStretchedImage</span> as a <span class='m'>Surface</span> object. We want to create a new stretched image by calling <span class='m'>pygame.transform.scale()</span>. Be sure to pass the original <span class='m'>Surface</span> object in <span class='m'>playerImage</span> and not <span class='m'>playerStretchedImage</span>. Stretching an image often distorts it a little. If we keep restretching a stretched image over and over, the distortions add up quickly. But by stretching the original image to the new size, we only distort the image once. This is why we pass <span class='m'>playerImage</span> as the first argument for <span class='m'>pygame.transform.scale()</span>.</p>
+
+<h3 id="DrawtheCherriesontheWindow">Draw the Cherries on the Window</h3>
+
+<div class='sourcecode'><ol start='121'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># draw the food</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for food in foods:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;windowSurface.blit(foodImage, food)</li>
+</ol></div>
+
+<p>In our previous programs, we called the <span class='m'>pygame.draw.rect()</span> function to draw a green square for each <span class='m'>Rect</span> object stored in the <span class='m'>foods</span> list. However, in this program we want to draw the cherry sprites instead. We will call the <span class='m'>blit()</span> method and pass the <span class='m'>Surface</span> object stored in <span class='m'>foodImage</span>. (This is the surface that has the image of cherries drawn on it.)</p>
+
+<p>We only use the <span class='m'>food</span> variable (which contains each of the <span class='m'>Rect</span> objects in <span class='m'>foods</span> on each iteration through the <span class='m'>for</span> loop) to tell the <span class='m'>blit()</span> method where to draw the <span class='m'>foodImage</span>.</p>
+
+<h2 id="SummaryGameswithGraphicsandSounds">Summary: Games with Graphics and Sounds</h2>
+
+<p>This game has added even more advanced graphics and introduced using sound in our games. The images (called sprites) look much better than the simple drawing primitives used in our previous programs. The game presented in this chapter also has music playing in the background while also playing sound effects.</p>
+
+<p>Sprites can be scaled (that is, stretched) to a larger or smaller size. This way we can display sprites at any size we want. This will come in handy in the game presented in the next chapter.</p>
+
+<p>Now that we know how to create a GUI window, display sprites and drawing primitives, collect keyboard and mouse input, play sounds, and implement collision detection, we are now ready to create a graphical game in Pygame. The next chapter brings all of these elements together for our most advanced game yet.</p>
+
+
+
+<table border='0' width='100%'><tr><td><a href='chapter18.html'>Go to Chapter 18 - Collision Detection and Input</a></td><td align='right'><a href='chapter20.html'>Go to Chapter 20 - Dodger</a></td></tr></table>
+<div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
+
+
+
+
+</body>
+</html>

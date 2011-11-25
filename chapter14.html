@@ -1,0 +1,545 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-5459430-3");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<meta http-equiv="Content-Type" content="text/html;charset=us-ascii" />
+<title>IYOCGwP, Chapter 14 - Caesar Cipher</title>
+<link rel="stylesheet" href="inventbook.css" type="text/css" media="all" />
+</head>
+<body class='chapter14body'>
+
+<table border='0' width='100%'><tr><td><a href='chapter13.html'>Go to Chapter 13 - Sonar Treasure Hunt</a></td><td align='right'><a href='chapter15.html'>Go to Chapter 15 - Reversi</a></td></tr></table>
+<div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
+
+
+<div style='height: 350px;'><img src='images/chap14.png'></div>
+
+<div class='inthischapter'><h3 id="TopicsCoveredInThisChapter">Topics Covered In This Chapter:</h3>
+<ul>
+<li>Cryptography and ciphers</li>
+<li>Encrypting and decrypting</li>
+<li>Ciphertext, plaintext, keys, and symbols</li>
+<li>The Caesar Cipher</li>
+<li>ASCII ordinal values</li>
+<li>The <span class='m'>chr()</span> and <span class='m'>ord()</span> functions</li>
+<li>The <span class='m'>isalpha()</span> string method</li>
+<li>The <span class='m'>isupper()</span> and <span class='m'>islower()</span> string methods</li>
+<li>Cryptanalysis</li>
+<li>The brute force technique</li>
+</ul></div>
+
+<p>The program in this chapter is not really a game, but it is fun to play with nonetheless. Our program will convert normal English into a secret code, and also convert secret codes back into regular English again. Only someone who is knowledgeable about secret codes will be able to understand our secret messages.</p>
+
+<p>Because this program manipulates text in order to convert it into secret messages, we will learn several new functions and methods that come with Python for manipulating strings. We will also learn how programs can do math with text strings just as it can with numbers.</p>
+
+<h2 id="AboutCryptography">About Cryptography</h2>
+
+<p>The science of writing secret codes is called <span class='term'>cryptography</span>. Cryptography has been used for thousands of years to send secret messages that only the recipient could understand, even if someone captured the messenger and read the coded message. A secret code system is called a <span class='term'>cipher</span>. There are thousands of different ciphers that have been used, each using different techniques to keep the messages a secret.</p>
+
+<p>In cryptography, we call the message that we want to be secret the <span class='term'>plaintext</span>. The plaintext could look something like this:</p>
+
+<p><span class='m'>Hello there! The keys to the house are hidden under the reddish flower pot.</span></p>
+
+<p>When we convert the plaintext into the encoded message, we call this <span class='term'>encrypting</span> the plaintext. The plaintext is encrypted into the <span class='term'>ciphertext</span>. The ciphertext looks like random letters (also called <span class='term'>garbage data</span>), and we cannot understand what the original plaintext was by just looking at the ciphertext. Here is an example of some ciphertext:</p>
+
+<p><span class='m'>Ckkz fkx kj becqnejc kqp pdeo oaynap iaoowca!</span></p>
+
+<p>But if we know about the cipher used to encrypt the message, we can <span class='term'>decrypt</span> the ciphertext back to the plaintext. (Decryption is the opposite of encryption.)</p>
+
+<p>Many ciphers also use keys. <span class='term'>Keys</span> are secret values that let you decrypt ciphertext that was encrypted using a specific cipher. Think of the cipher as being like a door lock. Although all the door locks of the same type are built the same, but a particular lock will only unlock if you have the key made for that lock.</p>
+
+<h2 id="TheCaesarCipher">The Caesar Cipher</h2>
+
+<p style='float: right;' class='centeredImageP'><img src='images/14-1.png' alt='' class='centeredImage' /><br />Figure 14-1: Shifting over letters by three spaces. Here, B becomes E.
+</p>
+
+<p>When we encrypt a message using a cipher, we will choose the key that is used to encrypt and decrypt this message. The key for our Caesar Cipher will be a number from 1 to 26. Unless you know the key (that is, know the number), you will not be able to decrypt the encrypted message.</p>
+
+<p>The <span class='term'>Caesar Cipher</span> was one of the earliest ciphers ever invented. In this cipher, you encrypt a message by taking each letter in the message (in cryptography, these letters are called <span class='term'>symbols</span> because they can be letters, numbers, or any other sign) and replacing it with a "shifted" letter. If you shift the letter A by one space, you get the letter B. If you shift the letter A by two spaces, you get the letter C. Figure 14-1 is a picture of some letters shifted over by 3 spaces.</p>
+
+
+<p>To get each shifted letter, draw out a row of boxes with each letter of the alphabet. Then draw a second row of boxes under it, but start a certain number of spaces over. When you get to the leftover letters at the end, wrap around back to the start of the boxes. Here is an example with the letters shifted by three spaces:</p>
+
+
+<p class='centeredImageP createspace'><img width='570' height='90' src='images/14-2.png' alt='' class='centeredImage' /><br />Figure 14-2: The entire alphabet shifted by three spaces.</p>
+<p class='centeredImageP noncreatespace'><img src='images/14-2.png' alt='' class='centeredImage' /><br />Figure 14-2: The entire alphabet shifted by three spaces.</p>
+
+<p>The number of spaces we shift is the key in the Caesar Cipher. The example above shows the letter translations for the key 3.</p>
+
+<p>Using a key of 3, if we encrypt the plaintext "Howdy", then the "H" becomes "K". The letter "o" becomes "r". The letter "w" becomes "z". The letter "d" becomes "g". And the letter "y" becomes "b". The ciphertext of "Hello" with key 3 becomes "Krzgb".</p>
+
+<p>We will keep any non-letter characters the same. In order to decrypt "Krzgb" with the key 3, we just go from the bottom boxes back to the top. The letter "K" becomes "H", the letter "r" becomes "o", the letter "z" becomes "w", the letter "g" becomes "d", and the letter "b" becomes "y" to form "Howdy".</p>
+
+<p>You can find out more about the Caesar Cipher from Wikipedia at <a href='http://en.wikipedia.org/wiki/Caesar_cipher'>http://en.wikipedia.org/wiki/Caesar_cipher</a></p>
+
+<h2 id="ASCIIandUsingNumbersforLetters">ASCII, and Using Numbers for Letters</h2>
+
+<p>How do we implement this shifting of the letters in our program? We can do this by representing each letter as a number (called an <span class='term'>ordinal</span>), and then adding or subtracting from this number to form a new number (and a new letter). <span class='term'>ASCII</span> (pronounced "ask-ee" and stands for American Standard Code for Information Interchange) is a code that connects each character to a number between 32 and 127. The numbers less than 32 refer to "unprintable" characters, so we will not be using them.</p>
+
+<p>The capital letters "A" through "Z" have the ASCII numbers 65 through 90. The lowercase letters "a" through "z" have the ASCII numbers 97 through 122. The numeric digits "0" through "9" have the ASCII numbers 48 through 57.</p>
+
+<div class='pagebreaker'>&nbsp;</div>
+
+<table class='simpletable centertable' style='width: 570px; text-align: center;'>
+<caption>Table 14-1: The ASCII Table</caption>
+<tr><td class='simpletdblankright'>32</td><td class='simpletd'>(space)</td><td class='simpletdblankright'>48</td><td class='simpletd'>0</td>   <td class='simpletdblankright'>64</td><td class='simpletd'>@</td><td class='simpletdblankright'>80</td><td class='simpletd'>P</td><td class='simpletdblankright'>96 </td><td class='simpletd'>`</td> <td class='simpletdblankright'>112</td><td class='simpletd'>p</td></tr>
+<tr><td class='simpletdblankright'>33</td><td class='simpletd'>!</td>      <td class='simpletdblankright'>49</td><td class='simpletd'>1</td>   <td class='simpletdblankright'>65</td><td class='simpletd'>A</td><td class='simpletdblankright'>81</td><td class='simpletd'>Q</td><td class='simpletdblankright'>97 </td><td class='simpletd'>a</td> <td class='simpletdblankright'>113</td><td class='simpletd'>q</td></tr>
+<tr><td class='simpletdblankright'>34</td><td class='simpletd'>"</td>      <td class='simpletdblankright'>50</td><td class='simpletd'>2</td>   <td class='simpletdblankright'>66</td><td class='simpletd'>B</td><td class='simpletdblankright'>82</td><td class='simpletd'>R</td><td class='simpletdblankright'>98 </td><td class='simpletd'>b</td> <td class='simpletdblankright'>114</td><td class='simpletd'>r</td></tr>
+<tr><td class='simpletdblankright'>35</td><td class='simpletd'>#</td>      <td class='simpletdblankright'>51</td><td class='simpletd'>3</td>   <td class='simpletdblankright'>67</td><td class='simpletd'>C</td><td class='simpletdblankright'>83</td><td class='simpletd'>S</td><td class='simpletdblankright'>99 </td><td class='simpletd'>c</td> <td class='simpletdblankright'>115</td><td class='simpletd'>s</td></tr>
+<tr><td class='simpletdblankright'>36</td><td class='simpletd'>$</td>      <td class='simpletdblankright'>52</td><td class='simpletd'>4</td>   <td class='simpletdblankright'>68</td><td class='simpletd'>D</td><td class='simpletdblankright'>84</td><td class='simpletd'>T</td><td class='simpletdblankright'>100</td><td class='simpletd'>d</td> <td class='simpletdblankright'>116</td><td class='simpletd'>t</td></tr>
+<tr><td class='simpletdblankright'>37</td><td class='simpletd'>%</td>      <td class='simpletdblankright'>53</td><td class='simpletd'>5</td>   <td class='simpletdblankright'>69</td><td class='simpletd'>E</td><td class='simpletdblankright'>85</td><td class='simpletd'>U</td><td class='simpletdblankright'>101</td><td class='simpletd'>e</td> <td class='simpletdblankright'>117</td><td class='simpletd'>u</td></tr>
+<tr><td class='simpletdblankright'>38</td><td class='simpletd'>&amp;</td>  <td class='simpletdblankright'>54</td><td class='simpletd'>6</td>   <td class='simpletdblankright'>70</td><td class='simpletd'>F</td><td class='simpletdblankright'>86</td><td class='simpletd'>V</td><td class='simpletdblankright'>102</td><td class='simpletd'>f</td> <td class='simpletdblankright'>118</td><td class='simpletd'>v</td></tr>
+<tr><td class='simpletdblankright'>39</td><td class='simpletd'>'</td>      <td class='simpletdblankright'>55</td><td class='simpletd'>7</td>   <td class='simpletdblankright'>71</td><td class='simpletd'>G</td><td class='simpletdblankright'>87</td><td class='simpletd'>W</td><td class='simpletdblankright'>103</td><td class='simpletd'>g</td> <td class='simpletdblankright'>119</td><td class='simpletd'>w</td></tr>
+<tr><td class='simpletdblankright'>40</td><td class='simpletd'>(</td>      <td class='simpletdblankright'>56</td><td class='simpletd'>8</td>   <td class='simpletdblankright'>72</td><td class='simpletd'>H</td><td class='simpletdblankright'>88</td><td class='simpletd'>X</td><td class='simpletdblankright'>104</td><td class='simpletd'>h</td> <td class='simpletdblankright'>120</td><td class='simpletd'>x</td></tr>
+<tr><td class='simpletdblankright'>41</td><td class='simpletd'>)</td>      <td class='simpletdblankright'>57</td><td class='simpletd'>9</td>   <td class='simpletdblankright'>73</td><td class='simpletd'>I</td><td class='simpletdblankright'>89</td><td class='simpletd'>Y</td><td class='simpletdblankright'>105</td><td class='simpletd'>i</td> <td class='simpletdblankright'>121</td><td class='simpletd'>y</td></tr>
+<tr><td class='simpletdblankright'>42</td><td class='simpletd'>*</td>      <td class='simpletdblankright'>58</td><td class='simpletd'>:</td>   <td class='simpletdblankright'>74</td><td class='simpletd'>J</td><td class='simpletdblankright'>90</td><td class='simpletd'>Z</td><td class='simpletdblankright'>106</td><td class='simpletd'>j</td> <td class='simpletdblankright'>122</td><td class='simpletd'>z</td></tr>
+<tr><td class='simpletdblankright'>43</td><td class='simpletd'>+</td>      <td class='simpletdblankright'>59</td><td class='simpletd'>;</td>   <td class='simpletdblankright'>75</td><td class='simpletd'>K</td><td class='simpletdblankright'>91</td><td class='simpletd'>[</td><td class='simpletdblankright'>107</td><td class='simpletd'>k</td> <td class='simpletdblankright'>123</td><td class='simpletd'>{</td></tr>
+<tr><td class='simpletdblankright'>44</td><td class='simpletd'>,</td>      <td class='simpletdblankright'>60</td><td class='simpletd'>&lt;</td><td class='simpletdblankright'>76</td><td class='simpletd'>L</td><td class='simpletdblankright'>92</td><td class='simpletd'>\</td><td class='simpletdblankright'>108</td><td class='simpletd'>l</td> <td class='simpletdblankright'>124</td><td class='simpletd'>|</td></tr>
+<tr><td class='simpletdblankright'>45</td><td class='simpletd'>-</td>      <td class='simpletdblankright'>61</td><td class='simpletd'>=</td>   <td class='simpletdblankright'>77</td><td class='simpletd'>M</td><td class='simpletdblankright'>93</td><td class='simpletd'>]</td><td class='simpletdblankright'>109</td><td class='simpletd'>m</td> <td class='simpletdblankright'>125</td><td class='simpletd'>}</td></tr>
+<tr><td class='simpletdblankright'>46</td><td class='simpletd'>.</td>      <td class='simpletdblankright'>62</td><td class='simpletd'>&gt;</td><td class='simpletdblankright'>78</td><td class='simpletd'>N</td><td class='simpletdblankright'>94</td><td class='simpletd'>^</td><td class='simpletdblankright'>110</td><td class='simpletd'>n</td> <td class='simpletdblankright'>126</td><td class='simpletd'>~</td></tr>
+<tr><td class='simpletdblankright'>47</td><td class='simpletd'>/</td>      <td class='simpletdblankright'>63</td><td class='simpletd'>?</td>   <td class='simpletdblankright'>79</td><td class='simpletd'>O</td><td class='simpletdblankright'>95</td><td class='simpletd'>_</td><td class='simpletdblankright'>111</td><td class='simpletd'>o</td> <td class='simpletdblankright'></td><td class='simpletd'></td></tr>
+</table>
+
+<p>So if we wanted to shift "A" by three spaces, we first convert it to a number (65). Then we add 3 to 65, to get 68. Then we convert the number 68 back to a letter ("D"). We will use the <span class='m'>chr()</span> and <span class='m'>ord()</span> functions to convert between letters and numbers.</p>
+
+<p>For example, the letter "A" is represented by the number 65. The letter "m" is represented by the number 109. A table of all the ASCII characters from 32 to 12 is in Table 14-1.</p>
+
+<h2 id="ThechrandordFunctions">The <span class='m'>chr()</span> and <span class='m'>ord()</span> Functions</h2>
+
+<p>The <span class='m'>chr()</span> function (pronounced "char", short for "character") takes an integer ASCII number for the parameter and returns the single-character string. The <span class='m'>ord()</span> function (short for "ordinal") takes a single-character string for the parameter, and returns the integer ASCII value for that character. Try typing the following into the interactive shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; chr(65)<br />
+'A'<br />
+&gt;&gt;&gt; ord('A')<br />
+65<br />
+&gt;&gt;&gt; chr(65+8)<br />
+'I'<br />
+&gt;&gt;&gt; chr(52)<br />
+'4'<br />
+&gt;&gt;&gt; chr(ord('F'))<br />
+'F'<br />
+&gt;&gt;&gt; ord(chr(68))<br />
+68<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>On the third line, <span class='m'>chr(65+8)</span> evaluates to <span class='m'>chr(73)</span>. If you look at the ASCII table, you can see that 73 is the ordinal for the capital letter "I". On the fifth line, <span class='m'>chr(ord('F'))</span> evaluates to <span class='m'>chr(70)</span> which evaluates to <span class='m'>'F'</span>. Feeding the result of <span class='m'>ord()</span> to <span class='m'>chr()</span> will evaluate to the same as the original argument. The same goes for feeding the result of <span class='m'>chr()</span> to <span class='m'>ord()</span>, as shown by the sixth line.</p>
+
+<p>Using <span class='m'>chr()</span> and <span class='m'>ord()</span> will come in handy for our Caesar Cipher program. They are also helpful when we need to convert strings to numbers and numbers to strings.</p>
+
+<h2 id="SampleRunofCaesarCipher">Sample Run of Caesar Cipher</h2>
+
+<p>Here is a sample run of the Caesar Cipher program, encrypting a message:</p>
+
+<div class='samplerun'>
+Do you wish to encrypt or decrypt a message?<br />
+encrypt<br />
+Enter your message:<br />
+<span class='sampleruninput'>The sky above the port was the color of television, tuned to a dead channel.</span><br />
+Enter the key number (1-26)<br />
+<span class='sampleruninput'>13</span><br />
+Your translated text is:<br />
+Gur fxl nobir gur cbeg jnf gur pbybe bs gryrivfvba, gharq gb n qrnq punaary.<br />
+</div>
+
+<p>Now we will run the program and decrypt the text that we just encrypted.</p>
+
+<div class='samplerun'>
+Do you wish to encrypt or decrypt a message?<br />
+<span class='sampleruninput'>decrypt</span><br />
+Enter your message:<br />
+<span class='sampleruninput'>Gur fxl nobir gur cbeg jnf gur pbybe bs gryrivfvba, gharq gb n qrnq punaary.</span><br />
+Enter the key number (1-26)<br />
+<span class='sampleruninput'>13</span><br />
+Your translated text is:<br />
+The sky above the port was the color of television, tuned to a dead channel.<br />
+</div>
+
+<p>On this run we will try to decrypt the text that was encrypted, but we will use the wrong key. Remember that if you do not know the correct key, the decrypted text will just be garbage data.</p>
+
+<div class='samplerun'>
+Do you wish to encrypt or decrypt a message?<br />
+<span class='sampleruninput'>decrypt</span><br />
+Enter your message:<br />
+<span class='sampleruninput'>Gur fxl nobir gur cbeg jnf gur pbybe bs gryrivfvba, gharq gb n qrnq punaary.</span><br />
+Enter the key number (1-26)<br />
+<span class='sampleruninput'>15</span><br />
+Your translated text is:<br />
+Rfc qiw yzmtc rfc nmpr uyq rfc amjmp md rcjctgqgml, rslcb rm y bcyb afyllcj.<br />
+</div>
+
+<h2 id="CaesarCiphersSourceCode">Caesar Cipher's Source Code</h2>
+
+<p>Here is the source code for the Caesar Cipher program. If you don't want to type all of this code in, you can visit this book's website at the URL <a href='http://inventwithpython.com/chapter14'>http://inventwithpython.com/chapter14</a> and follow the instructions to download the source code. After you type this code in, save the file as <i>cipher.py</i></p>
+
+<div class='sourcecode'><span class='sourcecodeHeader'>cipher.py</span><br /><span class='sourcecodeSubHeader'>This code can be downloaded from <a href='http://inventwithpython.com/cipher.py'>http://inventwithpython.com/cipher.py</a><br />If you get errors after typing this code in, compare it to the book's code with the online diff tool at <a href='http://inventwithpython.com/diff'>http://inventwithpython.com/diff</a> or email the author at <a href="mailto:al@inventwithpython.com">al@inventwithpython.com</a></span><br /><ol start='1'>
+<li># Caesar Cipher</li>
+<li></li>
+<li>MAX_KEY_SIZE = 26</li>
+<li></li>
+<li>def getMode():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Do you wish to encrypt or decrypt a message?')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mode = input().lower()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if mode in 'encrypt e decrypt d'.split():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return mode</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Enter either "encrypt" or "e" or "decrypt" or "d".')</li>
+<li></li>
+<li>def getMessage():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Enter your message:')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return input()</li>
+<li></li>
+<li>def getKey():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;key = 0</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Enter the key number (1-%s)' % (MAX_KEY_SIZE))</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key = int(input())</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (key &gt;= 1 and key &lt;= MAX_KEY_SIZE):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return key</li>
+<li></li>
+<li>def getTranslatedMessage(mode, message, key):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if mode[0] == 'd':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key = -key</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;translated = ''</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for symbol in message:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if symbol.isalpha():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num = ord(symbol)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num += key</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if symbol.isupper():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if num &gt; ord('Z'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num -= 26</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elif num &lt; ord('A'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num += 26</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elif symbol.islower():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if num &gt; ord('z'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num -= 26</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elif num &lt; ord('a'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num += 26</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;translated += chr(num)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;translated += symbol</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return translated</li>
+<li></li>
+<li>mode = getMode()</li>
+<li>message = getMessage()</li>
+<li>key = getKey()</li>
+<li></li>
+<li>print('Your translated text is:')</li>
+<li>print(getTranslatedMessage(mode, message, key))</li>
+</ol></div>
+
+<h2 id="HowtheCodeWorksLines1to34">How the Code Works: Lines 1 to 34</h2>
+
+<p>This code is much shorter compared to our other games. The encryption and decryption processes are the just the reverse of the other, and even then they still share much of the same code. Let's look at how each line works.</p>
+
+<div class='sourcecode'><ol start='1'>
+<li># Caesar Cipher</li>
+<li></li>
+<li>MAX_KEY_SIZE = 26</li>
+</ol></div>
+
+<p>The first line is simply a comment. The Caesar Cipher is one cipher of a type of ciphers called simple substitution ciphers. <span class='term'>Simple substitution ciphers</span> are ciphers that replace one symbol in the plaintext with one (and only one) symbol in the ciphertext. So if a "G" was substituted with "Z" in the cipher, every single "G" in the plaintext would be replaced with (and only with) a "Z".</p>
+
+<p><span class='m'>MAX_KEY_SIZE</span> is a variable that stores the integer <span class='m'>26</span> in it. <span class='m'>MAX_KEY_SIZE</span> reminds us that in this program, the key used in our cipher should be between 1 and 26.</p>
+
+<h3 id="DecidingtoEncryptorDecrypt">Deciding to Encrypt or Decrypt</h3>
+
+<div class='sourcecode'><ol start='5'>
+<li>def getMode():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Do you wish to encrypt or decrypt a message?')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mode = input().lower()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if mode in 'encrypt e decrypt d'.split():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return mode</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Enter either "encrypt" or "e" or "decrypt" or "d".')</li>
+</ol></div>
+
+<p>The <span class='m'>getMode()</span> function will let the user type in if they want to encrypt or decrypt the message. The return value of <span class='m'>input()</span> (which then has the <span class='m'>lower()</span> method called on it, which returns the lowercase version of the string) is stored in <span class='m'>mode</span>. The <span class='m'>if</span> statement's condition checks if the string stored in <span class='m'>mode</span> exists in the list returned by <span class='m'>'encrypt e decrypt d'.split()</span>. This list is <span class='m'>['encrypt', 'e', 'decrypt', 'd']</span>, but it is easier for the programmer to just type in <span class='m'>'encrypt e decrypt d'.split()</span> and not type in all those quotes and commas. But you can use whatever is easiest for you; they both evaluate to the same list value.</p>
+
+<p>This function will return the first character in <span class='m'>mode</span> as long as <span class='m'>mode</span> is equal to <span class='m'>'encrypt'</span>, <span class='m'>'e'</span>, <span class='m'>'decrypt'</span>, or <span class='m'>'d'</span>. This means that <span class='m'>getMode()</span> will return the string <span class='m'>'e'</span> or the string <span class='m'>'d'</span>.</p>
+
+<h3 id="GettingtheMessagefromthePlayer">Getting the Message from the Player</h3>
+
+<div class='sourcecode'><ol start='14'>
+<li>def getMessage():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Enter your message:')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return input()</li>
+</ol></div>
+
+<p>The <span class='m'>getMessage()</span> function simply gets the message to encrypt or decrypt from the user and uses this string as its return value.</p>
+
+<h3 class='pagebreaker' id="GettingtheKeyfromthePlayer">Getting the Key from the Player</h3>
+
+<div class='sourcecode'><ol start='18'>
+<li>def getKey():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;key = 0</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Enter the key number (1-%s)' % (MAX_KEY_SIZE))</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key = int(input())</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (key &gt;= 1 and key &lt;= MAX_KEY_SIZE):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return key</li>
+</ol></div>
+
+<p>The <span class='m'>getKey()</span> function lets the player type in key they will use to encrypt or decrypt the message. The <span class='m'>while</span> loop ensures that the function only returns a valid key. A valid key here is one that is between the integer values <span class='m'>1</span> and <span class='m'>26</span> (remember that <span class='m'>MAX_KEY_SIZE</span> will only have the value <span class='m'>26</span> because it is constant). It then returns this key. Remember that on line 22 that <span class='m'>key</span> was set to the integer version of what the user typed in, and so <span class='m'>getKey()</span> returns an integer.</p>
+
+<h3 id="EncryptorDecrypttheMessagewiththeGivenKey">Encrypt or Decrypt the Message with the Given Key</h3>
+
+<div class='sourcecode'><ol start='26'>
+<li>def getTranslatedMessage(mode, message, key):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if mode[0] == 'd':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key = -key</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;translated = ''</li>
+</ol></div>
+
+<p><span class='m'>getTranslatedMessage()</span> is the function that does the encrypting and decrypting in our program. It has three parameters. <span class='m'>mode</span> sets the function to encryption mode or decryption mode. <span class='m'>message</span> is the plaintext (or ciphertext) to be encrypted (or decrypted). <span class='m'>key</span> is the key that is used in this cipher.</p>
+
+<p>The first line in the <span class='m'>getTranslatedMessage()</span> function determines if we are in encryption mode or decryption mode. If the first letter in the <span class='m'>mode</span> variable is the string <span class='m'>'d'</span>, then we are in decryption mode. The only difference between the two modes is that in decryption mode, the key is set to the negative version of itself. If <span class='m'>key</span> was the integer <span class='m'>22</span>, then in decryption mode we set it to <span class='m'>-22</span>. The reason for this will be explained later.</p>
+
+<p><span class='m'>translated</span> is the string that will hold the end result: either the ciphertext (if we are encrypting) or the plaintext (if we are decrypting). We will only be concatenating strings to this variable, so we first store the blank string in <span class='m'>translated</span>. (A variable must be defined with some string value first before a string can be concatenated to it.)</p>
+
+<h2 id="TheisalphaStringMethod">The <span class='m'>isalpha()</span> String Method</h2>
+
+<p>The <span class='m'>isalpha()</span> string method will return <span class='m'>True</span> if the string is an uppercase or lowercase letter from A to Z. If the string contains any non-letter characters, then <span class='m'>isalpha()</span> will return <span class='m'>False</span>. Try typing the following into the interactive shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; 'Hello'.isalpha()<br />
+True<br />
+&gt;&gt;&gt; 'Forty two'.isalpha()<br />
+False<br />
+&gt;&gt;&gt; 'Fortytwo'.isalpha()<br />
+True<br />
+&gt;&gt;&gt; '42'.isalpha()<br />
+False<br />
+&gt;&gt;&gt; ''.isalpha()<br />
+False<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>As you can see, <span class='m'>'Forty two'.isalpha()</span> will return <span class='m'>False</span> because <span class='m'>'Forty two'</span> has a space in it, which is a non-letter character. <span class='m'>'Fortytwo'.isalpha()</span> returns <span class='m'>True</span> because it does not have this space. <span class='m'>'42'.isalpha()</span> returns <span class='m'>False</span> because both <span class='m'>'4'</span> and <span class='m'>'2'</span> are non-letter characters. And <span class='m'>''.isalpha()</span> is <span class='m'>False</span> because <span class='m'>isalpha()</span> only returns <span class='m'>True</span> if the string has only letter characters and is not blank.</p>
+
+<p>We will use the <span class='m'>isalpha()</span> method in our program in the next few lines.</p>
+
+<div class='sourcecode'><ol start='31'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for symbol in message:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if symbol.isalpha():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num = ord(symbol)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num += key</li>
+</ol></div>
+
+<p>Line 31's <span class='m'>for</span> loop iterates over each letter (remember in cryptography they are called symbols) in the <span class='m'>message</span> string. In a <span class='m'>for</span> loop, strings are treated just like lists of single-character strings. If <span class='m'>message</span> had the string <span class='m'>'Hello'</span>, then <span class='m'>for symbol in 'Hello'</span> would be the same as <span class='m'>for symbol in ['H', 'e', 'l', 'l', 'o']</span>. On each iteration through this loop, <span class='m'>symbol</span> will have the value of a letter in <span class='m'>message</span>.</p>
+
+<p>The reason we have the <span class='m'>if</span> statement on line 32 is because we will only encrypt/decrypt letters in the message. Numbers, signs, punctuation marks, and everything else will stay in their untranslated form. The <span class='m'>num</span> variable will hold the integer ordinal value of the letter stored in <span class='m'>symbol</span>. Line 34 then "shifts" the value in <span class='m'>num</span> by the value in <span class='m'>key</span>.</p>
+
+<h2 id="TheisupperandislowerStringMethods">The <span class='m'>isupper()</span> and <span class='m'>islower()</span> String Methods</h2>
+
+<p>The <span class='m'>isupper()</span> and <span class='m'>islower()</span> string methods (which are on line 36 and 41) work in a way that is very similar to the <span class='m'>isdigit()</span> and <span class='m'>isalpha()</span> methods. <span class='m nw'>isupper()</span> will return <span class='m'>True</span> if the string it is called on contains at least one uppercase letter and no lowercase letters. <span class='m'>islower()</span> returns <span class='m'>True</span> if the string it is called on contains at least one lowercase letter and no uppercase letters. Otherwise these methods return <span class='m'>False</span>. The existence of non-letter characters like numbers and spaces does not affect the outcome. Although strings that do not have any letters, including blank strings, will also return <span class='m'>False</span>. Try typing the following into the interactive shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; 'HELLO'.isupper()<br />
+True<br />
+&gt;&gt;&gt; 'hello'.isupper()<br />
+False<br />
+&gt;&gt;&gt; 'hello'.islower()<br />
+True<br />
+&gt;&gt;&gt; 'Hello'.islower()<br />
+False<br />
+&gt;&gt;&gt; 'LOOK OUT BEHIND YOU!'.isupper()<br />
+True<br />
+&gt;&gt;&gt; '42'.isupper()<br />
+False<br />
+&gt;&gt;&gt; '42'.islower()<br />
+False<br />
+&gt;&gt;&gt; ''.isupper()<br />
+False<br />
+&gt;&gt;&gt; ''.islower()<br />
+False<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<h2 id="HowtheCodeWorksLines36to57">How the Code Works: Lines 36 to 57</h2>
+
+<p>The process of encrypting (or decrypting) each letter is fairly simple. We want to apply the same Python code to every letter character in the string, which is what the next several lines of code do.</p>
+
+<h3 id="EncryptingorDecryptingEachLetter">Encrypting or Decrypting Each Letter</h3>
+
+<div class='sourcecode'><ol start='36'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if symbol.isupper():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if num &gt; ord('Z'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num -= 26</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elif num &lt; ord('A'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num += 26</li>
+</ol></div>
+
+<p>This code checks if the symbol is an uppercase letter. If so, there are two special cases we need to worry about. What if <span class='m'>symbol</span> was <span class='m'>'Z'</span> and <span class='m'>key</span> was <span class='m'>4</span>? If that were the case, the value of <span class='m'>num</span> here would be the character <span class='m'>'^'</span> (The ordinal of <span class='m'>'^'</span> is <span class='m'>94</span>). But ^ isn't a letter at all. We wanted the ciphertext to "wrap around" to the beginning of the alphabet.</p>
+
+<p>The way we can do this is to check if <span class='m'>key</span> has a value larger than the largest possible letter's ASCII value (which is a capital "Z"). If so, then we want to <b>subtract</b> <span class='m'>26</span> (because there are 26 letters in total) from <span class='m'>num</span>. After doing this, the value of <span class='m'>num</span> is <span class='m'>68</span>, which is the ASCII value for <span class='m'>'D'</span>.</p>
+
+<div class='sourcecode'><ol start='41'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elif symbol.islower():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if num &gt; ord('z'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num -= 26</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elif num &lt; ord('a'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num += 26</li>
+</ol></div>
+
+<p>If the symbol is a lowercase letter, the program runs code that is very similar to lines 36 through 40. The only difference is that we use <span class='m'>ord('z')</span> and <span class='m'>ord('a')</span> instead of <span class='m'>ord('Z')</span> and <span class='m'>ord('A')</span>.</p>
+
+<p>If we were in decrypting mode, then <span class='m'>key</span> would be negative. Then we would have the special case where <span class='m'>num -= 26</span> might be less than the smallest possible value (which is <span class='m'>ord('A')</span>, that is, <span class='m'>65</span>). If this is the case, we want to <b>add</b> <span class='m'>26</span> to <span class='m'>num</span> to have it "wrap around".</p>
+
+<div class='sourcecode'><ol start='47'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;translated += chr(num)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;translated += symbol</li>
+</ol></div>
+
+<p>The <span class='m'>translated</span> string will be appended with the encrypted/decrypted character. If the symbol was not an uppercase or lowercase letter, then the else-block on line 48 would have executed instead. All the code in the else-block does is append the original, untranslated symbol to the <span class='m'>translated</span> string. This means that spaces, numbers, punctuation marks, and other characters will not be encrypted or decrypted.</p>
+
+<div class='sourcecode'><ol start='50'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return translated</li>
+</ol></div>
+
+<p>The last line in the <span class='m'>getTranslatedMessage()</span> function returns the translated string.</p>
+
+<h3 id="TheStartoftheProgram">The Start of the Program</h3>
+
+<div class='sourcecode'><ol start='52'>
+<li>mode = getMode()</li>
+<li>message = getMessage()</li>
+<li>key = getKey()</li>
+<li></li>
+<li>print('Your translated text is:')</li>
+<li>print(getTranslatedMessage(mode, message, key))</li>
+</ol></div>
+
+<p>This is the main part of our program. We call each of the three functions we have defined above in turn to get the mode, message, and key that the user wants to use. We then pass these three values as arguments to <span class='m'>getTranslatedMessage()</span>, whose return value (the <span class='m'>translated</span> string) is printed to the user.</p>
+
+<h2 id="BruteForce">Brute Force</h2>
+
+<p>That's the entire Caesar Cipher. However, while this cipher may fool some people who don't understand cryptography, it won't keep a message secret from someone who knows cryptanalysis. While cryptography is the science of making codes, <span class='term'>cryptanalysis</span> is the science of breaking codes.</p>
+
+<div class='samplerun'>
+Do you wish to encrypt or decrypt a message?<br />
+<span class='sampleruninput'>encrypt</span><br />
+Enter your message:<br />
+<span class='sampleruninput'>Doubts may not be pleasant, but certainty is absurd.</span><br />
+Enter the key number (1-26)<br />
+<span class='sampleruninput'>8</span><br />
+Your translated text is:<br />
+Lwcjba uig vwb jm xtmiaivb, jcb kmzbiqvbg qa ijaczl.<br />
+</div>
+
+<p>The whole point of cryptography is that so if someone else gets their hands on the encrypted message, they cannot figure out the original unencrypted message from it. Let's pretend we are the code breaker and all we have is the encrypted text:</p>
+
+<p><span class='m'>Lwcjba uig vwb jm xtmiaivb, jcb kmzbiqvbg qa ijaczl.</span></p>
+
+<p>One method of cryptanalysis is called brute force. <span class='term'>Brute force</span> is the technique of trying every single possible key. If the cryptanalyst knows the cipher that the message uses (or at least guesses it), they can just go through every possible key. Because there are only 26 possible keys, it would be easy for a cryptanalyst to write a program than prints the decrypted ciphertext of every possible key and see if any of the outputs make sense. Let's add a brute force feature to our program.</p>
+
+<h3 id="AddingtheBruteForceModetoOurProgram">Adding the Brute Force Mode to Our Program</h3>
+
+<p>First, change lines 7, 9, and 12 (which are in the <span class='m'>getMode()</span> function) to look like the following (the changes are in bold):</p>
+
+<div class='sourcecode'><ol start='5'>
+<li>def getMode():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Do you wish to encrypt or decrypt <b>or brute force</b> a message?')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mode = input().lower()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if mode in 'encrypt e decrypt d <b>brute b</b>'.split():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return mode[0]</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Enter either "encrypt" or "e" or "decrypt" or "d"<b> or "brute" or "b"</b>.')</li>
+</ol></div>
+
+<p>This will let us select "brute force" as a mode for our program. Then modify and add the following changes to the main part of the program:</p>
+
+<div class='sourcecode'><ol start='52'>
+<li>mode = getMode()</li>
+<li>message = getMessage()</li>
+<li><b>if mode[0] != 'b':</b></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;key = getKey()</li>
+<li></li>
+<li>print('Your translated text is:')</li>
+<li><b>if mode[0] != 'b':</b></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print(getTranslatedMessage(mode, message, key))</li>
+<li><b>else:</b></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<b>for key in range(1, MAX_KEY_SIZE + 1):</b></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>print(key, getTranslatedMessage('decrypt', message, key))</b></li>
+</ol></div>
+
+<p>These changes make our program ask the user for a key if they are not in "brute force" mode. If they are not in "brute force" mode, then the original <span class='m'>getTranslatedMessage()</span> call is made and the translated string is printed.</p>
+
+<p>However, otherwise we are in "brute force" mode, and we run a <span class='m'>getTranslatedMessage()</span> loop that iterates from <span class='m'>1</span> all the way up to <span class='m'>MAX_KEY_SIZE</span> (which is <span class='m'>26</span>). Remember that when the <span class='m'>range()</span> function returns a list of integers up to but not including the second parameter, which is why we have <span class='m'>+ 1</span>. This program will print out every possible translation of the message (including the key number used in the translation). Here is a sample run of this modified program:</p>
+
+<div class='sourceblurb pagebreaker' style='font-size: 90%'><!-- createspace dictates font size of 85%-->
+Do you wish to encrypt or decrypt or brute force a message?<br />
+<span class='sampleruninput'>brute</span><br />
+Enter your message:<br />
+<span class='sampleruninput'>Lwcjba uig vwb jm xtmiaivb, jcb kmzbiqvbg qa ijaczl.</span><br />
+Your translated text is:<br />
+1 Kvbiaz thf uva il wslhzhua, iba jlyahpuaf pz hizbyk.<br />
+2 Juahzy sge tuz hk vrkgygtz, haz ikxzgotze oy ghyaxj.<br />
+3 Itzgyx rfd sty gj uqjfxfsy, gzy hjwyfnsyd nx fgxzwi.<br />
+4 Hsyfxw qec rsx fi tpiewerx, fyx givxemrxc mw efwyvh.<br />
+5 Grxewv pdb qrw eh sohdvdqw, exw fhuwdlqwb lv devxug.<br />
+6 Fqwdvu oca pqv dg rngcucpv, dwv egtvckpva ku cduwtf.<br />
+7 Epvcut nbz opu cf qmfbtbou, cvu dfsubjouz jt bctvse.<br />
+<span style='border: solid black 2px;'>8 Doubts may not be pleasant, but certainty is absurd.</span><br />
+9 Cntasr lzx mns ad okdzrzms, ats bdqszhmsx hr zartqc.<br />
+10 Bmszrq kyw lmr zc njcyqylr, zsr acpryglrw gq yzqspb.<br />
+11 Alryqp jxv klq yb mibxpxkq, yrq zboqxfkqv fp xyproa.<br />
+12 Zkqxpo iwu jkp xa lhawowjp, xqp yanpwejpu eo wxoqnz.<br />
+13 Yjpwon hvt ijo wz kgzvnvio, wpo xzmovdiot dn vwnpmy.<br />
+14 Xiovnm gus hin vy jfyumuhn, von wylnuchns cm uvmolx.<br />
+15 Whnuml ftr ghm ux iextltgm, unm vxkmtbgmr bl tulnkw.<br />
+16 Vgmtlk esq fgl tw hdwsksfl, tml uwjlsaflq ak stkmjv.<br />
+17 Uflskj drp efk sv gcvrjrek, slk tvikrzekp zj rsjliu.<br />
+18 Tekrji cqo dej ru fbuqiqdj, rkj suhjqydjo yi qrikht.<br />
+19 Sdjqih bpn cdi qt eatphpci, qji rtgipxcin xh pqhjgs.<br />
+20 Rciphg aom bch ps dzsogobh, pih qsfhowbhm wg opgifr.<br />
+21 Qbhogf znl abg or cyrnfnag, ohg pregnvagl vf nofheq.<br />
+22 Pagnfe ymk zaf nq bxqmemzf, ngf oqdfmuzfk ue mnegdp.<br />
+23 Ozfmed xlj yze mp awpldlye, mfe npceltyej td lmdfco.<br />
+24 Nyeldc wki xyd lo zvokckxd, led mobdksxdi sc klcebn.<br />
+25 Mxdkcb vjh wxc kn yunjbjwc, kdc lnacjrwch rb jkbdam.<br />
+26 Lwcjba uig vwb jm xtmiaivb, jcb kmzbiqvbg qa ijaczl.<br />
+</div>
+
+<p>After looking over each row, you can see that the 8th message is not garbage, but plain English! The cryptanalyst can deduce that the original key for this encrypted text must have been <span class='m'>8</span>. This brute force would have been difficult to do back in the days of Caesars and the Roman Empire, but today we have computers that can quickly go through millions or even billions of keys in a short time. You can even write a program that can recognize when it has found a message in English, so you don't have read through all the garbage text.</p>
+
+<h2 id="SummaryReviewingOurCaesarCipherProgram">Summary: Reviewing Our Caesar Cipher Program</h2>
+
+
+<p>Computers are very good at doing mathematics. When we create a system to translate some piece of information into numbers (such as we do with text and ASCII or with space and coordinate systems), computer programs can process these numbers very quickly and efficiently.</p>
+
+<p>But while our Caesar cipher program here can encrypt messages that will keep them secret from people who have to figure it out with pencil and paper, it won't keep it secret from people who know how to get computers to process information for them. (Our brute force mode proves this.) And there are other cryptographic ciphers that are so advanced that nobody knows how to decrypt the secret messages they make. (Except for the people with the key of course!)</p>
+
+<p>A large part of figuring out how to write a program is figuring out how to represent the information you want to manipulate as numbers. I hope this chapter has especially shown you how this can be done. The next chapter will present our final game, Reversi (also known as Othello). The AI that plays this game will be much more advanced than the AI that played Tic Tac Toe in chapter 9. In fact, the AI is so good, that you'll find that most of the time you will be unable to beat it!</p>
+
+
+
+
+
+<table border='0' width='100%'><tr><td><a href='chapter13.html'>Go to Chapter 13 - Sonar Treasure Hunt</a></td><td align='right'><a href='chapter15.html'>Go to Chapter 15 - Reversi</a></td></tr></table>
+<div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
+
+
+
+
+
+</body>
+</html>

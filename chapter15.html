@@ -1,0 +1,1359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-5459430-3");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<meta http-equiv="Content-Type" content="text/html;charset=us-ascii" />
+<title>IYOCGwP, Chapter 15 - Reversi</title>
+<link rel="stylesheet" href="inventbook.css" type="text/css" media="all" />
+</head>
+<body class='chapter15body'>
+
+<table border='0' width='100%'><tr><td><a href='chapter14.html'>Go to Chapter 14 - Caesar Cipher</a></td><td align='right'><a href='chapter16.html'>Go to Chapter 16 - AI Simulation</a></td></tr></table>
+<div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
+
+
+<div style='height: 350px;'><img src='images/chap15.png'></div>
+
+<div class='inthischapter'><h3 id="TopicsCoveredInThisChapter">Topics Covered In This Chapter:</h3>
+<ul>
+<li>The <span class='m'>bool()</span> Function</li>
+<li>Evaluating Non-Boolean Values as Booleans</li>
+</ul></div>
+
+<h2 id="HowtoPlayReversi">How to Play Reversi</h2>
+
+<p>In this chapter we will make a game called Reversi. Reversi (also called Othello) is a board game that is played on a grid (so we will use a Cartesian coordinate system with XY coordinates, like we did with Sonar.) It is a game played with two players. Our version of the game will have a computer AI that is more advanced than the AI we made for Tic Tac Toe. In fact, this AI is so good that it will probably beat you almost every time you play. (I know I lose whenever I play against it!)</p>
+
+<p>If you would like to see a video of Reversi being played, there is a demonstration on this book's website. Go to the URL <a href='http://inventwithpython.com/videos'>http://inventwithpython.com/videos</a> and find the "Reversi Demo Video" video.</p>
+
+<p>Reversi has an 8 x 8 board with tiles that are black on one side and white on the other (our game will use O's and X's though). The starting board looks like Figure 15-1. Each player takes turn placing down a new tile of their color. Any of the opponent's tiles that are between the new tile and the other tiles of that color is flipped. The goal of the game is to have as many of the tiles with your color as possible. For example, Figure 15-2 is what it looks like if the white player places a new white tile on space 5, 6.</p>
+
+<table border='0' class='centeredImageP'>
+<tr><td style='width: 280px;'><img src='images/15-1.png' alt='' class='centeredImage' /></td><td style='width: 280px;'><img src='images/15-2.png' alt='' class='centeredImage' /></td></tr>
+<tr><td>Figure 15-1: The starting Reversi board<br />has two white tiles and two black tiles.</td><td>Figure 15-2: White places a new tile.</td></tr>
+</table>
+
+<p>The black tile at 5, 5 is in between the new white tile and the existing white tile at 5, 4. That black tile is flipped over and becomes a new white tile, making the board look like Figure 15-3. Black makes a similar move next, placing a black tile on 4, 6 which flips the white tile at 4, 5. This results in a board that looks like Figure 15-4.</p>
+
+<table border='0' class='centeredImageP'>
+<tr><td style='width: 280px;'><img src='images/15-3.png' alt='' class='centeredImage' /></td><td style='width: 280px;'><img src='images/15-4.png' alt='' class='centeredImage' /></td></tr>
+<tr><td>Figure 15-3: White's move will<br />flip over one of black's tiles.</td><td>Figure 15-4: Black places a new tile,<br />which flips over one of white's tiles.</td></tr>
+</table>
+
+
+<p>Tiles in all directions are flipped as long as they are in between the player's new tile and existing tile. In Figure 15-5, the white player places a tile at 3, 6 and flips black tiles in both directions (marked by the lines.) The result is in Figure 15-6.</p>
+
+<table border='0' class='centeredImageP'>
+<tr><td style='width: 280px;'><img src='images/15-5.png' alt='' class='centeredImage' /></td><td style='width: 280px;'><img src='images/15-6.png' alt='' class='centeredImage' /></td></tr>
+<tr><td>Figure 15-5: White's second move<br />at 3, 6 will flip two of black's tiles.</td><td>Figure 15-6: The board after white's second move.</td></tr>
+</table>
+
+<p>As you can see, each player can quickly grab a majority of the tiles on the board in just one or two moves. Players must always make a move that captures at least one tile. The game ends when a player either cannot make a move, or the board is completely full. The player with the most tiles of their color wins.</p>
+
+<p>The basic strategy of Reversi is to look at which move would turn over the most tiles. But you should also consider taking a move that will not let your opponent recapture many tiles after your move. Placing a tile on the sides or, even better, the corners is good because there is less chance that those tiles will end up between your opponent's tiles. The AI we make for this game will simply look for any corner moves they can take. If there are no corner moves available, then the computer will select the move that claims the most tiles.</p>
+
+<p>You can learn more about Reversi from Wikipedia: <a href='http://en.wikipedia.org/wiki/Reversi'>http://en.wikipedia.org/wiki/Reversi</a></p>
+
+<div class='createspace'><br /><br /></div>
+
+<h2 id="SampleRun">Sample Run</h2>
+
+<p>Notice that our version of Reversi doesn't use black and white tiles because the text that our program creates will always be the same color. Instead, we will use X's and O's to represent the human and computer players.</p>
+
+<div class='samplerun'>
+Welcome to Reversi!<br />
+Do you want to be X or O?<br />
+<span class='sampleruninput'>x</span><br />
+The player will go first.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;8<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+1&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+2&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+3&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+4&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;X&nbsp;|&nbsp;O&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+5&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;O&nbsp;|&nbsp;X&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+6&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+7&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+8&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+You have 2 points. The computer has 2 points.<br />
+Enter your move, or type quit to end the game, or hints to turn off/on hints.<br />
+<span class='sampleruninput'>53</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;8<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+1&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+2&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+3&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;X&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+4&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+5&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;O&nbsp;|&nbsp;X&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+6&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+7&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+8&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+You have 4 points. The computer has 1 points.<br />
+Press Enter to see the computer's move.<br />
+<br />
+<br />
+<i>...skipped for brevity...</i><br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;8<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+1&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+2&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+3&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+4&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;X&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+5&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;X&nbsp;|&nbsp;O&nbsp;|&nbsp;X&nbsp;|&nbsp;O&nbsp;|&nbsp;X&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+6&nbsp;|&nbsp;O&nbsp;|&nbsp;X&nbsp;|&nbsp;O&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+7&nbsp;|&nbsp;O&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+8&nbsp;|&nbsp;O&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;O&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;X&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+You have 12 points. The computer has 48 points.<br />
+Enter your move, or type quit to end the game, or hints to turn off/on hints.<br />
+<span class='sampleruninput'>86</span><br />
+X scored 15 points. O scored 46 points.<br />
+You lost. The computer beat you by 31 points.<br />
+Do you want to play again? (yes or no)<br />
+<span class='sampleruninput'>no</span><br />
+</div>
+
+<p>As you can see, the AI was pretty good at beating me. To help the player out, we'll program our game to provide hints. If the player types <span class='m'>'hints'</span> as their move, they can toggle the hints mode on and off. When hints mode is on, all the possible moves the player can make will show up on the board as <span class='m'>'.'</span> characters, like this:</p>
+
+<div class='sourceblurb' style='font-size: small;'>
+&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;8<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+1&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+2&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;.&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;.&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+3&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+4&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;.&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;X&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+5&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;.&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;O&nbsp;|&nbsp;X&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+6&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;.&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;.&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+7&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+8&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;&nbsp;+---+---+---+---+---+---+---+---+<br />
+</div>
+
+
+<h2 id="ReversisSourceCode">Reversi's Source Code</h2>
+
+<p>Reversi is a mammoth program compared to our previous games. It comes in over 300 lines long! (But don't worry, many of these lines are just comments or blank lines to space out the code and make it more readable.) As always, you don't have to type in the program before reading this chapter. And you can also download the program by going to this book's website at the URL, <a href='http://inventwithpython.com/chapter15'>http://inventwithpython.com/chapter15</a> and following the instructions online.</p>
+
+<p>As with our other programs, we will first create several functions to carry out Reversi-related tasks that the main section of our program will call. Roughly the first 250 lines of code are for these helper functions, and the last 50 lines of code implement the Reversi game itself.</p>
+
+<div class='sourcecode'><span class='sourcecodeHeader'>reversi.py</span><br /><span class='sourcecodeSubHeader'>This code can be downloaded from <a href='http://inventwithpython.com/reversi.py'>http://inventwithpython.com/reversi.py</a><br />If you get errors after typing this code in, compare it to the book's code with the online diff tool at <a href='http://inventwithpython.com/diff'>http://inventwithpython.com/diff</a> or email the author at <a href="mailto:al@inventwithpython.com">al@inventwithpython.com</a></span><br /><ol start='1'>
+<li># Reversi</li>
+<li></li>
+<li>import random</li>
+<li>import sys</li>
+<li></li>
+<li>def drawBoard(board):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# This function prints out the board that it was passed. Returns None.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;HLINE = '&nbsp;&nbsp;+---+---+---+---+---+---+---+---+'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;VLINE = '&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|'</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;8')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print(HLINE)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for y in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(VLINE)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(y+1, end=' ')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for x in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('| %s' % (board[x][y]), end=' ')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('|')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(VLINE)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(HLINE)</li>
+<li></li>
+<li></li>
+<li>def resetBoard(board):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Blanks out the board it is passed, except for the original starting position.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for x in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for y in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;board[x][y] = ' '</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Starting pieces:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;board[3][3] = 'X'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;board[3][4] = 'O'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;board[4][3] = 'O'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;board[4][4] = 'X'</li>
+<li></li>
+<li></li>
+<li>def getNewBoard():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Creates a brand new, blank board data structure.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;board = []</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;board.append([' '] * 8)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return board</li>
+<li></li>
+<li></li>
+<li>def isValidMove(board, tile, xstart, ystart):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns False if the player's move on space xstart, ystart is invalid.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# If it is a valid move, returns a list of spaces that would become the player's if they made a move here.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if board[xstart][ystart] != ' ' or not isOnBoard(xstart, ystart):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return False</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;board[xstart][ystart] = tile # temporarily set the tile on the board.</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if tile == 'X':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;otherTile = 'O'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;otherTile = 'X'</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;tilesToFlip = []</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for xdirection, ydirection in [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x, y = xstart, ystart</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x += xdirection # first step in the direction</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y += ydirection # first step in the direction</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isOnBoard(x, y) and board[x][y] == otherTile:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# There is a piece belonging to the other player next to our piece.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x += xdirection</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y += ydirection</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if not isOnBoard(x, y):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while board[x][y] == otherTile:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x += xdirection</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y += ydirection</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if not isOnBoard(x, y): # break out of while loop, then continue in for loop</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if not isOnBoard(x, y):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if board[x][y] == tile:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# There are pieces to flip over. Go in the reverse direction until we reach the original space, noting all the tiles along the way.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x -= xdirection</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y -= ydirection</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if x == xstart and y == ystart:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tilesToFlip.append([x, y])</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;board[xstart][ystart] = ' ' # restore the empty space</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if len(tilesToFlip) == 0: # If no tiles were flipped, this is not a valid move.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return tilesToFlip</li>
+<li></li>
+<li></li>
+<li>def isOnBoard(x, y):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns True if the coordinates are located on the board.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return x &gt;= 0 and x &lt;= 7 and y &gt;= 0 and y &lt;=7</li>
+<li></li>
+<li></li>
+<li>def getBoardWithValidMoves(board, tile):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns a new board with . marking the valid moves the given player can make.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;dupeBoard = getBoardCopy(board)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for x, y in getValidMoves(dupeBoard, tile):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dupeBoard[x][y] = '.'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return dupeBoard</li>
+<li></li>
+<li></li>
+<li>def getValidMoves(board, tile):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns a list of [x,y] lists of valid moves for the given player on the given board.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;validMoves = []</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for x in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for y in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isValidMove(board, tile, x, y) != False:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;validMoves.append([x, y])</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return validMoves</li>
+<li></li>
+<li></li>
+<li>def getScoreOfBoard(board):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Determine the score by counting the tiles. Returns a dictionary with keys 'X' and 'O'.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;xscore = 0</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;oscore = 0</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for x in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for y in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if board[x][y] == 'X':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xscore += 1</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if board[x][y] == 'O':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oscore += 1</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return {'X':xscore, 'O':oscore}</li>
+<li></li>
+<li></li>
+<li>def enterPlayerTile():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Let's the player type which tile they want to be.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns a list with the player's tile as the first item, and the computer's tile as the second.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;tile = ''</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while not (tile == 'X' or tile == 'O'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Do you want to be X or O?')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tile = input().upper()</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# the first element in the tuple is the player's tile, the second is the computer's tile.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if tile == 'X':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return ['X', 'O']</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return ['O', 'X']</li>
+<li></li>
+<li></li>
+<li>def whoGoesFirst():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Randomly choose the player who goes first.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if random.randint(0, 1) == 0:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 'computer'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 'player'</li>
+<li></li>
+<li></li>
+<li>def playAgain():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# This function returns True if the player wants to play again, otherwise it returns False.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Do you want to play again? (yes or no)')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return input().lower().startswith('y')</li>
+<li></li>
+<li></li>
+<li>def makeMove(board, tile, xstart, ystart):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Place the tile on the board at xstart, ystart, and flip any of the opponent's pieces.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns False if this is an invalid move, True if it is valid.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;tilesToFlip = isValidMove(board, tile, xstart, ystart)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if tilesToFlip == False:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return False</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;board[xstart][ystart] = tile</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for x, y in tilesToFlip:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;board[x][y] = tile</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return True</li>
+<li></li>
+<li></li>
+<li>def getBoardCopy(board):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Make a duplicate of the board list and return the duplicate.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;dupeBoard = getNewBoard()</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for x in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for y in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dupeBoard[x][y] = board[x][y]</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return dupeBoard</li>
+<li></li>
+<li></li>
+<li>def isOnCorner(x, y):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns True if the position is in one of the four corners.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return (x == 0 and y == 0) or (x == 7 and y == 0) or (x == 0 and y == 7) or (x == 7 and y == 7)</li>
+<li></li>
+<li></li>
+<li>def getPlayerMove(board, playerTile):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Let the player type in their move.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns the move as [x, y] (or returns the strings 'hints' or 'quit')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;DIGITS1TO8 = '1 2 3 4 5 6 7 8'.split()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Enter your move, or type quit to end the game, or hints to turn off/on hints.')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move = input().lower()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if move == 'quit':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 'quit'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if move == 'hints':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 'hints'</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if len(move) == 2 and move[0] in DIGITS1TO8 and move[1] in DIGITS1TO8:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = int(move[0]) - 1</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = int(move[1]) - 1</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isValidMove(board, playerTile, x, y) == False:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('That is not a valid move. Type the x digit (1-8), then the y digit (1-8).')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('For example, 81 will be the top-right corner.')</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return [x, y]</li>
+<li></li>
+<li></li>
+<li>def getComputerMove(board, computerTile):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Given a board and the computer's tile, determine where to</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# move and return that move as a [x, y] list.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;possibleMoves = getValidMoves(board, computerTile)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# randomize the order of the possible moves</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;random.shuffle(possibleMoves)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# always go for a corner if available.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for x, y in possibleMoves:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isOnCorner(x, y):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return [x, y]</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Go through all the possible moves and remember the best scoring move</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;bestScore = -1</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for x, y in possibleMoves:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dupeBoard = getBoardCopy(board)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;makeMove(dupeBoard, computerTile, x, y)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;score = getScoreOfBoard(dupeBoard)[computerTile]</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if score > bestScore:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bestMove = [x, y]</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bestScore = score</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return bestMove</li>
+<li></li>
+<li></li>
+<li>def showPoints(playerTile, computerTile):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Prints out the current score.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;scores = getScoreOfBoard(mainBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('You have %s points. The computer has %s points.' % (scores[playerTile], scores[computerTile]))</li>
+<li></li>
+<li></li>
+<li></li>
+<li>print('Welcome to Reversi!')</li>
+<li></li>
+<li>while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Reset the board and game.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;mainBoard = getNewBoard()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;resetBoard(mainBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;playerTile, computerTile = enterPlayerTile()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;showHints = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;turn = whoGoesFirst()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('The ' + turn + ' will go first.')</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if turn == 'player':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Player's turn.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if showHints:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;validMovesBoard = getBoardWithValidMoves(mainBoard, playerTile)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawBoard(validMovesBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawBoard(mainBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showPoints(playerTile, computerTile)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move = getPlayerMove(mainBoard, playerTile)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if move == 'quit':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Thanks for playing!')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.exit() # terminate the program</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elif move == 'hints':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showHints = not showHints</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;makeMove(mainBoard, playerTile, move[0], move[1])</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if getValidMoves(mainBoard, computerTile) == []:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;turn = 'computer'</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Computer's turn.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawBoard(mainBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showPoints(playerTile, computerTile)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input('Press Enter to see the computer\'s move.')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x, y = getComputerMove(mainBoard, computerTile)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;makeMove(mainBoard, computerTile, x, y)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if getValidMoves(mainBoard, playerTile) == []:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;turn = 'player'</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Display the final score.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;drawBoard(mainBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;scores = getScoreOfBoard(mainBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('X scored %s points. O scored %s points.' % (scores['X'], scores['O']))</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if scores[playerTile] &gt; scores[computerTile]:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('You beat the computer by %s points! Congratulations!' % (scores[playerTile] - scores[computerTile]))</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;elif scores[playerTile] &lt; scores[computerTile]:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('You lost. The computer beat you by %s points.' % (scores[computerTile] - scores[playerTile]))</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('The game was a tie!')</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if not playAgain():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+</ol></div>
+
+<h2 id="HowtheCodeWorks">How the Code Works</h2>
+
+<h3 id="TheGameBoardDataStructure">The Game Board Data Structure</h3>
+
+<p>Before we get into the code, we should talk about the board data structure. This data structure is a list of lists, just like the one in our previous Sonar game. The list is created so that <span class='m'>board[x][y]</span> will represent the character on space located at position <span class='m'>x</span> on the X-axis (going left/right) and position <span class='m'>y</span> on the Y-axis (going up/down). This character can either be a <span class='m'>' '</span> space character (to represent a blank space), a <span class='m'>'.'</span> period character (to represent a possible move in hint mode), or an <span class='m'>'X'</span> or <span class='m'>'O'</span> (to represent a player's tile). Whenever you see a parameter named board, that parameter variable is meant to be this list of lists <span class='m'>board</span> data structure.</p>
+
+<h3 id="ImportingOtherModules">Importing Other Modules</h3>
+
+<div class='sourcecode'><ol start='1'>
+<li># Reversi</li>
+<li></li>
+<li>import random</li>
+<li>import sys</li>
+</ol></div>
+
+<p>We import the <span class='m'>random</span> module for its <span class='m'>randint()</span> and <span class='m'>choice()</span> functions and the <span class='m'>sys</span> module for its <span class='m'>exit()</span> function.</p>
+
+<h3 id="DrawingtheBoardDataStructureontheScreen">Drawing the Board Data Structure on the Screen</h3>
+
+<div class='sourcecode'><ol start='6'>
+<li>def drawBoard(board):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# This function prints out the board that it was passed. Returns None.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;HLINE = '&nbsp;&nbsp;+---+---+---+---+---+---+---+---+'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;VLINE = '&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|'</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;8')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print(HLINE)</li>
+</ol></div>
+
+<p>The <span class='m'>drawBoard()</span> function will print out the current game <span class='m'>board</span> based on the data structure in board. Notice that each square of the board looks like this:</p>
+
+<div class='sourceblurb'>
++---+<br />
+|&nbsp;&nbsp;&nbsp;|<br />
+|&nbsp;X&nbsp;|<br />
+|&nbsp;&nbsp;&nbsp;|<br />
++---+<br />
+</div>
+
+<p>Since we are going to print the string with the horizontal line (and plus signs at the intersections) over and over again, we will store that in a constant variable named <span class='m'>HLINE</span>. There are also lines above and below the very center of X or O tile that are nothing but '|' characters (called "pipe" characters) with three spaces in between. We will store this string in a constant named <span class='m'>VLINE</span>.</p>
+
+<p>Line 11 is the first <span class='m'>print()</span> function call executed, and it prints out the labels for the X-axis along the top of the board. Line 12 prints the top horizontal line of the board.</p>
+
+<div class='sourcecode'><ol start='13'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for y in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(VLINE)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(y+1, end=' ')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for x in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('| %s' % (board[x][y]), end=' ')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('|')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(VLINE)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(HLINE)</li>
+</ol></div>
+
+<p>Printing each row of spaces on the board is fairly repetitive, so we can use a loop here. We will loop eight times, once for each row. Line 15 prints the label for the Y-axis on the left side of the board, and has an <span class='m'>end=' '</span> keyword argument at the end of it to print a single space instead of a new line. This is so we can have another loop (which again loops eight times, once for each space) print out each space (along with the <span class='m'>'X'</span>, <span class='m'>'O'</span>, or <span class='m'>' '</span> character for that space depending on what is stored in <span class='m'>board</span>.)</p>
+
+<p>The <span class='m'>print()</span> function call inside the inner loop also has an <span class='m'>end=' '</span> keyword argument at the end of it, meaning a space character is printed instead of a newline character. This produces the second space in the pipe-space-tile-space string that we print out, over and over for eight times. That will produce a single line on the screen that looks like <span class='m'>'| X | X | X | X | X | X | X | X '</span> (that is, if each of the <span class='m'>board[x][y]</span> values were <span class='m'>'X'</span>). After the inner loop is done, the <span class='m'>print()</span> function call on line 18 prints out the final <span class='m'>'|'</span> character along with a newline (since it does not end with an <span class='m'>end</span> keyword argument).</p>
+
+<p>(The <span class='m'>print()</span>call forces us to always print a newline character or a space at the end of everything we print. If we do not want this last character, then we can always use the <span class='m'>sys.stdout.write()</span> function, which has a single string parameter that it prints out. Be sure to <span class='m'>import sys</span> first before calling this function.)</p>
+
+<p>The code inside the outer <span class='m'>for</span> loop from line 14 to line 20 prints out an entire row of the board like this:</p>
+
+<div class='sourceblurb' style='font-size: small;'>
+|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|<br />
+|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
++---+---+---+---+---+---+---+---+<br />
+</div>
+
+<p>When the <span class='m'>for</span> loop on line 13 prints the row eight times, it forms the entire board (of course, some of the spaces on the board will have <span class='m'>'O'</span> or <span class='m'>' '</span> instead of <span class='m'>'X'</span>):</p>
+
+<div class='sourceblurb' style='font-size: small;'>
+|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|<br />
+|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
++---+---+---+---+---+---+---+---+<br />
+|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|<br />
+|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
++---+---+---+---+---+---+---+---+<br />
+|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|<br />
+|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
++---+---+---+---+---+---+---+---+<br />
+|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|<br />
+|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
++---+---+---+---+---+---+---+---+<br />
+|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|<br />
+|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
++---+---+---+---+---+---+---+---+<br />
+|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|<br />
+|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
++---+---+---+---+---+---+---+---+<br />
+|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|<br />
+|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
++---+---+---+---+---+---+---+---+<br />
+|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
+|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|&nbsp;X&nbsp;|<br />
+|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|<br />
++---+---+---+---+---+---+---+---+<br />
+</div>
+
+<h3 id="ResettingtheGameBoard">Resetting the Game Board</h3>
+
+<p>An important thing to remember is that the coordinates that we print out to the player are from 1 to 8, but the indexes in the <span class='m'>board</span> data structure are from 0 to 7.</p>
+
+<div class='sourcecode'><ol start='23'>
+<li>def resetBoard(board):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Blanks out the board it is passed, except for the original starting position.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for x in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for y in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;board[x][y] = ' '</li>
+</ol></div>
+
+<p>Here we use a loop inside a loop to set the <span class='m'>board</span> data structure to be all single-space strings to make a blank Reversi board. We will call the <span class='m'>resetBoard()</span> function whenever we start a new game and want to remove the tiles from a previous game.</p>
+
+<h3 id="SettingUptheStartingPieces">Setting Up the Starting Pieces</h3>
+
+<div class='sourcecode'><ol start='29'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Starting pieces:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;board[3][3] = 'X'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;board[3][4] = 'O'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;board[4][3] = 'O'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;board[4][4] = 'X'</li>
+</ol></div>
+
+<p>When we start a new game of Reversi, it isn't enough to have a completely blank board. At the very beginning, each player has two tiles already laid down in the very center, so we will also have to set those.</p>
+
+<p>We do not have to return the <span class='m'>board</span> variable, because <span class='m'>board</span> is a reference to a list. Even when we make changes inside the local function's scope, these changes happen to the original list that was passed as an argument. (Remember, this is one way list variables are different from non-list variables.)</p>
+
+<h3 id="CreatingaNewGameBoardDataStructure">Creating a New Game Board Data Structure</h3>
+
+<div class='sourcecode'><ol start='36'>
+<li>def getNewBoard():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Creates a brand new, blank board data structure.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;board = []</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;board.append([' '] * 8)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return board</li>
+</ol></div>
+
+<p>The <span class='m'>getNewBoard()</span> function creates a new board data structure and returns it. Line 38 creates the outer list and stores a reference to this list in <span class='m'>board</span>. Line 40 creates the inner lists using list replication. (<span class='m'>[' '] * 8</span> evaluates to be the same as <span class='m'>[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']</span> but with less typing.) The <span class='m'>for</span> loop here runs line 40 eight times to create the eight inner lists. The spaces represent a completely empty game board.</p>
+
+<p>What <span class='m'>board</span> ends up being is a list of eight lists, and each of those eight lists themselves has eight strings. The result is sixty four (8 x 8 = 64) strings. Each string is (right now) a single space character.</p>
+
+<h3 id="CheckingifaMoveisValid">Checking if a Move is Valid</h3>
+
+<div class='sourcecode'><ol start='45'>
+<li>def isValidMove(board, tile, xstart, ystart):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns False if the player's move on space xstart, ystart is invalid.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# If it is a valid move, returns a list of spaces that would become the player's if they made a move here.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if board[xstart][ystart] != ' ' or not isOnBoard(xstart, ystart):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return False</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;board[xstart][ystart] = tile # temporarily set the tile on the board.</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if tile == 'X':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;otherTile = 'O'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;otherTile = 'X'</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;tilesToFlip = []</li>
+</ol></div>
+
+<p><span class='m'>isValidMove()</span> is one of the more complicated functions. Given a board data structure, the player's tile, and the XY coordinates for player's move, this function should return <span class='m'>True</span> if the Reversi game rules allow a move to those coordinates and <span class='m'>False</span> if they don't.</p>
+
+<p>The easiest check we can do to disqualify a move is to see if the XY coordinates are on the game board or if the space at XY is not empty. This is what the <span class='m'>if</span> statement on line 48 checks for. <span class='m'>isOnBoard()</span> is a function we will write that makes sure both the X and Y coordinates are between <span class='m'>0</span> and <span class='m'>7</span>. We do this on line 48 and 49.</p>
+
+<p>For the purposes of this function, we will go ahead and copy the XY coordinate pointed to by <span class='m'>xstart</span> and <span class='m'>ystart</span> with the player's tile. We set this place on the board back to a space before we leave this function.</p>
+
+<p>The player's tile (either the human player or the computer player) has been passed to us, but we will need to be able to identify the other player's tile. If the player's tile is <span class='m'>'X'</span> then obviously the other player's tile is <span class='m'>'O'</span>, and vice versa.</p>
+
+<p>Finally, if the given XY coordinate ends up as a valid position, we will return a list of all the opponent's tiles that would be flipped by this move.</p>
+
+<div class='sourcecode'><ol start='59'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for xdirection, ydirection in [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]:</li>
+</ol></div>
+
+<p>The <span class='m'>for</span> loop iterates through a list of lists which represent directions you can move on the game board. The game board is a Cartesian coordinate system with an X and Y direction. There are eight directions you can move: up, down, left, right, and the four diagonal directions. Each of the eight 2-item lists in the list on line 59 represents one of these directions. We will move around the board in a direction by adding the first value in the two-item list to our X coordinate, and the second value to our Y coordinate.</p>
+
+<p>Because the X coordinates increase as you go to the right, you can "move" to the right by adding <span class='m'>1</span> to the X coordinate. Moving to the left is the opposite: you would subtract <span class='m'>1</span> (or add <span class='m'>-1</span>) from the X coordinate. We can move up, down, left, and right by adding or subtracting to only one coordinate at a time. But to move diagonally, we need to add or subtract to both coordinates. For example, adding <span class='m'>1</span> to the X coordinate to move right and adding <span class='m'>-1</span> to the Y coordinate to move up would result in moving to the up-right diagonal direction.</p>
+
+<h3 id="CheckingEachoftheEightDirections">Checking Each of the Eight Directions</h3>
+
+<p>Here is a diagram to make it easier to remember which two-item list represents which direction:</p>
+
+
+<p class='centeredImageP'><img src='images/15-7.png' alt='' class='centeredImage' /><br />Figure 15-7: Each two-item list represents one of the eight directions.
+</p>
+
+<div class='sourcecode'><ol start='59'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for xdirection, ydirection in [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x, y = xstart, ystart</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x += xdirection # first step in the direction</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y += ydirection # first step in the direction</li>
+</ol></div>
+
+<p>Line 60 sets an <span class='m'>x</span> and <span class='m'>y</span> variable to be the same value as <span class='m'>xstart</span> and <span class='m'>ystart</span>, respectively. We will change <span class='m'>x</span> and <span class='m'>y</span> to "move" in the direction that <span class='m'>xdirection</span> and <span class='m'>ydirection</span> dictate. <span class='m'>xstart</span> and <span class='m'>ystart</span> will stay the same so we can remember which space we originally intended to check. (Remember, we need to set this place back to a space character, so we shouldn't overwrite the values in them.)</p>
+
+<p>We make the first step in the direction as the first part of our algorithm.</p>
+
+<div class='sourcecode'><ol start='63'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isOnBoard(x, y) and board[x][y] == otherTile:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# There is a piece belonging to the other player next to our piece.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x += xdirection</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y += ydirection</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if not isOnBoard(x, y):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue</li>
+</ol></div>
+
+<p>Remember, in order for this to be a valid move, the first step in this direction must be 1) on the board and 2) must be occupied by the other player's tile. Otherwise there is no chance to flip over any of the opponent's tiles. In that case, the <span class='m'>if</span> statement on line 63 is not <span class='m'>True</span> and execution goes back to the <span class='m'>for</span> statement for the next direction.</p>
+
+<p>But if the first space does have the other player's tile, then we should keep proceeding in that direction until we reach on of our own tiles. If we move off of the board, then we should continue back to the <span class='m'>for</span> statement to try the next direction.</p>
+
+<div class='sourcecode'><ol start='69'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while board[x][y] == otherTile:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x += xdirection</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y += ydirection</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if not isOnBoard(x, y): # break out of while loop, then continue in for loop</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if not isOnBoard(x, y):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue</li>
+</ol></div>
+
+<p>The <span class='m'>while</span> loop on line 69 ensures that <span class='m'>x</span> and <span class='m'>y</span> keep going in the current direction as long as we keep seeing a trail of the other player's tiles. If <span class='m'>x</span> and <span class='m'>y</span> move off of the board, we break out of the <span class='m'>for</span> loop and the flow of execution moves to line 74. What we really want to do is break out of the <span class='m'>while</span> loop but continue in the <span class='m'>for</span> loop. But if we put a <span class='m'>continue</span> statement on line 73, that would only continue to the <span class='m'>while</span> loop on line 69.</p>
+
+<p>Instead, we recheck <span class='m'>not isOnBoard(x, y)</span> on line 74 and then continue from there, which goes to the next direction in the <span class='m'>for</span> statement on line 59. It is important to know that <span class='m'>break</span> and <span class='m'>continue</span> will only break or continue in the loop they are called from, and not an outer loop that contain the loop they are called from.</p>
+
+<h3 id="FindingOutifTherearePiecestoFlipOver">Finding Out if There are Pieces to Flip Over</h3>
+
+<div class='sourcecode'><ol start='76'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if board[x][y] == tile:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# There are pieces to flip over. Go in the reverse direction until we reach the original space, noting all the tiles along the way.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x -= xdirection</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y -= ydirection</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if x == xstart and y == ystart:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tilesToFlip.append([x, y])</li>
+</ol></div>
+
+<p>If the <span class='m'>while</span> loop on line 69 stopped looping because the condition was <span class='m'>False</span>, then we have found a space on the board that holds our own tile or a blank space. Line 76 checks if this space on the board holds one of our tiles. If it does, then we have found a valid move. We will then start a new <span class='m'>while</span> loop, this time subtracting <span class='m'>x</span> and <span class='m'>y</span> to move in the opposite direction we were originally going. We note each space between our tiles on the board by appending the space to the <span class='m'>tilesToFlip</span> list.</p>
+
+<p>We break out of the <span class='m'>while</span> loop once <span class='m'>x</span> and <span class='m'>y</span> have returned to the original position (which was still stored in <span class='m'>xstart</span> and <span class='m'>ystart</span>).</p>
+
+<div class='sourcecode'><ol start='85'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;board[xstart][ystart] = ' ' # restore the empty space</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if len(tilesToFlip) == 0: # If no tiles were flipped, this is not a valid move.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return tilesToFlip</li>
+</ol></div>
+
+<p>We perform this check in all eight directions, and afterwards the <span class='m'>tilesToFlip</span> list will contain the XY coordinates all of our opponent's tiles that would be flipped if the player moved on <span class='m'>xstart</span>, <span class='m'>ystart</span>. Remember, the <span class='m'>isValidMove()</span> function is only checking to see if the original move was valid, it does not actually change the data structure of the game board.</p>
+
+<p>If none of the eight directions ended up flipping at least one of the opponent's tiles, then <span class='m'>tilesToFlip</span> would be an empty list and this move would not be valid. In that case, <span class='m'>isValidMove()</span> should return <span class='m'>False</span>. Otherwise, we should return <span class='m'>tilesToFlip</span>.</p>
+
+<h3 id="CheckingforValidCoordinates">Checking for Valid Coordinates</h3>
+
+<div class='sourcecode'><ol start='91'>
+<li>def isOnBoard(x, y):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns True if the coordinates are located on the board.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return x &gt;= 0 and x &lt;= 7 and y &gt;= 0 and y &lt;=7</li>
+</ol></div>
+
+<p><span class='m'>isOnBoard()</span> is a function called from <span class='m'>isValidMove()</span>, and is just shorthand for the rather complicated Boolean expression that returns <span class='m'>True</span> if both <span class='m'>x</span> and <span class='m'>y</span> are in between <span class='m'>0</span> and <span class='m'>7</span>. This function lets us make sure that the coordinates are actually on the game board.</p>
+
+<h3 id="GettingaListwithAllValidMoves">Getting a List with All Valid Moves</h3>
+
+<div class='sourcecode'><ol start='96'>
+<li>def getBoardWithValidMoves(board, tile):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns a new board with . marking the valid moves the given player can make.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;dupeBoard = getBoardCopy(board)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for x, y in getValidMoves(dupeBoard, tile):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dupeBoard[x][y] = '.'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return dupeBoard</li>
+</ol></div>
+
+<p><span class='m'>getBoardWithValidMoves()</span> is used to return a game board data structure that has <span class='m'>'.'</span> characters for all valid moves on the board. This is used by the hints mode to display to the player a board with all possible moves marked on it.</p>
+
+<p>Notice that this function creates a duplicate game board data structure instead of modifying the one passed to it in the <span class='m'>board</span> parameter. Line 100 calls <span class='m'>getValidMoves()</span>, which returns a list of XY coordinates with all the legal moves the player could make. The board copy is then marked with a period in those spaces. How <span class='m'>getValidMoves()</span> works is described next.</p>
+
+<div class='sourcecode'><ol start='105'>
+<li>def getValidMoves(board, tile):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns a list of [x,y] lists of valid moves for the given player on the given board.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;validMoves = []</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for x in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for y in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isValidMove(board, tile, x, y) != False:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;validMoves.append([x, y])</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return validMoves</li>
+</ol></div>
+
+<p>The <span class='m'>getValidMoves()</span> function returns a list of two-item lists that hold the XY coordinates for all valid moves for tile's player, given a particular game board data structure in <span class='m'>board</span>.</p>
+
+<p>This function uses two loops to check every single XY coordinate (all sixty four of them) by calling <span class='m'>isValidMove()</span> on that space and checking if it returns <span class='m'>False</span> or a list of possible moves (in which case it is a valid move). Each valid XY coordinate is appended to the list, <span class='m'>validMoves</span>.</p>
+
+<h2 id="TheboolFunction">The <span class='m'>bool()</span> Function</h2>
+
+
+<p>Remember how you could use the <span class='m'>int()</span> and <span class='m'>str()</span> functions to get the integer and string value of other data types? For example, <span class='m'>str(42)</span> would return the string <span class='m'>'42'</span>, and <span class='m'>int('100')</span> would return the integer <span class='m'>100</span>.</p>
+
+<p>There is a similar function for the Boolean data type, <span class='m'>bool()</span>. Most other data types have one value that is considered the <span class='m'>False</span> value for that data type, and every other value is consider <span class='m'>True</span>. The integer <span class='m'>0</span>, the floating point number <span class='m'>0.0</span>, the empty string, the empty list, and the empty dictionary are all considered to be <span class='m'>False</span> when used as the condition for an <span class='m'>if</span> or loop statement. All other values are <span class='m'>True</span>. Try entering the following into the interactive shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; bool(0)<br />
+False<br />
+&gt;&gt;&gt; bool(0.0)<br />
+False<br />
+&gt;&gt;&gt; bool('')<br />
+False<br />
+&gt;&gt;&gt; bool([])<br />
+False<br />
+&gt;&gt;&gt; bool({})<br />
+False<br />
+&gt;&gt;&gt; bool(1)<br />
+True<br />
+&gt;&gt;&gt; bool('Hello')<br />
+True<br />
+&gt;&gt;&gt; bool([1, 2, 3, 4, 5])<br />
+True<br />
+&gt;&gt;&gt; bool({'spam':'cheese', 'fizz':'buzz'})<br />
+True<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>Whenever you have a condition, imagine that the entire condition is placed inside a call to <span class='m'>bool()</span> as the parameter. Conditions are automatically interpreted as Boolean values. This is similar to how <span class='m'>print()</span> can be passed non-string values and will automatically interpret them as strings when they print.</p>
+
+<p>This is why the condition on line 111 works correctly. The call to the <span class='m'>isValidMove()</span> function either returns the Boolean value <span class='m'>False</span> or a non-empty list. If you imagine that the entire condition is placed inside a call to <span class='m'>bool()</span>, then the condition <span class='m'>False</span> becomes <span class='m'>bool(False)</span> (which, of course, evalutes to <span class='m'>False</span>). And a condition of a non-empty list placed as the parameter to <span class='m'>bool()</span> will return <span class='m'>True</span>. This is why the return value of <span class='m'>isValidMove()</span> can be used as a condition.</p>
+
+<h3 id="GettingtheScoreoftheGameBoard">Getting the Score of the Game Board</h3>
+
+<div class='sourcecode'><ol start='116'>
+<li>def getScoreOfBoard(board):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Determine the score by counting the tiles. Returns a dictionary with keys 'X' and 'O'.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;xscore = 0</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;oscore = 0</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for x in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for y in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if board[x][y] == 'X':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xscore += 1</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if board[x][y] == 'O':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oscore += 1</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return {'X':xscore, 'O':oscore}</li>
+</ol></div>
+
+<p>The <span class='m'>getScoreOfBoard()</span> function uses nested <span class='m'>for</span> loops to check all 64 spaces on the board (8 rows times 8 columns per row is 64 spaces) and see which tile (if any) is on them. For each <span class='m'>'X'</span> tile, the code increments <span class='m'>xscore</span>. For each <span class='m'>'O'</span> tile, the code increments <span class='m'>oscore</span>.</p>
+
+<p>Notice that this function does not return a two-item list of the scores. A two-item list might be a bit confusing, because you may forget which item is for X and which item is for O. Instead the function returns a dictionary with keys <span class='m'>'X'</span> and <span class='m'>'O'</span> whose values are the scores.</p>
+
+<h3 id="GettingthePlayersTileChoice">Getting the Player's Tile Choice</h3>
+
+<div class='sourcecode'><ol start='129'>
+<li>def enterPlayerTile():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Let's the player type which tile they want to be.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns a list with the player's tile as the first item, and the computer's tile as the second.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;tile = ''</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while not (tile == 'X' or tile == 'O'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Do you want to be X or O?')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tile = input().upper()</li>
+</ol></div>
+
+<p>This function asks the player which tile they want to be, either <span class='m'>'X'</span> or <span class='m'>'O'</span>. The <span class='m'>for</span> loop will keep looping until the player types in <span class='m'>'X'</span> or <span class='m'>'O'</span>.</p>
+
+<div class='sourcecode'><ol start='137'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# the first element in the tuple is the player's tile, the second is the computer's tile.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if tile == 'X':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return ['X', 'O']</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return ['O', 'X']</li>
+</ol></div>
+
+<p>The <span class='m'>enterPlayerTile()</span> function then returns a two-item list, where the player's tile choice is the first item and the computer's tile is the second. We use a list here instead of a dictionary so that the assignment statement calling this function can use the multiple assignment trick. (See line 252.)</p>
+
+<h3 id="DeterminingWhoGoesFirst">Determining Who Goes First</h3>
+
+<div class='sourcecode'><ol start='144'>
+<li>def whoGoesFirst():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Randomly choose the player who goes first.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if random.randint(0, 1) == 0:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 'computer'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 'player'</li>
+</ol></div>
+
+<p>The <span class='m'>whoGoesFirst()</span> function randomly selects who goes first, and returns either the string <span class='m'>'computer'</span> or the string <span class='m'>'player'</span>.</p>
+
+<h3 class='pagebreaker' id="AskingthePlayertoPlayAgain">Asking the Player to Play Again</h3>
+
+<div class='sourcecode'><ol start='152'>
+<li>def playAgain():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# This function returns True if the player wants to play again, otherwise it returns False.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Do you want to play again? (yes or no)')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return input().lower().startswith('y')</li>
+</ol></div>
+
+<p>We have used the <span class='m'>playAgain()</span> in our previous games. If the player types in something that begins with <span class='m'>'y'</span>, then the function returns <span class='m'>True</span>. Otherwise the function returns <span class='m'>False</span>.</p>
+
+<h3 id="PlacingDownaTileontheGameBoard">Placing Down a Tile on the Game Board</h3>
+
+<div class='sourcecode'><ol start='158'>
+<li>def makeMove(board, tile, xstart, ystart):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Place the tile on the board at xstart, ystart, and flip any of the opponent's pieces.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns False if this is an invalid move, True if it is valid.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;tilesToFlip = isValidMove(board, tile, xstart, ystart)</li>
+</ol></div>
+
+<p><span class='m'>makeMove()</span> is the function we call when we want to place a tile on the board and flip the other tiles according to the rules of Reversi. This function modifies the <span class='m'>board</span> data structure that is passed as a parameter directly. Changes made to the <span class='m'>board</span> variable (because it is a list) will be made to the global scope as well. Most of the work is done by <span class='m'>isValidMove()</span>, which returns a list of XY coordinates (in a two-item list) of tiles that need to be flipped. (Remember, if the the <span class='m'>xstart</span> and <span class='m'>ystart</span> arguments point to an invalid move, then <span class='m'>isValidMove()</span> will return the Boolean value <span class='m'>False</span>.)</p>
+
+<div class='sourcecode'><ol start='163'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if tilesToFlip == False:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return False</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;board[xstart][ystart] = tile</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for x, y in tilesToFlip:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;board[x][y] = tile</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return True</li>
+</ol></div>
+
+<p>On lines 163 and 164, if the return value of <span class='m'>isValidMove()</span> was <span class='m'>False</span>, then <span class='m'>makeMove()</span> will also return <span class='m'>False</span>.</p>
+
+<p>Otherwise, <span class='m'>isValidMove()</span> would have returned a list of spaces on the board to put down our tiles (the <span class='m'>'X'</span> or <span class='m'>'O'</span> string in tile). Line 166 sets the space that the player has moved on, and the <span class='m'>for</span> loop after that sets all the tiles that are in <span class='m'>tilesToFlip</span>.</p>
+
+<h3 id="CopyingtheBoardDataStructure">Copying the Board Data Structure</h3>
+
+<div class='sourcecode'><ol start='172'>
+<li>def getBoardCopy(board):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Make a duplicate of the board list and return the duplicate.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;dupeBoard = getNewBoard()</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for x in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for y in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dupeBoard[x][y] = board[x][y]</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return dupeBoard</li>
+</ol></div>
+
+<p><span class='m'>getBoardCopy()</span> is different from <span class='m'>getNewBoard()</span>. <span class='m'>getNewBoad()</span> will create a new game board data structure which has only empty spaces and the four starting tiles. <span class='m'>getBoardCopy()</span> will create a new game board data structure, but then copy all of the pieces in the <span class='m'>board</span> parameter. This function is used by our AI to have a game board that it can change around so that it doesn't have to change the real game board. This is like how you may imagine making moves on a copy of the board in your mind, but not actually put pieces down on the real board.</p>
+
+<p>A call to <span class='m'>getNewBoard()</span> handles getting a fresh game board data structure. Then the two <span class='m'>for</span> loops copy each of the 64 tiles from <span class='m'>board</span> to our duplicate board data structure named <span class='m'>dupeBoard</span>.</p>
+
+<h3 id="DeterminingifaSpaceisonaCorner">Determining if a Space is on a Corner</h3>
+
+<div class='sourcecode'><ol start='183'>
+<li>def isOnCorner(x, y):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns True if the position is in one of the four corners.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return (x == 0 and y == 0) or (x == 7 and y == 0) or (x == 0 and y == 7) or (x == 7 and y == 7)</li>
+</ol></div>
+
+<p>This function is much like <span class='m'>isOnBoard()</span>. Because all Reversi boards are 8 x 8 in size, we only need the XY coordinates to be passed to this function, not a game board data structure itself. This function returns <span class='m'>True</span> if the coordinates are on either (0,0), (7,0), (0,7) or (7,7). Otherwise <span class='m'>isOnCorner()</span> returns <span class='m'>False</span>.</p>
+
+<h3 id="GettingthePlayersMove">Getting the Player's Move</h3>
+
+<div class='sourcecode'><ol start='188'>
+<li>def getPlayerMove(board, playerTile):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Let the player type in their move.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns the move as [x, y] (or returns the strings 'hints' or 'quit')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;DIGITS1TO8 = '1 2 3 4 5 6 7 8'.split()</li>
+</ol></div>
+
+<p>The <span class='m'>getPlayerMove()</span> function is called to let the player type in the coordinates of their next move (and check if the move is valid). The player can also type in <span class='m'>'hints'</span> to turn hints mode on (if it is off) or off (if it is on). The player can also type in <span class='m'>'quit'</span> to quit the game.</p>
+
+<p>The <span class='m'>DIGITS1TO8</span> constant variable is the list <span class='m'>['1', '2', '3', '4', '5', '6', '7', '8']</span>. We create this constant because it is easier type <span class='m'>DIGITS1TO8</span> than the entire list. (We can't use the <span class='m'>isdigit()</span> method because that would allow 0 and 9 to be entered, which are not valid coordinates on our 8x8 board.)</p>
+
+<div class='sourcecode'><ol start='192'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Enter your move, or type quit to end the game, or hints to turn off/on hints.')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move = input().lower()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if move == 'quit':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 'quit'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if move == 'hints':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 'hints'</li>
+</ol></div>
+
+<p>The <span class='m'>while</span> loop will keep looping until the player has typed in a valid move. First we check if the player wants to quit or toggle hints mode, and return the string <span class='m'>'quit'</span> or <span class='m'>'hints'</span>. We use the <span class='m'>lower()</span> method on the string returned by <span class='m'>input()</span> so the player can type <span class='m'>'HINTS'</span> or <span class='m'>'Quit'</span> but still have the command understood by our game.</p>
+
+<p>The code that calls <span class='m'>getPlayerMove()</span> will handle what to do if the player wants to quit or toggle hints mode.</p>
+
+<div class='sourcecode'><ol start='200'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if len(move) == 2 and move[0] in DIGITS1TO8 and move[1] in DIGITS1TO8:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = int(move[0]) - 1</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = int(move[1]) - 1</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isValidMove(board, playerTile, x, y) == False:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+</ol></div>
+
+<p>Our game is expecting that the player would have typed in the XY coordinates of their move as two numbers without anything in between them. The <span class='m'>if</span> statement first checks that the size of the string the player typed in is <span class='m'>2</span>. After that, the <span class='m'>if</span> statement also checks that both <span class='m'>move[0]</span> (the first character in the string) and <span class='m'>move[1]</span> (the second character in the string) are strings that exist in <span class='m'>DIGITS1TO8</span>, which we defined at the beginning of the function.</p>
+
+<p>Remember that our game board data structures have indexes from 0 to 7, not 1 to 8. We show 1 to 8 when we print the board using <span class='m'>drawBoard()</span> because people are used to numbers beginning at 1 instead of 0. So when we convert the strings in <span class='m'>move[0]</span> and <span class='m'>move[1]</span> to integers, we also subtract <span class='m'>1</span>.</p>
+
+<p>Even if the player typed in a correct move, we still need to check that the move is allowed by the rules of Reversi. We do this by calling <span class='m'>isValidMove()</span>, passing the game board data structure, the player's tile, and the XY coordinates of the move. If <span class='m'>isValidMove()</span> returns <span class='m'>False</span>, then we execute the <span class='m'>continue</span> statement so that the flow of execution goes back to the beginning of the <span class='m'>while</span> loop and asks the player for the move again.</p>
+
+<p>If <span class='m'>isValidMove()</span> does not return <span class='m'>False</span>, then we know the player typed in a valid move and we should break out of the <span class='m'>while</span> loop.</p>
+
+<div class='sourcecode'><ol start='207'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('That is not a valid move. Type the x digit (1-8), then the y digit (1-8).')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('For example, 81 will be the top-right corner.')</li>
+</ol></div>
+
+<p>If the <span class='m'>if</span> statement's condition on line 200 was <span class='m'>False</span>, then the player did not type in a valid move. We should display a message instructing them how to type in moves that our Reversi program can understand. Afterwards, the execution moves back to the <span class='m'>while</span> statement on line 192 because line 209 is not only the last line in the else-block, but also the last line in the while-block.</p>
+
+<div class='sourcecode'><ol start='211'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return [x, y]</li>
+</ol></div>
+
+<p>Finally, <span class='m'>getPlayerMove()</span> returns a two-item list with the XY coordinates of the player's valid move.</p>
+
+<h3 id="GettingtheComputersMove">Getting the Computer's Move</h3>
+
+<div class='sourcecode'><ol start='214'>
+<li>def getComputerMove(board, computerTile):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Given a board and the computer's tile, determine where to</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# move and return that move as a [x, y] list.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;possibleMoves = getValidMoves(board, computerTile)</li>
+</ol></div>
+
+<p><span class='m'>getComputerMove()</span> and is where our AI algorithm is implemented. The <span class='m'>getValidMoves()</span> function is very helpful for our AI. Normally we use the results from <span class='m'>getValidMoves()</span> for hints mode. Hints mode will print <span class='m'>'.'</span> period characters on the board to show the player all the potential moves they can make. But if we call <span class='m'>getValidMoves()</span> with the computer AI's tile (in <span class='m'>computerTile</span>), we can get all the possible moves that the computer can make. We will select the best move from this list.</p>
+
+<div class='sourcecode'><ol start='219'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# randomize the order of the possible moves</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;random.shuffle(possibleMoves)</li>
+</ol></div>
+
+<p>First, we are going to use the <span class='m'>random.shuffle()</span> function to randomize the order of moves in the <span class='m'>possibleMoves</span> list. Remember that the <span class='m'>random.shuffle()</span> function will reorder the items in the list that you pass to it. The function also modifies the list directly, much like our <span class='m'>resetBoard()</span> function does with the game board data structure.</p>
+
+<p>We will explain why we want to shuffle the <span class='m'>possibleMoves</span> list, but first let's look at our algorithm.</p>
+
+<h3 id="CornerMovesaretheBestMoves">Corner Moves are the Best Moves</h3>
+
+<div class='sourcecode'><ol start='222'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# always go for a corner if available.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for x, y in possibleMoves:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if isOnCorner(x, y):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return [x, y]</li>
+</ol></div>
+
+<p>First, we loop through every move in <span class='m'>possibleMoves</span> and if any of them are on the corner, we return that as our move. Corner moves are a good idea because once a tile has been placed on the corner, it can never be flipped over. Since <span class='m'>possibleMoves</span> is a list of two-item lists, we use the multiple assignment trick in our <span class='m'>for</span> loop to set <span class='m'>x</span> and <span class='m'>y</span>.</p>
+
+<p>Because we immediately return on finding the first corner move in <span class='m'>possibleMoves</span>, if <span class='m'>possibleMoves</span> contains multiple corner moves we always go with the first one. But since <span class='m'>possibleMoves</span> was shuffled on line 220, it is completely random which corner move is first in the list.</p>
+
+<h3 id="GetaListoftheBestScoringMoves">Get a List of the Best Scoring Moves</h3>
+
+<div class='sourcecode'><ol start='227'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Go through all the possible moves and remember the best scoring move</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;bestScore = -1</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for x, y in possibleMoves:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dupeBoard = getBoardCopy(board)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;makeMove(dupeBoard, computerTile, x, y)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;score = getScoreOfBoard(dupeBoard)[computerTile]</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if score > bestScore:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bestMove = [x, y]</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bestScore = score</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return bestMove</li>
+</ol></div>
+
+<p>If there are no corner moves, we will go through the entire list and find out which move gives us the highest score. The <span class='m'>for</span> loop will set <span class='m'>x</span> and <span class='m'>y</span> to every move in <span class='m'>possibleMoves</span>. <span class='m'>bestMove</span> will be set to the highest scoring move we've found so far, and <span class='m'>bestScore</span> will be set to the best move's score. When the code in the loop finds a move that scores higher than <span class='m'>bestScore</span>, we will store that move and score as the new values of <span class='m'>bestMove</span> and <span class='m'>bestScore</span> (see lines 233, 234, and 235).</p>
+
+<h3 id="SimulateAllPossibleMovesonDuplicateBoardDataStructures">Simulate All Possible Moves on Duplicate Board Data Structures</h3>
+
+<p>In order to figure out the score of the possible move we are currently iterating on, we first make a duplicate game board data structure by calling <span class='m'>getBoardCopy()</span> on line 230. We want a copy so we can modify without changing the real game board data structure stored in the <span class='m'>board</span> variable.</p>
+
+<p>Then we call <span class='m'>makeMove()</span> on line 231, passing the duplicate board (stored in <span class='m'>dupeBoard</span>) instead of the real board. <span class='m'>makeMove()</span> will handle placing the computer's tile and the flipping the player's tiles on the duplicate board.</p>
+
+<p>We call <span class='m'>getScoreOfBoard()</span> on line 232 with the duplicate board, which returns a dictionary where the keys are <span class='m'>'X'</span> and <span class='m'>'O'</span>, and the values are the scores. <span class='m'>getScoreOfBoard()</span> does not know if the computer is <span class='m'>'X'</span> or <span class='m'>'O'</span>, which is why it returns a dictionary with both scores.</p>
+
+<p>By making a duplicate board, we can simulate a future move and test the results of that move without changing the actual game board data structure. This is very helpful in deciding which move is the best possible move to make.</p>
+
+<p>Pretend that <span class='m'>getScoreOfBoard()</span> returns the dictionary <span class='m'>{'X':22, 'O':8}</span> and <span class='m'>computerTile</span> is <span class='m'>'X'</span>. Then <span class='m'>getScoreOfBoard(dupeBoard)[computerTile]</span> would evaluate to <span class='m'>{'X':22, 'O':8}['X']</span>, which would then evaluate to <span class='m'>22</span>. If <span class='m'>22</span> is larger than <span class='m'>bestScore</span>, <span class='m'>bestScore</span> is set to <span class='m'>22</span> and <span class='m'>bestMove</span> is set to the current <span class='m'>x</span> and <span class='m'>y</span> values we are looking at. By the time this <span class='m'>for</span> loop is finished, we can be sure that <span class='m'>bestScore</span> is the highest possible score a move can make, and that move is stored in <span class='m'>bestMove</span>.</p>
+
+<p>You may have noticed that on line 228 we first set <span class='m'>bestScore</span> to <span class='m'>-1</span>. This is so that the first move we look at in our <span class='m'>for</span> loop over <span class='m'>possibleMoves</span> will be set to the first <span class='m'>bestMove</span>. This will guarantee that <span class='m'>bestMove</span> is set to one of the moves when we return it.</p>
+
+<p>Say that the highest scoring move in <span class='m'>possibleMoves</span> would give the computer a score of <span class='m'>42</span>. What if there was more than one move in <span class='m'>possibleMoves</span> that would give this score? The <span class='m'>for</span> loop we use would always go with the first move that scored <span class='m'>42</span> points, because <span class='m'>bestMove</span> and <span class='m'>bestScore</span> only change if the move is greater than the highest score. A tie will not change <span class='m'>bestMove</span> and <span class='m'>bestScore</span>.</p>
+
+<p>We do not always want to go with the first move in the <span class='m'>possibleMoves</span> list if it had not been shuffled on line 220, because that would make our AI predictable by the player. Even though our code always chooses the first of these tied moves, is random which of the moves will be first in the list because the order is random. This ensures that the AI will not be predictable when there is more than one best move.</p>
+
+<h3 id="PrintingtheScorestotheScreen">Printing the Scores to the Screen</h3>
+
+<div class='sourcecode'><ol start='239'>
+<li>def showPoints(playerTile, computerTile):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Prints out the current score.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;scores = getScoreOfBoard(mainBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('You have %s points. The computer has %s points.' % (scores[playerTile], scores[computerTile]))</li>
+</ol></div>
+
+<p><span class='m'>showPoints()</span> simply calls the <span class='m'>getScoreOfBoard()</span> function and then prints out the player's score and the computer's score. Remember that <span class='m'>getScoreOfBoard()</span> returns a dictionary with the keys <span class='m'>'X'</span> and <span class='m'>'O'</span> and values of the scores for the X and O players.</p>
+
+<p>That's all the functions we define for our Reversi game. The code starting on line 246 will implement the actual game and make calls to these functions when they are needed.</p>
+
+<h3 id="TheStartoftheGame">The Start of the Game</h3>
+
+<div class='sourcecode'><ol start='246'>
+<li>print('Welcome to Reversi!')</li>
+<li></li>
+<li>while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Reset the board and game.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;mainBoard = getNewBoard()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;resetBoard(mainBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;playerTile, computerTile = enterPlayerTile()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;showHints = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;turn = whoGoesFirst()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('The ' + turn + ' will go first.')</li>
+</ol></div>
+
+<p>The <span class='m'>while</span> loop on line 248 is the main game loop. The program will loop back to line 248 each time we want to start a new game. First we get a new game board data structure by calling <span class='m'>getNewBoard()</span> and set the starting tiles by calling <span class='m'>resetBoard()</span>. <span class='m'>mainBoard</span> is the main game board data structure we will use for this program. The call to <span class='m'>enterPlayerTile()</span> will let the player type in whether they want to be <span class='m'>'X'</span> or <span class='m'>'O'</span>, which is then stored in <span class='m'>playerTile</span> and <span class='m'>computerTile</span>.</p>
+
+<p><span class='m'>showHints</span> is a Boolean value that determines if hints mode is on or off. We originally set it to off by setting <span class='m'>showHints</span> to <span class='m'>False</span>.</p>
+
+<p>The <span class='m'>turn</span> variable is a string will either have the string value <span class='m'>'player'</span> or <span class='m'>'computer'</span>, and will keep track of whose turn it is. We set turn to the return value of <span class='m'>whoGoesFirst()</span>, which randomly chooses who will go first. We then print out who goes first to the player on line 255.</p>
+
+<h3 id="RunningthePlayersTurn">Running the Player's Turn</h3>
+
+<div class='sourcecode'><ol start='257'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if turn == 'player':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Player's turn.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if showHints:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;validMovesBoard = getBoardWithValidMoves(mainBoard, playerTile)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawBoard(validMovesBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawBoard(mainBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showPoints(playerTile, computerTile)</li>
+</ol></div>
+
+<p>The <span class='m'>while</span> loop that starts on line 257 will keep looping each time the player or computer takes a turn. We will break out of this loop when the current game is over.</p>
+
+<p>Line 258 has an <span class='m'>if</span> statement whose body has the code that runs if it is the player's turn. (The else-block that starts on line 282 has the code for the computer's turn.) The first thing we want to do is display the board to the player. If hints mode is on (which it is if <span class='m'>showHints</span> is <span class='m'>True</span>), then we want to get a board data structure that has <span class='m'>'.'</span> period characters on every space the player could go.</p>
+
+<p>Our <span class='m'>getBoardWithValidMoves()</span> function does that, all we have to do is pass the game board data structure and it will return a copy that also contains <span class='m'>'.'</span> period characters. We then pass this board to the <span class='m'>drawBoard()</span> function on line 262.</p>
+
+<p>If hints mode is off, then we just pass <span class='m'>mainBoard</span> to <span class='m'>drawBoard()</span> on line 264.</p>
+
+<p>After printing out the game board to the player, we also want to print out the current score by calling <span class='m'>showPoints()</span> on line 265.</p>
+
+<div class='sourcecode'><ol start='266'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move = getPlayerMove(mainBoard, playerTile)</li>
+</ol></div>
+
+<p>Next we let the player type in their move. <span class='m'>getPlayerMove()</span> handles this, and its return value is a two-item list of the XY coordinate of the player's move. <span class='m'>getPlayerMove()</span> makes sure that the move the player typed in is a valid move, so we don't have to worry about it here.</p>
+
+<h3 class='pagebreaker' id="HandlingtheQuitorHintsCommands">Handling the Quit or Hints Commands</h3>
+
+<div class='sourcecode'><ol start='267'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if move == 'quit':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Thanks for playing!')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.exit() # terminate the program</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elif move == 'hints':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showHints = not showHints</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;makeMove(mainBoard, playerTile, move[0], move[1])</li>
+</ol></div>
+
+<p>If the player typed in the string <span class='m'>'quit'</span> for their move, then <span class='m'>getPlayerMove()</span> would have returned the string <span class='m'>'quit'</span>. In that case, we should call the <span class='m'>sys.exit()</span> to terminate the program.</p>
+
+<p>If the player typed in the string <span class='m'>'hints'</span> for their move, then <span class='m'>getPlayerMove()</span> would have returned the string <span class='m'>'hints'</span>. In that case, we want to turn hints mode on (if it was off) or off (if it was on). The <span class='m'>showHints = not showHints</span> assignment statement handles both of these cases, because <span class='m'>not False</span> evaluates to <span class='m'>True</span> and <span class='m'>not True</span> evaluates to <span class='m'>False</span>. Then we run the <span class='m'>continue</span> statement to loop back (<span class='m'>turn</span> has not changed, so it will still be the player's turn when we continue).</p>
+
+<h3 id="MakethePlayersMove">Make the Player's Move</h3>
+
+<p>Otherwise, if the player did not quit or toggle hints mode, then we will call <span class='m'>makeMove()</span> to make the player's move on the board.</p>
+
+<div class='sourcecode'><ol start='276'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if getValidMoves(mainBoard, computerTile) == []:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;turn = 'computer'</li>
+</ol></div>
+
+<p>After making the player's move, we call <span class='m'>False</span> to see if the computer could possibly make any moves. If <span class='m'>False</span> returns a blank list, then there are no more moves left that the computer could make (most likely because the board is full). In that case, we break out of the <span class='m'>while</span> loop and end the current game.</p>
+
+<p>Otherwise, we set <span class='m'>turn</span> to <span class='m'>'computer'</span>. The flow of execution skips the else-block and reaches the end of the while-block, so execution jumps back to the <span class='m'>while</span> statement on line 257. This time, however, it will be the computer's turn.</p>
+
+<h3 class='pagebreaker' id="RunningtheComputersTurn">Running the Computer's Turn</h3>
+
+<div class='sourcecode'><ol start='281'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Computer's turn.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawBoard(mainBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showPoints(playerTile, computerTile)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input('Press Enter to see the computer\'s move.')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x, y = getComputerMove(mainBoard, computerTile)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;makeMove(mainBoard, computerTile, x, y)</li>
+</ol></div>
+
+<p>The first thing we do when it is the computer's turn is call <span class='m'>drawBoard()</span> to print out the board to the player. Why do we do this now? Because either the computer was selected to make the first move of the game, in which case we should display the original starting picture of the board to the player before the computer makes its move. Or the player has gone first, and we want to show what the board looks like after the player has moved but before the computer has gone.</p>
+
+<p>After printing out the board with <span class='m'>drawBoard()</span>, we also want to print out the current score with a call to <span class='m'>showPoints()</span> on line 284.</p>
+
+<p>Next we have a call to <span class='m'>input()</span> on line 285 to pause the script while the player can look at the board. This is much like how we use <span class='m'>input()</span> to pause the program in our Jokes chapter. Instead of using a <span class='m'>print()</span> call to print a string before a call to <span class='m'>input()</span>, you can pass the string as a parameter to <span class='m'>input()</span>. <span class='m'>input()</span> has an optional string parameter. The string we pass in this call is <span class='m'>'Press Enter to see the computer\'s move.'</span>.</p>
+
+<p>After the player has looked at the board and pressed Enter (any text the player typed is ignored since we do not assign the return value of <span class='m'>input()</span> to anything), we call <span class='m'>getComputerMove()</span> to get the XY coordinates of the computer's next move. We store these coordinates in variables <span class='m'>x</span> and <span class='m'>y</span>, respectively.</p>
+
+<p>Finally, we pass <span class='m'>x</span> and <span class='m'>y</span>, along with the game board data structure and the computer's tile to the <span class='m'>makeMove()</span> function to change the game board to reflect the computer's move. Our call to <span class='m'>getComputerMove()</span> on line 286 got the computer's move (and stored it in variables <span class='m'>x</span> and <span class='m'>y</span>), and the call to <span class='m'>makeMove()</span> on line 287 makes the move on the board.</p>
+
+<div class='sourcecode'><ol start='289'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if getValidMoves(mainBoard, playerTile) == []:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;turn = 'player'</li>
+</ol></div>
+
+<p>Lines 289 to 292 are very similar to lines 276 to 279. After the computer has made its move, we check if there exist any possible moves the human player can make. If <span class='m'>getValidMoves()</span> returns an empty list, then there are no possible moves. That means the game is over, and we should break out of the <span class='m'>while</span> loop that we are in.</p>
+
+<p>Otherwise, there is at least one possible move the player should make, so we should set <span class='m'>turn</span> to <span class='m'>'player'</span>. There is no more code in the while-block after line 292, so execution loops back to the <span class='m'>while</span> statement on line 257.</p>
+
+<h3 id="DrawingEverythingontheScreen">Drawing Everything on the Screen</h3>
+
+<div class='sourcecode'><ol start='294'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Display the final score.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;drawBoard(mainBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;scores = getScoreOfBoard(mainBoard)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('X scored %s points. O scored %s points.' % (scores['X'], scores['O']))</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if scores[playerTile] &gt; scores[computerTile]:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('You beat the computer by %s points! Congratulations!' % (scores[playerTile] - scores[computerTile]))</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;elif scores[playerTile] &lt; scores[computerTile]:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('You lost. The computer beat you by %s points.' % (scores[computerTile] - scores[playerTile]))</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('The game was a tie!')</li>
+</ol></div>
+
+<p>Line 294 is the first line beyond the while-block that started on line 257. This code is executed when we have broken out of that <span class='m'>while</span> loop, either on line 290 or 277. (The <span class='m'>while</span> statement's condition on line 257 is simply the value <span class='m'>True</span>, so we can only exit the loop through <span class='m'>break</span> statements.)</p>
+
+<p>At this point, the game is over. We should print out the board and scores, and determine who won the game. <span class='m'>getScoreOfBoard()</span> will return a dictionary with keys <span class='m'>'X'</span> and <span class='m'>'O'</span> and values of both players' scores. By checking if the player's score is greater than, less than, or equal to the computer's score, we can know if the player won, if the player lost, or if the player and computer tied.</p>
+
+<p>Subtracting one score from the other is an easy way to see by how much one player won over the other. Our <span class='m'>print()</span> calls on lines 299 and 301 use string interpolation to put the integer result of this subtraction into the string that is printed.</p>
+
+<h3 id="AskthePlayertoPlayAgain">Ask the Player to Play Again</h3>
+
+<div class='sourcecode'><ol start='305'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if not playAgain():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+</ol></div>
+
+<p>The game is now over and the winner has been declared. We should call our <span class='m'>playAgain()</span> function, which returns <span class='m'>True</span> if the player typed in that they want to play another game. If <span class='m'>playAgain()</span> returns <span class='m'>False</span> (which makes the <span class='m'>if</span> statement's condition <span class='m'>True</span>), we break out of the <span class='m'>while</span> loop (the one that started on line 248), and since there are no more lines of code after this while-block, the program terminates.</p>
+
+<p>Otherwise, <span class='m'>playAgain()</span> has returned <span class='m'>True</span> (which makes the <span class='m'>if</span> statement's condition <span class='m'>False</span>), and so execution loops back to the <span class='m'>while</span> statement on line 248 and a new game board is created.</p>
+
+<h2 id="ChangingThedrawBoardFunction">Changing The <span class='m'>drawBoard()</span> Function</h2>
+
+<p>The board we draw for our Reversi game is fairly large. But we could change the <span class='m'>drawBoard()</span> function's code to draw out a much smaller board, while keeping the rest of the game code the same. The new, smaller board would look something like this:</p>
+
+<div class='sourceblurb'>
+&nbsp;&nbsp;12345678<br />
+&nbsp;+--------+<br />
+1|&nbsp;&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;&nbsp;|<br />
+2|&nbsp;&nbsp;&nbsp;XOX&nbsp;&nbsp;|<br />
+3|&nbsp;&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;&nbsp;|<br />
+4|&nbsp;XXXXX&nbsp;&nbsp;|<br />
+5|&nbsp;&nbsp;.OX&nbsp;&nbsp;&nbsp;|<br />
+6|&nbsp;&nbsp;OOO&nbsp;&nbsp;&nbsp;|<br />
+7|&nbsp;..O..&nbsp;&nbsp;|<br />
+8|&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;+--------+<br />
+You have 8 points. The computer has 9 points.<br />
+Enter your move, or type quit to end the game, or hints to turn off/on hints.<br />
+</div>
+
+<p>Here is the code for this new <span class='m'>drawBoard()</span> function, starting at line 6. You can also download this code from <a href='http://inventwithpython.com/reversi_mini.py'>http://inventwithpython.com/reversi_mini.py</a></p>
+
+<div class='sourcecode'><ol start='6'>
+<li>def drawBoard(board):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# This function prints out the board that it was passed. Returns None.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;HLINE = ' +--------+'</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('  12345678')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print(HLINE)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for y in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('%s|' % (y+1), end='')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for x in range(8):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(board[x][y], end='')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('|')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print(HLINE)</li>
+</ol></div>
+
+
+<h2 id="SummaryReviewingtheReversiGame">Summary: Reviewing the Reversi Game</h2>
+
+
+<p>The AI may seem almost unbeatable, but this isn't because the computer is very smart. The strategy it follows is very simple: move on the corner if you can, otherwise make the move that will flip over the most tiles. We could do that, but it would take us a long time to figure out how many tiles would be flipped for every possible valid move we could make. But calculating this for the computer is very simple. The computer isn't smarter than us, it's just much faster!</p>
+
+<p>This game is very similar to Sonar because it makes use of a grid for a board. It is also like the Tic Tac Toe game because there is an AI that plans out the best move for it to take. This chapter only introduced one new concept: using the <span class='m'>bool()</span> function and the fact that empty lists, blank strings, and the integer <span class='m'>0</span> all evaluate to <span class='m'>False</span> in the context of a condition.</p>
+
+<p>Other than that, this game used programming concepts that you already knew! You don't have to know very much about programming in order to create interesting games. However, this game is stretching how far you can get with ASCII art. The board took up almost the entire screen to draw, and the game didn't have any color.</p>
+
+<p>Later in this book, we will learn how to create games with graphics and animation, not just text. We will do this using a module called Pygame, which adds new functions and features to Python so that we can break away from using just text and keyboard input.</p>
+
+
+
+
+<table border='0' width='100%'><tr><td><a href='chapter14.html'>Go to Chapter 14 - Caesar Cipher</a></td><td align='right'><a href='chapter16.html'>Go to Chapter 16 - AI Simulation</a></td></tr></table>
+<div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
+
+
+
+
+
+
+</body>
+</html>

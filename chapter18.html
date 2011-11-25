@@ -1,0 +1,657 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-5459430-3");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<meta http-equiv="Content-Type" content="text/html;charset=us-ascii" />
+<title>IYOCGwP, Chapter 18 - Collision Detection and Input</title>
+<link rel="stylesheet" href="inventbook.css" type="text/css" media="all" />
+</head>
+<body class='chapter18body'>
+
+<table border='0' width='100%'><tr><td><a href='chapter17.html'>Go to Chapter 17 - Graphics and Animation</a></td><td align='right'><a href='chapter19.html'>Go to Chapter 19 - Sound and Images</a></td></tr></table>
+<div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
+
+
+<div style='height: 350px;'><img src='images/chap18.png'></div>
+
+<div class='inthischapter'><h3 id="TopicsCoveredInThisChapter">Topics Covered In This Chapter:</h3>
+<ul>
+<li>Collision Detection</li>
+<li>Don't Modify a List While Iterating Over It</li>
+<li>Keyboard Input in Pygame</li>
+<li>Mouse Input in Pygame</li>
+</ul></div>
+
+<p>A very common behavior in most graphical games is collision detection. <span class='term'>Collision detection</span> is figuring when two things on the screen have touched (that is, collided with) each other. This is used very often in computer games. For example, if the player touches an enemy they may lose health or a game life. Or we may want to know when the player has touched a coin so that they automatically pick it up. Collision detection can help determine if the game character is standing on solid ground, or if there is nothing but empty air underneath them. In our games, collision detection is determining if two rectangles are overlapping each other or not. Our next example program will cover this basic technique.</p>
+
+<p>Later in this chapter, we will look at how our Pygame programs can accept input from the user through the keyboard and the mouse. It's a bit more complicated than calling the <span class='m'>input()</span> function like we did for our text programs. But using the keyboard is much more interactive in GUI programs, and using the mouse isn't even possible in our text games. Knowing these two concepts will make our games more advanced and exciting!</p>
+
+<h2 id="TheCollisionDetectionProgramsSourceCode">The Collision Detection Program's Source Code</h2>
+
+<p>Much of this code is similar to the animation program, so we will skip over explaining how to make the bouncer move and bounce off of the walls. (See the animation program in the previous chapter for an explanation of that code.) We will use a list of <span class='m'>pygame.Rect</span> objects to represent the food squares. Each <span class='m'>pygame.Rect</span> object in the list represents a single food square. On each iteration through the game loop, our program will read each <span class='m'>pygame.Rect</span> object in the list and draw a green square on the window. Every forty iterations through the game loop we will add a new <span class='m'>pygame.Rect</span> to the list so that the screen constantly has new food squares in it.</p>
+
+<p>The bouncer is represented by a dictionary. The dictionary has a key named <span class='m'>'rect'</span> (whose value is a <span class='m'>pygame.Rect</span> object) and a key named <span class='m'>'dir'</span> (whose value is one of the constant direction variables just like we had in last chapter's Animation program). As the bouncer bounces around the window, we check if it collides with any of the food squares. If it does, we delete that food square so that it will no longer be drawn on the screen.</p>
+
+<p>Type the following into a new file and save it as <i>collisionDetection.py</i>. If you don't want to type all of this code, you can download the source from the book's website at <a href='http://inventwithpython.com/chapter18'>http://inventwithpython.com/chapter18</a>.</p>
+
+<div class='sourcecode'><span class='sourcecodeHeader'>collisionDetection.py</span><br /><span class='sourcecodeSubHeader'>This code can be downloaded from <a href='http://inventwithpython.com/collisionDetection.py'>http://inventwithpython.com/collisionDetection.py</a><br />If you get errors after typing this code in, compare it to the book's code with the online diff tool at <a href='http://inventwithpython.com/diff'>http://inventwithpython.com/diff</a> or email the author at <a href="mailto:al@inventwithpython.com">al@inventwithpython.com</a></span><br /><ol start='1'>
+<li>import pygame, sys, random</li>
+<li>from pygame.locals import *</li>
+<li></li>
+<li>def doRectsOverlap(rect1, rect2):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for a, b in [(rect1, rect2), (rect2, rect1)]:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># Check if a's corners are inside b</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ((isPointInsideRect(a.left, a.top, b)) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isPointInsideRect(a.left, a.bottom, b)) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isPointInsideRect(a.right, a.top, b)) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isPointInsideRect(a.right, a.bottom, b))):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return True</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return False</li>
+<li></li>
+<li>def isPointInsideRect(x, y, rect):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if (x &gt; rect.left) and (x &lt; rect.right) and (y &gt; rect.top) and (y &lt; rect.bottom):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return True</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return False</li>
+<li></li>
+<li></li>
+<li><span class='comment'># set up pygame</span></li>
+<li>pygame.init()</li>
+<li>mainClock = pygame.time.Clock()</li>
+<li></li>
+<li><span class='comment'># set up the window</span></li>
+<li>WINDOWWIDTH = 400</li>
+<li>WINDOWHEIGHT = 400</li>
+<li>windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), 0, 32)</li>
+<li>pygame.display.set_caption('Collision Detection')</li>
+<li></li>
+<li><span class='comment'># set up direction variables</span></li>
+<li>DOWNLEFT = 1</li>
+<li>DOWNRIGHT = 3</li>
+<li>UPLEFT = 7</li>
+<li>UPRIGHT = 9</li>
+<li></li>
+<li>MOVESPEED = 4</li>
+<li></li>
+<li><span class='comment'># set up the colors</span></li>
+<li>BLACK = (0, 0, 0)</li>
+<li>GREEN = (0, 255, 0)</li>
+<li>WHITE = (255, 255, 255)</li>
+<li></li>
+<li><span class='comment'># set up the bouncer and food data structures</span></li>
+<li>foodCounter = 0</li>
+<li>NEWFOOD = 40</li>
+<li>FOODSIZE = 20</li>
+<li>bouncer = {'rect':pygame.Rect(300, 100, 50, 50), 'dir':UPLEFT}</li>
+<li>foods = []</li>
+<li>for i in range(20):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;foods.append(pygame.Rect(random.randint(0, WINDOWWIDTH - FOODSIZE), random.randint(0, WINDOWHEIGHT - FOODSIZE), FOODSIZE, FOODSIZE))</li>
+<li></li>
+<li><span class='comment'># run the game loop</span></li>
+<li>while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># check for the QUIT event</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for event in pygame.event.get():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.type == QUIT:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pygame.quit()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.exit()</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;foodCounter += 1</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if foodCounter &gt;= NEWFOOD:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># add new food</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foodCounter = 0</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foods.append(pygame.Rect(random.randint(0, WINDOWWIDTH - FOODSIZE), random.randint(0, WINDOWHEIGHT - FOODSIZE), FOODSIZE, FOODSIZE))</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># draw the black background onto the surface</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;windowSurface.fill(BLACK)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># move the bouncer data structure</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if bouncer['dir'] == DOWNLEFT:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bouncer['rect'].left -= MOVESPEED</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bouncer['rect'].top += MOVESPEED</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if bouncer['dir'] == DOWNRIGHT:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bouncer['rect'].left += MOVESPEED</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bouncer['rect'].top += MOVESPEED</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if bouncer['dir'] == UPLEFT:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bouncer['rect'].left -= MOVESPEED</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bouncer['rect'].top -= MOVESPEED</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if bouncer['dir'] == UPRIGHT:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bouncer['rect'].left += MOVESPEED</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bouncer['rect'].top -= MOVESPEED</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># check if the bouncer has move out of the window</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if bouncer['rect'].top &lt; 0:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># bouncer has moved past the top</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if bouncer['dir'] == UPLEFT:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bouncer['dir'] = DOWNLEFT</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if bouncer['dir'] == UPRIGHT:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bouncer['dir'] = DOWNRIGHT</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if bouncer['rect'].bottom &gt; WINDOWHEIGHT:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># bouncer has moved past the bottom</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if bouncer['dir'] == DOWNLEFT:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bouncer['dir'] = UPLEFT</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if bouncer['dir'] == DOWNRIGHT:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bouncer['dir'] = UPRIGHT</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if bouncer['rect'].left &lt; 0:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># bouncer has moved past the left side</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if bouncer['dir'] == DOWNLEFT:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bouncer['dir'] = DOWNRIGHT</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if bouncer['dir'] == UPLEFT:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bouncer['dir'] = UPRIGHT</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if bouncer['rect'].right &gt; WINDOWWIDTH:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# bouncer has moved past the right side</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if bouncer['dir'] == DOWNRIGHT:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bouncer['dir'] = DOWNLEFT</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if bouncer['dir'] == UPRIGHT:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bouncer['dir'] = UPLEFT</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># draw the bouncer onto the surface</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;pygame.draw.rect(windowSurface, WHITE, bouncer['rect'])</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># check if the bouncer has intersected with any food squares.</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for food in foods[:]:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if doRectsOverlap(bouncer['rect'], food):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foods.remove(food)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># draw the food</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in range(len(foods)):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pygame.draw.rect(windowSurface, GREEN, foods[i])</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># draw the window onto the screen</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;pygame.display.update()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;mainClock.tick(40)</li>
+</ol></div>
+
+<p>When you run this code, this is what the program looks like. The white square (the bouncer) will bounce around the window, and when it collides with the green squares (the food) will disappear from the screen.</p>
+
+
+<p class='centeredImageP'><img src='images/18-1.png' alt='' class='centeredImage' /><br />Figure 18-1: The Collision Detection program.
+</p>
+
+<h3 id="ImportingtheModules">Importing the Modules</h3>
+
+<div class='sourcecode'><ol start='1'>
+<li>import pygame, sys, random</li>
+<li>from pygame.locals import *</li>
+</ol></div>
+
+<p>The collision detection program imports the same things as the Animation program in the last chapter, along with the <span class='m'>random</span> module.</p>
+
+<h3 id="TheCollisionDetectionFunction">The Collision Detection Function</h3>
+
+<div class='sourcecode'><ol start='4'>
+<li>def doRectsOverlap(rect1, rect2):</li>
+</ol></div>
+
+<p>In order to do collision detection, we will need a function that can determine if two rectangles intersect each other or not. Here is a picture of intersecting rectangles (on the left) and rectangles that do not intersect (on the right):</p>
+
+<p class='centeredImageP'><img src='images/18-2.png' alt='' class='centeredImage' /><br />Figure 18-2: Examples of intersecting rectangles (on the left) and rectangles that do not intersect (on the right).</p>
+
+<p>We will make a single function that is passed two <span class='m'>pygame.Rect</span> objects. The function, <span class='m'>doRectsOverlap()</span>, will return <span class='m'>True</span> if they do and <span class='m'>False</span> if they don't.</p>
+
+<p>There is a very simple rule we can follow to determine if rectangles intersect (that is, collide). Look at each of the four corners on both rectangles. If at least one of these eight corners is inside the other rectangle, then we know that the two rectangles have collided. We will use this fact to determine if <span class='m'>doRectsOverlap()</span> returns <span class='m'>True</span> or <span class='m'>False</span>.</p>
+
+<div class='sourcecode'><ol start='5'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for a, b in [(rect1, rect2), (rect2, rect1)]:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># Check if a's corners are inside b</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ((isPointInsideRect(a.left, a.top, b)) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isPointInsideRect(a.left, a.bottom, b)) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isPointInsideRect(a.right, a.top, b)) or</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isPointInsideRect(a.right, a.bottom, b))):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return True</li>
+</ol></div>
+
+<p>Above is the code that checks if one rectangle's corners are inside another. Later we will create a function called <span class='m'>isPointInsideRect()</span> that returns <span class='m'>True</span> if the XY coordinates of the point are inside the rectangle. We call this function for each of the eight corners, and if any of these calls return <span class='m'>True</span>, the <span class='m'>or</span> operators will make the entire condition <span class='m'>True</span>.</p>
+
+<p>The parameters for <span class='m'>doRectsOverlap()</span> are <span class='m'>rect1</span> and <span class='m'>rect2</span>. We first want to check if <span class='m'>rect1</span>'s corners are inside <span class='m'>rect2</span> and then check if <span class='m'>rect2</span>'s corners are in <span class='m'>rect1</span>.</p>
+
+<p>We don't want to repeat the code that checks all four corners for both <span class='m'>rect1</span> and <span class='m'>rect2</span>, so instead we use <span class='m'>a</span> and <span class='m'>b</span> on lines 7 to 10. The <span class='m'>for</span> loop on line 5 uses the multiple assignment trick so that on the first iteration, <span class='m'>a</span> is set to <span class='m'>rect1</span> and <span class='m'>b</span> is set to <span class='m'>rect2</span>. On the second iteration through the loop, it is the opposite. <span class='m'>a</span> is set to <span class='m'>rect2</span> and <span class='m'>b</span> is set to <span class='m'>rect1</span>.</p>
+
+<p>We do this because then we only have to type the code for the <span class='m'>if</span> statement on line 7 once. This is good, because this is a very long <span class='m'>if</span> statement. The less code we have to type for our program, the better.</p>
+
+<div class='sourcecode'><ol start='13'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return False</li>
+</ol></div>
+
+<p>If we never return <span class='m'>True</span> from the previous <span class='m'>if</span> statements, then none of the eight corners we checked are in the other rectangle. In that case, the rectangles did not collide and we return <span class='m'>False</span>.</p>
+
+<h3 id="DeterminingifaPointisInsideaRectangle">Determining if a Point is Inside a Rectangle</h3>
+
+<div class='sourcecode'><ol start='15'>
+<li>def isPointInsideRect(x, y, rect):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if (x &gt; rect.left) and (x &lt; rect.right) and (y &gt; rect.top) and (y &lt; rect.bottom):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return True</li>
+</ol></div>
+
+<p>The <span class='m'>isPointInsideRect()</span> function is used by the <span class='m'>doRectsOverlap()</span> function. <span class='m'>isPointInsideRect()</span> will return <span class='m'>True</span> if the XY coordinates passed to it as the first and second parameters are located "inside" the <span class='m'>pygame.Rect</span> object that is passed as the third parameter. Otherwise, this function returns <span class='m'>False</span>.</p>
+
+<p>Figure 18-3 is an example picture of a rectangle and several dots. The dots and the corners of the rectangle are labeled with coordinates.</p>
+
+<p>The pattern that points inside a rectangle have is an X-coordinate that is greater than the X-coordinate of the left side and less than the X-coordinate of the right side, and a Y-coordinate that is greater than the Y-coordinate of the top side and less than the Y-coordinate of the bottom side. If any of those conditions are false, then the point is outside the rectangle.</p>
+
+<p>We combine all four of these conditions into the <span class='m'>if</span> statement's condition with <span class='m'>and</span> operators because all four of the conditions must be <span class='m'>True</span>.</p>
+
+<p class='centeredImageP'><img src='images/18-3.png' alt='' class='centeredImage' /><br />Figure 18-3: Example of coordinates inside and outside<br />of a rectangle. The (50, 30), (85, 30) and (50, 50) points<br />are inside the rectangle, and all the others are outside.</p>
+
+<div class='sourcecode'><ol start='18'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return False</li>
+</ol></div>
+
+<p>If just one of the four expressions in the condition on line 16 is <span class='m'>False</span>, then we should have <span class='m'>isPointInsideRect()</span> return the value <span class='m'>False</span>.</p>
+
+<p>This function will be called from the <span class='m'>doRectsOverlap()</span> function to see if any of the corners in the two <span class='m'>pygame.Rect</span> objects are inside each other. These two functions give us the power to do collision detection between two rectangles.</p>
+
+<h2 id="ThepygametimeClockObjectandtickMethod">The <span class='m'>pygame.time.Clock</span> Object and <span class='m'>tick()</span> Method</h2>
+
+<p>Much of lines 22 to 43 do the same thing that Animation program in the last chapter did: initialize the Pygame library, set <span class='m'>WINDOWHEIGHT</span> and <span class='m'>WINDOWWIDTH</span>, and put together the color and direction constants. However, line 24 is new:</p>
+
+<div class='sourcecode'><ol start='24'>
+<li>mainClock = pygame.time.Clock()</li>
+</ol></div>
+
+<p>In the previous Animation program, we had a call to <span class='m'>time.sleep(0.02)</span> inside the game loop in order to slow down the program enough so that we could see the blocks moving. The problem with this is that the program might run too fast on fast computers and too slow on slow computers. We want to limit the maximum number of iterations through the game loop there are per second.</p>
+
+<p>A <span class='m'>pygame.time.Clock</span> object can do this for us. You can see on line 125 that we call <span class='m'>mainClock.tick(40)</span> inside the game loop. This call to the <span class='m'>Clock</span> object's <span class='m nw'>tick()</span> method will check if we have iterated through the game loop more than 40 times in the last second. If so, it puts a short sleep into the program for us based on frequently <span class='m'>tick()</span> is being called. This ensures that the game never runs faster than we expect. Be sure to call <span class='m'>tick()</span> only once in the game loop.</p>
+
+
+<h3 id="SettingUptheWindowandDataStructures">Setting Up the Window and Data Structures</h3>
+
+<div class='sourcecode'><ol start='30'>
+<li>pygame.display.set_caption('Collision Detection')</li>
+<li></li>
+<li><span class='comment'># set up the bouncer and food data structures</span></li>
+<li>foodCounter = 0</li>
+<li>NEWFOOD = 40</li>
+<li>FOODSIZE = 20</li>
+</ol></div>
+
+<p>We are going to set up a few variables for the food blocks that appear on the screen. <span class='m'>foodCounter</span> will start at the value <span class='m'>0</span>, <span class='m'>NEWFOOD</span> at <span class='m'>40</span>, and <span class='m'>FOODSIZE</span> at <span class='m'>20</span>.</p>
+
+<div class='sourcecode'><ol start='49'>
+<li>bouncer = {'rect':pygame.Rect(300, 100, 50, 50), 'dir':UPLEFT}</li>
+</ol></div>
+
+<p>We are going to set up a new data structure called <span class='m'>bouncer</span>. <span class='m'>bouncer</span> is a dictionary with two keys. The value stored in the <span class='m'>'rect'</span> key will be a <span class='m'>pygame.Rect</span> object that represents the bouncer's size and position. The value stored in the <span class='m'>'dir'</span> key will be a direction that the bouncer is currently moving. The bouncer will move the same way the blocks did in our previous animation program: moving in diagonal directions and bouncing off of the sides of the window.</p>
+
+<div class='sourcecode'><ol start='50'>
+<li>foods = []</li>
+<li>for i in range(20):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;foods.append(pygame.Rect(random.randint(0, WINDOWWIDTH - FOODSIZE), random.randint(0, WINDOWHEIGHT - FOODSIZE), FOODSIZE, FOODSIZE))</li>
+</ol></div>
+
+<p>Our program will keep track of every food square with a list of <span class='m'>pygame.Rect</span> objects called <span class='m'>foods</span>. At the start of the program, we want to create twenty food squares randomly placed around the screen. We can use the <span class='m'>random.randint()</span> function to come up with random XY coordinates.</p>
+
+<table class='floatTable'><tr><td class='floatTable'>
+
+<p style='float: right;' class='centeredImageP'><img src='images/18-4.png' alt='' class='centeredImage' /><br />Figure 18-4: For a 20 by 20 rectangle, having the top left<br />corner at (400, 200) in a 400 by 400 window would place<br />the rectangle outside of the window. To be inside, the<br />top left corner should be at (380, 200) instead.</p>
+
+<p>On line 52, we will call the <span class='m'>pygame.Rect()</span> constructor function to return a new <span class='m'>pygame.Rect</span> object that will represent the position and size of the food square. The first two parameters for <span class='m'>pygame.Rect()</span> are the XY coordinates of the top left corner. We want the random coordinate to be between 0 and the size of the window minus the size of the food square. If we had the random coordinate between 0 and the size of the window, then the food square might be pushed outside of the window altogether. For example, look at the diagram in Figure 18-4.</p>
+
+<p>The square on the left has an X-coordinate of its top left corner at <span class='m'>380</span>. Because the food square is 20 pixels wide, the right edge of the food square is at 400. (This is because 380 + 20 = 400.) The square on the right has an X-coordinate of its top left corner at 400. Because the food square is 20 pixels wide, the right edge of the food square is at 420, which puts the entire square outside of the window (and not viewable to the user).</p>
+
+<p>The third parameter for <span class='m'>pygame.Rect()</span> is a tuple that contains the width and height of the food square. Both the width and height will be equal to the value in the <span class='m'>FOODSIZE</span> constant.</p>
+
+</td></tr></table>
+
+<h3 id="DrawingtheBouncerontheScreen">Drawing the Bouncer on the Screen</h3>
+
+<p>Lines 71 to 109 cause the bouncer to move around the window and bounce off of the edges of the window. This code is very similar to lines 44 to 83 of our animation program in the last chapter, so we will not go over them again here.</p>
+
+<div class='sourcecode'><ol start='111'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># draw the bouncer onto the surface</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;pygame.draw.rect(windowSurface, WHITE, bouncer['rect'])</li>
+</ol></div>
+
+<p>After moving the bouncer, we now want to draw it on the window in its new position. We call the <span class='m'>pygame.draw.rect()</span> function to draw a rectangle. The <span class='m'>windowSurface</span> passed for the first parameter tells the computer which <span class='m'>pygame.Surface</span> object to draw the rectangle on. The <span class='m'>WHITE</span> variable, which has <span class='m'>(255, 255, 255)</span> stored in it, will tell the computer to draw a white rectangle. The <span class='m'>pygame.Rect</span> object stored in the <span class='m'>bouncer</span> dictionary at the <span class='m'>'rect'</span> key tells the position and size of the rectangle to draw. This is all the information needed to draw a white rectangle on <span class='m'>windowSurface</span>.</p>
+
+<p>Remember, we are not done drawing things on the <span class='m'>windowSurface</span> object yet. We still need to draw a green square for each food square in the <span class='m'>foods</span> list. And we are just "drawing" rectangles on the <span class='m'>windowSurface</span> object, not on the screen. This <span class='m'>pygame.Surface</span> object is only inside the computer's memory, which is much faster to modify than the pixels on the screen. The window on the screen will not be updated until we call the <span class='m'>pygame.display.update()</span> function.</p>
+
+<h2 id="CollidingwiththeFoodSquares">Colliding with the Food Squares</h2>
+
+<div class='sourcecode'><ol start='114'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># check if the bouncer has intersected with any food squares.</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for food in foods[:]:</li>
+</ol></div>
+
+<p>Before we draw the food squares, we want to see if the bouncer has overlapped any of the food squares. If it has, we will remove that food square from the <span class='m'>foods</span> list. This way, the computer won't draw any food squares that the bouncer has "eaten".</p>
+
+<p>On each iteration through the <span class='m'>for</span> loop, the current food square from the <span class='m'>foods</span> (plural) list will be stored inside a variable called <span class='m'>food</span> (singular).</p>
+
+<h3 id="DontAddtoorDeletefromaListwhileIteratingOverIt">Don't Add to or Delete from a List while Iterating Over It</h3>
+
+<p>Notice that there is something slightly different with this <span class='m'>for</span> loop. If you look carefully at line 116, we are not iterating over <span class='m'>foods</span> but actually over <span class='m'>foods[:]</span>. Just as <span class='m nw'>foods[:2]</span> would return a copy of the list with the items from the start and up to (but not including) the item at index 2, and just as <span class='m'>foods[3:]</span> would return a copy of the list with the items from index 3 to the end of the list, <span class='m'>foods[:]</span> will give you a copy of the list with the items from the start to the end. Basically, <span class='m'>foods[:]</span> creates a new list with a copy of all the items in <span class='m'>foods</span>. (This is a shorter way to copy a list than our <span class='m'>getBoardCopy()</span> function in the Tic Tac Toe game.)</p>
+
+<p>Why would we want to iterate over a copy of the list instead of the list itself? It is because we cannot add or remove items from a list while we are iterating over it. Python can lose track of what the next value of <span class='m'>food</span> variable should be if the size of the <span class='m'>foods</span> list is always changing. Think of how difficult it would be for you if you tried to count the number of jelly beans in a jar while someone was adding or removing jelly beans. But if we iterate over a copy of the list (and the copy never changes), then adding or removing items from the original list won't be a problem.</p>
+
+<h3 id="RemovingtheFoodSquares">Removing the Food Squares</h3>
+
+<div class='sourcecode'><ol start='116'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if doRectsOverlap(bouncer['rect'], food):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foods.remove(food)</li>
+</ol></div>
+
+<p>Line 116 is where our <span class='m'>doRectsOverlap()</span> function that we defined earlier comes in handy. We pass two <span class='m'>pygame.Rect</span> objects to <span class='m'>doRectsOverlap()</span>: the bouncer and the current food square. If these two rectangles overlap, then <span class='m'>doRectsOverlap()</span> will return <span class='m'>True</span> and we will remove the overlapping food squares from <span class='m'>foods</span> list.</p>
+
+<h3 id="DrawingtheFoodSquaresontheScreen">Drawing the Food Squares on the Screen</h3>
+
+<div class='sourcecode'><ol start='119'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># draw the food</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in range(len(foods)):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pygame.draw.rect(windowSurface, GREEN, foods[i])</li>
+</ol></div>
+
+<p>The code on lines 120 and 121 are very similar to how we drew the white square for the player. We will loop through each food square in the <span class='m'>foods</span> list, and then draw the rectangle onto the <span class='m'>windowSurface</span> surface. This demonstration of collision detection is fairly easy. This program was very similar to our bouncing program in the previous chapter, except now the bouncing square will "eat" the other squares as it passes over them.</p>
+
+<p>These past few programs are interesting to watch, but the user does not get to actually control anything. In this next program, we will learn how to get input from the keyboard. Keyboard input is handled in Pygame by using events.</p>
+
+<div class='createspace'><br /><br /></div>
+
+<h2 id="TheKeyboardInputProgramsSourceCode">The Keyboard Input Program's Source Code</h2>
+
+<p>Start a new file and type in the following code, then save it as <i>pygameInput.py</i>.</p>
+
+<div class='sourcecode'><span class='sourcecodeHeader'>pygameInput.py</span><br /><span class='sourcecodeSubHeader'>This code can be downloaded from <a href='http://inventwithpython.com/pygameInput.py'>http://inventwithpython.com/pygameInput.py</a><br />If you get errors after typing this code in, compare it to the book's code with the online diff tool at <a href='http://inventwithpython.com/diff'>http://inventwithpython.com/diff</a> or email the author at <a href="mailto:al@inventwithpython.com">al@inventwithpython.com</a></span><br /><ol start='1'>
+<li>import pygame, sys, random</li>
+<li>from pygame.locals import *</li>
+<li></li>
+<li><span class='comment'># set up pygame</span></li>
+<li>pygame.init()</li>
+<li>mainClock = pygame.time.Clock()</li>
+<li></li>
+<li><span class='comment'># set up the window</span></li>
+<li>WINDOWWIDTH = 400</li>
+<li>WINDOWHEIGHT = 400</li>
+<li>windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), 0, 32)</li>
+<li>pygame.display.set_caption('Input')</li>
+<li></li>
+<li><span class='comment'># set up the colors</span></li>
+<li>BLACK = (0, 0, 0)</li>
+<li>GREEN = (0, 255, 0)</li>
+<li>WHITE = (255, 255, 255)</li>
+<li></li>
+<li><span class='comment'># set up the player and food data structure</span></li>
+<li>foodCounter = 0</li>
+<li>NEWFOOD = 40</li>
+<li>FOODSIZE = 20</li>
+<li>player = pygame.Rect(300, 100, 50, 50)</li>
+<li>foods = []</li>
+<li>for i in range(20):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;foods.append(pygame.Rect(random.randint(0, WINDOWWIDTH - FOODSIZE), random.randint(0, WINDOWHEIGHT - FOODSIZE), FOODSIZE, FOODSIZE))</li>
+<li></li>
+<li><span class='comment'># set up movement variables</span></li>
+<li>moveLeft = False</li>
+<li>moveRight = False</li>
+<li>moveUp = False</li>
+<li>moveDown = False</li>
+<li></li>
+<li>MOVESPEED = 6</li>
+<li></li>
+<li></li>
+<li><span class='comment'># run the game loop</span></li>
+<li>while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># check for events</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for event in pygame.event.get():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.type == QUIT:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pygame.quit()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.exit()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.type == KEYDOWN:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># change the keyboard variables</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_LEFT or event.key == ord('a'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveRight = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveLeft = True</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_RIGHT or event.key == ord('d'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveLeft = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveRight = True</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_UP or event.key == ord('w'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveDown = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveUp = True</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_DOWN or event.key == ord('s'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveUp = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveDown = True</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.type == KEYUP:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_ESCAPE:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pygame.quit()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.exit()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_LEFT or event.key == ord('a'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveLeft = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_RIGHT or event.key == ord('d'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveRight = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_UP or event.key == ord('w'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveUp = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_DOWN or event.key == ord('s'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveDown = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == ord('x'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player.top = random.randint(0, WINDOWHEIGHT - player.height)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player.left = random.randint(0, WINDOWWIDTH - player.width)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.type == MOUSEBUTTONUP:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foods.append(pygame.Rect(event.pos[0], event.pos[1], FOODSIZE, FOODSIZE))</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;foodCounter += 1</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if foodCounter &gt;= NEWFOOD:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># add new food</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foodCounter = 0</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foods.append(pygame.Rect(random.randint(0, WINDOWWIDTH - FOODSIZE), random.randint(0, WINDOWHEIGHT - FOODSIZE), FOODSIZE, FOODSIZE))</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># draw the black background onto the surface</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;windowSurface.fill(BLACK)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># move the player</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if moveDown and player.bottom &lt; WINDOWHEIGHT:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player.top += MOVESPEED</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if moveUp and player.top &gt; 0:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player.top -= MOVESPEED</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if moveLeft and player.left &gt; 0:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player.left -= MOVESPEED</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if moveRight and player.right &lt; WINDOWWIDTH:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player.right += MOVESPEED</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># draw the player onto the surface</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;pygame.draw.rect(windowSurface, WHITE, player)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># check if the player has intersected with any food squares.</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for food in foods[:]:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if player.colliderect(food):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foods.remove(food)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># draw the food</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in range(len(foods)):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pygame.draw.rect(windowSurface, GREEN, foods[i])</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># draw the window onto the screen</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;pygame.display.update()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;mainClock.tick(40)</li>
+</ol></div>
+
+<p>This program looks identical to the collision detection program earlier in this chapter. But in this program, the bouncer only moves around when we hold down keys on the keyboard. Holding down the "W" key moves the bouncer up. The "A" key moves the bouncer to the left and the "D" key moves the bouncer to the right. The "S" key moves the bouncer down. You can also move the bouncer by holding down the arrow keys on the keyboard. The user can also use the keyboard's arrow keys.</p>
+
+<p>We can also click anywhere in the GUI window and create new food objects at the coordinates where we clicked. In addition, the ESC key will quit the program and the "X" key will teleport the bouncer to a random place on the screen.</p>
+
+<h3 id="SettingUptheWindowandDataStructures">Setting Up the Window and Data Structures</h3>
+
+<p>First, we set the caption of the window's title bar to the string to <span class='m'>'Mouse'</span> on line 12. We set the caption of the window with a call to <span class='m'>pygame.display.set_caption()</span> the same way as we did in our previous Pygame programs. Next we want to set up some variables that track the movement of the bouncer.</p>
+
+<div class='sourcecode'><ol start='28'>
+<li><span class='comment'># set up movement variables</span></li>
+<li>moveLeft = False</li>
+<li>moveRight = False</li>
+<li>moveUp = False</li>
+<li>moveDown = False</li>
+</ol></div>
+
+<p>We are going to use four different Boolean variables to keep track of which of the arrow keys are being held down. For example, when the user pushes the left arrow key on her keyboard, we will set the <span class='m'>moveLeft</span> variable to <span class='m'>True</span>. When she lets go of the key, we will set the <span class='m'>moveLeft</span> variable back to <span class='m'>False</span>. The "W" key affects the <span class='m'>moveUp</span> variable, the "S" key affects the <span class='m'>moveDown</span> variable, and the "D" key affects the <span class='m'>moveRight</span> variable in a similar way.</p>
+
+<p>Lines 34 to 43 are identical to code in the previous Pygame programs. These lines handle the start of the game loop and handling what to do when the user wants to quit the program. We will skip the explanation for this code here since we have already covered it in the last chapter.</p>
+
+<h3 class='pagebreaker' id="EventsandHandlingtheKEYDOWNEvent">Events and Handling the <span class='m'>KEYDOWN</span> Event</h3>
+
+<table class='simplefulltable' style='width: 570px;'>
+<caption>Table 18-1: Events, and what causes them to be generated.</caption>
+<tr><th style='text-align: left;'>Event</th><th style='text-align: left;'>Description</th></tr>
+<tr><td class='simplefulltdhline'><span class='m'>QUIT</span></td><td class='simplefulltdhline'>Generated when the user closes with window.</td></tr>
+<tr><td class='simplefulltdhline'><span class='m'>KEYDOWN</span></td><td class='simplefulltdhline'>Generated when the user pressed down a key. Has a <span class='m'>key</span> attribute that tells which key was pressed. Also has a <span class='m'>mod</span> attribute that tells if the Shift, Ctrl, Alt, or other keys were held down when this key was pressed.</td></tr>
+<tr><td class='simplefulltdhline'><span class='m'>KEYUP</span></td><td class='simplefulltdhline'>Generated when the user releases a key. Has a <span class='m'>key</span> and <span class='m'>mod</span> attribute that are similar to those for <span class='m'>KEYDOWN</span>.</td></tr>
+<tr><td class='simplefulltdhline'><span class='m'>MOUSEMOTION</span></td><td class='simplefulltdhline'>Generated whenever the mouse moves over the window. Has a <span class='m'>pos</span> attribute that returns tuple (x, y) for the coordinates of where the mouse is in the window. The <span class='m'>rel</span> attribute also returns a (x, y) tuple, but it gives coordinates relative since the last <span class='m'>MOUSEMOTION</span> event. For example, if the mouse moves left by four pixels from (200, 200) to (196, 200), then <span class='m'>rel</span> will be <span class='m'>(-4, 0)</span>. The <span class='m'>buttons</span> attribute returns a tuple of three integers. The first integer in the tuple is for the left mouse button, the second integer for the middle mouse button (if there is a middle mouse button), and the third integer is for the right mouse button. These integers will be <span class='m'>0</span> if they are not being pressed down when the mouse moved and <span class='m'>1</span> if they are pressed down.</td></tr>
+<tr><td class='simplefulltdhline'><span class='m'>MOUSEBUTTONDOWN</span></td><td class='simplefulltdhline'>Generated when a mouse button is pressed down in the window. This event has a <span class='m'>pos</span> attribute which is an (x, y) tuple for the coordinates of where the mouse was when the button was pressed. There is also a <span class='m'>button</span> attribute which is an integer from <span class='m'>1</span> to <span class='m'>5</span> that tells which mouse button was pressed:
+
+<table class='simplefulltable centertable'>
+<tr><th>Value of <span class='m'>button</span></th><th>Mouse Button</th></tr>
+<tr><td style='text-align: center;'>1</td><td style='text-align: center;'>Left button</td></tr>
+<tr><td style='text-align: center;'>2</td><td style='text-align: center;'>Middle button</td></tr>
+<tr><td style='text-align: center;'>3</td><td style='text-align: center;'>Right button</td></tr>
+<tr><td style='text-align: center;'>4</td><td style='text-align: center;'>Scroll wheel moved up</td></tr>
+<tr><td style='text-align: center;'>5</td><td style='text-align: center;'>Scroll wheel moved down</td></tr>
+</table>
+
+</td></tr>
+
+<tr><td><span class='m'>MOUSEBUTTONUP</span></td><td>Generated when the mouse button is released. This has the same attributes as <span class='m'>MOUSEBUTTONDOWN</span></td></tr>
+</table>
+
+
+<p>The code to handle the key press and key release events is below. But at the start of the program, we will set all of these variables to <span class='m'>False</span>.</p>
+
+<div class='sourcecode pagebreaker'><ol start='44'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.type == KEYDOWN:</li>
+</ol></div>
+
+<p>Pygame has another event type called <span class='m'>KEYDOWN</span>. On line 41, we check if the <span class='m'>event.type</span> attribute is equal to the <span class='m'>QUIT</span> value to check if we should exit the program. But there are other events that Pygame can generate. A brief list of the events that could be returned by <span class='m'>pygame.event.get()</span> is in Table 18-1.</p>
+
+<h3 id="SettingtheFourKeyboardVariables">Setting the Four Keyboard Variables</h3>
+
+<div class='sourcecode'><ol start='45'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># change the keyboard variables</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_LEFT or event.key == ord('a'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveRight = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveLeft = True</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_RIGHT or event.key == ord('d'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveLeft = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveRight = True</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_UP or event.key == ord('w'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveDown = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveUp = True</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_DOWN or event.key == ord('s'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveUp = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveDown = True</li>
+</ol></div>
+
+<p>If the event type is <span class='m'>KEYDOWN</span>, then the event object will have a <span class='m'>key</span> attribute that will tell us which key was pressed down. On line 46, we can compare this value to <span class='m'>K_LEFT</span>, which represents the left arrow key on the keyboard. We will do this for each of the arrow keys: <span class='m'>K_LEFT</span>, <span class='m'>K_RIGHT</span>, <span class='m'>K_UP</span>, <span class='m'>K_DOWN</span>.</p>
+
+<p>When one of these keys is pressed down, we will set the corresponding movement variable to <span class='m'>True</span>. We will also set the movement variable of the opposite direction to <span class='m'>False</span>. For example, the program executes lines 47 and 48 when the left arrow key has been pressed. In this case, we will set <span class='m'>moveLeft</span> to <span class='m'>True</span> and <span class='m'>moveRight</span> to <span class='m'>False</span> (even though <span class='m'>moveRight</span> might already be <span class='m'>False</span>, we set it to <span class='m'>False</span> just to be sure).</p>
+
+<p>You may notice that on line 46, in <span class='m'>event.key</span> can either be equal to <span class='m'>K_LEFT</span> or <span class='m'>ord('a')</span>. The value in <span class='m'>event.key</span> is set to the integer ASCII value of the key that was pressed on the keyboard. (There is no ASCII value for the arrow keys, which is why we use the constant variable <span class='m'>K_LEFT</span>.) You can use the <span class='m'>ord()</span> function to get the ASCII value of any single character to compare it with <span class='m'>event.key</span>.</p>
+
+<p>By executing the code on lines 47 and 48 if the keystroke was either <span class='m'>K_LEFT</span> or <span class='m nw'>ord('a')</span>, we make the left arrow key and the A key do the same thing. You may notice that the W, A, S, and D keys are all used as alternates for changing the movement variables. This is because some people may want to use their left hand to press the WASD keys instead of their right hand to press the arrow keys. Our program offers them both!</p>
+
+<h3 id="HandlingtheKEYUPEvent">Handling the <span class='m'><span class='m'>KEYUP</span></span> Event</h3>
+
+<div class='sourcecode'><ol start='58'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.type == KEYUP:</li>
+</ol></div>
+
+<p>When the user releases the key that they are holding down, a <span class='m'>KEYUP</span> event is generated.</p>
+
+<div class='sourcecode'><ol start='59'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_ESCAPE:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pygame.quit()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.exit()</li>
+</ol></div>
+
+<p>If the key that the user released was the Esc key, then we want to terminate the program. Remember, in Pygame you must call the <span class='m'>pygame.quit()</span> function before calling the <span class='m'>sys.exit()</span> function. We want to do this when the user releases the Esc key, not when they first Esc key down.</p>
+
+<p>Lines 62 to 69 will set a movement variable to <span class='m'>False</span> if that direction's key was let go.</p>
+
+<div class='sourcecode'><ol start='62'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_LEFT or event.key == ord('a'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveLeft = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_RIGHT or event.key == ord('d'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveRight = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_UP or event.key == ord('w'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveUp = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == K_DOWN or event.key == ord('s'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moveDown = False</li>
+</ol></div>
+
+<h3 id="TeleportingthePlayer">Teleporting the Player</h3>
+
+<p>If the user released one of the keys that moves the player, then we want to set the movement variable that corresponds with the key to <span class='m'>False</span>. This will tell the later parts of our program to no longer move the player's square on the screen.</p>
+
+<div class='sourcecode'><ol start='70'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.key == ord('x'):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player.top = random.randint(0, WINDOWHEIGHT - player.height)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player.left = random.randint(0, WINDOWWIDTH - player.width)</li>
+</ol></div>
+
+<p>We will also add teleportation to our game. If the user presses the "X" key, then we will set the position of the user's square to a random place on the window. This will give the user the ability to teleport around the window by pushing the "X" key (though they can't control where they will teleport: it's completely random).</p>
+
+
+<h3 id="HandlingtheMOUSEBUTTONUPEvent">Handling the <span class='m'>MOUSEBUTTONUP</span> Event</h3>
+
+<div class='sourcecode'><ol start='74'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if event.type == MOUSEBUTTONUP:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foods.append(pygame.Rect(event.pos[0], event.pos[1], FOODSIZE, FOODSIZE))</li>
+</ol></div>
+
+<p>Mouse input is handled by events just like keyboard input is. The <span class='m'>MOUSEBUTTONUP</span> event occurs when the user clicks a mouse button somewhere in our window, and releases the mouse button. The <span class='m'>pos</span> attribute in the <span class='m'>Event</span> object is set to a tuple of two integers for the XY coordinates. On line 75, the X-coordinate is stored in <span class='m'>event.pos[0]</span> and the Y-coordinate is stored in <span class='m'>event.pos[1]</span>. We will create a new <span class='m'>Rect</span> object to represent a new food and place it where the <span class='m'>MOUSEBUTTONUP</span> event occurred. By adding a new <span class='m'>Rect</span> object to the <span class='m'>foods</span> list, a new food square will be displayed on the screen.</p>
+
+<h3 id="MovingtheBouncerAroundtheScreen">Moving the Bouncer Around the Screen</h3>
+
+<div class='sourcecode'><ol start='86'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># move the player</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if moveDown and player.bottom &lt; WINDOWHEIGHT:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player.top += MOVESPEED</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if moveUp and player.top &gt; 0:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player.top -= MOVESPEED</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if moveLeft and player.left &gt; 0:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player.left -= MOVESPEED</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if moveRight and player.right &lt; WINDOWWIDTH:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player.right += MOVESPEED</li>
+</ol></div>
+
+<p>We have set the movement variables (<span class='m'>moveDown</span>, <span class='m'>moveUp</span>, <span class='m'>moveLeft</span>, and <span class='m'>moveRight</span>) to <span class='m'>True</span> or <span class='m'>False</span> depending on what keys the user has pressed. Now we will actually move the player's square (which is represented by the <span class='m'>pygame.Rect</span> object stored in <span class='m'>player</span>) around by adjusting the XY coordinates of <span class='m'>player</span>. If <span class='m'>moveDown</span> is set to <span class='m'>True</span> (and the bottom of the player's square is not below the bottom edge of the window), then we move the player's square down by adding <span class='m'>MOVESPEED</span> to the player's current <span class='m'>top</span> attribute. We do the same thing for the other three directions as well.</p>
+
+<h2 class='pagebreaker' id="ThecolliderectMethod">The <span class='m'>colliderect()</span> Method</h2>
+
+<div class='sourcecode'><ol start='99'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class='comment'># check if the player has intersected with any food squares.</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for food in foods[:]:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if player.colliderect(food):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foods.remove(food)</li>
+</ol></div>
+
+<p>In our previous Collision Detection program, we had our own function to check if one rectangle had collided with another. That function was included in this book so that you could understand how the code behind collision detection works. In this program, we can use the collision detection function that comes with Pygame. The <span class='m'>colliderect()</span> method for <span class='m'>pygame.Rect</span> objects is passed another <span class='m'>pygame.Rect</span> object as an argument and returns <span class='m'>True</span> if the two rectangles collide and <span class='m'>False</span> if they do not. This is the exact same behavior as the <span class='m'>doRectsOverlap()</span> function in our previous Collision Detection program.</p>
+
+<div class='sourcecode'><ol start='110'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;mainClock.tick(40)</li>
+</ol></div>
+
+<p>The rest of the code is similar to the code in the Input program is similar to the earlier Collision Detection program: draw the food squares and the player squares to the <span class='m'>windowSurface</span> surface, occasionally add a new food square at a random location to the <span class='m'>foods</span> list, check if the player square has collided with any of the food squares, and call <span class='m'>mainClock.tick(40)</span> to make the program run at an appropriate speed.</p>
+
+<h2 id="SummaryCollisionDetectionandPygameInput">Summary: Collision Detection and Pygame Input</h2>
+
+<p>This chapter introduced the concept of collision detection, which is used in most graphical games. Detecting collisions between two rectangles is easy: we just check if the four corners of either rectangle are within the other rectangle. This is such a common thing to check for that Pygame provides it's own collision detection method named <span class='m'>colliderect()</span> for <span class='m'>pygame.Rect</span> objects.</p>
+
+<p>The first several games in this book were text-based. The program output was text printed to the screen and the input was text typed by the user on the keyboard. But GUI programs can accept keyboard and mouse inputs. Furthermore, GUI programs can respond to single keystrokes when the user pushes down or lets up a single key. The user does not have to type in an entire response and press Enter. This allows for immediate feedback when the player presses down any key on the keyboard and much more interactive games.</p>
+
+<p>The Pygame programs we shown so far have drawn rectangles, lines, circles, and even individual pixels to the screen. These are called drawing primitives. But we also want to use pictures and images instead of simple drawing primitives. The next chapter will tell you how to load images and draw them on the screen. We will also learn how to play sounds and music for the player to hear.</p>
+
+
+<table border='0' width='100%'><tr><td><a href='chapter17.html'>Go to Chapter 17 - Graphics and Animation</a></td><td align='right'><a href='chapter19.html'>Go to Chapter 19 - Sound and Images</a></td></tr></table>
+<div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
+
+
+
+
+</body>
+</html>

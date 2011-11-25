@@ -1,0 +1,318 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-5459430-3");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<meta http-equiv="Content-Type" content="text/html;charset=us-ascii" />
+<title>IYOCGwP, Chapter 2 - The Interactive Shell</title>
+<link rel="stylesheet" href="inventbook.css" type="text/css" media="all" />
+</head>
+<body>
+
+<table border='0' width='100%'><tr><td><a href='chapter1.html'>Go to Chapter 1 - Installing Python</a></td><td align='right'><a href='chapter3.html'>Go to Chapter 3 - Strings</a></td></tr></table>
+<div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
+
+
+<div style='height: 350px;'><img src='images/chap2.png'></div>
+
+<div class='inthischapter'><h3 id="TopicsCoveredInThisChapter">Topics Covered In This Chapter:</h3>
+<ul>
+<li>Integers and Floating Point Numbers</li>
+<li>Expressions</li>
+<li>Values</li>
+<li>Operators</li>
+<li>Evaluating Expressions</li>
+<li>Storing Values in Variables</li>
+<li>Overwriting variables</li>
+</ul></div>
+
+<p>Before we start writing computer games, we should learn some basic programming concepts first. These concepts are values, operators, expressions, and variables. We won't start programming in this chapter, but knowing these concepts and the names of things will make learning to program much easier. This is because most programming is built on only a few simple concepts combined together to make advanced programs.</p>
+
+<p>Let's start by learning how to use Python's interactive shell.</p>
+
+<h2 id="SomeSimpleMathStuff">Some Simple Math Stuff</h2>
+
+<p>To open IDLE on Windows, click on <span class='menuname'>Start</span>, then <span class='menuname'>Programs</span>, then <span class='menuname'>Python 3.1</span>, then <span class='menuname'>IDLE (Python GUI)</span>. With IDLE open, let's do some simple math with Python. The interactive shell can work just like a calculator. Type <span class='m'>2+2</span> into the shell and press the Enter key on your keyboard. (On some keyboards, this is the Return key.) As you can see in Figure 2-1, the computer should respond with the number 4; the sum of 2+2.</p>
+
+<p class='centeredImageP'><img src='images/2-1.png' alt='' class='centeredImage' /><br />
+Figure 2-1: Type <span class='m'>2+2</span> into the shell.</p>
+
+<p>As you can see, we can use the Python shell just like a calculator. This isn't a program by itself because we are just learning the basics right now. The <span class='m'>+</span> sign tells the computer to add the numbers 2 and 2. To subtract numbers use the <span class='m'>-</span> sign, and to multiply numbers use an asterisk (<span class='m'>*</span>), like so:</p>
+
+<table class='centertable simpletable' style='width: 200px; text-align: center;'>
+<caption>Table 2-1: The various math operators in Python.</caption>
+<tr><td class='simpletd'><span class='m'>2+2</span></td><td class='simpletd'>addition</td></tr>
+<tr><td class='simpletd'><span class='m'>2-2</span></td><td class='simpletd'>subtraction</td></tr>
+<tr><td class='simpletd'><span class='m'>2*2</span></td><td class='simpletd'>multiplication</td></tr>
+<tr><td class='simpletd'><span class='m'>2/2</span></td><td class='simpletd'>division</td></tr>
+</table>
+
+<p>When used in this way, +, -, *, and / are called <span class='term'>operators</span> because they tell the computer to perform the specified operation on the numbers surrounding them.</p>
+
+<h3 id="IntegersandFloatingPointNumbers">Integers and Floating Point Numbers</h3>
+
+<p>In programming (and also in mathematics), whole numbers like 4, 0, and 99 are called <span class='term'>integers</span>. Numbers with fractions or decimal points (like 3.5 and 42.1 and 5.0) are not integers. In Python, the number 5 is an integer, but if we wrote it as 5.0 it would not be an integer. Numbers with a decimal point are called <span class='term'>floating point numbers</span>. In mathematics, 5.0 is still considered an integer and the same as the number 5, but in computer programming the computer considers any number with a decimal point as not an integer.</p>
+
+<!-- Decided to remove this since it was important enough.
+<h3 id="DontUseCommasinNumbers">Don't Use Commas in Numbers</h3>
+
+<p>The Python shell is handy for solving large math problems very quickly. For example, try entering <span class='m'>2063 * 3581</span>.</p>
+
+<p>When I say "enter" I mean type something into IDLE and then press the Enter or RETURN key on your keyboard. It will look something like this:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; 2063 * 3581<br />
+7387603<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>That was a lot faster than solving it by hand! Solving calculations quickly is what computers were made for. But in order for Python to understand what calculations we want it to do, we must enter them in a particular way.</p>
+
+<p>In Python, we don't put commas inside numbers. We type <span class='m'>2063</span> instead of <span class='m'>2,063</span>. The computer can do what you tell it to very quickly, but it needs you to tell it in a very specific way. Computer programming is all about writing out precise instructions to get the computer to do exactly what you want because really computers are dumb. We need to tell them exactly what to do.</p>
+//-->
+
+<h3 id="Expressions">Expressions</h3>
+
+<p>Try typing some of these math problems into the shell, pressing Enter key after each one.</p>
+
+<div class='sourceblurb'>
+2+2+2+2+2<br />
+8*6<br />
+10-5+6<br />
+2&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br />
+</div>
+
+<p>Figure 2-2 is what the interactive shell in IDLE will look like after you type in the instructions above.</p>
+
+<p class='centeredImageP'><img src='images/2-2.png' alt='' class='centeredImage' /><br />
+Figure 2-2: What the IDLE window looks like after entering instructions.</p>
+
+<p style='float: right;' class='centeredImageP'><img src='images/2-3.png' alt='' class='centeredImage' /><br />
+Figure 2-3: An expression is a made up of values and operators.</p>
+
+<p>These math problems are called expressions. Computers can solve millions of these problems in seconds. Expressions are made up of <span class='term'>values</span> (the numbers) connected by <span class='term'>operators</span> (the math signs). Let's learn exactly what values and operators are.</p>
+
+<p>As you can see with the last expression in the above example, you can put any amount of spaces in between the integers and these operators. (But be sure to always start at the very beginning of the line, with no spaces in front.)</p>
+
+<p>Numbers are a type of value. Integers are a type of number. But, even though integers are numbers, not all numbers are integers. (For example, fractions and numbers with decimal points like <span class='m'>2.5</span> are numbers that are not integers.)</p>
+
+<p>This is like how a cat is a type of pet, but not all pets are cats. Someone could have a pet dog or a pet hermit crab. An <span class='term'>expression</span> is made up of values (such as integers like 8 and 6) connected by an operator (such as the * multiplication sign). A single value by itself is also considered an expression.</p>
+
+<p>In the next chapter, we will learn about working with text in expressions. Python isn't limited to just numbers. It's more than just a fancy calculator!</p>
+
+<h2 id="EvaluatingExpressions">Evaluating Expressions</h2>
+
+<p>When a computer solves the expression <span class='m'>10 + 5</span> and gets the value <span class='m'>15</span>, we say it has <span class='term'>evaluated</span> the expression. Evaluating an expression reduces the expression to a single value, just like solving a math problem reduces the problem to a single number: the answer.</p>
+
+<p>The expressions <span class='m'>10 + 5</span> and <span class='m'>10 + 3 + 2</span> have the same value, because they both evaluate to <span class='m'>15</span>. Even single values are considered expressions: The expression <span class='m'>15</span> evaluates to the value <span class='m'>15</span>.</p>
+
+<p>However, if you just type <span class='m'>5 +</span> into the interactive shell, you will get an error message.</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; 5 +<br />
+SyntaxError: invalid syntax<br />
+</div>
+
+<p>This error happened because <span class='m'>5 +</span> is not an expression. Expressions have values connected by operators, but the + operator always expects to connect two things in Python. We have only given it one. This is why the error message appeared. A syntax error means that the computer does not understand the instruction you gave it because you typed it incorrectly. Python will always display an error message if you enter an instruction that it cannot understand.</p>
+
+<p>This may not seem important, but a lot of computer programming is not just telling the computer what to do, but also knowing exactly how to tell the computer to do it.</p>
+
+<h3 id="ExpressionsInsideOtherExpressions">Expressions Inside Other Expressions</h3>
+
+<p>Expressions can also contain other expressions. For example, in the expression <span class='m'>2 + 5 + 8</span>, the <span class='m'>2 + 5</span> part is its own expression. Python evaluates <span class='m'>2 + 5</span> to <span class='m'>7</span>, so the original expression becomes <span class='m'>7 + 8</span>. Python then evaluates this expression to <span class='m'>15</span>.</p>
+
+<p>Think of an expression as being a stack of pancakes. If you put two stacks of pancakes together, you still have a stack of pancakes. And a large stack of pancakes can be made up of smaller stacks of pancakes that were put together. Expressions can be combined together to form larger expressions in the same way. But no matter how big an expression is it also evaluates to a single answer, just like <span class='m'>2 + 5 + 8</span> evaluates to <span class='m'>15</span>.</p>
+
+<h2 id="StoringValuesinVariables">Storing Values in Variables</h2>
+
+<p>When we program, we will often want to save the values that our expressions evaluate to so we can use them later in the program. We can store values in <span class='term'>variables</span>.</p>
+
+<p>Think of variables like a box that can hold values. You can store values inside variables with the = sign (called the <span class='term'>assignment operator</span>). For example, to store the value 15 in a variable named "spam", enter <span class='m'>spam = 15</span> into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = 15<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p style='float: right;' class='centeredImageP'><img src='images/2-4.png' alt='' class='centeredImage' /><br />
+Figure 2-4: Variables are like boxes that can hold values in them.</p>
+
+<p>You can think of the variable like a box with the value 15 inside of it (as shown in Figure 2-4). The variable name "spam" is the label on the box (so we can tell one variable from another) and the value stored in it is like a small note inside the box.</p>
+
+<p>When you press Enter you won't see anything in response, other than a blank line. Unless you see an error message, you can assume that the instruction has been executed successfully. The next &gt;&gt;&gt; prompt will appear so that you can type in the next instruction.</p>
+
+<p>This instruction (called an <span class='term'>assignment statement</span>) creates the variable <span class='m'>spam</span> and stores the value <span class='m'>15</span> in it. Unlike expressions, <span class='term'>statements</span> are instructions that do not evaluate to any value, which is why there is no value displayed on the next line in the shell.</p>
+
+<p>It might be confusing to know which instructions are expressions and which are statements. Just remember that if the instruction evaluates to a single value, it's an expression. If the instruction does not, then it's a statement.</p>
+
+<p>An assignment statement is written as a variable, followed by the = equal sign, followed by an expression. The value that the expression evaluates to is stored inside the variable. The value <span class='m'>15</span> by itself is an expression. Expressions made up of a single value by itself are easy to evaluate. These expressions just evaluate to the value itself. For example, the expression <span class='m'>15</span> evaluates to <span class='m'>15!</span></p>
+
+<p>Remember, variables store values, not expressions. For example, if we had the statement, <span class='m'>spam = 10 + 5</span>, then the expression <span class='m'>10 + 5</span> would first be evaluated to <span class='m'>15</span> and then the value <span class='m'>15</span> would be stored in the variable, <span class='m'>spam</span>.</p>
+
+<p>The first time you store a value inside a variable by using an assignment statement, Python will create that variable. Each time after that, an assignment statement will only replace the value stored in the variable.</p>
+
+<p>Now let's see if we've created our variable properly. If we type <span class='m'>spam</span> into the shell by itself, we should see what value is stored inside the variable <span class='m'>spam</span>.</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = 15<br />
+&gt;&gt;&gt; spam<br />
+15<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>Now, <span class='m'>spam</span> evaluates to the value inside the variable, 15.</p>
+
+<p>And here's an interesting twist. If we now enter <span class='m'>spam + 5</span> into the shell, we get the integer <span class='m'>20</span>, like so.</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = 15<br />
+&gt;&gt;&gt; spam + 5<br />
+20<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>That may seem odd but it makes sense when we remember that we set the value of spam to <span class='m'>15</span>. Because we've set the value of the variable <span class='m'>spam</span> to <span class='m'>15</span>, writing <span class='m'>spam + 5</span> is like writing the expression <span class='m'>15 + 5</span>.</p>
+
+<p>If you try to use a variable before it has been created, Python will give you an error because no such variable would exist yet. This also happens if you mistype the name of the variable.</p>
+
+<p>We can change the value stored in a variable by entering another assignment statement. For example, try the following:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = 15<br />
+&gt;&gt;&gt; spam + 5<br />
+20<br />
+&gt;&gt;&gt; spam = 3<br />
+&gt;&gt;&gt; spam + 5<br />
+8<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>The first time we enter <span class='m'>spam + 5</span>, the expression evaluates to <span class='m'>20</span>, because we stored the value <span class='m'>15</span> inside the variable <span class='m'>spam</span>. But when we enter <span class='m'>spam = 3</span>, the value <span class='m'>15</span> is replaced, or overwritten, with the value <span class='m'>3</span>. Now, when we enter <span class='m'>spam + 5</span>, the expression evaluates to <span class='m'>8</span> because the value of <span class='m'>spam</span> is now 3.</p>
+
+<p>To find out what the current value is inside a variable, just enter the variable name into the shell.</p>
+
+<p>Now here's something interesting. Because a variable is only a name for a value, we can write expressions with variables like this:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = 15<br />
+&gt;&gt;&gt; spam + spam<br />
+30<br />
+&gt;&gt;&gt; spam - spam<br />
+0<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>When the variable <span class='m'>spam</span> has the integer value <span class='m'>15</span> stored in it, entering <span class='m'>spam + spam</span> is the same as entering <span class='m'>15 + 15</span>, which evaluates to <span class='m'>30</span>. And <span class='m'>spam - spam</span> is the same as <span class='m'>15 - 15</span>, which evaluates to <span class='m'>0</span>. The expressions above use the variable <span class='m'>spam</span> twice. You can use variables as many times as you want in expressions. Remember that Python will evaluate a variable name to the value that is stored inside that variable, each time the variable is used.</p>
+
+<p>We can even use the value in the <span class='m'>spam</span> variable to assign <span class='m'>spam</span> a new value:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = 15<br />
+&gt;&gt;&gt; spam = spam + 5<br />
+20<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>The assignment statement <span class='m'>spam = spam + 5</span> is like saying, "the new value of the <span class='m'>spam</span> variable will be the current value of <span class='m'>spam</span> plus five." Remember that the variable on the left side of the <span class='m'>=</span> sign will be assigned the value that the expression on the right side evaluates to. We can also keep increasing the value in <span class='m'>spam</span> by <span class='m'>5</span> several times:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = 15<br />
+&gt;&gt;&gt; spam = spam + 5<br />
+&gt;&gt;&gt; spam = spam + 5<br />
+&gt;&gt;&gt; spam = spam + 5<br />
+&gt;&gt;&gt; spam<br />
+30<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<h2 id="UsingMoreThanOneVariable">Using More Than One Variable</h2>
+
+<p>When we program we won't always want to be limited to only one variable. Often we'll need to use multiple variables.</p>
+
+<p>For example, let's assign different values to two variables named <span class='m'>eggs</span> and <span class='m'>fizz</span>, like so:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; fizz = 10<br />
+&gt;&gt;&gt; eggs = 15<br />
+</div>
+
+<p>Now the <span class='m'>fizz</span> variable has <span class='m'>10</span> inside it, and <span class='m'>eggs</span> has <span class='m'>15</span> inside it.</p>
+
+<p class='centeredImageP'><img src='images/2-5.png' alt='' class='centeredImage' /><br />
+Figure 2-5: The "fizz" and "eggs" variables have values stored in them.</p>
+
+<p>Without changing the value in our <span class='m'>spam</span> variable, let's try assigning a new value to the <span class='m'>spam</span> variable. Enter <span class='m'>spam = fizz + eggs</span> into the shell then enter <span class='m'>spam</span> into the shell to see the new value of <span class='m'>spam</span>. Can you guess what it will be?</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; fizz = 10<br />
+&gt;&gt;&gt; eggs = 15<br />
+&gt;&gt;&gt; spam = fizz + eggs<br />
+&gt;&gt;&gt; spam<br />
+25<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>The value in <span class='m'>spam</span> is now <span class='m'>25</span> because when we add <span class='m'>fizz</span> and <span class='m'>eggs</span> we are adding the values stored inside <span class='m'>fizz</span> and <span class='m'>eggs</span>.</p>
+
+<h3>Overwriting Variables</h3>
+
+<p>Changing the value stored inside a variable is easy. Just perform another assignment statement with the same variable. Look what happens when you enter the following code into the interactive shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = 42<br />
+&gt;&gt;&gt; print(spam)<br />
+42<br />
+&gt;&gt;&gt; spam = 'Hello'<br />
+&gt;&gt;&gt; print(spam)<br />
+Hello<br />
+</div>
+
+<p>Initially, the <span class='m'>spam</span> variable had the integer <span class='m'>42</span> placed inside of it. This is why the first <span class='m'>print(spam)</span> prints out <span class='m'>42</span>. But when we execute <span class='m'>spam = 'Hello'</span>, the <span class='m'>42</span> value is tossed out of the variable and forgotten as the new <span class='m'>'Hello'</span> string value is placed inside the <span class='m'>spam</span> variable.</p>
+
+<p>Replacing the value in a variable with a new value is called <span class='term'>overwriting</span> the value. It is important to know that the old value is permanently forgotten. If you want to remember this value so you can use it later in your program, store it in a different variable before overwriting the value:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = 42<br />
+&gt;&gt;&gt; print(spam)<br />
+42<br />
+&gt;&gt;&gt; oldSpam = spam<br />
+&gt;&gt;&gt; spam = 'Hello'<br />
+&gt;&gt;&gt; print(spam)<br />
+Hello<br />
+&gt;&gt;&gt; print(oldSpam)<br />
+42<br />
+</div>
+
+<p>In the above example, before overwriting the value in <span class='m'>spam</span>, we copy that value to a variable named <span class='m'>oldSpam</span>. At that point, both <span class='m'>spam</span> and <span class='m'>oldSpam</span> store the value <span class='m'>42</span>. On the next line, the string <span class='m'>'Hello'</span> is stored in <span class='m'>spam</span> but <span class='m'>oldSpam</span> is left untouched.</p>
+
+<h2 id="Summary">Summary</h2>
+
+<p>In this chapter you learned the basics about writing Python instructions. Python needs you to tell it exactly what to do in a strict way, because computers don't have common sense and only understand very simple instructions. You have learned that Python can evaluate expressions (that is, reduce the expression to a single value), and that expressions are values (such as <span class='m'>2</span> or <span class='m'>5</span>) combined with operators (such as <span class='m'>+</span> or <span class='m'>-</span>). You have also learned that you can store values inside of variables so that your program can remember them in order to use them later on.</p>
+
+<p>In the next chapter, we will go over some more basic concepts, and you will write your first program!</p>
+
+
+
+
+
+
+
+<table border='0' width='100%'><tr><td><a href='chapter1.html'>Go to Chapter 1 - Installing Python</a></td><td align='right'><a href='chapter3.html'>Go to Chapter 3 - Strings</a></td></tr></table>
+<div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
+
+
+
+
+
+
+</body>
+</html>

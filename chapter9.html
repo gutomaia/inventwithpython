@@ -1,0 +1,1610 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-5459430-3");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<meta http-equiv="Content-Type" content="text/html;charset=us-ascii" />
+<title>IYOCGwP, Chapter 9 - Hangman</title>
+<link rel="stylesheet" href="inventbook.css" type="text/css" media="all" />
+</head>
+<body class='chapter9body'>
+
+<table border='0' width='100%'><tr><td><a href='chapter8.html'>Go to Chapter 8 - Flow Charts</a></td><td align='right'><a href='chapter10.html'>Go to Chapter 10 - Tic Tac Toe</a></td></tr></table>
+<div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
+
+
+<div style='height: 350px;'><img src='images/chap9.png'></div>
+
+<div class='inthischapter'><h3 id="TopicsCoveredInThisChapter">Topics Covered In This Chapter:</h3>
+<ul>
+<li>Methods</li>
+<li>The <span class='m'>append()</span> list method</li>
+<li>The <span class='m'>lower()</span> and <span class='m'>upper()</span> string methods</li>
+<li>The <span class='m'>reverse()</span> list method</li>
+<li>The <span class='m'>split()</span> string method</li>
+<li>The <span class='m'>range()</span> function</li>
+<li>The <span class='m'>list()</span> function</li>
+<li><span class='m'>for</span> loops</li>
+<li>elif statements</li>
+<li>The <span class='m'>startswith()</span> and <span class='m'>endswith()</span> string methods.</li>
+<li>The dictionary data type.</li>
+<li>key-value pairs</li>
+<li>The <span class='m'>keys()</span> and <span class='m'>values()</span> dictionary methods</li>
+<li>Multiple variable assignment, such as a, b, c = [1, 2, 3]</li>
+</ul></div>
+
+<p>This game introduces many new concepts. But don't worry; we'll experiment with these programming concepts in the interactive shell first. Some data types such as strings and lists have functions that are associated with their values called methods. We will learn several different methods that can manipulate strings and lists for us. We will also learn about a new type of loop called a <span class='m'>for</span> loop and a new type of data type called a dictionary. Once you understand these concepts, it will be much easier to understand the game in this chapter: Hangman.</p>
+
+<p>You can learn more from Wikipedia: <a href='http://en.wikipedia.org/wiki/Hangman_(game)'>http://en.wikipedia.org/wiki/Hangman_(game)</a></p>
+
+<h2 id="HangmansSourceCode">Hangman's Source Code</h2>
+
+<p>This chapter's game is a bit longer than our previous games. You can either type in the code below directly into the file editor (which I recommend) or you can obtain the code from this book's website. To grab the code from the web, in a web browser go to the URL <a href='http://inventwithpython.com/chapter9'>http://inventwithpython.com/chapter9</a> and follow the instructions for downloading the source code.</p>
+
+<div class='sourcecode'><span class='sourcecodeHeader'>hangman.py</span><br /><span class='sourcecodeSubHeader'>This code can be downloaded from <a href='http://inventwithpython.com/hangman.py'>http://inventwithpython.com/hangman.py</a><br />If you get errors after typing this code in, compare it to the book's code with the online diff tool at <a href='http://inventwithpython.com/diff'>http://inventwithpython.com/diff</a> or email the author at <a href="mailto:al@inventwithpython.com">al@inventwithpython.com</a></span><br /><ol start='1'>
+<li>import random</li>
+<li>HANGMANPICS = ['''</li>
+<li></li>
+<li>&nbsp;&nbsp;+---+</li>
+<li>&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>=========''',&nbsp;'''</li>
+<li></li>
+<li>&nbsp;&nbsp;+---+</li>
+<li>&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;O&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>=========''',&nbsp;'''</li>
+<li></li>
+<li>&nbsp;&nbsp;+---+</li>
+<li>&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;O&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>=========''',&nbsp;'''</li>
+<li></li>
+<li>&nbsp;&nbsp;+---+</li>
+<li>&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;O&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;/|&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>=========''',&nbsp;'''</li>
+<li></li>
+<li>&nbsp;&nbsp;+---+</li>
+<li>&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;O&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;/|\&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>=========''',&nbsp;'''</li>
+<li></li>
+<li>&nbsp;&nbsp;+---+</li>
+<li>&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;O&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;/|\&nbsp;&nbsp;|</li>
+<li>&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>=========''',&nbsp;'''</li>
+<li></li>
+<li>&nbsp;&nbsp;+---+</li>
+<li>&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;O&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;/|\&nbsp;&nbsp;|</li>
+<li>&nbsp;/&nbsp;\&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>=========''']</li>
+<li>words = 'ant baboon badger bat bear beaver camel cat clam cobra cougar coyote crow deer dog donkey duck eagle ferret fox frog goat goose hawk lion lizard llama mole monkey moose mouse mule newt otter owl panda parrot pigeon python rabbit ram rat raven rhino salmon seal shark sheep skunk sloth snake spider stork swan tiger toad trout turkey turtle weasel whale wolf wombat zebra'.split()</li>
+<li></li>
+<li>def getRandomWord(wordList):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# This function returns a random string from the passed list of strings.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;wordIndex = random.randint(0, len(wordList) - 1)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return wordList[wordIndex]</li>
+<li></li>
+<li>def displayBoard(HANGMANPICS, missedLetters, correctLetters, secretWord):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print(HANGMANPICS[len(missedLetters)])</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print()</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Missed letters:', end=' ')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for letter in missedLetters:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(letter, end=' ')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print()</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;blanks = '_' * len(secretWord)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in range(len(secretWord)): # replace blanks with correctly guessed letters</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if secretWord[i] in correctLetters:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blanks = blanks[:i] + secretWord[i] + blanks[i+1:]</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for letter in blanks: # show the secret word with spaces in between each letter</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(letter, end=' ')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print()</li>
+<li></li>
+<li>def getGuess(alreadyGuessed):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns the letter the player entered. This function makes sure the player entered a single letter, and not something else.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Guess a letter.')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;guess = input()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;guess = guess.lower()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if len(guess) != 1:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Please enter a single letter.')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elif guess in alreadyGuessed:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('You have already guessed that letter. Choose again.')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elif guess not in 'abcdefghijklmnopqrstuvwxyz':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Please enter a LETTER.')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return guess</li>
+<li></li>
+<li>def playAgain():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# This function returns True if the player wants to play again, otherwise it returns False.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Do you want to play again? (yes or no)')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return input().lower().startswith('y')</li>
+<li></li>
+<li></li>
+<li>print('H A N G M A N')</li>
+<li>missedLetters = ''</li>
+<li>correctLetters = ''</li>
+<li>secretWord = getRandomWord(words)</li>
+<li>gameIsDone = False</li>
+<li></li>
+<li>while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;displayBoard(HANGMANPICS, missedLetters, correctLetters, secretWord)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Let the player type in a letter.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;guess = getGuess(missedLetters + correctLetters)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if guess in secretWord:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;correctLetters = correctLetters + guess</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Check if the player has won</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foundAllLetters = True</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for i in range(len(secretWord)):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if secretWord[i] not in correctLetters:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foundAllLetters = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if foundAllLetters:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Yes! The secret word is "' + secretWord + '"! You have won!')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gameIsDone = True</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;missedLetters = missedLetters + guess</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Check if player has guessed too many times and lost</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if len(missedLetters) == len(HANGMANPICS) - 1:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;displayBoard(HANGMANPICS, missedLetters, correctLetters, secretWord)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('You have run out of guesses!\nAfter ' + str(len(missedLetters)) + ' missed guesses and ' + str(len(correctLetters)) + ' correct guesses, the word was "' + secretWord + '"')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gameIsDone = True</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Ask the player if they want to play again (but only if the game is done).</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if gameIsDone:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if playAgain():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;missedLetters = ''</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;correctLetters = ''</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gameIsDone = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;secretWord = getRandomWord(words)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+</ol></div>
+
+
+<!--
+
+<p>After typing in the source code (don't forget to save!) you can run this game by pressing F5. If any errors come up, be sure you typed the source code in <i>exactly</i> as it appears here. Remember that the indentation is important, and that lines will have zero, four, eight, or even twelve spaces in front of them.</p>
+
+-->
+
+<h2 id="HowtheCodeWorks">How the Code Works</h2>
+
+<blockquote class='sourcecode'>
+<ol start=1>
+<li>import random</li>
+</ol>
+</blockquote>
+
+<p>The Hangman program is going to randomly select a secret word from a list of secret words. This means we will need the <span class='m'>random</span> module imported.</p>
+
+<blockquote class='sourcecode'>
+<ol start=2>
+<li>HANGMANPICS = ['''</li>
+<li></li>
+<li>&nbsp;&nbsp;+---+</li>
+<li>&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>=========''',&nbsp;'''</li>
+</ol>
+<p><i>...the rest of the code is too big to show here...</i></p>
+</blockquote>
+
+<p>This "line" of code is a simple variable assignment, but it actually stretches over several real lines in the source code. The actual "line" doesn't end until line 58. To help you understand what this code means, you should learn about multi-line strings and lists:</p>
+
+<h2 id="MultilineStrings">Multi-line Strings</h2>
+
+<p>Ordinarily when you write strings in your source code, the string has to be on one line. However, if you use three single-quotes instead of one single-quote to begin and end the string, the string can be on several lines:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; fizz = '''Dear Alice,<br />
+I will return home at the end of the month. I will see you then.<br />
+Your friend,<br />
+Bob'''<br />
+&gt;&gt;&gt; print(fizz)<br />
+Dear Alice,<br />
+I will return home at the end of the month. I will see you then.<br />
+Your friend,<br />
+Bob<br />
+&gt;&gt;&gt;
+</div>
+
+<p>If we didn't have multi-line strings, we would have to use the <span class='m'>\n</span> escape character to represent the new lines. But that can make the string hard to read in the source code, like in this example:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; fizz = 'Dear Alice,\nI will return home at the end of the month. I will see you then.\nYour friend,\nBob'<br />
+&gt;&gt;&gt; print(fizz)<br />
+Dear Alice,<br />
+I will return home at the end of the month. I will see you then.<br />
+Your friend,<br />
+Bob<br />
+&gt;&gt;&gt;
+</div>
+
+<p>Multi-line strings do not have to keep the same indentation to remain in the same block. Within the multi-line string, Python ignores the indentation rules it normally has for where blocks end.
+
+<blockquote class='sourceblurb'>def writeLetter():<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;# inside the def-block<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;print('''Dear Alice,<br/>
+How are you? Write back to me soon.<br/>
+<br/>
+Sincerely,</br>
+&nbsp;&nbsp;Bob''') # end of the multi-line string and print() call<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;print('P.S. I miss you.') # still inside the def-block<br/>
+</br>
+writeLetter() # This is the first line outside the def-block.<br/></blockquote>
+
+<h2 id="ConstantVariables">Constant Variables</h2>
+
+<p>You may have noticed that <span class='m'>HANGMANPICS</span>'s name is in all capitals. This is the programming convention for constant variables. <span class='term'>Constants</span> are variables whose values do not change throughout the program. Although we can change <span class='m'>HANGMANPICS</span> just like any other variable, the all-caps reminds the programmer to not write code that does so.</p>
+
+<p>Constant variables are helpful for providing descriptions for values that have a special meaning. Since the multi-string value never changes, there is no reason we couldn't copy this multi-line string each time we needed that value. The <span class='m'>HANGMANPICS</span> variable never varies. But it is much shorter to type <span class='m'>HANGMANPICS</span> than it is to type that large multi-line string.</p>
+
+<p>Also, there are cases where typing the value by itself may not be obvious. If we set a variable <span class='m'>eggs = 72</span>, we may forget why we were setting that variable to the integer <span class='m'>72</span>. But if we define a constant variable <span class='m'>DOZEN = 12</span>, then we could set <span class='m'>eggs = DOZEN * 6</span> and by just looking at the code know that the <span class='m'>eggs</span> variable was set to six dozen.</p>
+
+<p>Like all conventions, we don't <i>have</i> to use constant variables, or even put the names of constant variables in all capitals. But doing it this way makes it easier for other programmers to understand how these variables are used. (It even can help you if you are looking at code you wrote a long time ago.)</p>
+
+<h2 id="Lists">Lists</h2>
+
+<p>I will now tell you about a new data type called a <span class='term'>list</span>. A list value can contain several other values in it. Try typing this into the shell: <span class='m'>['apples', 'oranges', 'HELLO WORLD']</span>. This is a list value that contains three string values. Just like any other value, you can store this list in a variable. Try typing <span class='m'>spam = ['apples', 'oranges', 'HELLO WORLD']</span>, and then type <span class='m'>spam</span> to view the contents of <span class='m'>spam</span>.</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = ['apples', 'oranges', 'HELLO WORLD']<br />
+&gt;&gt;&gt; spam<br />
+['apples', 'oranges', 'HELLO WORLD']<br />
+&gt;&gt;&gt;
+</div>
+
+<p>Lists are a good way to store several different values into one variable. The individual values inside of a list are also called <span class='term'>items</span>. Try typing: <span class='m'>animals = ['aardvark', 'anteater', 'antelope', 'albert']</span> to store various strings into the variable <span class='m'>animals</span>. The square brackets can also be used to get an item from a list. Try typing <span class='m'>animals[0]</span>, or <span class='m'>animals[1]</span>, or <span class='m'>animals[2]</span>, or <span class='m'>animals[3]</span> into the shell to see what they evaluate to.</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; animals = ['aardvark', 'anteater', 'antelope', 'albert']<br />
+&gt;&gt;&gt; animals[0]<br />
+'aardvark'<br />
+&gt;&gt;&gt; animals[1]<br />
+'anteater'<br />
+&gt;&gt;&gt; animals[2]<br />
+'antelope'<br />
+&gt;&gt;&gt; animals[3]<br />
+'albert'<br />
+&gt;&gt;&gt;
+</div>
+
+<p>The number between the square brackets is the <span class='term'>index</span>. In Python, the first index is the number 0 instead of the number 1. So the first item in the list is at index 0, the second item is at index 1, the third item is at index 2, and so on. Lists are very good when we have to store lots and lots of values, but we don't want variables for each one. Otherwise we would have something like this:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; animals1 = 'aardvark'<br />
+&gt;&gt;&gt; animals2 = 'anteater'<br />
+&gt;&gt;&gt; animals3 = 'antelope'<br />
+&gt;&gt;&gt; animals4 = 'albert'<br />
+&gt;&gt;&gt;
+</div>
+
+<p>This makes working with all the strings as a group very hard, especially if you have hundreds or thousands (or even millions) of different strings that you want stored in a list. Using the square brackets, you can treat items in the list just like any other value. Try typing <span class='m'>animals[0] + animals[2]</span> into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; animals[0] + animals[2]<br />
+'aardvarkantelope'<br />
+&gt;&gt;&gt;
+</div>
+
+<p>Because <span class='m'>animals[0]</span> evaluates to the string <span class='m'>'aardvark'</span> and <span class='m'>animals[2]</span> evaluates to the string <span class='m'>'antelope'</span>, then the expression <span class='m'>animals[0] + animals[2]</span> is the same as <span class='m'>'aardvark' + 'antelope'</span>. This string concatenation evaluates to <span class='m'>'aardvarkantelope'</span>.
+
+<p>What happens if we enter an index that is larger than the list's largest index? Try typing <span class='m'>animals[4]</span> or <span class='m'>animals[99]</span> into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; animals = ['aardvark', 'anteater', 'antelope', 'albert']<br />
+&gt;&gt;&gt; animals[4]<br />
+Traceback (most recent call last):<br />
+  File "<pushell#66>", line 1, in <module><br />
+    animals[4]<br />
+IndexError: list index out of range<br />
+&gt;&gt;&gt; animals[99]<br />
+Traceback (most recent call last):<br />
+  File "<pushell#67>", line 1, in <module><br />
+    animals[99]<br />
+IndexError: list index out of range<br />
+&gt;&gt;&gt;
+</div>
+
+<p>If you try accessing an index that is too large, you will get an <span class='term'>index error</span>.</p>
+
+<h2 id="ChangingtheValuesofListItemswithIndexAssignment">Changing the Values of List Items with Index Assignment</h2>
+
+<p>You can also use the square brackets to change the value of an item in a list. Try typing <span class='m'>animals[1] = 'ANTEATER'</span>, then type <span class='m'>animals</span> to view the list.</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; animals = ['aardvark', 'anteater', 'antelope', 'albert']<br />
+&gt;&gt;&gt; animals[1] = 'ANTEATER'<br />
+&gt;&gt;&gt; animals<br />
+['aardvark', 'ANTEATER', 'antelope', 'albert']<br />
+&gt;&gt;&gt;
+</div>
+
+<p>The second item in the <span class='m'>animals</span> list has been overwritten with a new string.</p>
+
+
+<h2 id="ListConcatenation">List Concatenation</h2>
+
+<p>You can join lists together into one list with the <span class='m'>+</span> operator, just like you can join strings. When joining lists, this is known as <span class='term'>list concatenation</span>. Try typing <span class='m'>[1, 2, 3, 4] + ['apples', 'oranges'] + ['Alice', 'Bob']</span> into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; [1, 2, 3, 4] + ['apples', 'oranges'] + ['Alice', 'Bob']<br />
+[1, 2, 3, 4, 'apples', 'oranges', 'Alice', 'Bob']<br />
+&gt;&gt;&gt;
+</div>
+
+<p>Notice that lists do not have to store values of the same data types. The example above has a list with both integers and strings in it. Remember, when you do list concatenation, you must add together two list values. <span class='m'>['apples'] + ['oranges']</span> will evaluate to <span class='m'>['apples', 'oranges']</span>. But <span class='m'>['apples'] + 'oranges'</span> will result in an error because you are adding a list value and string value instead of two list values. If you want to add non-list values to a list, use the <span class='m'>append()</span> method (which is described later).</p>
+
+
+<h2 id="TheinOperator">The <span class='m'>in</span> Operator</h2>
+
+<p>The <span class='m'>in</span> operator makes it easy to see if a value is inside a list or not. Expressions that use the <span class='m'>in</span> operator return a Boolean value: <span class='m'>True</span> if the value is in the list and <span class='m'>False</span> if the value is not in the list. Try typing <span class='m'>'antelope' in animals</span> into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; animals = ['aardvark', 'anteater', 'antelope', 'albert']<br />
+&gt;&gt;&gt; 'antelope' in animals<br />
+True<br />
+&gt;&gt;&gt;
+</div>
+
+<p>The expression <span class='m'>'antelope' in animals</span> returns <span class='m'>True</span> because the string <span class='m'>'antelope'</span> can be found in the list, <span class='m'>animals</span>. (It is located at index 2.)</p>
+
+<p>But if we type the expression <span class='m'>'ant' in animals</span>, this will return <span class='m'>False</span> because the string <span class='m'>'ant'</span> does not exist in the list. We can try the expression <span class='m'>'ant' in ['beetle', 'wasp', 'ant']</span>, and see that it will return <span class='m'>True</span>.</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; animals = ['aardvark', 'anteater', 'antelope', 'albert']<br />
+&gt;&gt;&gt; 'antelope' in animals<br />
+True<br />
+&gt;&gt;&gt; 'ant' in animals<br />
+False<br />
+&gt;&gt;&gt; 'ant' in ['beetle', 'wasp', 'ant']<br />
+True<br />
+&gt;&gt;&gt;
+</div>
+
+<p>The <span class='m'>in</span> operator also works for strings as well as lists. You can check if one string exists in another the same way you can check if a value exists in a list. Try typing <span class='m'>'hello' in 'Alice said hello to Bob.'</span> into the shell. This expression will evaluate to <span class='m'>True</span>.</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; 'hello' in 'Alice said hello to Bob.'<br />
+True<br />
+&gt;&gt;&gt;
+</div>
+
+<h2 id="RemovingItemsfromListswithdelStatements">Removing Items from Lists with <span class='m'>del</span> Statements</h2>
+
+<p>You can remove items from a list with a <span class='m'>del</span> statement. ("del" is short for "delete.") Try creating a list of numbers by typing: <span class='m'>spam = [2, 4, 6, 8, 10]</span> and then <span class='m'>del spam[1]</span>. Type <span class='m'>spam</span> to view the list's contents:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = [2, 4, 6, 8, 10]<br />
+&gt;&gt;&gt; del spam[1]<br />
+&gt;&gt;&gt; spam<br />
+[2, 6, 8, 10]<br />
+&gt;&gt;&gt;
+</div>
+
+<p>Notice that when you deleted the item at index 1, the item that used to be at index 2 became the new value at index 1. The item that used to be at index 3 moved to be the new value at index 2. Everything above the item that we deleted moved down one index. We can type <span class='m'>del spam[1]</span> again and again to keep deleting items from the list:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = [2, 4, 6, 8, 10]<br />
+&gt;&gt;&gt; del spam[1]<br />
+&gt;&gt;&gt; spam<br />
+[2, 6, 8, 10]<br />
+&gt;&gt;&gt; del spam[1]<br />
+&gt;&gt;&gt; spam<br />
+[2, 8, 10]<br />
+&gt;&gt;&gt; del spam[1]<br />
+&gt;&gt;&gt; spam<br />
+[2, 10]<br />
+&gt;&gt;&gt;
+</div>
+
+<p>Just remember that <span class='m'>del</span> is a statement, not a function or an operator. It does not evaluate to any return value.</p>
+
+<h2 id="ListsofLists">Lists of Lists</h2>
+
+<p>Lists are a data type that can contain other values as items in the list. But these items can also be other lists. Let's say you have a list of groceries, a list of chores, and a list of your favorite pies. You can put all three of these lists into another list. Try typing this into the shell:</p>
+
+<div class='sourceblurb' style='line-height: 120%;'>
+&gt;&gt;&gt; groceries = ['eggs', 'milk', 'soup', 'apples', 'bread']<br />
+&gt;&gt;&gt; chores = ['clean', 'mow the lawn', 'go grocery shopping']<br />
+&gt;&gt;&gt; favoritePies = ['apple', 'frumbleberry']<br />
+&gt;&gt;&gt; listOfLists = [groceries, chores, favoritePies]<br />
+&gt;&gt;&gt; listOfLists<br />
+[['eggs', 'milk', 'soup', 'apples', 'bread'], ['clean', 'mow the lawn', 'go grocery shopping'], ['apple', 'frumbleberry']]<br />
+&gt;&gt;&gt;
+</div>
+
+<p>You could also type the following and get the same values for all four variables:</p>
+
+<div class='sourceblurb' style='line-height: 120%;'>
+&gt;&gt;&gt; listOfLists = [['eggs', 'milk', 'soup', 'apples', 'bread'], ['clean', 'mow the lawn', 'go grocery shopping'], ['apple', 'frumbleberry']]<br />
+&gt;&gt;&gt; groceries = listOfLists[0]<br />
+&gt;&gt;&gt; chores = listOfLists[1]<br />
+&gt;&gt;&gt; favoritePies = listOfLists[2]<br />
+&gt;&gt;&gt; groceries<br />
+['eggs', 'milk', 'soup', 'apples', 'bread']<br />
+&gt;&gt;&gt; chores<br />
+['clean', 'mow the lawn', 'go grocery shopping']<br />
+&gt;&gt;&gt; favoritePies<br />
+['apple', 'frumbleberry']<br />
+&gt;&gt;&gt;
+</div>
+
+<p>To get an item inside the list of lists, you would use <i>two</i> sets of square brackets like this: <span class='m'>listOfLists[1][2]</span> which would evaluate to the string <span class='m'>'go grocery shopping'</span>. This is because <span class='m'>listOfLists[1]</span> evaluates to the list <span class='m'>['clean', 'mow the lawn', 'go grocery shopping'][2]</span>. That finally evaluates to <span class='m'>'go grocery shopping'</span>.</p>
+
+<p>Here is another example of a list of lists, along with some of the indexes that point to the items in the list of lists named <span class='m'>x</span>. The red arrows point to indexes of the inner lists themselves. The image is also flipped on its side to make it easier to read:</p>
+
+<p class='centeredImageP createspace'><img width='570' height='374' src='images/9-1.png' alt='' class='centeredImage' /><br />
+Figure 9-1: The indexes of a list of lists.</p>
+<p class='centeredImageP noncreatespace'><img src='images/9-1.png' alt='' class='centeredImage' /><br />
+Figure 9-1: The indexes of a list of lists.</p>
+
+
+<!-- END OF FIRST HALF -->
+
+
+<h2 id="Methods">Methods</h2>
+
+<p><span class='term'>Methods</span> are just like functions, but they are always attached to a value. For example, all string values have a <span class='m'>lower()</span> method, which returns a copy of the string value in lowercase. You cannot just call <span class='m'>lower()</span> by itself and you do not pass a string argument to <span class='m'>lower()</span> by itself (as in <span class='m'>lower('Hello')</span>). You must attach the method call to a specific string value using a period.</p>
+
+<h3 id="ThelowerandupperStringMethods">The <span class='m'>lower()</span> and <span class='m'>upper()</span> String Methods</h3>
+
+
+<p>Try entering <span class='m'>'Hello world!'.lower()</span> into the interactive shell to see an example of this method:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; 'Hello world'.lower()<br />
+'hello world!'<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>There is also an <span class='m'>upper()</span> method for strings, which changes all the characters in a string to uppercase. Try entering <span class='m'>'Hello world'.upper()</span> into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; 'Hello world'.upper()<br />
+'HELLO WORLD! '<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>Because the <span class='m'>upper()</span> method returns a string, you can call a method on <i>that</i> string as well. Try typing <span class='m'>'Hello world!'.upper().lower()</span> into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; 'Hello world'.upper().lower()<br />
+'hello world!'<br />
+&gt;&gt;&gt;<br />
+</div>
+
+
+<p><span class='m'>'Hello world!'.upper()</span> evaluates to the string <span class='m'>'HELLO WORLD!'</span>, and then we call that string's <span class='m'>lower()</span> method. This returns the string <span class='m'>'hello world!'</span>, which is the final value in the evaluation. The order is important. <span class='m'>'Hello world!'.lower().upper()</span> is not the same as <span class='m'>'Hello world!'.upper().lower()</span>:</p>
+
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; 'Hello world'.lower().upper()<br />
+'HELLO WORLD!'<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>Remember, if a string is stored in a variable, you can call a string method on that variable. Look at this example:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; fizz = 'Hello world'<br />
+&gt;&gt;&gt; fizz.upper()<br />
+'HELLO WORLD'<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<h3 id="ThereverseListMethod">The <span class='m'>reverse()</span> and <span class='m'>append()</span> List Methods</h3>
+
+<p>The list data type also has methods. The <span class='m'>reverse()</span> method will reverse the order of the items in the list. Try entering <span class='m'>spam = [1, 2, 3, 4, 5, 6, 'meow', 'woof']</span>, and then <span class='m'>spam.reverse()</span> to reverse the list. Then enter <span class='m'>spam</span> to view the contents of the variable.</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = [1, 2, 3, 4, 5, 6, 'meow', 'woof']<br />
+&gt;&gt;&gt; spam.reverse()<br />
+&gt;&gt;&gt; spam<br />
+['woof', 'meow', 6, 5, 4, 3, 2, 1]<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>The most common list method you will use is <span class='m'>append()</span>. This method will add the value you pass as an argument to the end of the list. Try typing the following into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; eggs = []<br />
+&gt;&gt;&gt; eggs.append('hovercraft')<br />
+&gt;&gt;&gt; eggs<br />
+['hovercraft']<br />
+&gt;&gt;&gt; eggs.append('eels')<br />
+&gt;&gt;&gt; eggs<br />
+['hovercraft', 'eels']<br />
+&gt;&gt;&gt; eggs.append(42)<br />
+&gt;&gt;&gt; eggs<br />
+['hovercraft', 'eels', 42]<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>Though string and list data types have methods, integers do not happen to have any methods.</p>
+
+
+<h2 id="TheDifferenceBetweenMethodsandFunctions">The Difference Between Methods and Functions</h2>
+
+<p>You may be wondering why Python has methods, since they seem to act just like functions. Some data types have methods. Methods are functions associated with values of that data type. For example, string methods are functions that can be called on any string. If you have the string value <span class='m'>'Hello'</span>, you could call the string method <span class='m'>upper()</span> like this: <span class='m'>'Hello'.upper()</span>. Or if the string <span class='m'>'Hello'</span> were stored in a variable named <span class='m'>spam</span>, it would look like this: <span class='m'>spam.upper()</span></p>
+
+<p>You cannot call string methods on values of other data types. For example, <span class='m'>[1, 2, 'apple'].upper()</span> would cause an error because <span class='m'>[1, 2, 'apple']</span> is a list and <span class='m'>upper()</span> is a string method.</p>
+
+<!--<p>Methods are associated with a value of a certain data type. Functions are never associated with values. Function calls for functions that are inside modules may look like methods because they have a name and period in front, such as <span class='m'>random.randint()</span>. But random is the name of a module, it is not a value or a variable with a value in it.</p>-->
+
+<p>The values of data types that have methods are also called objects. Object-oriented programming is a bit advanced for this book, and you don't need to understand it to make games. Just understand that objects are another name for a values of data types that have methods. For example, all strings and lists are objects.</p>
+
+<h2 id="ThesplitListMethod">The <span class='m'>split()</span> List Method</h2>
+
+<p>Line 59 is a very long line of code, but it is really just a simple assignment statement. This line also uses the <span class='m'>split()</span> method, which is a method for the string data type (just like the <span class='m'>lower()</span> and <span class='m'>upper()</span> methods).</p>
+
+<div class='sourcecode'><ol start='59'>
+<li>words = 'ant baboon badger bat bear beaver camel cat clam cobra cougar coyote crow deer dog donkey duck eagle ferret fox frog goat goose hawk lion lizard llama mole monkey moose mouse mule newt otter owl panda parrot pigeon python rabbit ram rat raven rhino salmon seal shark sheep skunk sloth snake spider stork swan tiger toad trout turkey turtle weasel whale wolf wombat zebra'.split()</li>
+</ol></div>
+
+<p>As you can see, this line is just one very long string, full of words separated by spaces. And at the end of the string, we call the <span class='m'>split()</span> method. The <span class='m'>split()</span> method changes this long string into a list, with each word making up a single list item. The "split" occurs wherever a space occurs in the string. The reason we do it this way, instead of just writing out the list, is that it is easier for us to type as one long string. If we created it as a list to begin with, we would have to type: <span class='m'>['ant', 'baboon', 'badger',</span>... and so on, with quotes and commas for every single word.</p>
+
+<p>For an example of how the <span class='m'>split()</span> string method works, try typing this into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; 'My very energetic mother just served us nine pies'.split()<br />
+['My', 'very', 'energetic', 'mother', 'just', 'served', 'us', 'nine', 'pies']<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>The result is a list of nine strings, one string for each of the words in the original string. The spaces are dropped from the items in the list. Once we've called <span class='m'>split()</span>, the <span class='m'>words</span> list will contain all the possible secret words that can be chosen by the computer for our Hangman game. You can also add your own words to the string, or remove any you don't want to be in the game. Just make sure that the words are separated by spaces.</p>
+
+<h2 id="HowtheCodeWorks">How the Code Works</h2>
+
+<p>Starting on line 61, we define a new function called <span class='m'>getRandomWord()</span>, which has a single parameter named <span class='m'>wordList</span>. We will call this function when we want to pick a single secret word from a list of secret words.</p>
+
+<div class='sourcecode'><ol start='61'>
+<li>def getRandomWord(wordList):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# This function returns a random string from the passed list of strings.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;wordIndex = random.randint(0, len(wordList) - 1)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return wordList[wordIndex]</li>
+</ol></div>
+
+<p>The function <span class='m'>getRandomWord()</span> is passed a list of strings as the argument for the <span class='m'>wordList</span> parameter. On line 63, we will store a random index for this list in the <span class='m'>wordIndex</span> variable. We do this by calling <span class='m'>randint()</span> with two arguments. Remember that arguments in a function call are separated by commas, so the first argument is <span class='m'>0</span> and the second argument is <span class='m'>len(wordList) - 1</span>. The second argument is an expression that is first evaluated. <span class='m'>len(wordList)</span> will return the integer size of the list passed to <span class='m'>getRandomWord()</span>, and then we subtract one.</p>
+
+<p>The reason we need the <span class='m'>- 1</span> is because the indexes for lists start at 0, not 1. If we have a list of three items, the index of the first item is 0, the index of the second item is 1, the index of the third item is 2. The length of this list is <span class='m'>3</span>, but the index 3 is after the last index. This is why we subtract 1 from the length.</p>
+
+<p>For example, if we passed ['apple', 'orange', grape'] as an argument to <span class='m nw'>getRandomWord()</span>, then <span class='m'>len(wordList)</span> would return the integer <span class='m'>3</span> and the expression <span class='m'>3 - 1</span> would evaluate to the integer <span class='m'>2</span>.</p>
+
+
+<p>That means that <span class='m'>wordIndex</span> would contain the return value of <span class='m'>randint(0, 2)</span>, which means <span class='m'>wordIndex</span> would equal <span class='m'>0</span>, <span class='m'>1</span>, or <span class='m'>2</span>. On line 64, we would return the element in <span class='m'>wordList</span> at the integer index stored in <span class='m'>wordIndex</span>.</p>
+
+<p>Let's pretend we did send <span class='m'>['apple', 'orange', grape']</span> as the argument to <span class='m'>getRandomWord()</span> and that <span class='m'>randint(0, 2)</span> returned the integer <span class='m'>2</span>. That would mean that line 64 would become <span class='m'>return wordList[2]</span>, which would evaluate to <span class='m'>return 'grape'</span>. This is how the <span class='m'>getRandomWord()</span> returns a random string in the <span class='m'>wordList</span> list. The following code entered into the interactive shell demonstrates this:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; wordIndex = 2<br />
+&gt;&gt;&gt; print(wordIndex)<br />
+2<br />
+&gt;&gt;&gt; print(['apple', 'orange', 'grape'][wordIndex])<br />
+grape<br />
+&gt;&gt;&gt;<br />
+</div>
+
+
+<p>And remember, we can pass any list of strings we want to the <span class='m'>getRandomWord()</span> function, which is what makes it so useful for our Hangman game.</p>
+
+<h3 id="DisplayingtheBoardtothePlayer">Displaying the Board to the Player</h3>
+
+<p>Next we need to create another function which will print the hangman board on the screen, along with how many letters the player has correctly (and incorrectly) guessed.</p>
+
+<div class='sourcecode'><ol start='66'>
+<li>def displayBoard(HANGMANPICS, missedLetters, correctLetters, secretWord):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print(HANGMANPICS[len(missedLetters)])</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print()</li>
+</ol></div>
+
+<p>This code defines a new function named <span class='m'>displayBoard()</span>. This function has four parameters. This function will implement the code for the "Show the board and blanks to the player" box in our flow chart. Here is what each parameter means:</p>
+
+<ul>
+<li><span class='m'>HANGMANPICS</span> - This is a list of multi-line strings that will display the board as ASCII art. We will always pass the global <span class='m'>HANGMANPICS</span> variable as the argument for this parameter.</li>
+<li><span class='m'>missedLetters</span> - This is a string made up of the letters the player has guessed that are not in the secret word.</li>
+<li><span class='m'>correctLetters</span> - This is a string made up of the letters the player has guessed that are in the secret word.</li>
+<li><span class='m'>secretWord</span> - This string is the secret word that the player is trying to guess..</li>
+</ul>
+
+<p>The first <span class='m'>print()</span> function call will display the board. <span class='m'>HANGMANPICS</span> will be a list of strings for each possible board. <span class='m'>HANGMANPICS[0]</span> shows an empty gallows, <span class='m'>HANGMANPICS[1]</span> shows the head (this happens when the player misses one letter), <span class='m'>HANGMANPICS[2]</span> shows a head and body (this happens when the player misses two letters), and so on until <span class='m'>HANGMANPICS[6]</span> when the full hangman is shown and the player loses.</p>
+
+<p>The number of letters in <span class='m'>missedLetters</span> will tell us how many incorrect guesses the player has made. We can call <span class='m'>len(missedLetters)</span> to find out this number. This number can also be used as the index to the <span class='m'>HANGMANPICS</span> list, which will allow us to print the correct board for the number of incorrect guesses. So, if <span class='m'>missedLetters</span> is <span class='m'>'aetr'</span> then <span class='m'>len('aetr')</span> will return <span class='m'>4</span> and we will display the string <span class='m'>HANGMANPICS[4]</span>. This is what <span class='m'>HANGMANPICS[len(missedLetters)]</span> evaluates to. This line shows the correct hangman board to the player.</p>
+
+<div class='sourcecode'><ol start='70'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Missed letters:', end=' ')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for letter in missedLetters:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(letter, end=' ')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print()</li>
+</ol></div>
+
+<p>Line 71 is a new type of loop, called a <span class='m'>for</span> loop. A <span class='m'>for</span> loop is kind of like a <span class='m'>while</span> loop. Line 72 is the entire body of the <span class='m'>for</span> loop. The <span class='m'>range()</span> function is often used with <span class='m'>for</span> loops. I will explain both in the next two sections.</p>
+
+<p>Remember that the keyword argument <span class='m'>end=' '</span> uses only one = sign (like <span class='m'>=</span>), not two (like <span class='m'>==</span>).</p>
+
+<h2 id="TherangeFunction">The <span class='m'>range()</span> and <span class='m'>list()</span> Functions</h2>
+
+<p>The <span class='m'>range()</span> function is easy to understand. You can call it with either one or two integer arguments. When called with one argument, <span class='m'>range()</span> will return a range object of integers from 0 up to (but not including) the argument. This range object can be converted to the more familiar list data type with the <span class='m'>list()</span> function. Try typing <span class='m'>list(range(10))</span> into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; list(range(10))<br />
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>The <span class='m'>list()</span> function is very similar to the <span class='m'>str()</span> or <span class='m'>int()</span> functions. It just converts the object it is passed into a list. It's very easy to generate huge lists with the <span class='m'>range()</span> function. Try typing in <span class='m'>list(range(10000))</span> into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; list(range(10000))<br />
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,...<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...The text here has been skipped for brevity...<br />
+...9989, 9990, 9991, 9992, 9993, 9994, 9995, 9996, 9997, 9998, 9999]<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>The list is so huge, that it won't even all fit onto the screen. But we can save the list into the variable just like any other list by entering this:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = list(range(10000))<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>If you pass two arguments to <span class='m'>range()</span>, the list of integers it returns is from the first argument up to (but not including) the second argument. Try typing <span class='m'>list(range(10, 20))</span> into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; list(range(10, 20))<br />
+[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>The <span class='m'>range()</span> is a very useful function, because we often use it in <span class='m'>for</span> loops (which are much like the <span class='m'>while</span> loops we have already seen).</p>
+
+<h2 id="forLoops"><span class='m'>for</span> Loops</h2>
+
+<p>The <span class='m'>for</span> loop is very good at looping over a list of values. This is different from the <span class='m'>while</span> loop, which loops as long as a certain condition is true. A <span class='m'>for</span> statement begins with the <span class='m'>for</span> keyword, followed by a variable name, followed by the <span class='m'>in</span> keyword, followed by a sequence (such as a list or string) or a range object (returned by the <span class='m nw'>range()</span> function), and then a colon. Each time the program execution goes through the loop (that is, on each <span class='term'>iteration</span> through the loop) the variable in the <span class='m'>for</span> statement takes on the value of the next item in the list.</p>
+
+<p>For example, you just learned that the <span class='m'>range()</span> function will return a list of integers. We will use this list as the <span class='m'>for</span> statement's list. In the shell, type <span class='m'>for i in <span class='nw'>range(10):</span></span> and press Enter. Nothing will happen, but the shell will indent the cursor and change the prompt from <span class='m'>&gt;&gt;&gt;</span> to <span class='m'>...</span> because it is waiting for you to type in the for-block. Type <span class='m'>print(i)</span> and press Enter. Then, to tell the interactive shell you are done typing in the for-block, press Enter again to enter a blank line. The shell will then execute your <span class='m'>for</span> statement and block:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; for i in range(10):<br />
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(i)<br />
+...<br />
+0<br />
+1<br />
+2<br />
+3<br />
+4<br />
+5<br />
+6<br />
+7<br />
+8<br />
+9<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>Notice that with <span class='m'>for</span> loops, you do not need to convert the range object returned by the <span class='m'>range()</span> function into a list with <span class='m'>list()</span>. <span class='m'>for</span> loops do this for us automatically.</p>
+
+<p>The <span class='m'>for</span> loop executes the code inside the for-block once for each item in the list. Each time it executes the code in the for-block, the variable <span class='m'>i</span> is assigned the next value of the next item in the list. If we used the <span class='m'>for</span> statement with the list <span class='m'>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span> instead of <span class='m'>range(10)</span>, it would have been the same:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; for i in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]:<br />
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(i)<br />
+...<br />
+0<br />
+1<br />
+2<br />
+3<br />
+4<br />
+5<br />
+6<br />
+7<br />
+8<br />
+9<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>The <span class='m'>for</span> statement automatically converts the range object returned by <span class='m'>range()</span> into a list, so there is no need to put something like list(range(10)) in the <span class='m'>for</span> statemet, just use <span class='m'>range(10)</span>.</p>
+
+<p>Try typing this into the shell: <span class='m'>for thing in ['cats', 'pasta', 'programming', 'spam']:</span> and press Enter, then type <span class='m'>print('I really like ' + thing)</span> and press Enter, and then press Enter again to tell the shell to end the for-block. The output should look like this:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; for thing in ['cats', 'pasta', 'programming', 'spam']:<br />
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('I really like ' + thing)<br />
+...<br />
+I really like cats<br />
+I really like pasta<br />
+I really like programming<br />
+I really like spam<br />
+>><br />
+</div>
+
+<p>And remember, because strings are also a sequence data type just like lists, you can use them in <span class='m'>for</span> statements as well. This example uses a single character from the string on each iteration:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; for i in 'Hello world!':<br />
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(i)<br />
+...<br />
+H<br />
+e<br />
+l<br />
+l<br />
+o<br />
+<br />
+w<br />
+o<br />
+r<br />
+l<br />
+d<br />
+!<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<h3 id="AwhileLoopEquivalentofaforLoop">A <span class='m'>while</span> Loop Equivalent of a <span class='m'>for</span> Loop</h3>
+
+<p>The <span class='m'>for</span> loop is very similar to the <span class='m'>while</span> loop, but when you only need to iterate over items in a list, using a <span class='m'>for</span> loop is much less code to type. You can make a <span class='m'>while</span> loop that acts the same way as a <span class='m'>for</span> loop by adding extra code:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; sequence = ['cats', 'pasta', 'programming', 'spam']<br />
+&gt;&gt;&gt; index = 0<br />
+&gt;&gt;&gt; while (index &lt; len(sequence)):<br />
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thing = sequence[index]<br />
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('I really like ' + thing)<br />
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index = index + 1<br />
+...<br />
+I really like cats<br />
+I really like pasta<br />
+I really like programming<br />
+I really like spam<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>But using the <span class='m'>for</span> statement automatically does all this extra code for us and makes programming easier since we have less to type. Our Hangman game will use <span class='m'>for</span> loops so you can see how useful they are in real games.</p>
+
+<p>One more thing about <span class='m'>for</span> loops, is that the <span class='m'>for</span> statement has the <span class='m'>in</span> keyword in it. But when you use the <span class='m'>in</span> keyword in a <span class='m'>for</span> statement, Python does not treat it like the <span class='m'>in</span> operator you would use in something like <span class='m'>42 in [0, 42, 67]</span>. The <span class='m'>in</span> keyword in <span class='m'>for</span> statements is just used to separate the variable and the list it gets its values from.</p>
+
+<p>The rest of the <span class='m'>displayBoard()</span> function displays the missed letters and creates the string of the secret word with all the unguessed letters as blanks.</p>
+
+<div class='sourcecode'><ol start='72'>
+&nbsp;&nbsp;&nbsp;&nbsp;print('Missed letters:', end=' ')<br />
+&nbsp;&nbsp;&nbsp;&nbsp;for letter in missedLetters:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(letter, end=' ')<br />
+&nbsp;&nbsp;&nbsp;&nbsp;print()<br />
+</ol></div>
+
+<p>This <span class='m'>for</span> loop on line 71 will display all the missed guesses that the player has made. When you play Hangman on paper, you usually write down these letters off to the side so you know not to guess them again. On each iteration of the loop the value of <span class='m'>letter</span> will be each letter in <span class='m'>missedLetters</span> in turn. Remember that the <span class='m'>end=' '</span> will replace the newline character that is printed after the string with a single space character.</p>
+
+<p>If <span class='m'>missedLetters</span> was <span class='m'>'ajtw'</span> then this <span class='m'>for</span> loop would display <span class='m'>a j t w</span>.</p>
+
+<h2 id="SlicesandSlicing">Slices and Slicing</h2>
+
+<p>If we want to get a shorter copy of some of the items in a list, we can use list slicing. <span class='term'>Slicing</span> creates a duplicate list out of some or all of the items in another list. In code, we can create a slice of a list by specifying two indexes (the beginning and end) and a colon. For example, type the following into the interactive shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = ['apples', 'oranges', 'pears', 'bananas']<br />
+&gt;&gt;&gt; eggs = spam[1:3]<br />
+&gt;&gt;&gt; eggs<br />
+['oranges', 'pears']<br />
+</div>
+
+<p>The expression <span class='m'>spam[0:2]</span> evaluates to a list that contains all the items from index <span class='m'>0</span> up to (but not including) index <span class='m'>2</span> in <span class='m'>spam</span>. We store this smaller list in the variable <span class='m'>eggs</span>.</p>
+
+<p>If you leave out the first index, Python will automatically think you want to specify index <span class='m'>0</span> for the first index:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = ['apples', 'oranges', 'pears', 'bananas']<br />
+&gt;&gt;&gt; spam[:3]<br />
+['apples', 'oranges', 'pears']<br />
+</div>
+
+<p>If you leave out the second index, Python will automatically think you want to specify the rest of the list:</p>
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = ['apples', 'oranges', 'pears', 'bananas']<br />
+&gt;&gt;&gt; spam[1:]<br />
+['oranges', 'pears', 'bananas']<br />
+</div>
+
+<p>Slicing is a simple way to get a subset of the items in a list. You can also use slices with strings in the same way you use them with lists. Each character in the string is like an item in the list. Try typing the following into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; myName = 'Zophie the Fat Cat'<br />
+&gt;&gt;&gt; myName[4:12]<br />
+'ie the F'<br />
+&gt;&gt;&gt; myName[:10]<br />
+'Zophie the'<br />
+&gt;&gt;&gt; myName[7:]<br />
+'the Fat Cat'<br />
+&gt;&gt;&gt;
+</div>
+
+<p>Slices are used in the next part of the code we look at.</p>
+
+<h3 id="DisplayingtheSecretWordwithBlanks">Displaying the Secret Word with Blanks</h3>
+
+<p>So by this point we have shown the player the hangman board and the missed letters. Now we want to print the secret word, except we want blank lines for the letters. We can use the _ character (called the underscore character) for this. But we should print the letters in the secret word that the player has guessed, and use _ characters for the letters the player has not guessed yet. We can first create a string with nothing but one underscore for each letter in the secret word. Then we can replace the blanks for each letter in <span class='m'>correctLetters</span>. So if the secret word was <span class='m'>'otter'</span> then the blanked out string would be <span class='m'>'_____'</span> (five _ characters). If <span class='m'>correctLetters</span> was the string <span class='m'>'rt'</span> then we would want to change the blanked string to <span class='m'>'_tt_r'</span>. Here is the code that does that:</p>
+
+<div class='sourcecode'><ol start='75'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;blanks = '_' * len(secretWord)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in range(len(secretWord)): # replace blanks with correctly guessed letters</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if secretWord[i] in correctLetters:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blanks = blanks[:i] + secretWord[i] + blanks[i+1:]</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for letter in blanks: # show the secret word with spaces in between each letter</li>
+</ol></div>
+
+<p>Line 75 creates the <span class='m'>blanks</span> variable full of _ underscores using string replication. Remember that the <span class='m'>*</span> operator can also be used on a string and an integer, so the expression <span class='m'>'hello' * 3</span> evaluates to <span class='m'>'hellohellohello'</span>. This will make sure that <span class='m'>blanks</span> has the same number of underscores as <span class='m'>secretWord</span> has letters.</p>
+
+<p>Then we use a <span class='m'>for</span> loop to go through each letter in <span class='m'>secretWord</span> and replace the underscore with the actual letter if it exists in <span class='m'>correctLetters</span>. Line 79 may look confusing. It seems that we are using the square brackets with the <span class='m'>blanks</span> and <span class='m'>secretWord</span> variables. But wait a second, <span class='m'>blanks</span> and <span class='m'>secretWord</span> are strings, not lists. And the <span class='m'>len()</span> function also only takes lists as parameters, not strings. But in Python, many of the things you can do to lists you can also do to strings such as replication, indexing, and slicing.</p>
+
+
+<h3 id="ReplacingtheUnderscoreswithCorrectlyGuessedLetters">Replacing the Underscores with Correctly Guessed Letters</h3>
+
+
+<div class='sourcecode'><ol start='77'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in range(len(secretWord)): # replace blanks with correctly guessed letters</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if secretWord[i] in correctLetters:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blanks = blanks[:i] + secretWord[i] + blanks[i+1:]</li>
+</ol></div>
+
+<p>Let's pretend the value of <span class='m'>secretWord</span> is <span class='m'>'otter'</span> and the value in <span class='m'>correctLetters</span> is <span class='m'>'tr'</span>. Then <span class='m'>len(secretWord)</span> will return <span class='m'>5</span>. Then <span class='m'>range(len(secretWord))</span> becomes <span class='m'>range(5)</span>, which in turn returns the list <span class='m'>[0, 1, 2, 3, 4]</span>.</p>
+
+<p>Because the value of <span class='m'>i</span> will take on each value in <span class='m'>[0, 1, 2, 3, 4]</span>, then the <span class='m'>for</span> loop code is equivalent to this:</p>
+
+<div class='sourceblurb'>
+if secretWord[0] in correctLetters:<br />
+blanks = blanks[:0] + secretWord[0] + blanks[1:]<br />
+if secretWord[1] in correctLetters:<br />
+blanks = blanks[:1] + secretWord[1] + blanks[2:]<br />
+if secretWord[2] in correctLetters:<br />
+blanks = blanks[:2] + secretWord[2] + blanks[3:]<br />
+if secretWord[3] in correctLetters:<br />
+blanks = blanks[:3] + secretWord[3] + blanks[4:]<br />
+if secretWord[4] in correctLetters:<br />
+blanks = blanks[:4] + secretWord[4] + blanks[5:]<br />
+</div>
+
+<p>(By the way, writing out the code like this is called <span class='term'>loop unrolling</span>.)</p>
+
+<p>If you are confused as to what the value of something like <span class='m'>secretWord[0]</span> or <span class='m'>blanks[3:]</span> is, then look at this picture. It shows the value of the <span class='m'>secretWord</span> and <span class='m'>blanks</span> variables, and the index for each letter in the string.</p>
+
+
+<p class='centeredImageP'><img src='images/9-2.png' alt='' class='centeredImage' /><br />
+Figure 9-2: The indexes of the <span class='m'>blanks</span> and <span class='m'>secretWord</span> strings.</p>
+
+<p>If we replace the list slices and the list indexes with the values that they represent, the unrolled loop code would be the same as this:</p>
+
+<div class='sourceblurb'>
+if 'o' in 'tr': #  False, blanks == '_____'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;blanks = '' + 'o' + '____' # This line is skipped.<br />
+if 't' in 'tr': #  True, blanks == '_____'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;blanks = '_' + 't' + '___' # This line is executed.<br />
+if 't' in 'tr': #  True, blanks == '_t___'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;blanks = '_t' + 't' + '__' # This line is executed.<br />
+if 'e' in 'tr': #  False, blanks == '_tt__'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;blanks = '_tt' + 'e' + '_' # This line is skipped.<br />
+if 'r' in 'tr': #  True, blanks == '_tt__'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;blanks = '_tt_' + 'r' + '' # This line is executed.<br />
+# blanks now has the value '_tt_r'<br />
+</div>
+
+<p>The above three code examples all do the <i>same thing</i> (at least, they do when <span class='m'>secretWord</span> is <span class='m'>'otter'</span> and <span class='m'>correctLetters</span> is <span class='m'>'tr'</span>. The first box is the actual code we have in our game. The second box shows code that does the same thing except without a <span class='m'>for</span> loop. The third box is the same as the second box, except we have evaluated many of the expressions in the second box.</p>
+
+<p>The next few lines of code display the new value of <span class='m'>blanks</span> with spaces in between each letter.</p>
+
+<div class='sourcecode'><ol start='81'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for letter in blanks: # show the secret word with spaces in between each letter</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(letter, end=' ')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print()</li>
+</ol></div>
+
+<p>This <span class='m'>for</span> loop will print out each character in the string <span class='m'>blanks</span>. Remember that by now, <span class='m'>blanks</span> may have some of its underscores replaced with the letters in <span class='m'>secretWord</span>. The <span class='m'>end</span> keyword argument in line 82's <span class='m'>print()</span> call makes the <span class='m nw'>print()</span> function put a space character at the end of the string instead of a newline character. This is the end of the <span class='m'>displayBoard()</span> function.</p>
+
+<h3 id="GetthePlayersGuess">Get the Player's Guess</h3>
+
+<p>The <span class='m'>getGuess()</span> function we create next will be called whenever we want to let the player type in a letter to guess. The function returns the letter the player guessed as a string. Further, <span class='m'>getGuess()</span> will make sure that the player types a valid letter before returning from the function.</p>
+
+<div class='sourcecode'><ol start='85'>
+<li>def getGuess(alreadyGuessed):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns the letter the player entered. This function makes sure the player entered a single letter, and not something else.</li>
+</ol></div>
+
+<p>The <span class='m'>getGuess()</span> function has a string parameter called <span class='m'>alreadyGuessed</span> which should be passed a string that contains the letters the player has already guessed, and will ask the player to guess a single letter. This single letter will be the return value for this function.</p>
+
+<div class='sourcecode'><ol start='87'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Guess a letter.')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;guess = input()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;guess = guess.lower()</li>
+</ol></div>
+
+<p>We will use a <span class='m'>while</span> loop because we want to keep asking the player for a letter until they enter text that is a single letter they have not guessed previously. Notice that the condition for the <span class='m'>while</span> loop is simply the Boolean value <span class='m'>True</span>. That means the only way execution will ever leave this loop is by executing a <span class='m'>break</span> statement (which leaves the loop) or a <span class='m'>return</span> statement (which leaves the entire function). Such a loop is called an <span class='term'>infinite loop</span>, because it will loop forever (unless it reaches a <span class='m'>break</span> statement).</p>
+
+<p>The code inside the loop asks the player to enter a letter, which is stored in the variable <span class='m'>guess</span>. If the player entered a capitalized letter, it will be converted to lowercase on line 90.</p>
+
+<h2 id="elifElseIfStatements"><span class='m'>elif</span> ("Else If") Statements</h2>
+
+<p>Take a look at the following code:</p>
+
+
+<div class='sourceblurb'>
+if catName == 'Fuzzball':<br />
+&nbsp;&nbsp;&nbsp;&nbsp;print('Your cat is fuzzy.')<br />
+else:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;print('Your cat is not very fuzzy at all.')<br />
+</div>
+
+<p>We've seen code like this before and it's rather simple. If the <span class='m'>catName</span> variable is equal to the string <span class='m'>'Fuzzball'</span>, then the <span class='m'>if</span> statement's condition is <span class='m'>True</span> and we tell the user that her cat is fuzzy. If <span class='m'>catName</span> is anything else, then we tell the user her cat is not fuzzy.</p>
+
+<p>But what if we wanted something else besides "fuzzy" and "not fuzzy"? We could put another <span class='m'>if</span> and <span class='m'>else</span> statement inside the first <span class='m'>else</span> block like this:</p>
+
+
+<div class='sourceblurb'>
+if catName == 'Fuzzball':<br />
+&nbsp;&nbsp;&nbsp;&nbsp;print('Your cat is fuzzy.')<br />
+else:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if catName == 'Spots'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Your cat is spotted.')<br />
+&nbsp;&nbsp;&nbsp;&nbsp;else:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Your cat is neither fuzzy nor spotted.')<br />
+<br />
+</div>
+
+<p>But if we wanted more things, then the code starts to have a lot of indentation:</p>
+
+<div class='sourceblurb'>
+if catName == 'Fuzzball':<br />
+&nbsp;&nbsp;&nbsp;&nbsp;print('Your cat is fuzzy.')<br />
+else:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if catName == 'Spots'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Your cat is spotted.')<br />
+&nbsp;&nbsp;&nbsp;&nbsp;else:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if catName == 'FattyKitty'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Your cat is fat.')<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if catName == 'Puff'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Your cat is puffy.')<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Your cat is neither fuzzy nor spotted nor fat nor puffy.')<br />
+</div>
+
+
+
+<p>Typing all those spaces means you have more chances of making a mistake with the indentation. So Python has the <span class='m'>elif</span> keyword. Using <span class='m'>elif</span>, the above code looks like this:</p>
+
+<div class='sourceblurb'>
+if catName == 'Fuzzball':<br />
+&nbsp;&nbsp;&nbsp;&nbsp;print('Your cat is fuzzy.')<br />
+elif catName == 'Spots'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;print('Your cat is spotted.')<br />
+elif catName == 'FattyKitty'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;print('Your cat is fat.')<br />
+elif catName == 'Puff'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;print('Your cat is puffy.')<br />
+else:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;print('Your cat is neither fuzzy nor spotted nor fat nor puffy.')<br />
+</div>
+
+<p>If the condition for the <span class='m'>if</span> statement is <span class='m'>False</span>, then the program will check the condition for the first <span class='m'>elif</span> statement (which is <span class='m'>catName == 'Spots'</span>). If that condition is <span class='m'>False</span>, then the program will check the condition of the next <span class='m'>elif</span> statement. If <i>all</i> of the conditions for the <span class='m'>if</span> and <span class='m'>elif</span> statements are <span class='m'>False</span>, then the code in the <span class='m'>else</span> block executes.</p>
+
+<p>But if one of the <span class='m'>elif</span> conditions are <span class='m'>True</span>, the elif-block code is executed and then execution jumps down to the first line past the else-block. So <i>only one</i> of the blocks in this if-elif-else statement will be executed. You can also leave off the else-block if you don't need one, and just have an if-else statement.</p>
+
+<h3 id="MakingSurethePlayerEnteredaValidGuess">Making Sure the Player Entered a Valid Guess</h3>
+
+<div class='sourcecode'><ol start='91'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if len(guess) != 1:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print('Please enter a single letter.')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; elif guess in alreadyGuessed:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print('You have already guessed that letter. Choose again.')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; elif guess not in 'abcdefghijklmnopqrstuvwxyz':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print('Please enter a LETTER.')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return guess</li>
+</ol></div>
+
+<p>The <span class='m'>guess</span> variable contains the text the player typed in for their letter guess. We need to make sure they typed in one and only one lowercase letter. If they didn't, we should loop back and ask them again. The <span class='m'>if</span> statement's condition checks that the text is one and only letter. If it is not, then we execute the if-block code, and then execution jumps down past the else-block. But since there is no more code after this if-elif-else statement, execution loops back to line 87.</p>
+
+<p>If the condition for the <span class='m'>if</span> statement is <span class='m'>False</span>, we check the <span class='m'>elif</span> statement's condition on line 93. This condition is <span class='m'>True</span> if the letter exists inside the <span class='m'>alreadyGuessed</span> variable (remember, this is a string that has every letter the player has already guessed). If this condition is <span class='m'>True</span>, then we display the error message to the player, and jump down past the else-block. But then we would be at the end of the while-block, so execution jumps back up to line 87.</p>
+
+<p>If the condition for the <span class='m'>if</span> statement and the <span class='m'>elif</span> statement are both <span class='m'>False</span>, then we check the second <span class='m'>elif</span> statement's condition on line 95. If the player typed in a number or a funny character (making <span class='m'>guess</span> have a value like <span class='m'>'5'</span> or <span class='m'>'!'</span>), then guess would not exist in the string <span class='m'>'abcdefghijklmnopqrstuvwxyz'</span>. If this is the case, the <span class='m'>elif</span> statement's condition is <span class='m'>True</span>.</p>
+
+<p>Figure 9-3 is an example of <span class='m'>elif</span> statements. Unless these three conditions are all <span class='m'>False</span>, the code will not return and the loop will keep asking for a letter. But when all three of the conditions are <span class='m'>False</span>, then the else-block's <span class='m'>return</span> statement will run and we will exit this loop and function.</p>
+
+<p class='centeredImageP'><img src='images/9-3.png' alt='' class='centeredImage' /><br />
+Figure 9-3: The <span class='m'>elif</span> statement.</p>
+
+<h3 id="AskingthePlayertoPlayAgain">Asking the Player to Play Again</h3>
+
+<div class='sourcecode'><ol start='100'>
+<li>def playAgain():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# This function returns True if the player wants to play again, otherwise it returns False.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Do you want to play again? (yes or no)')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return input().lower().startswith('y')</li>
+</ol></div>
+
+<p>The <span class='m'>playAgain()</span> function has just a <span class='m'>print()</span> function call and a <span class='m'>return</span> statement. The <span class='m'>return</span> statement has an expression that looks complicated, but we can break it down. Once we evaluate this expression to a value, that value will be returned from this function.</p>
+
+<p>The expression on line 103 doesn't have any operators, but it does have a function call and two method calls. The function call is <span class='m'>input()</span> and the method calls are <span class='m'>lower()</span> and <span class='m'>startswith('y')</span>. Remember that method calls are function calls that are attached by a period to the <i>value</i> on their <i>left</i>. <span class='m'>lower()</span> is attached to the return value of <span class='m'>input()</span>.</p>
+
+<p><span class='m'>input()</span> returns a string of the text that the user typed in. Here's a step by step look at how Python evaluates this expression if the user types in YES.</p>
+
+<div class='sourceblurb'>
+input().lower().startswith('y')<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/downarrow.png' alt='A downward arrow' /><br />
+'YES'.lower().startswith('y')<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/downarrow.png' alt='A downward arrow' /><br />
+'yes'.startswith('y')<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/downarrow.png' alt='A downward arrow' /><br />
+True<br />
+</div>
+
+<p>The point of the <span class='m'>playAgain()</span> function is to let the player type in yes or no to tell our program if they want to play another round of Hangman. If the player types in YES, then the return value of <span class='m'>input()</span> is the string <span class='m'>'YES'</span>. And <span class='m'>'YES'.lower()</span> returns the lowercase version of the attached string. So the return value of <span class='m'>'YES'.lower()</span> is <span class='m'>'yes'</span>.</p>
+
+<p>But there's the second method call, <span class='m'>startswith('y')</span>. This function returns <span class='m'>True</span> if the associated string begins with the string parameter between the parentheses, and <span class='m'>False</span> if it doesn't. The return value of <span class='m'>'yes'.startswith('y')</span> is <span class='m'>True</span>.</p>
+
+<p>Now we have evaluated this expression! We can see that what this does is let the player type in a response, we lowercase the response, check if it begins with the letter <span class='m'>'y'</span> or <span class='m'>'Y'</span>, and then return <span class='m'>True</span> if it does and <span class='m'>False</span> if it doesn't. Whew!</p>
+
+<p>On a side note, there is also a <span class='m'>endswith(someString)</span> string method that will return <span class='m'>True</span> if the string ends with the string in <span class='m'>someString</span> and <span class='m'>False</span> if it doesn't. <span class='m'>endswith()</span> is sort of like the opposite of <span class='m'>startswith()</span>.</p>
+
+<h2 id="ReviewoftheFunctionsWeDefined">Review of the Functions We Defined</h2>
+
+<p>That's all the functions we are creating for this game!</p>
+
+<ul>
+<li><span class='m'>getRandomWord(wordList)</span> will take a list of strings passed to it as a parameter, and return one string from it. That is how we will choose a word for the player to guess.</li>
+<li><span class='m'>displayBoard(HANGMANPICS, missedLetters, correctLetters, secretWord)</span> will show the current state of the board, including how much of the secret word the player has guessed so far and the wrong letters the player has guessed. This function needs four parameters passed to work correctly. <span class='m'>HANGMANPICS</span> is a list of strings that hold the ASCII art for each possible hangman board. <span class='m'>correctLetters</span> and <span class='m'>missedLetters</span> are strings made up of the letters that the player has guessed that are in and not in the secret word. And <span class='m'>secretWord</span> is the secret word the player is trying to guess. This function has no return value.</li>
+<li><span class='m'>getGuess(alreadyGuessed)</span> takes a string of letters the player has already guessed and will keep asking the player for a letter that is a letter that he hasn't already guessed. (That is, a letter that is not in <span class='m'>alreadyGuessed</span>.) This function returns the string of the acceptable letter the player guessed.</li>
+<li><span class='m'>playAgain()</span> is a function that asks if the player wants to play another round of Hangman. This function returns <span class='m'>True</span> if the player does and <span class='m'>False</span> if the player doesn't.</li>
+</ul>
+
+<p>We'll now start the code for the main part of the game, which will call the above functions as needed. As a refresher, look back at our flow chart in Figure 9-4.</p>
+
+
+<p class='centeredImageP'><img src='images/9-4.png' alt='' class='centeredImage' /><br />
+Figure 9-4: The complete flow chart of Hangman.</p>
+<h2 id="TheMainCodeforHangman">The Main Code for Hangman</h2>
+
+<p>We need to write code that does everything in this flow chart, and does it in the correct order. The main part of the code starts at line 106. Everything previous was just function definitions and a very large variable assignment for <span class='m'>HANGMANPICS</span>.</p>
+
+<h3 id="SettingUptheVariables">Setting Up the Variables</h3>
+
+<div class='sourcecode'><ol start='106'>
+<li>print('H A N G M A N')</li>
+<li>missedLetters = ''</li>
+<li>correctLetters = ''</li>
+<li>secretWord = getRandomWord(words)</li>
+<li>gameIsDone = False</li>
+</ol></div>
+
+<p>Line 106 is the first actual line that executes in our game. We start by assigning a blank string for <span class='m'>missedLetters</span> and <span class='m'>correctLetters</span>, because the player has not guessed any missed or correct letters yet. Then we call <span class='m'>getRandomWord(words)</span>, where <span class='m'>words</span> is a variable with the huge list of possible secret words we assigned on line 59. The return value of <span class='m'>getRandomWord(words)</span> is one of these words, and we save it to the <span class='m'>secretWord</span> variable. Then we also set a variable named <span class='m'>gameIsDone</span> to <span class='m'>False</span>. We will set <span class='m'>gameIsDone</span> to <span class='m'>True</span> when we want to signal that the game is over and the program should ask the player if they want to play again.</p>
+
+<p>Setting the values of these variables is what we do before the player starts guessing letters.</p>
+
+<h3 id="DisplayingtheBoardtothePlayer">Displaying the Board to the Player</h3>
+
+<div class='sourcecode'><ol start='112'>
+<li>while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;displayBoard(HANGMANPICS, missedLetters, correctLetters, secretWord)</li>
+</ol></div>
+
+<p>The <span class='m'>while</span> loop's condition is always <span class='m'>True</span>, which means we will always loop forever until a <span class='m'>break</span> statement is encountered. We will execute a <span class='m'>break</span> statement when the game is over (either because the player won or the player lost).</p>
+
+<p>Line 113 calls our <span class='m'>displayBoard()</span> function, passing it the list of hangman ASCII art pictures and the three variables we set on lines 107, 108, and 109. The execution moves to the start of <span class='m'>displayBoard()</span> at line 66. Based on how many letters the player has correctly guessed and missed, this function displays the appropriate hangman board to the player.</p>
+
+<h3 id="LettingthePlayerEnterTheirGuess">Letting the Player Enter Their Guess</h3>
+
+<div class='sourcecode'><ol start='115'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Let the player type in a letter.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;guess = getGuess(missedLetters + correctLetters)</li>
+</ol></div>
+
+<p>If you look at our flow chart, you see only one arrow going from the "Show the board and the blanks to the player." box to the "Ask a player to guess a letter." box. Since we have already written a function to get the guess from the player, let's call that function. Remember that the function needs all the letters in <span class='m'>missedLetters</span> and <span class='m'>correctLetters</span> combined, so we will pass as an argument a string that is a concatenation of both of those strings. This argument is needed by <span class='m'>getGuess()</span> because the function has code to check if the player types in a letter that they have already guessed.</p>
+
+<h3 id="CheckingiftheLetterisintheSecretWord">Checking if the Letter is in the Secret Word</h3>
+
+<div class='sourcecode'><ol start='118'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if guess in secretWord:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;correctLetters = correctLetters + guess</li>
+</ol></div>
+
+<p>Now let's see if the single letter in the <span class='m'>guess</span> string exists in <span class='m'>secretWord</span>. If it does exist, then we should concatenate the letter in <span class='m'>guess</span> to the <span class='m'>correctLetters</span> string. Next we can check if we have guessed all of the letters and won.</p>
+
+<h3 id="CheckingifthePlayerhasWon">Checking if the Player has Won</h3>
+
+<div class='sourcecode'><ol start='121'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Check if the player has won</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foundAllLetters = True</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for i in range(len(secretWord)):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if secretWord[i] not in correctLetters:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foundAllLetters = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+</ol></div>
+
+<p>How do we know if the player has guessed every single letter in the secret word? Well, <span class='m'>correctLetters</span> has each letter that the player correctly guessed and <span class='m'>secretWord</span> is the secret word itself. We can't just check if <span class='m'>correctLetters == secretWord</span> because consider this situation: if <span class='m'>secretWord</span> was the string <span class='m'>'otter'</span> and <span class='m'>correctLetters</span> was the string <span class='m'>'orte'</span>, then <span class='m'>correctLetters == secretWord</span> would be <span class='m'>False</span> even though the player has guessed each letter in the secret word.</p>
+
+<p>The player simply guessed the letters out of order and they still win, but our program would incorrectly think the player hasn't won yet. Even if they did guess the letters in order, <span class='m'>correctLetters</span> would be the string <span class='m'>'oter'</span> because the player can't guess the letter t more than once. The expression <span class='m'>'otter' == 'oter'</span> would evaluate to <span class='m'>False</span> even though the player guessed all the letters.</p>
+
+<p>The only way we can be sure the player won is to go through each letter in <span class='m'>secretWord</span> and see if it exists in <span class='m'>correctLetters</span>. If, and only if, every single letter in <span class='m'>secretWord</span> exists in <span class='m'>correctLetters</span> will the player have won.</p>
+
+<p>Note that this is different than checking if every letter in <span class='m'>correctLetters</span> is in <span class='m'>secretWord</span>. If <span class='m'>correctLetters</span> was the string <span class='m'>'ot'</span> and <span class='m'>secretWord</span> was <span class='m'>'otter'</span>, it would be true that every letter in <span class='m'>'ot'</span> is in <span class='m'>'otter'</span>, but that doesn't mean the player has guessed the secret word and won.</p>
+
+<p>So how can we do this? We can loop through each letter in <span class='m'>secretWord</span> and if we find a letter that does not exist in <span class='m'>correctLetters</span>, we know that the player has not guessed all the letters. This is why we create a new variable named <span class='m'>foundAllLetters</span> and set it to the Boolean value <span class='m'>True</span>. We start out assuming that we have found all the letters, but will change <span class='m'>foundAllLetters</span> to <span class='m'>False</span> when we find a letter in <span class='m'>secretWord</span> that is not in <span class='m'>correctLetters</span>.</p>
+
+<p>The <span class='m'>for</span> loop will go through the numbers 0 up to (but not including) the length of the word. Remember that <span class='m'>range(5)</span> will evaluate to the list <span class='m'>[0, 1, 2, 3, 4]</span>. So on line 123, the program executes all the code inside the for-block five times. The first time it executes with the variable <span class='m'>i</span> set to <span class='m'>0</span>, the second time set to <span class='m'>1</span>, then <span class='m'>2</span>, then <span class='m'>3</span>, then finally <span class='m'>4</span>.</p>
+
+<p>We use <span class='m'>range(len(secretWord))</span> so that <span class='m'>i</span> can be used to access each letter in the secret word. So if the first letter in <span class='m'>secretWord</span> (which is located at <span class='m'>secretWord[0]</span>) is not in <span class='m'>correctLetters</span>, we know we can set <span class='m'>foundAllLetters</span> to <span class='m'>False</span>. Also, because we don't have to check the rest of the letters in <span class='m'>secretWord</span>, we can just break out of this loop. Otherwise, we loop back to line 123 and check the next letter.</p>
+
+<p>If <span class='m'>foundAllLetters</span> manages to stay set to <span class='m'>True</span>, then it will keep the original <span class='m'>True</span> value we gave it. Either way, the value in <span class='m'>foundAllLetters</span> is accurate by the time we get past this <span class='m'>for</span> loop and run line 127.</p>
+
+<div class='sourcecode'><ol start='129'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if foundAllLetters:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Yes! The secret word is "' + secretWord + '"! You have won!')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gameIsDone = True</li>
+</ol></div>
+
+<p>This is a simple check to see if we found all the letters. If we have found every letter in the secret word, we should tell the player that they have won. We will also set the <span class='m'>gameIsDone</span> variable to <span class='m'>True</span>. We will check this variable to see if we should let the player guess again or if the player is done guessing.</p>
+
+<h3 id="WhenthePlayerGuessesIncorrectly">When the Player Guesses Incorrectly</h3>
+
+<div class='sourcecode'><ol start='130'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+</ol></div>
+
+<p>This is the start of the else-block. Remember, the code in this block will execute if the condition was <span class='m'>False</span>. But which condition? To find out, point your finger at the start of the <span class='m'>else</span> keyword and move it straight up. You will see that the <span class='m'>else</span> keyword's indentation is the same as the <span class='m'>if</span> keyword's indentation on line 118. So if the condition on line 118 was <span class='m'>False</span>, then we will run the code in this else-block. Otherwise, we skip down past the else-block to line 140.</p>
+
+<div class='sourcecode'><ol start='131'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;missedLetters = missedLetters + guess</li>
+</ol></div>
+
+<p>Because the player's guessed letter was wrong, we will add it to the <span class='m'>missedLetters</span> string. This is like what we did on line 119 when the player guessed correctly.</p>
+
+<div class='sourcecode'><ol start='133'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Check if player has guessed too many times and lost</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if len(missedLetters) == len(HANGMANPICS) - 1:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;displayBoard(HANGMANPICS, missedLetters, correctLetters, secretWord)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('You have run out of guesses!\nAfter ' + str(len(missedLetters)) + ' missed guesses and ' + str(len(correctLetters)) + ' correct guesses, the word was "' + secretWord + '"')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gameIsDone = True</li>
+</ol></div>
+
+<p>Think about how we know when the player has guessed too many times. When you play Hangman on paper, this is when the drawing of the hangman is finished. We draw the hangman on the screen with <span class='m'>print()</span> calls, based on how many letters are in <span class='m'>missedLetters</span>. Remember that each time the player guesses wrong, we add (or as a programmer would say, concatenate) the wrong letter to the string in <span class='m'>missedLetters</span>. So the length of <span class='m'>missedLetters</span> (or, in code, <span class='m'>len(missedLetters)</span>) can tell us the number of wrong guesses.</p>
+
+<p>At what point does the player run out of guesses and lose? Well, the <span class='m'>HANGMANPICS</span> list has 7 pictures (really, they are ASCII art strings). So when <span class='m'>len(missedLetters)</span> equals <span class='m'>6</span>, we know the player has lost because the hangman picture will be finished. (Remember that <span class='m'>HANGMANPICS[0]</span> is the first item in the list, and <span class='m'>HANGMANPICS[6]</span> is the last one. This is because the index of a list with 7 items goes from 0 to 6, not 1 to 7.)</p>
+
+<p>So why do we have <span class='m'>len(missedLetters) == len(HANGMANPICS) - 1</span> as the condition on line 134, instead of <span class='m'>len(missedLetters) == 6</span>? Pretend that we add another string to the <span class='m'>HANGMANPICS</span> list (maybe a picture of the full hangman with a tail, or a third mutant arm). Then the last picture in the list would be at <span class='m nw'>HANGMANPICS[7]</span>. So not only would we have to change the <span class='m'>HANGMANPICS</span> list with a new string, but we would also have to remember to change line 134 to <span class='m'>len(missedLetters) == 7</span>. This might not be a big deal for a small program like Hangman, but when you start writing larger programs you may have to change several different lines of code all over your program just to make a single change in the program's behavior. This way, if we want to make the game harder or easier, we just have to add or remove ASCII art strings to <span class='m'>HANGMANPICS</span> and change nothing else.</p>
+
+<p>A second reason we user <span class='m'>len(HANGMANPICS) - 1</span> is so that when we read the code in this program later, we know why this program behaves the way it does. If you wrote <span class='m'>len(missedLetters) == 6</span> and then looked at the code two weeks later, you may wonder what is so special about the number 6. You may have forgotten that 6 is the last index in the <span class='m'>HANGMANPICS</span> list. Of course, you could write a comment to remind yourself, like:</p>
+
+<div class='sourceblurb'>
+if len(missedLetters) == 6: # 6 is the last index in the HANGMANPICS list</li>
+</div>
+
+<p>But it is easier to just use <span class='m'>len(HANGMANPICS) - 1</span> instead.</p>
+
+<p>So, when the length of the <span class='m'>missedLetters</span> string is equal to <span class='m'>len(HANGMANPICS) - 1</span>, we know the player has run out of guesses and has lost the game. We print a long string telling the user what the secret word was, and then set the <span class='m'>gameIsDone</span> value to the Boolean value <span class='m'>True</span>. This is how we will tell ourselves that the game is done and we should start over.</p>
+
+<p>Remember that when we have \n in a string, that represents the newline character. That is how the one <span class='m'>print()</span> call on line 136 displays several lines of text.</p>
+
+<div class='sourcecode'><ol start='139'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Ask the player if they want to play again (but only if the game is done).</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if gameIsDone:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if playAgain():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;missedLetters = ''</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;correctLetters = ''</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gameIsDone = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;secretWord = getRandomWord(words)</li>
+</ol></div>
+
+<p>If the player won or lost after guessing their letter, then our code would have set the <span class='m'>gameIsDone</span> variable to <span class='m'>True</span>. If this is the case, we should ask the player if they want to play again. We already wrote the <span class='m'>playAgain()</span> function to handle getting a yes or no from the player. This function returns a Boolean value of <span class='m'>True</span> if the player wants to play another game of Hangman, and <span class='m'>False</span> if they've had enough.</p>
+
+<p>If the player does want to play again, we will reset the values in <span class='m'>missedLetters</span> and <span class='m'>correctLetters</span> to blank strings, set <span class='m'>gameIsDone</span> to <span class='m'>False</span>, and then choose a new secret word by calling <span class='m'>getRandomWord()</span> again, passing it the list of possible secret words.</p>
+
+<p>This way, when we loop back to the beginning of the loop (on line 112) the board will be back to the start (remember we decide which hangman picture to show based on the length of <span class='m'>missedLetters</span>, which we just set as the blank string) and the game will be just as the first time we entered the loop. The only difference is we will have a new secret word, because we programmed <span class='m'>getRandomWord()</span> to return a randomly chosen word each time we call it.</p>
+
+<p>There is a small chance that the new secret word will be the same as the old secret word, but this is just a coincidence. Let's say you flipped a coin and it came up heads, and then you flipped the coin again and it also came up heads. Both coin flips were random, it was just a coincidence that they came up the same both times. Accordingly, you may get the same word return from <span class='m'>getRandomWord()</span> twice in a row, but this is just a coincidence.</p>
+
+<div class='sourcecode'><ol start='146'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+</ol></div>
+
+<p>If the player typed in <span class='m'>'no'</span> when asked if they wanted to play again, then they return value of the call to the <span class='m'>playAgain()</span> function would be <span class='m'>False</span> and the else-block would have executed. This else-block only has one line, a <span class='m'>break</span> statement. This causes the execution to jump to the end of the loop that was started on line 112. But because there is no more code after the loop, the program terminates.</p>
+
+<h2 id="MakingNewChangestotheHangmanProgram">Making New Changes to the Hangman Program</h2>
+
+<p>This program was much bigger than the Dragon Realm program, but this program is also more sophisticated. It really helps to make a flow chart or small sketch to remember how you want everything to work. Take a look at the flow chart a few pages back in Figure 9-4 and try to find the lines of code that represent each block.</p>
+
+<p>Let's look at some ways we can improve our Hangman game.</p>
+
+<p>After you have played Hangman a few times, you might think that six guesses aren't enough to get many of the words. We can easily give the player more guesses by adding more multi-line strings to the <span class='m'>HANGMANPICS</span> list. It's easy, just change the ] square bracket on line 58 to a ,''' comma and three quotes (see line 57 below). Then add the following:</p>
+
+<div class='sourcecode'><ol start='58'>
+<li>==========''', '''</li>
+<li></li>
+<li>&nbsp;&nbsp;+----+</li>
+<li>&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;[O&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;/|\&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;/ \&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>==========''', '''</li>
+<li></li>
+<li>&nbsp;&nbsp;+----+</li>
+<li>&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;[O]&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;/|\&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;/ \&nbsp;&nbsp;&nbsp;|</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</li>
+<li>==========''']</li>
+</ol></div>
+
+<p>We have added two new multi-line strings to the HANGMANPICS list, one with the hangman's left ear drawn, and the other with both ears drawn. Because our program will tell the player they have lost when the number of guesses is the same as the number of strings in HANGMANPICS (minus one), this is the only change we need to make.</p>
+
+<p>We can also change the list of words by changing the words on line 59. Instead of animals, we could have colors:</p>
+
+<div class='sourcecode'><ol start='59'>
+<li>words = 'red orange yellow green blue indigo violet white black brown'.split()</li>
+</ol></div>
+
+<p>Or shapes:</p>
+
+<div class='sourcecode'><ol start='59'>
+<li>words = 'square triangle rectangle circle ellipse rhombus trapazoid chevron pentagon hexagon septagon octogon'.split()</li>
+</ol></div>
+
+<p>Or fruits:</p>
+
+<div class='sourcecode'><ol start='59'>
+<li>words = 'apple orange lemon lime pear watermelon grape grapefruit cherry banana cantalope mango strawberry tomato'.split()</li>
+</ol></div>
+
+<h2 id="Dictionaries">Dictionaries</h2>
+
+<p>With some modification, we can change our code so that our Hangman game can use all of these words as separate sets. We can tell the player which set the secret word is from (like "animal", "color", "shape", or "fruit"). This way, the player isn't guessing animals all the time.</p>
+
+<p>To make this change, we will introduce a new data type called a <span class='term'>dictionary</span>. A dictionary is a collection of many values much like a list is, but instead of accessing the items in the dictionary with an integer index, you access them with an index (for dictionaries, the indexes are called <span class='term'>keys</span>) of any data type (but most often strings).</p>
+
+<p>Try typing the following into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; stuff = {'hello':'Hello there, how are you?', 'chat':'How is the weather?', 'goodbye':'It was nice talking to you!'}<br />
+&gt;&gt;&gt;
+</div>
+
+<p>Those are curly braces { and }. On the keyboard they are on the same key as the square braces [ and ]. We use curly braces to type out a dictionary value in Python. The values in between them are <span class='term'>key-value pairs</span>. The keys are the things on the left of the colon and the values are on the right of the colon. You can access the values (which are like items in lists) in the dictionary by using the key (which are like indexes in lists). Try typing into the shell <span class='m'>stuff['hello']</span> and <span class='m'>stuff['chat']</span> and <span class='m'>stuff['goodbye']</span>:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; stuff['hello']<br />
+'Hello there, how are you?'<br />
+&gt;&gt;&gt; stuff['chat']<br />
+'How is the weather?'<br />
+&gt;&gt;&gt; stuff['goodbye']<br />
+'It was nice talking to you!'<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<h3 id="GettingtheSizeofDictionarieswithlen">Getting the Size of Dictionaries with <span class='m'>len()</span></h3>
+
+<p>You see, instead of putting an integer index in between the square brackets, you put a string key. This will evaluate to the value for that key. You can get the size (that is, how many key-value pairs in the dictionary) with the <span class='m'>len()</span> function. Try typing <span class='m'>len(stuff)</span> into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; len(stuff)<br />
+3<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>The list version of this dictionary would have only the values, and look something like this:</p>
+
+<div class='sourceblurb'>
+listStuff = ['Hello there, how are you?', 'How is the weather?', 'It was nice talking to you!']<br />
+</div>
+
+<p>The list doesn't have any keys, like <span class='m'>'hello'</span> and <span class='m'>'chat'</span> and <span class='m'>'goodbye'</span> in the dictionary. We have to use integer indexes <span class='m'>0</span>, <span class='m'>1</span>, and <span class='m'>2</span>.</p>
+
+<h3 id="TheDifferenceBetweenDictionariesandLists">The Difference Between Dictionaries and Lists</h3>
+
+<p>Dictionaries are different from lists because they are <span class='term'>unordered</span>. The first item in a list named <span class='m'>listStuff</span> would be <span class='m'>listStuff[0]</span>. But there is no "first" item in a dictionary, because dictionaries do not have any sort of order. Try typing this into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; favorites1 = {'fruit':'apples', 'number':42, 'animal':'cats'}<br />
+&gt;&gt;&gt; favorites2 = {'animal':'cats', 'number':42, 'fruit':'apples'}<br />
+&gt;&gt;&gt; favorites1 == favorites2<br />
+True<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>As you can see, the expression <span class='m'>favorites1 == favorites2</span> evaluates to <span class='m'>True</span> because dictionaries are unordered, and they are considered to be the same if they have the same key-value pairs in them. Lists are ordered, so a list with the same values in them but in a different order are not the same. Try typing this into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; listFavs1 = ['apples', 'cats', 42]<br />
+&gt;&gt;&gt; listFavs2 = ['cats', 42, 'apples']<br />
+&gt;&gt;&gt; listFavs1 == listFavs2<br />
+False<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>As you can see, the two lists <span class='m'>listFavs1</span> and <span class='m'>listFavs2</span> are not considered to be the same because order matters in lists.</p>
+
+<p>You can also use integers as the keys for dictionaries. Dictionaries can have keys of any data type, not just strings. But remember, because <span class='m'>0</span> and <span class='m'>'0'</span> are different values, they will be different keys. Try typing this into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; myDict = {'0':'a string', 0:'an integer'}<br />
+&gt;&gt;&gt; myDict[0]<br />
+'an integer'<br />
+&gt;&gt;&gt; myDict['0']<br />
+'a string'<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>You might think that using a <span class='m'>for</span> loop is hard with dictionaries because they do not have integer indexes. But actually, it's easy. Try typing the following into the shell. (Here's a hint, in IDLE, you do not have to type spaces to start a new block. IDLE does it for you. To end the block, just insert a blank line by just hitting the Enter key. Or you could start a new file, type in this code, and then press F5 to run the program.)</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; favorites = {'fruit':'apples', 'animal':'cats', 'number':42}<br />
+&gt;&gt;&gt; for i in favorites:<br />
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(i)<br />
+<br />
+fruit<br />
+number<br />
+animal<br />
+&gt;&gt;&gt; for i in favorites:<br />
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(favorites[i])<br />
+<br />
+apples<br />
+42<br />
+cats<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>As you can see, if you just use a dictionary in a <span class='m'>for</span> loop, the variable <span class='m'>i</span> will take on the values of the dictionary's keys, not its values. But if you have the dictionary and the key, you can get the value as we do above with <span class='m'>favorites[i]</span>. But remember that because dictionaries are unordered, you cannot predict which order the <span class='m'>for</span> loop will execute in. Above, we typed the <span class='m'>'animal'</span> key as coming before the <span class='m'>'number'</span> key, but the <span class='m'>for</span> loop printed out <span class='m'>'number'</span> before <span class='m'>'animal'</span>.</p>
+
+<p>Dictionaries also have two useful methods, <span class='m'>keys()</span> and <span class='m'>values()</span>. These will return values of a type called <span class='m'>dict_keys</span> and <span class='m'>dict_values</span>, respectively. Those data types are beyond the scope of this book, but you can easily convert them to lists with the <span class='m'>list()</span> function (just like <span class='m'>str()</span> converts a value to a string value.) Then you will have an ordered list of the key values and the value values in the dictionary value. Try typing the following into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; favorites = {'fruit':'apples', 'animal':'cats', 'number':42}<br />
+&gt;&gt;&gt; list(favorites.keys())<br />
+['fruit', 'number', 'animal']<br />
+&gt;&gt;&gt; list(favorites.values())<br />
+['apples', 42, 'cats']<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>Using these methods to get a list of the keys and values that are in a dictionary can be very helpful. Do not forget to convert the return value of <span class='m'>dict_keys</span> and <span class='m'>dict_keys</span> with the <span class='m'>dict_keys</span> function first, otherwise you may get errors in your program.</p>
+
+<h2 id="SetsofWordsforHangman">Sets of Words for Hangman</h2>
+
+<p>We will make changes to our original Hangman program. These changes can be downloaded from <a href='http://inventwithpython.com/hangman2.py'>http://inventwithpython.com/hangman2.py</a></p>
+
+<p>So how can we use dictionaries in our game? First, let's change the list <span class='m'>words</span> into a dictionary whose keys are strings and values are lists of strings. (Remember that the string method <span class='m'>split()</span> evaluates to a list.</p>
+
+<div class='sourcecode'><ol start='59'>
+<li>words = {'Colors':'red orange yellow green blue indigo violet white black brown'.split(),</li>
+<li>'Shapes':'square triangle rectangle circle ellipse rhombus trapazoid chevron pentagon hexagon septagon octogon'.split(),</li>
+<li>'Fruits':'apple orange lemon lime pear watermelon grape grapefruit cherry banana cantalope mango strawberry tomato'.split(),</li>
+<li>'Animals':'bat bear beaver cat cougar crab deer dog donkey duck eagle fish frog goat leech lion lizard monkey moose mouse otter owl panda python rabbit rat shark sheep skunk squid tiger turkey turtle weasel whale wolf wombat zebra'.split()}</li>
+</ol></div>
+
+<p>This code is put across multiple lines in the file, even though the Python interpreter thinks of it as just one "line of code." (The line of code doesn't end until the final } curly brace.)</p>
+
+<h3 id="TherandomchoiceFunction">The <span class='m'>random.choice()</span> Function</h3>
+
+<p>Now we will have to change our <span class='m'>getRandomWord()</span> function so that it chooses a random word from a dictionary of lists of strings, instead of from a list of strings. Here is what the function originally looked like:</p>
+
+<div class='sourcecode'><ol start='61'>
+<li>def getRandomWord(wordList):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# This function returns a random string from the passed list of strings.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;wordIndex = random.randint(0, len(wordList) - 1)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return wordList[wordIndex]</li>
+</ol></div>
+
+<p>Change the code in this function so that it looks like this:</p>
+
+<div class='sourcecode'><ol start='64'>
+<li>def getRandomWord(wordDict):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# This function returns a random string from the passed dictionary of lists of strings, and the key also.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# First, randomly select a key from the dictionary:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;wordKey = random.choice(list(wordDict.keys()))</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Second, randomly select a word from the key's list in the dictionary:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;wordIndex = random.randint(0, len(wordDict[wordKey]) - 1)</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return [wordDict[wordKey][wordIndex], wordKey]</li>
+</ol></div>
+
+<p>Line 61 just changes the name of the parameter to something a little more descriptive. Now instead of choosing a random word from a list of strings, first we choose a random key from the dictionary and then we choose a random word from the key's list of strings. Line 65 calls a new function in the <span class='m'>random</span> module named <span class='m'>choice()</span>. The <span class='m'>choice()</span> function has one parameter, a list. The return value of <span class='m'>choice()</span> is an item randomly selected from this list each time it is called.</p>
+
+<p>Remember that <span class='m'>randint(a, b)</span> will return a random integer between (and including) the two integers <span class='m'>a</span> and <span class='m'>b</span> and <span class='m'>choice(a)</span> returns a random item from the list <span class='m'>a</span>. Look at these two lines of code, and figure out why they do the exact same thing:</p>
+
+<div class='sourceblurb'>
+random.randint(0, 9)<br />
+random.choice(list(range(0, 10)))<br />
+</div>
+
+<p>Line 64 (line 70 in the new code) has also been changed. Now instead of returning the string <span class='m'>wordList[wordIndex]</span>, we are returning a list with two items. The first item is <span class='m'>wordDict[wordKey][wordIndex]</span>. The second item is <span class='m'>wordKey</span>. We return a list because we actually want the <span class='m'>getRandomWord()</span> to return two values, so putting those two values in a list and returning the list is the easiest way to do this.</p>
+
+<h3 id="EvaluatingaDictionaryofLists">Evaluating a Dictionary of Lists</h3>
+
+<p><span class='m'>wordDict[wordKey][wordIndex]</span> may look kind of complicated, but it is just an expression you can evaluate one step at a time like anything else. First, imagine that <span class='m'>wordKey</span> had the value <span class='m'>'Fruits'</span> (which was chosen on line 65) and <span class='m'>wordIndex</span> has the value <span class='m'>5</span> (chosen on line 68). Here is how <span class='m'>wordDict[wordKey][wordIndex]</span> would evaluate:</p>
+
+<div class='sourceblurb'>
+wordDict[wordKey][wordIndex]<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/downarrow.png' alt='A downward arrow' /><br />
+wordDict['Fruits'][5]<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/downarrow.png' alt='A downward arrow' /><br />
+['apple', 'orange', 'lemon', 'lime', 'pear', 'watermelon', 'grape', 'grapefruit', 'cherry', 'banana', 'cantalope', 'mango', 'strawberry', 'tomato'][5]<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/downarrow.png' alt='A downward arrow' /><br />
+'watermelon'<br />
+</div>
+
+<p>In the above case, the item in the list this function returns would be the string <span class='m'>'watermelon'</span>. (Remember that indexes start at 0, so <span class='m'>[5]</span> refers to the 6th item in the list.)</p>
+
+<p>There are just three more changes to make to our program. The first two are on the lines that we call the <span class='m'>getRandomWord()</span> function. The function is called on lines 109 and 145 in the original program:</p>
+
+<div class='sourcecode'><ol start='108'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;correctLetters = ''</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;secretWord = getRandomWord(words)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gameIsDone = False</li>
+</ol>
+<br />
+...<br />
+<br />
+<ol start='144'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gameIsDone = False</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;secretWord = getRandomWord(words)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</li>
+</ol></div>
+
+<p>Because the <span class='m'>getRandomWord()</span> function now returns a list of two items instead of a string, <span class='m'>secretWord</span> will be assigned a list, not a string. We would then have to change the code as follows:</p>
+
+<div class='sourcecode'><ol start='108'>
+<li>correctLetters = ''</li>
+<li>secretWord = getRandomWord(words)</li>
+<li>secretKey = secretWord[1]</li>
+<li>secretWord = secretWord[0]</li>
+<li>gameIsDone = False</li>
+</ol>
+<br />
+...<br />
+<br />
+<ol start='144'>
+<li>gameIsDone = False</li>
+<li>secretWord = getRandomWord(words)</li>
+<li>secretKey = secretWord[1]</li>
+<li>secretWord = secretWord[0]</li>
+<li>else:</li>
+</ol></div>
+
+<p>With the above changes, <span class='m'>secretWord</span> is first a list of two items. Then we add a new variable named <span class='m'>secretKey</span> and set it to the second item in <span class='m'>secretWord</span>. Then we set <span class='m'>secretWord</span> itself to the first item in the <span class='m'>secretWord</span> list. That means that <span class='m'>secretWord</span> will then be a string.</p>
+
+<h2 id="MultipleAssignment">Multiple Assignment</h2>
+
+<p>But there is an easier way by doing a little trick with assignment statements. Try typing the following into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; a, b, c = ['apples', 'cats', 42]<br />
+&gt;&gt;&gt; a<br />
+'apples'<br />
+&gt;&gt;&gt; b<br />
+'cats'<br />
+&gt;&gt;&gt; c<br />
+42<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>The trick is to put the same number of variables (delimited by commas) on the left side of the = sign as are in the list on the right side of the = sign. Python will automatically assign the first item's value in the list to the first variable, the second item's value to the second variable, and so on. But if you do not have the same number of variables on the left side as there are items in the list on the right side, the Python interpreter will give you an error.</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; a, b, c, d = ['apples', 'cats', 42]<br />
+<br />
+Traceback (most recent call last):<br />
+&nbsp;&nbsp;File "&lt;pyshell#8&gt;", line 1, in &lt;module&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;a, b, c, d = ['apples', 'cats', 42, 10, 'hello']<br />
+ValueError: too many values to unpack<br />
+<br />
+&gt;&gt;&gt; a, b, c, d = ['apples', 'cats']<br />
+<br />
+Traceback (most recent call last):<br />
+&nbsp;&nbsp;File "&lt;pyshell#9&gt;", line 1, in &lt;module&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;a, b, c = ['apples', 'cats']<br />
+ValueError: need more than 2 values to unpack<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>So we should change our code in Hangman to use this trick, which will mean our program uses fewer lines of code.</p>
+
+<div class='sourcecode'><ol start='108'>
+<li>correctLetters = ''</li>
+<li>secretWord, secretKey = getRandomWord(words)</li>
+<li>gameIsDone = False</li>
+</ol>
+<br />
+...<br />
+<br />
+<ol start='144'>
+<li>gameIsDone = False</li>
+<li>secretWord, secretKey = getRandomWord(words)</li>
+<li>else:</li>
+</ol></div>
+
+<h3 id="PrintingtheWordCategoryforthePlayer">Printing the Word Category for the Player</h3>
+
+<p>The last change we will make is to add a simple <span class='m'>print()</span> call to tell the player which set of words they are trying to guess. This way, when the player plays the game they will know if the secret word is an animal, color, shape, or fruit. Add this line of code after line 112. Here is the original code:</p>
+
+<div class='sourcecode'><ol start='112'>
+<li>while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;displayBoard(HANGMANPICS, missedLetters, correctLetters, secretWord)</li>
+</ol></div>
+
+<p>Add the line so your program looks like this:</p>
+
+<div class='sourcecode'><ol start='112'>
+<li>while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('The secret word is in the set: ' + secretKey)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;displayBoard(HANGMANPICS, missedLetters, correctLetters, secretWord)</li>
+</ol></div>
+
+<p>Now we are done with our changes. Instead of just a single list of words, the secret word will be chosen from many different lists of words. We will also tell the player which set of words the secret word is from. Try playing this new version. You can easily change the <span class='m'>words</span> dictionary on line 59 to include more sets of words.</p>
+
+<h2 id="Summary">Summary</h2>
+<p>We're done with Hangman. This has been a long chapter, and several new concepts have been introduced. But Hangman has been our most advanced game yet. As your games get more and more complex, it'll be a good idea to sketch out a flow chart on paper of what happens in your program.</p>
+
+<p>Methods are just like functions, except that are associated with values. Methods return values just like functions return values.</p>
+
+<p><span class='m'>for</span> loops iterate over the items in a list. The <span class='m'>range()</span> function is often used with <span class='m'>for</span> loops because it is an easy way to create lists of sequential numbers.</p>
+
+<p>Else-if statements (which use the <span class='m'>elif</span> keyword) will execute their block if their condition is <span class='m'>True</span> and the previous <span class='m'>if</span> and <span class='m'>elif</span> conditions are <span class='m'>False</span></p>
+
+<p>Dictionaries are very similar to lists except that they can use any value for an index. The indexes in dictionaries are called keys. Keys can be strings, integers, or any value of any data type.</p>
+
+<!--<p>Now that we have learned these new concepts, let's learn about artificial intelligence with our next game, Tic Tac Toe!</p>-->
+
+
+<table border='0' width='100%'><tr><td><a href='chapter8.html'>Go to Chapter 8 - Flow Charts</a></td><td align='right'><a href='chapter10.html'>Go to Chapter 10 - Tic Tac Toe</a></td></tr></table>
+<div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
+
+
+
+
+
+</body>
+</html>

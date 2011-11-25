@@ -1,0 +1,552 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-5459430-3");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<meta http-equiv="Content-Type" content="text/html;charset=us-ascii" />
+<title>IYOCGwP, Chapter 11 - Bagels</title>
+<link rel="stylesheet" href="inventbook.css" type="text/css" media="all" />
+</head>
+<body class='chapter11body'>
+
+<table border='0' width='100%'><tr><td><a href='chapter10.html'>Go to Chapter 10 - Tic Tac Toe</a></td><td align='right'><a href='chapter12.html'>Go to Chapter 12 - Cartesian Coordinates</a></td></tr></table>
+<div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
+
+
+<div style='height: 350px;'><img src='images/chap11.png'></div>
+
+<div class='inthischapter'><h3 id="TopicsCoveredInThisChapter">Topics Covered In This Chapter:</h3>
+<ul>
+<li>Hard-coding</li>
+<li>Augmented Assignment Operators, <span class='m'>+=</span>, <span class='m'>-=</span>, <span class='m'>*=</span>, <span class='m'>/=</span></li>
+<li>The <span class='m'>random.shuffle()</span> Function</li>
+<li>The <span class='m'>sort()</span> List Method</li>
+<li>The <span class='m'>join()</span> List Method</li>
+<li>String Interpolation (also called String Formatting)</li>
+<li>Conversion Specifier <span class='m'>%s</span></li>
+<li>Nested Loops</li>
+</ul></div>
+
+<p>In this chapter you will learn a few new methods and functions that come with Python. You will also learn about augmented assignment operators and string interpolation. These concepts don't let you do anything you couldn't do before, but they are nice shortcuts that make typing your code easier.</p>
+
+<p>Bagels is a simple game you can play with a friend. Your friend thinks up a random 3-digit number with no repeating digits, and you try to guess what the number is. After each guess, your friend gives you clues on how close your guess was. If the friend tells you "bagels", that means that none of the three digits you guessed is in the secret number. If your friend tells you "pico", then one of the digits is in the secret number, but your guess has the digit in the wrong place. If your friend tells you "fermi", then your guess has a correct digit in the correct place. Of course, even if you get a pico or fermi clue, you still don't know which digit in your guess is the correct one.</p>
+
+<p>You can also get multiple clues after each guess. Say the secret number is 456, and your guess is 546. The clue you get from your friend would be "fermi pico pico" because one digit is correct and in the correct place (the digit 6), and two digits are in the secret number but in the wrong place (the digits 4 and 5).</p>
+
+<h2 id="SampleRun">Sample Run</h2>
+
+<div class='samplerun'>
+I am thinking of a 3-digit number. Try to guess what it is.<br />
+Here are some clues:<br />
+When I say:&nbsp;&nbsp;&nbsp;&nbsp;That means:<br />
+&nbsp;&nbsp;Pico&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; One digit is correct but in the wrong position.<br />
+&nbsp;&nbsp;Fermi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;One digit is correct and in the right position.<br />
+&nbsp;&nbsp;Bagels&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No digit is correct.<br />
+I have thought up a number. You have 10 guesses to get it.<br />
+Guess #1:<br />
+<span class='sampleruninput'>123</span><br />
+Fermi<br />
+Guess #2:<br />
+<span class='sampleruninput'>453</span><br />
+Pico<br />
+Guess #3:<br />
+<span class='sampleruninput'>425</span><br />
+Fermi<br />
+Guess #4:<br />
+<span class='sampleruninput'>326</span><br />
+Bagels<br />
+Guess #5:<br />
+<span class='sampleruninput'>489</span><br />
+Bagels<br />
+Guess #6:<br />
+<span class='sampleruninput'>075</span><br />
+Fermi Fermi<br />
+Guess #7:<br />
+<span class='sampleruninput'>015</span><br />
+Fermi Pico<br />
+Guess #8:<br />
+<span class='sampleruninput'>175</span><br />
+You got it!<br />
+Do you want to play again? (yes or no)<br />
+<span class='sampleruninput'>no</span><br />
+</div>
+
+<h2 id="BagelsSourceCode">Bagel's Source Code</h2>
+
+<div class='sourcecode'><span class='sourcecodeHeader'>bagels.py</span><br /><span class='sourcecodeSubHeader'>This code can be downloaded from <a href='http://inventwithpython.com/bagels.py'>http://inventwithpython.com/bagels.py</a><br />If you get errors after typing this code in, compare it to the book's code with the online diff tool at <a href='http://inventwithpython.com/diff'>http://inventwithpython.com/diff</a> or email the author at <a href="mailto:al@inventwithpython.com">al@inventwithpython.com</a></span><br /><ol start='1'>
+<li>import random</li>
+<li>def getSecretNum(numDigits):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns a string that is numDigits long, made up of unique random digits.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;numbers = list(range(10))</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;random.shuffle(numbers)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;secretNum = ''</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in range(numDigits):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;secretNum += str(numbers[i])</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return secretNum</li>
+<li></li>
+<li>def getClues(guess, secretNum):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns a string with the pico, fermi, bagels clues to the user.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if guess == secretNum:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 'You got it!'</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;clue = []</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in range(len(guess)):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if guess[i] == secretNum[i]:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clue.append('Fermi')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elif guess[i] in secretNum:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clue.append('Pico')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if len(clue) == 0:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 'Bagels'</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;clue.sort()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return ' '.join(clue)</li>
+<li></li>
+<li>def isOnlyDigits(num):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns True if num is a string made up only of digits. Otherwise returns False.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if num == '':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return False</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in num:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if i not in '0 1 2 3 4 5 6 7 8 9'.split():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return False</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return True</li>
+<li></li>
+<li>def playAgain():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# This function returns True if the player wants to play again, otherwise it returns False.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Do you want to play again? (yes or no)')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return input().lower().startswith('y')</li>
+<li></li>
+<li>NUMDIGITS = 3</li>
+<li>MAXGUESS = 10</li>
+<li></li>
+<li>print('I am thinking of a %s-digit number. Try to guess what it is.' % (NUMDIGITS))</li>
+<li>print('Here are some clues:')</li>
+<li>print('When I say:&nbsp;&nbsp;&nbsp;&nbsp;That means:')</li>
+<li>print('&nbsp;&nbsp;Pico&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;One digit is correct but in the wrong position.')</li>
+<li>print('&nbsp;&nbsp;Fermi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;One digit is correct and in the right position.')</li>
+<li>print('&nbsp;&nbsp;Bagels&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No digit is correct.')</li>
+<li></li>
+<li>while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;secretNum = getSecretNum(NUMDIGITS)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('I have thought up a number. You have %s guesses to get it.' % (MAXGUESS))</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;numGuesses = 1</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while numGuesses &lt;= MAXGUESS:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;guess = ''</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while len(guess) != NUMDIGITS or not isOnlyDigits(guess):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Guess #%s: ' % (numGuesses))</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;guess = input()</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clue = getClues(guess, secretNum)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(clue)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;numGuesses += 1</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if guess == secretNum:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if numGuesses > MAXGUESS:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('You ran out of guesses. The answer was %s.' % (secretNum))</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if not playAgain():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+</ol></div>
+
+<h2 id="DesigningtheProgram">Designing the Program</h2>
+
+<p>Here is a flow chart for this program. The flow chart in Figure 11-1 describes the basic events of what happens in this game, and in what order they can happen.</p>
+
+
+<p class='centeredImageP'><img src='images/11-1.png' alt='' class='centeredImage' /><br />
+Figure 11-1: Flow chart for the Bagels game.</p>
+
+<p>And here is the source code for our game. Start a new file and type the code in, and then save the file as <span class='filename'>bagels.py</span>. We will design our game so that it is very easy to change the size of the secret number. It can be 3 digits or 5 digits or 30 digits. We will do this by using a constant variable named <span class='m'>NUMDIGITS</span> instead of hard-coding the integer <span class='m'>3</span> into our source code.</p>
+
+<p><span class='term'>Hard-coding</span> means writing a program in a way that it changing the behavior of the program requires changing a lot of the source code. For example, we could hard-code a name into a <span class='m'>print()</span> function call like: <span class='m'>print('Hello, Albert')</span>. Or we could use this line: <span class='m'>print('Hello, ' + name)</span> which would let us change the name that is printed by changing the name variable <span class='m'>name</span> the program is running.</p>
+
+<h2 id="HowtheCodeWorksLines1to9">How the Code Works: Lines 1 to 9</h2>
+
+<p>At the start of the program we import the <span class='m'>random</span> module and also create a function for generating a random secret number for the player to guess. The process of creating this number isn't hard, and also guarantees that it only has unique digits in it.</p>
+
+<div class='sourcecode pagebreaker'><ol start='1'>
+<li>import random</li>
+</ol></div>
+
+<p>This game imports the <span class='m'>random</span> module so we can use the module's random number functions.</p>
+
+<h3 id="ShufflingaUniqueSetofDigits">Shuffling a Unique Set of Digits</h3>
+
+<div class='sourcecode'><ol start='2'>
+<li>def getSecretNum(numDigits):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns a string that is numDigits long, made up of unique random digits.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;numbers = list(range(10))</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;random.shuffle(numbers)</li>
+</ol></div>
+
+<p>Our first function is named <span class='m'>getSecretNum()</span>, which will generate the random secret number. Instead of having the code only produce 3-digit numbers, we use a parameter named <span class='m'>numDigits</span> to tell us how many digits the secret number should have. (This way, we can make the game produce secret numbers with four or six digits, for example, just by passing <span class='m'>4</span> or <span class='m'>6</span> as <span class='m'>numDigits</span>.)</p>
+
+<p>You may have noticed that the return value of our call to <span class='m'>range()</span> was in turn passed to a function called <span class='m'>list()</span>. The <span class='m'>list()</span> function returns a list value of the value passed to it, much like the <span class='m'>str()</span> function returns a string form or the <span class='m'>int()</span> function returns an integer form. The reason we do this is because the <span class='m'>range()</span> function technically does not return a list but something called an iterator object. Iterators are a topic that you don't need to know at this point, so they aren't covered in this book.</p>
+
+<p>Just about every time we use the <span class='m'>range()</span> function it is in a <span class='m'>for</span> loop. Iterators are fine to use in <span class='m'>for</span> loops (just like lists and strings are), but if we ever want to store a list of integers in a variable, be sure to convert the return value of <span class='m'>range()</span> to a list with the <span class='m'>list()</span> function first. (Just like we do on line 4.)</p>
+
+<h3 id="TherandomshuffleFunction">The <span class='m'>random.shuffle()</span> Function</h3>
+
+<p>First, we create a list of integers <span class='m'>0</span> to <span class='m'>9</span> by calling <span class='m'>list(range(10))</span> and store a reference to this list in numbers. Then we call a function in the random module named <span class='m'>shuffle()</span>. The only parameter to <span class='m'>random.shuffle()</span> is a reference to a list. The <span class='m'>shuffle()</span> function will randomly change the order of all the items in the list.</p>
+
+<p>Notice that <span class='m'>random.shuffle()</span> does not return a value. It changes the list you pass it "in place" (just like our <span class='m'>makeMove()</span> function in the Tic Tac Toe chapter modified the list it was passed in place, rather than return a new list with the change). It would actually be incorrect to write <span class='m'>numbers = random.shuffle(numbers)</span>.</p>
+
+<p>Try experimenting with the <span class='m'>random.shuffle()</span> function by entering the following code into the interactive shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; import random<br />
+&gt;&gt;&gt; spam = list(range(10))<br />
+&gt;&gt;&gt; print(spam)<br />
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]<br />
+&gt;&gt;&gt; random.shuffle(spam)<br />
+&gt;&gt;&gt; print(spam)<br />
+[3, 0, 5, 9, 6, 8, 2, 4, 1, 7]<br />
+&gt;&gt;&gt; random.shuffle(spam)<br />
+&gt;&gt;&gt; print(spam)<br />
+[1, 2, 5, 9, 4, 7, 0, 3, 6, 8]<br />
+&gt;&gt;&gt; random.shuffle(spam)<br />
+&gt;&gt;&gt; print(spam)<br />
+[9, 8, 3, 5, 4, 7, 1, 2, 0, 6]<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>Every time you pass a list reference to <span class='m'>random.shuffle()</span>, afterwards the list it references will have all the same items but in a different order. The reason we do this is because we want the secret number to have unique values. The Bagels game is much more fun if you don't have duplicate numbers in the secret number, such as <span class='m'>'244'</span> or <span class='m'>'333'</span>.</p>
+
+<h3 id="GettingtheSecretNumberfromtheShuffledDigits">Getting the Secret Number from the Shuffled Digits</h3>
+
+<div class='sourcecode'><ol start='6'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;secretNum = ''</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in range(numDigits):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;secretNum += str(numbers[i])</li>
+<li>&nbsp;&nbsp;&nbsp;return secretNum</li>
+</ol></div>
+
+<p>The secret number will be a string of the first three digits (because we'll pass <span class='m'>3</span> for the <span class='m'>numDigits</span> parameter) of the shuffled list of integers. For example, if the shuffled list is [9, 8, 3, 5, 4, 7, 1, 2, 0, 6] then we want the string returned by <span class='m'>getSecretNum()</span> to be <span class='m'>'983'</span>.</p>
+
+<p>The <span class='m'>secretNum</span> variable starts out as a blank string. We then loop a number of times equal to the integer value in <span class='m'>numDigits</span>. On each iteration through the loop, a new integer is pulled from the shuffled list, converted to a string, and concatenated to the end of <span class='m'>secretNum</span>. So if <span class='m'>numDigits</span> is <span class='m'>3</span>, the loop will iterate three times and three random digits will be concatenated as strings.</p>
+
+<p>For example, if <span class='m'>numbers</span> refers to the list <span class='m'>[9, 8, 3, 5, 4, 7, 1, 2, 0, 6]</span>, then on the first iteration, <span class='m'>numbers[0]</span> (that is, <span class='m'>9</span>) will be passed to <span class='m'>str()</span>, which in turn returns <span class='m'>'9'</span> which is concatenated to the end of <span class='m'>secretNum</span>. On the second iteration, the same happens with <span class='m'>numbers[1]</span> (that is, <span class='m'>8</span>) and on the third iteration the same happens with <span class='m'>numbers[2]</span> (that is, <span class='m'>3</span>). The final value of <span class='m'>secretNum</span> that is returned is <span class='m'>'983'</span>.</p>
+
+<p>You may notice that <span class='m'>secretNum</span> in this function is a string, not an integer. This may seem odd, but remember that our secret number could be something like <span class='m'>'012'</span>. If we stored this as an integer, it would be <span class='m'>12</span> (without the leading zero) which would make it harder to work with in our program.</p>
+
+<h2 id="AugmentedAssignmentOperators">Augmented Assignment Operators</h2>
+
+
+<p>The <span class='m'>+=</span> operator on line 8 is new. This is one of the augmented assignment operators. Normally, if you wanted to add or concatenate a value to a variable, you would use code that looked like this:</p>
+
+<div class='sourceblurb'>
+spam = 42<br />
+spam = spam + 10<br />
+eggs = 'Hello '<br />
+eggs = eggs + 'world!'<br />
+</div>
+
+<p>After running the above code, <span class='m'>spam</span> would have the value <span class='m'>52</span> and <span class='m'>eggs</span> would have the value <span class='m'>'Hello world!'</span>. The augmented assignment operators are a shortcut that frees you from retyping the variable name. The following code does the exact same thing as the above code:</p>
+
+<div class='sourceblurb'>
+spam = 42<br />
+spam += 10 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Like spam = spam + 10<br />
+eggs = 'Hello '<br />
+eggs += 'world!' # Like eggs = eggs + 'world!'<br />
+</div>
+
+<p>There are other augmented assignment operators. <span class='m'>-=</span> will subtract a value from an integer. <span class='m'>*=</span> will multiply the variable by a value. <span class='m'>/=</span> will divide a variable by a value. Notice that these augmented assignment operators do the same math operations as the <span class='m'>-</span>, <span class='m'>*</span>, and <span class='m'>/</span> operators. Augmented assignment operators are a neat shortcut.</p>
+
+<h2 id="HowtheCodeWorksLines11to24">How the Code Works: Lines 11 to 24</h2>
+
+<p>We also need a way of figuring out which clues to show to the player.</p>
+
+<div class='sourcecode'><ol start='11'>
+<li>def getClues(guess, secretNum):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns a string with the pico, fermi, bagels clues to the user.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if guess == secretNum:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 'You got it!'</li>
+</ol></div>
+
+<p>The <span class='m'>getClues()</span> function will return a string with the fermi, pico, and bagels clues, depending on what it is passed for the <span class='m'>guess</span> and <span class='m'>secretNum</span> parameters. The most obvious and easiest step is to check if the guess is the exact same as the secret number. In that case, we can just return <span class='m'>'You got it!'</span>.</p>
+
+<div class='sourcecode'><ol start='16'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;clue = []</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in range(len(guess)):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if guess[i] == secretNum[i]:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clue.append('Fermi')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elif guess[i] in secretNum:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clue.append('Pico')</li>
+</ol></div>
+
+<p>If the guess is not the exact same as the secret number, we need to figure out what clues to give the player. First we'll set up a list named <span class='m'>clue</span>, which we will add the strings <span class='m'>'Fermi'</span> and <span class='m'>'Pico'</span> as needed. We will combine the strings in this list into a single string to return.</p>
+
+<p>We do this by looping through each possible index in <span class='m'>guess</span> and <span class='m'>secretNum</span> (we make sure both strings are the same size before we call <span class='m'>getClues()</span>). We will assume that <span class='m'>guess</span> and <span class='m'>secretNum</span> are the same size. As the value of <span class='m'>i</span> changes from <span class='m'>0</span> to <span class='m'>1</span> to <span class='m'>2</span>, and so on, the <span class='m'>if</span> statement checks if the first, second, third, etc. letter of <span class='m'>guess</span> is the same as the number in the same position in <span class='m'>secretNum</span>. If so, we will add a string <span class='m'>'Fermi'</span> to clue.</p>
+
+<p>If that condition is <span class='m'>False</span> we will check if the number at the <span class='m'>i</span>th position in <span class='m'>guess</span> exists anywhere in <span class='m'>secretNum</span>. If this condition is <span class='m'>True</span> we know that the number is somewhere in the secret number but not in the same position. This is why we add the <span class='m'>'Pico'</span> to <span class='m'>clue</span>.</p>
+
+<div class='sourcecode'><ol start='23'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if len(clue) == 0:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 'Bagels'</li>
+</ol></div>
+
+<p>If we go through the entire <span class='m'>for</span> loop above and never add anything to the <span class='m'>clue</span> list, then we know that there are no correct digits at all in <span class='m'>guess</span>. In this case, we should just return the string <span class='m'>'Bagels'</span> as our only clue.</p>
+
+<h2 class='pagebreaker' id="ThesortListMethod">The <span class='m'>sort()</span> List Method</h2>
+
+<div class='sourcecode'><ol start='26'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;clue.sort()</li>
+</ol></div>
+
+<p>Lists have a method named <span class='m'>sort()</span> that rearranges the items in the list to be in alphanumerical order (this means in alphabetical order, but numbers are also in order). Try entering the following into the interactive shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = [5, 'bat', 3, 1, 4, 'cat', 2, 'ape']<br />
+&gt;&gt;&gt; spam.sort()<br />
+&gt;&gt;&gt; spam<br />
+[1, 2, 3, 4, 5, 'ape', 'bat', 'cat']<br />
+</div>
+
+<p>Notice that the <span class='m'>sort()</span> method does not <i>return</i> a sorted list, but rather just sorts the list it is called on "in place". This is much like how the <span class='m'>reverse()</span> method works. You would never want to use this line of code: <span class='m'>return spam.sort()</span> because that would return the value <span class='m'>None</span> (which is what <span class='m'>sort()</span> returns). Instead you would want a separate line <span class='m'>spam.sort()</span> and then the line <span class='m'>return spam</span>.</p>
+
+<p>The reason we want to sort the <span class='m'>clue</span> list is because we might return extra clues that we did not intend based on the order of the clues. If <span class='m'>clue</span> referenced the list <span class='m'>['Pico', 'Fermi', 'Pico']</span>, then that would tell us that the center digit of our guess is in the correct position. Since the other two clues are both Pico, then we know that all we have to do is swap the first and third digit and we have the secret number. But if the clues are always sorted in alphabetical order, the player can't be sure which number the Fermi clue refers to (which is what we want for this game).</p>
+
+<h2 id="ThejoinStringMethod">The <span class='m'>join()</span> String Method</h2>
+
+<div class='sourcecode'><ol start='27'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return ' '.join(clue)</li>
+</ol></div>
+
+<p>The <span class='m'>join()</span> string method returns a string of each item in the list argument joined together. The string that the method is called on (on line 27, this is a single space, <span class='m'>' '</span>) appears in between each item in the list. So the string that is returned on line 27 is each string in <span class='m'>clue</span> combined together with a single space in between each string.</p>
+
+<p>For an example, enter the following into the interactive shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; 'x'.join(['hello', 'world'])<br />
+'helloxworld'<br />
+&gt;&gt;&gt; 'ABCDEF'.join(['x', 'y', 'z'])<br />
+'xABCDEFyABCDEFz'<br />
+&gt;&gt;&gt; ' '.join(['My', 'name', 'is', 'Zophie'])<br />
+'My name is Zophie'<br />
+</div>
+
+<p>The <span class='m'>join()</span> string method is sort of like the opposite of the <span class='m'>split()</span> string method. While <span class='m'>split()</span> returns a list from a split up string, <span class='m'>join()</span> returns a string from a combined list.</p>
+
+<h2 id="HowtheCodeWorksLines29to53">How the Code Works: Lines 29 to 53</h2>
+
+<p>We need a couple more functions for our game to use. The first is a function that will tell us if the guess that the player entered is a valid integer. Remember that the <span class='m'>input()</span> function returns a string of whatever the player typed in. If the player enters in anything but numbers for their guess, we want to ask the player again for a proper guess.</p>
+
+<p>The second function is something we've seen before in previous games. We want a function that will ask the player if they want to play the game again and from the player's response, figure out if it was a Yes or No answer.</p>
+
+<h3 id="CheckingifaStringOnlyhasNumbers">Checking if a String Only has Numbers</h3>
+
+<div class='sourcecode'><ol start='29'>
+<li>def isOnlyDigits(num):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# Returns True if num is a string made up only of digits. Otherwise returns False.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if num == '':</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return False</li>
+</ol></div>
+
+<p>The <span class='m'>isOnlyDigits()</span> is a small function that will help us determine if the player entered a guess that was only made up of numbers. To do this, we will check each individual letter in the string named <span class='m'>num</span> and make sure it is a number.</p>
+
+<p>Line 31 does a quick check to see if we were sent the blank string, and if so, we return <span class='m'>False</span>.</p>
+
+<div class='sourcecode'><ol start='34'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;for i in num:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if i not in '0 1 2 3 4 5 6 7 8 9'.split():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return False</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return True</li>
+</ol></div>
+
+<p>We use a <span class='m'>for</span> loop on the string <span class='m'>num</span>. The value of <span class='m'>i</span> will have a single character from the <span class='m'>num</span> string on each iteration. Inside the for-block, we check if <span class='m'>i</span> does not exist in the list returned by <span class='m'>'0 1 2 3 4 5 6 7 8 9'.split()</span>. If it doesn't, we know that there is a character in <span class='m'>num</span> that is something besides a number. In that case, we should return the value <span class='m'>False</span>.</p>
+
+<p>If execution continues past the <span class='m'>for</span> loop, then we know that every character in <span class='m'>num</span> is a number because we did not return out of the function. In that case, we return the value <span class='m'>True</span>.</p>
+
+<h3 id="FindingoutifthePlayerWantstoPlayAgain">Finding out if the Player Wants to Play Again</h3>
+
+<div class='sourcecode'><ol start='40'>
+<li>def playAgain():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;# This function returns True if the player wants to play again, otherwise it returns False.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Do you want to play again? (yes or no)')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;return input().lower().startswith('y')</li>
+</ol></div>
+
+<p>The <span class='m'>playAgain()</span> function is the same one we used in Hangman and Tic Tac Toe. The long expression on line 43 will evaluate to either <span class='m'>True</span> or <span class='m'>False</span>. The return value from the call to the <span class='m'>input()</span> function is a string that has its <span class='m'>lower()</span> method called on it. The <span class='m'>lower()</span> method returns another string (the lowercase string) and that string has its <span class='m'>startswith()</span> method called on it, passing the argument <span class='m'>'y'</span>.</p>
+
+<h3 id="TheStartoftheGame">The Start of the Game</h3>
+
+<div class='sourcecode'><ol start='45'>
+<li>NUMDIGITS = 3</li>
+<li>MAXGUESS = 10</li>
+<li></li>
+<li>print('I am thinking of a %s-digit number. Try to guess what it is.' % (NUMDIGITS))</li>
+<li>print('Here are some clues:')</li>
+<li>print('When I say:&nbsp;&nbsp;&nbsp;&nbsp;That means:')</li>
+<li>print('&nbsp;&nbsp;Pico&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; One digit is correct but in the wrong position.')</li>
+<li>print('&nbsp;&nbsp;Fermi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;One digit is correct and in the right position.')</li>
+<li>print('&nbsp;&nbsp;Bagels&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No digit is correct.')</li>
+</ol></div>
+
+<p>This is the actual start of the program. Instead of hard-coding three digits as the size of the secret number, we will use the constant variable <span class='m'>NUMDIGITS</span>. And instead of hard-coding a maximum of ten guesses that the player can make, we will use the constant variable <span class='m'>MAXGUESS</span>. (This is because if we increase the number of digits the secret number has, we also might want to give the player more guesses. We put the variable names in all capitals to show they are meant to be constant.)</p>
+
+<p>The <span class='m'>print()</span> function calls will tell the player the rules of the game and what the Pico, Fermi, and Bagels clues mean. Line 48's <span class='m'>print()</span> call has <span class='m'>% (NUMDIGITS)</span> added to the end and <span class='m'>%s</span> inside the string. This is a technique know as string interpolation.</p>
+
+<span class='createspace'><br /><br /></span>
+
+<h2 id="StringInterpolation">String Interpolation</h2>
+
+
+<p>String interpolation is another shortcut, like augmented assignment operators. Normally, if you want to use the string values inside variables in another string, you have to use the <span class='m'>+</span> concatenation operator:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; name = 'Alice'<br />
+&gt;&gt;&gt; event = 'party'<br />
+&gt;&gt;&gt; where = 'the pool'<br />
+&gt;&gt;&gt; day = 'Saturday'<br />
+&gt;&gt;&gt; time = '6:00pm'<br />
+&gt;&gt;&gt; print('Hello, ' + name + '. Will you go to the ' + event + ' at ' + where + ' this ' + day + ' at ' + time + '?')<br />
+Hello, Alice. Will you go to the party at the pool this Saturday at 6:00pm?<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>As you can see, it can be very hard to type a line that concatenates several strings together. Instead, you can use <span class='term'>string interpolation</span>, which lets you put placeholders like <span class='m'>%s</span> (these placeholders are called <span class='term'>conversion specifiers</span>), and then put all the variable names at the end. Each <span class='m'>%s</span> is replaced with the value in the variable at the end of the line. For example, the following code does the same thing as the above code:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; name = 'Alice'<br />
+&gt;&gt;&gt; event = 'party'<br />
+&gt;&gt;&gt; where = 'the pool'<br />
+&gt;&gt;&gt; day = 'Saturday'<br />
+&gt;&gt;&gt; time = '6:00pm'<br />
+&gt;&gt;&gt; print('Hello, %s. Will you go to the %s at %s this %s at %s?' % (name, event, where, day, time))<br />
+Hello, Alice. Will you go to the party at the pool this Saturday at 6:00pm?<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>String interpolation can make your code much easier to type and read, rather than using several <span class='m'>+</span> concatenation operators.</p>
+
+<p>The final line has the <span class='m'>print()</span> call with a string with conversion specifiers, followed by the % sign, followed by a set of parentheses with the variables in them. The first variable <span class='m'>name</span> will be used for the first <span class='m'>%s</span>, the second variable with the second <span class='m'>%s</span> and so on. The Python interpreter will give you an error if you do not have the same number of <span class='m'>%s</span> conversion specifiers as you have variables.</p>
+
+<p>Another benefit of using string interpolation instead of string concatenation is that interpolation works with any data type, not just strings. All values are automatically converted to the string data type. (This is what the s in <span class='m'>%s</span> stands for.) If you typed this code into the shell, you'd get an error:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = 42<br />
+&gt;&gt;&gt; print('Spam == ' + spam)<br />
+Traceback (most recent call last):<br />
+&nbsp;&nbsp;File "&lt;stdin&gt;", line 1, in &lt;module&gt;<br />
+TypeError: Can't convert 'int' object to str implicitly<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>You get this error because string concatenation can only combine two strings, and <span class='m'>spam</span> is an integer. You would have to remember to put <span class='m'>str(spam)</span> in there instead. But with string interpolation, you can have any data type. Try entering this into the shell:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; spam = 42<br />
+&gt;&gt;&gt; print('Spam == %s' % (spam))<br />
+Spam == 42<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>As you can see, using string interpolation instead of string concatenation is much easier because you don't have to worry about the data type of the variable. Also, string interpolation can be done on any strings, not just strings used in <span class='m'>print()</span> function calls.</p>
+
+<p>String interpolation is also known as <span class='term'>string formatting</span>.</p>
+
+<h2 id="HowtheCodeWorksLines55to76">How the Code Works: Lines 55 to 76</h2>
+
+<p>Now that the program has displayed the rules to Bagels to the player, the program will randomly create a secret number and then enter a loop where it repeatedly asks for the player's guesses until she has either correctly guessed the secret number, or has run out of guesses. After that, we will ask the player if she wants to play again.</p>
+
+<h3 id="CreatingtheSecretNumber">Creating the Secret Number</h3>
+
+<div class='sourcecode'><ol start='55'>
+<li>while True:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;secretNum = getSecretNum(NUMDIGITS)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('I have thought up a number. You have %s guesses to get it.' % (MAXGUESS))</li>
+<li></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;numGuesses = 1</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;while numGuesses &lt;= MAXGUESS:</li>
+</ol></div>
+
+<p>We start with a <span class='m'>while</span> loop that has a condition of <span class='m'>True</span>, meaning it will loop forever until we execute a <span class='m'>break</span> statement. Inside the infinite loop, we get a secret number from our <span class='m'>getSecretNum()</span> function (passing it <span class='m'>NUMDIGITS</span> to tell how many digits we want the secret number to have) and assign it to <span class='m'>secretNum</span>. Remember that <span class='m'>secretNum</span> is a string, not an integer.</p>
+
+<p>We tell the player how many digits is in our secret number by using string interpolation instead of string concatenation. We set a variable <span class='m'>numGuesses</span> to <span class='m'>1</span>, to denote that this is the first guess. Then we enter a new <span class='m'>while</span> loop which will keep looping as long as <span class='m'>numGuesses</span> is less than or equal to <span class='m'>MAXGUESS</span>.</p>
+
+<h3 id="GettingthePlayersGuess">Getting the Player's Guess</h3>
+
+<p>Notice that this second <span class='m'>while</span> loop on line 60 is inside another <span class='m'>while</span> loop that started on line 55. Whenever we have these loops-inside-loops, we call them <span class='term'>nested loops</span>. You should know that any <span class='m'>break</span> or <span class='m'>continue</span> statements will only <span class='m'>break</span> or <span class='m'>continue</span> out of the innermost loop, and not any of the outer loops.</p>
+
+<div class='sourcecode'><ol start='61'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;guess = ''</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while len(guess) != NUMDIGITS or not isOnlyDigits(guess):</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Guess #%s: ' % (numGuesses))</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;guess = input()</li>
+</ol></div>
+
+<p>The <span class='m'>guess</span> variable will hold the player's guess. We will keep looping and asking the player for a guess until the player enters a guess that has the same number of digits as the secret number and is made up only of digits. This is what the <span class='m'>while</span> loop that starts on line 62 is for. We set <span class='m'>guess</span> as the blank string on line 61 so that the <span class='m'>while</span> loop's condition is <span class='m'>False</span> the first time, ensuring that we enter the loop at least once.</p>
+
+<h3 id="GettingtheCluesforthePlayersGuess">Getting the Clues for the Player's Guess</h3>
+
+<div class='sourcecode'><ol start='66'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clue = getClues(guess, secretNum)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(clue)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;numGuesses += 1</li>
+</ol></div>
+
+<p>After execution gets past the <span class='m'>while</span> loop on line 62, we know that <span class='m'>guess</span> contains a valid guess. We pass this and the secret number in <span class='m'>secretNum</span> to our <span class='m'>getClues()</span> function. It returns a string that contains our clues, which we will display to the player. We then increment <span class='m'>numGuesses</span> by 1 using the augmented assignment operator for addition.</p>
+
+<h3 id="CheckingifthePlayerWonorLost">Checking if the Player Won or Lost</h3>
+
+<div class='sourcecode'><ol start='70'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if guess == secretNum:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if numGuesses > MAXGUESS:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('You ran out of guesses. The answer was %s.' % (secretNum))</li>
+</ol></div>
+
+<p>If <span class='m'>guess</span> is the same value as <span class='m'>secretNum</span>, then we know the player has correctly guessed the secret number and we can break out of this loop (the <span class='m'>while</span> loop that was started on line 60). If not, then execution continues to line 72, where we check to see if the player ran out of guesses. If so, then we tell the player that they have lost and what the secret number was. We know that the condition for the <span class='m'>while</span> loop on line 55 will be <span class='m'>False</span>, so there is no need for a <span class='m'>break</span> statement.</p>
+
+<p>At this point, execution jumps back to the <span class='m'>while</span> loop on line 60 where we let the player have another guess. If the player ran out of guesses (or we broke out of the loop with the <span class='m'>break</span> statement on line 71), then execution would proceed past the loop and to line 75.</p>
+
+<h3 id="AskingthePlayertoPlayAgain">Asking the Player to Play Again</h3>
+
+<div class='sourcecode'><ol start='75'>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if not playAgain():</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
+</ol></div>
+
+<p>After leaving the <span class='m'>while</span> loop that starts on line 60, we ask the player if want to play again by calling our <span class='m'>playAgain()</span> function. If <span class='m'>playAgain()</span> returns <span class='m'>False</span>, then we should break out of the <span class='m'>while</span> loop that was started on line 55. Since there is no more code after this loop, the program terminates.</p>
+
+<p>If <span class='m'>playAgain()</span> returned <span class='m'>True</span>, then we would not execute the <span class='m'>break</span> statement and execution would jump back to line 55. A new secret number would be generated so that the player can play a new game.</p>
+
+<h2 id="SummaryGettingGoodatBagels">Summary: Getting Good at Bagels</h2>
+
+<p>Bagels is a fairly simple game to program but can be difficult to win at. But if you keep playing, you will eventually discover better ways to guess and make use of the clues the game gives you.</p>
+
+<p>This chapter introduced a few new functions and methods (<span class='m'>random.shuffle()</span>, <span class='m'>sort()</span>, and <span class='m'>join()</span>), along with a couple handy shortcuts. Using the augmented assignment operators involve less typing when you want to change a variable's relative value (such as in <span class='m'>spam = spam + 1</span>, which can be shortend to <span class='m'>spam += 1</span>). String interpolation can make your code much more readable by placing <span class='m'>%s</span> (called a conversion specifier) inside the string instead of using many string concatenation operations.</p>
+
+<p>The <span class='m'>join()</span> string method is passed a list of strings that will be concatenated together, with the original associated string in between them. For example, <span class='m'>'X'.join( ['hello', 'world', 'yay'] )</span> will evaluate to the string, <span class='m'>'helloXworldXyay'</span>.</p>
+
+<p>The <span class='m'>sort()</span> list method will rearrange the items in the list to be in alphabetical order.</p>
+
+<p>The <span class='m'>append()</span> list method will add a value to the end of the associated list. If <span class='m'>spam</span> contains the list <span class='m'>['a', 'b', 'c']</span>, then calling <span class='m'>spam.append('d')</span> will change the list in <span class='m'>spam</span> to be <span class='m'>['a', 'b', 'c', 'd']</span>.</p>
+
+<p>The next chapter is not about programming directly, but will be necessary for the games we want to create in the later chapters of this book. We will learn about the math concepts of Cartesian coordinates and negative numbers. These will be used in the Sonar, Reversi, and Dodger games, but Cartesian coordinates and negative numbers are used in almost all games (especially graphical games). If you already know about these concepts, give the next chapter a brief read anyway just to freshen up. Let's dive in!</p>
+
+
+
+<table border='0' width='100%'><tr><td><a href='chapter10.html'>Go to Chapter 10 - Tic Tac Toe</a></td><td align='right'><a href='chapter12.html'>Go to Chapter 12 - Cartesian Coordinates</a></td></tr></table>
+<div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
+
+
+
+
+</body>
+</html>

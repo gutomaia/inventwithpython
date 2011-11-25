@@ -1,0 +1,258 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html lang="en">
+
+<head>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-5459430-3");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<title>Invent Your Own Computer Games with Python - Learn how to program with a free ebook programming tutorial</title>
+<meta name="description" content="Invent Your Own Computer Games with Python is a free ebook programming tutorial for the Python programming language. Learn how to program by making fun games!" />
+<meta name="keywords" content="Python, Invent Your Own Computer Games with Python, Invent with Python, tutorial, object-oriented, programming, documentation, book, free, ebook, Dive Into Python">
+<meta name="author" content="Al Sweigart" />
+
+<link rel="stylesheet" type="text/css" href="inventweb.css" />
+</head>
+
+<body>
+		<div id='header'>
+		</div>
+
+
+	  <div id='mainarea'>
+			<div id='sidebar'>
+				<ul>
+	<li><a href="index.html">Home</a></li>
+	<li><a href="chapters/">Read It!</a></li>
+	<li><a href="http://www.amazon.com/gp/product/0982106017?ie=UTF8&tag=playwithpyth-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=0982106017">Buy the Book</a></li>
+	<!--<li><a href="#">Forum</a></li>-->
+	<li><a href="blog/">Book's Blog</a></li>
+	<br/>
+	<li><a href="chapters/">Chapters</a></li>
+	<li><a href="source/">Source</a></li>
+	<li><a href="resources/">Resources</a></li>
+	<li><a href="traces/" >Traces</a></li>
+	<li><a href="diff/" >Diff Tool</a></li>
+	<li><a href="videos/" >Videos</a></li>
+	<li><a href="extra/" >Extra Content</a></li>
+	<br/>
+	<li><a href="../about.html">About the Author</a></li>
+	<li><a href="http://coffeeghost.net" >Author's Blog</a></li>
+
+	<div><br /><form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+	<input type="hidden" name="cmd" value="_s-xclick">
+	<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+	">
+	<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+	<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+	</form>
+	</div>
+
+
+
+</ul>
+ 			</div>
+
+			<div id='contentarea'>
+
+
+<h1>Learn How to Program!</h1>
+<h1>Free eBook Programming Tutorial<br />for Python Games!</h1>
+<div style="height: 310px;">
+<a href='chapters/'><img align='right' src='images/cover_thumb2.jpg' style='border: 1px solid black;'></a>
+<p><em>&#147;Invent Your Own Computer Games with Python&#148;</em> is a <strong>free book</strong> (as in, open source) and a <strong>free eBook</strong> (as in, no cost to download) that teaches you <strong>how to program</strong> in the <strong>Python programming language</strong>. Each chapter gives you the complete source code for a new game, and then teaches the programming concepts from the example.</p>
+
+<p>&#147;Invent with Python&#148; was written to be understandable by kids as young as 10 to 12 years old, although it is great for anyone of any age who has never programmed before.</p>
+
+<p>This second edition has revised and expanded content, including a <strong>Pygame tutorial</strong> library to make games with graphics, animation, and sound.</p>
+
+<p>The book and the programs are <strong>open source</strong>, and are available under a <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/"><strong>Creative Commons</strong> Attribution-Noncommercial-Share Alike</a></strong> license, meaning they are free to copy and distribute. See the license for full details. A print copy can be bought on <a href="http://www.amazon.com/gp/product/0982106017?ie=UTF8&tag=playwithpyth-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=0982106017">Amazon.com</a></p>
+
+<center>
+<p><a href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Finventwithpython.com"><img src="images/stumbleuponicon.png" alt="Vote up on StumbleUpon.com"/><strong>Vote for this site</strong></a> on <a href='http://www.stumbleupon.com'>Stumble Upon</a></p>
+
+<table border='0'>
+<tr>
+
+<!--<td><script src="http://www.stumbleupon.com/hostedbadge.php?s=2&r=http://inventwithpython.com"></script>
+</td>-->
+
+<td><a href="http://twitter.com/share" class="twitter-share-button" data-url="http://inventwithpython.com" data-text="Learn programming by making games: &quot;Invent Your Own Computer Games with Python&quot;" data-count="horizontal" data-via="AlSweigart">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+</td>
+
+<td><iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Finventwithpython.com&amp;send=false&amp;layout=standard&amp;width=450&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px;" allowTransparency="true"></iframe>
+</td>
+
+</tr></table>
+</cetner>
+
+
+</div>
+
+<br /><br /><br /><br />
+
+<a href="http://www.amazon.com/gp/product/0982106017?ie=UTF8&tag=playwithpyth-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=0982106017"><img src='images/buyonamazon.png' border='0' /></a>
+<a href='chapters/'><img src='images/readonline.png' border='0'></a>
+</p>
+
+<h2>Quick Download Links</h2>
+
+
+<p style="text-align: center;">
+
+<ul>
+<li><a href='http://python.org/ftp/python/3.1.1/python-3.1.1.msi'>Python 3.1 installer</a> (for Windows)</li>
+<li><a href='http://python.org/download/'>Python for other operating systems</a> (Mac, Linux)</li>
+<li><a href='http://pygame.org/ftp/pygame-1.9.1.win32-py3.1.msi'>Pygame for Python 3.1 installer</a> (for Windows)</li>
+<li><a href='IYOCGwP_book1.pdf' onClick="javascript: pageTracker._trackPageview('/IYOCGwP_book1.pdf'); ">Book PDF <img src='images/Icon_pdf.gif' border='0' /></a></li>
+<li><a href='chapters/'>Book HTML</a></li>
+<li><a href='inventwithpython_src.zip'>Source Code</a> <!--or the <a href='source/inventwithpython_src.zip'>executable versions</a>--> of the games.<!-- (the executables don't require Python to be installed.)--></li>
+</ul>
+
+
+<p>
+
+
+</p>
+
+
+<h2>Amazon Reviews and Testimonials</h2>
+<blockquote>
+&#147;This book is totally appropriate for someone who has never programmed before. Everything is explained, right from the ground up, in a lively, interesting style which doesn't dumb things down.&#148;
+<div style="text-align:right;">- J. Hartley, <a href="http://tartley.com">tartley.com</a>&nbsp;&nbsp;<br /><a href="http://www.amazon.com/review/RA7EII6XKPG4Y/ref=cm_cr_rdp_perm"><em>Read full Amazon review</em></a>&nbsp;&nbsp;</div>
+</blockquote>
+
+<blockquote>
+&#147;I am a college professor who occasionally teaches courses for liberal arts students. [...] I offered a game programming course in the Python programming language using Sweigart's book. The students loved this book. It starts at the very beginning and leads them, game by fascinating game, to become highly capable programmers.&#148;
+<div style="text-align:right;">- Dr. Robert C. Gann&nbsp;&nbsp;<br /><a href="http://www.amazon.com/review/RA7EII6XKPG4Y/ref=cm_cr_rdp_perm"><em>Read full Amazon review</em></a>&nbsp;&nbsp;</div>
+</blockquote>
+
+<blockquote>
+&#147;I picked up a copy of this book and was in all honesty blown away by how easy the concepts of python are introduced to the reader in a clear and concise manner. The fact that you are also making small little games with your programs throughout this book helps with motivation as tasks get harder and harder - it keeps it all fun while learning. [...] I e-mailed the author and got great personal help to advance further - that was of course much appreciated as well.&#148;
+<div style="text-align:right;">- Tor Hagen&nbsp;&nbsp;<br /><a href="http://www.amazon.com/review/R3I2QMS3W9SCNZ/ref=cm_cr_rdp_perm"><em>Read full Amazon review</em></a>&nbsp;&nbsp;</div>
+</blockquote>
+
+<blockquote>
+&#147;This Spring, we used this book for six weeks of a homeschool "Physics and Modeling" class. I am extremely happy with the book. It received many compliments from the students for ease of use, the hands-on approach, and the fact that game programming starts right away.&#148;
+<div style="text-align:right;">- Maria A. Droujkova <a href="http://naturalmath.com">naturalmath.com</a>&nbsp;&nbsp;<br /><a href="http://www.amazon.com/review/ROPOWJRS4HUNA/ref=cm_cr_rdp_perm"><em>Read full Amazon review</em></a>&nbsp;&nbsp;</div>
+</blockquote>
+
+<blockquote>
+&#147;I used to write a column on a greek magazine about learning Python and PyGame. [...] Since I found this book, every time the topic of learning programming is mentioned - especially from a person interested on making games - I point people to it.&#148;
+<div style="text-align:right;">- Konstantinos Michalopoulos&nbsp;&nbsp;<br /><a href="http://www.amazon.com/review/RYSRCG4GTVNMV/ref=cm_cr_rdp_perm"><em>Read full Amazon review</em></a>&nbsp;&nbsp;</div>
+</blockquote>
+
+<blockquote>
+&#147;My name is Felix. I'm ten years old, and I really liked your book on game programming with python.&#148;
+<div style="text-align:right;">- Felix D.&nbsp;&nbsp;</div>
+</blockquote>
+
+<blockquote>
+&#147;Thanks so much for Invent with Python! I’m an artist, I always had programming/math phobia, but... since python is included in several of the programs I use, I figured it’s time I took the plunge and learned how to program – at least with Python to start – “Invent with Python” has been a great resource so far.&#148;
+<div style="text-align:right;">- Jay B.&nbsp;&nbsp;</div>
+</blockquote>
+
+<blockquote>
+&#147;I just discovered your site and I wanted to thank you for your site and your book, which I just bought.<br />
+I tried to learn Java for one year and a half before I realized there are languages that are much easier to learn and much less verbose. Nowadays it seems the vast majority of books to start learning programming are super theoretical.<br />
+Your site is the best for adults like me. I think other authors in your field should follow your example and make their books fun and appealing to everyone. Because if a book is a bit boring or incomprehensible for a kid, chances are it will be the same for adults.&#148;
+<div style="text-align:right;">- Hugo&nbsp;&nbsp;</div>
+</blockquote>
+
+<blockquote>
+&#147;Hi there Al, my name is Ignacio and I'm from Argentina.<br />
+First of all, thanks a lot for writing such a useful book as Invent with Python. I'm 22 years old and I work as Tech Support in an enterprise, but I don't have any (and I mean any) knowledge about programming, so I found your book awesome. I'm learning a lot through it about Python and programming itself, which will make a better proffesional of me. I really, really thank you.&#148;
+<div style="text-align:right;">- Ignacio&nbsp;&nbsp;</div>
+</blockquote>
+
+
+<!-- DONATE STUFF SHOULD GO HERE
+<iframe src="gimme.html" width="100%" height="140" frameborder='0'>
+<script language="javascript" type="text/javascript" src="/gimme/gimmewidget.php"></script>
+</iframe>
+-->
+<h2>Compare Prices</h2>
+
+<p>I want to make programming knowledge accessible to everyone. As such, &#147;Invent Your Own Computer Games with Python&#148; is free to read online. And I've priced the print version (<a href='http://www.amazon.com/gp/product/0982106017?ie=UTF8&tag=playwithpyth-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=0982106017'>available for sale on Amazon.com</a>) for $25.00 (including free shipping) to make it affordable. Compare this with other programming books on Amazon:</p>
+
+
+<table border='0' cellpadding='2'>
+
+<tr><td style='font-size: 18; font-weight: bold; text-align:right;'>$25<br />(or free online)</td>
+<td style='font-weight: bold; vertical-align: top;'><a href='http://www.amazon.com/gp/product/0982106017?ie=UTF8&tag=playwithpyth-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=0982106017'>Invent Your Own Computer Games with Python, 2nd Ed.</a></td></tr>
+
+<tr><td style='font-size: 18; text-align:right;'>&nbsp;$25</td>
+<td><a href='http://www.amazon.com/gp/product/0071497528?ie=UTF8&tag=playwithpyth-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=0071497528'>Programming Video Games for the Evil Genius</a></td></tr>
+
+<tr><td style='font-size: 18; text-align:right;'>&nbsp;$30</td>
+<td><a href='http://www.amazon.com/gp/product/1598635182?ie=UTF8&tag=playwithpyth-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=1598635182'>Game Programming for Teens</a></td></tr>
+
+<tr><td style='font-size: 18; text-align:right;'>&nbsp;$35</td>
+<td><a href='http://www.amazon.com/gp/product/1933988495?ie=UTF8&tag=playwithpyth-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=1933988495'>Hello World! Computer Programming for Kids</a></td></tr>
+
+<tr><td style='font-size: 18; text-align:right;'>&nbsp;$35</td>
+<td><a href='http://www.amazon.com/gp/product/1435455002?ie=UTF8&tag=playwithpyth-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=1435455002'>Python Programming for the Absolute Beginner, 3rd Ed.</a></td></tr>
+
+<tr><td style='font-size: 18; text-align:right;'>&nbsp;$40</td>
+<td><a href='http://www.amazon.com/gp/product/1590596153?ie=UTF8&tag=playwithpyth-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=1590596153'>The Game Maker's Apprentice: Game Development for Beginners</a></td></tr>
+
+<tr><td style='font-size: 18; text-align:right;'>&nbsp;$45</td>
+<td><a href='http://www.amazon.com/gp/product/1590599829?ie=UTF8&tag=playwithpyth-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=1590599829'>Beginning Python: From Novice to Professional, 2nd Ed</a></td></tr>
+
+<tr><td style='font-size: 18; text-align:right;'>&nbsp;$60</td>
+<td><a href='http://www.amazon.com/gp/product/0596007302?ie=UTF8&tag=playwithpyth-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=0596007302'>Killer Game Programming in Java</a></td></tr>
+
+
+<!--<tr><td><a href=''></a></td><td style='font-size: 18; text-align:right;'>&nbsp;$</td></tr>-->
+</table>
+
+
+
+
+
+<h2>News and Updates</h2>
+
+<p>The <a href="blog/">book's blog</a> contains news and updates about this book.</p>
+
+<h2>Contact</h2>
+
+<p>You can email the author at <a href="mailto:al@inventwithpython.com">al@inventwithpython.com</a>. Feel free to send your programming questions or comments.</p>
+
+<h2>Other programming guides for kids:</h2>
+<p>Here are some other free resources to learn programming (in Python and other languages):</p>
+<ul>
+<li><a href='http://wiki.github.com/steveklabnik/hacketyhack/'>Hackety Hack</a> (a programming tutorial in Ruby)</li>
+<li><a href='http://www.greenteapress.com/thinkpython/thinkCSpy/'>How to Think Like a Computer Scientist: Learning with Python</a></li>
+<li><a href='http://www.briggs.net.nz/log/writing/snake-wrangling-for-kids/'>Snake Wrangling for Kids: Learning to Program with Python</a></li>
+<li><a href='http://www.python.org/doc/'>Python.org Official Documentation</a></li>
+<li><a href='http://www.cs.luc.edu/~anh/python/hands-on/handsonHtml/handson.html'>Hands-On Python: A Tutorial Introduction for Beginners</a></li>
+<li><a href='http://gvr.sourceforge.net/about.php'>The Guido van Robot Programming Language</a> (a simplified form of Python, designed as a kid's tutorial)</li>
+<li><a href='http://www.greenfoot.org/'>Greenfoot</a> (programming in the Java language)</li>
+<li><a href='http://www.doughellmann.com/PyMOTW/'>PyMOTW - Python Module of the Week</a> (a great site to learn about Python's other modules)</li>
+</ul></p>
+<p>Once you've learned to make graphical games with Pygame, there are many resources for downloading graphics, music, and sound effects: <a href="http://inventwithpython.com/blog/2011/04/30/free-music-sound-effects-tiles-and-2d-art-to-use-in-your-games/">Free Music, Sound Effects, Tiles, and 2D Art to Use in Your Games</a></p>
+
+
+<p class='copyright'>
+Copyright &copy; 2008-2011 by Albert Sweigart<br/>
+<span class='important'>"Invent Your Own Computer Games with Python" 2nd Edition is free to copy and distribute</span> under the Creative Commons <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/us/'>Attribution-Noncommercial-Share Alike 3.0 United States License</a>.<br/>
+<a href='http://creativecommons.org/licenses/by-nc-sa/3.0/us/'><img src='images/88x31.png' border='0'></a>
+</p>
+
+			</div>
+		</div>
+
+		<br/><br/><br/><br/>
+
+	</div>
+</body>
+
+</html>
