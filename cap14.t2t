@@ -3,7 +3,6 @@ A Cifra de Caesar
 
 
 ==Tópicos cobertos nesse capítulo==
-
 - Criptografia e cifras
 - Encriptando e decriptando
 - Texto cifrado, texto puro, chaves e símbolos
@@ -17,62 +16,67 @@ A Cifra de Caesar
 
 
 O programa deste capítulo não é bem um jogo, mas é divertido da mesma 
-forma. Nosso programa irá converter texto em Inglês para um código secreto, e 
-também converter códigos secretos de volta para Inglês. Somente alguém com 
+forma. Nosso programa irá converter texto escrito em Português para um código 
+secreto, e 
+também irá fazer o inverso, converter códigos secretos de volta para Português. Somente alguém com 
 bons conhecimentos sobre códigos secretos será capaz de entender nossas 
 mensagens secretas.
 
 Como nosso programa irá manipular texto visando convertê-lo em mensagens 
 secretas, nós iremos conhecer várias funções e métodos que Python fornece para
 manipulação de Strings. Nós também iremos aprender como os programas podem 
-executar operações matemáticas com strings assim como faz com números.
+executar operações matemáticas com strings assim como se faz com números.
 
 
-=Sobre Criptografia=
-A ciência de escrever códigos secretos é chamada **criptografia**. Criptografia tem sido usadas por centenas de anos para envio de mensagens secretas que apenas
-o destinatário possa entender, mesmo que alguém capture o mensageiro e leia
-a mensagem codificada. Um sistema de código secreto é chamado de **cifra**. 
-Existem milhares de diferentes cifras que tem sido utilizadas, cada uma usando 
-diferentes técnicas para manter as mensagens como um segredo.
+=Sobre a Criptografia=
+A ciência de escrever códigos secretos é chamada **criptografia**. Criptografia
+tem sido usadas por centenas de anos para envio de mensagens secretas de forma que apenas
+o destinatário destas possa entender, mesmo que alguém capture o mensageiro e leia
+a mensagem codificada. Um sistema de código secreto é também chamado de **cifra**. 
+Existem milhares de cifras diferentes que tem sido utilizadas, sendo que cada uma delas utiliza 
+diferentes técnicas para manter as mensagens em segredo.
 
 Em criptografia, nós chamamos a mensagem que queremos que se torne secreta de 
 **texto puro**. A mensagem em texto puro poderia ser algo como o seguinte:
 
 ``Alô pessoal! As chaves para a minha casa estão escondidas debaixo do vaso de flores vermelho.``
 
-A operação de converter o texto puro em uma mensagem codificada é chamada de 
-**criptografar** o texto puro. O texto puro é criptografado em 
+Quando convertemos o texto puro em uma mensagem codificada, nós chamamos essa 
+operação de 
+**encriptar** o texto puro. O texto puro é encriptado, gerando o
 **texto cifrado**. O texto cifrado se parece com um conjunto de letras 
-aleatórias (também chamado de **garbage data** - lixo), e nós não conseguimos 
+aleatórias (também chamado de **//garbage data//** - lixo), de forma que nós não consigamos
 descobrir qual era o texto puro original apenas olhando o texto cifrado. Segue 
 um exemplo de um texto cifrado:
 
 ``Ckkz fkx kj becqnejc kqp pdeo oaynap iaoowca!``
 
-Mas se nós conhecermos a cifra utilizada para encriptar a mensagem, então nós 
-poderemos **descriptografar** o texto cifrado de volta para texto puro 
-(descriptografar é o oposto de criptografar).
+Porém, se nós conhecermos a cifra utilizada para encriptar a mensagem, então nós
+poderemos **decriptar** o texto cifrado de volta para texto puro
+(decriptar é o oposto de encriptar).
 
 Muitas cifras também utilizam chaves. **Chaves** são valores secretos que 
-permitem que você descriptografe o texto que foi cifrado usando uma cifra 
+permitem que você decripte o texto que foi encriptado usando uma cifra 
 específica. Pense na cifra como sendo uma fechadura. Apesar de todas as 
 fechaduras do mesmo tipo serem construídas da mesma forma, você somente 
 conseguirá destravar uma fechadura se você possuir a chave construída para 
 aquela tranca.
+%TODO: melhorar última frase
 
 
 =A Cifra de Caesar=
-Quando criptografamos uma mensagem usando uma cifra, escolhemos a chave que
-será utilizada para criptografar e descriptografar uma mensagem. A chave para 
-nossa Cifra de Caesar será um número de 1 a 26. A menos que você conheça a 
-chave (isto é, conheça o número), você não será capaz de descriptografar a 
-mensagem criptografada.
+Quando encriptamos uma mensagem usando uma cifra, escolhemos a chave que
+será utilizada para encriptar e decriptar uma mensagem. Em nosso programa de Cifra de Caesar, a chave 
+será um número de 1 a 26. A menos que você conheça a
+chave (isto é, conheça o número), você não será capaz de decriptar a
+mensagem encriptada.
 
 [14-1.png]
-Figura 14-1: Deslocando letras por três espaços. Assim, B se torna E.
+Figura 14-1: Deslocando letras por três espaços. Nesse caso, B se torna E.
+
 
 A **Cifra de Caesar** foi uma das primeiras cifras inventadas. Nessa cifra, você
-criptografa a mensagem pegando cada letra do alfabeto (em criptografia, essas 
+encripta a mensagem pegando cada letra do alfabeto (em criptografia, essas 
 letras são chamadas de **símbolos** porque podem ser letras, números ou 
 quaisquer outros símbolos) e substituindo pela letra "deslocada". Se você 
 desloca a letra A por um espaço, você obtém a letra B. Se você desloca a letra 
@@ -82,16 +86,15 @@ sendo deslocadas em 3 espaços.
 Para obter cada letra deslocada, desenhe uma linha composta por divisões com 
 cada letra do alfabeto ocupando uma divisão. Então, desenhe uma segunda linha 
 com divisões exatamente abaixo desta, mas inicie o alfabeto com um certo número
-de espaços deslocados. Quando você terminar o alfabeto, preencha o restante com 
+de espaços deslocados. Quando você terminar o alfabeto na linha de baixo, preencha o restante com 
 as letras que precedem a primeira letra do alfabeto deslocado no alfabeto 
 tradicional. Segue um exemplo com as letras deslocadas em três espaços:
-
 
 [14-2.png]
 Figura 14-2: O alfabeto inteiro deslocado por três espaços.
 
 O número de espaços que nós deslocamos é a chave da Cifra de Caesar. O exemplo 
-acima mostra as traduções de letras para a chave 3.
+acima mostra a tradução de cada letra, usando a chave 3.
 
 %XXX: erro no livro!
 Usando uma chave de 3, se criptografarmos o texto puro "Beleza", então o "B" se 
@@ -99,30 +102,30 @@ torna "E". A letra "e" se torna "h". A letra "l" se torna "o". A letra "e" se
 torna "h". A letra "z" se torna "c". Por fim, a letra "a" se torna "d". O texto 
 cifrado de "Beleza" com chave 3 se torna: "Ehohcd".
 
-Os caracteres que não representam letras serão mantidos na frase. Para 
-descriptografar "Ehohcd" com chave 3, basta fazer o processo inverso, da linha
+Os caracteres que não representam letras serão mantidos inalterados na frase. Para 
+decriptar "Ehohcd" com chave 3, basta fazer o processo inverso, da linha
 de baixo para a de cima. A letra "E" se torna "B". A letra "h" se torna "e". A 
 letra "o" se torna "l". A letra "h" se torna "e". A letra "c" se torna "z". Por 
-fim, a letra "d" se torna "a", para formar novamente "Beleza".
+fim, a letra "d" se torna "a", formando novamente a palavra "Beleza".
 
-Você pode encontrar mais sobre a Cifra de Caesar na Wikipedia, em: http://pt.wikipedia.org/wiki/Cifra_de_César
+Você pode encontrar mais sobre a Cifra de Caesar na Wikipedia, em: [http://pt.wikipedia.org/wiki/Cifra_de_César http://pt.wikipedia.org/wiki/Cifra_de_César]
 
 
 =ASCII, Usando Números para Representar Letras=
 Como vamos implementar esse deslocamento de letras em nosso programa? Nós 
 podemos fazer isso representando cada letra como um número (chamado de ordinal),
 e então adicionar ou subtrair valores desse número para formar um novo número
-(e, por consequência, uma nova letra). ASCII (que é pronunciado "asqui" e 
+(e, por consequência, uma nova letra). **ASCII** (que é pronunciado "asqui" e 
 significa //American Standard Code for Information Interchange//) é um código
 que conecta cada caractere a um número entre 32 e 127. Os números menores que 32
 se referem a caracteres "não-imprimíveis", então não iremos usá-los.
 
-As letras maiúsculas "A" até "Z" possuem o código ASCII de 65 até 90. As letras
-minúsculas "a" até "z" possuem os números ASCII de 97 até 122. Os caracteres que
+As letras maiúsculas de "A" até "Z" possuem o código ASCII de 65 até 90. As letras
+minúsculas de "a" até "z" possuem os números ASCII de 97 até 122. Os caracteres que
 representam os dígitos númericos de "0" até "9" possuem os números ASCII de 48
 até 57.
 
-
+%TODO: montar a tabela
 Tabela 14-1. A Tabela ASCII 
 
 Então, se quiséssemos deslocar "A" por três espaços, primeiro devemos 
@@ -130,6 +133,7 @@ convertê-lo para um número (65). Então, adicionamos 3 a 65, obtendo 68. Entã
 convertemos o número 68 de volta para letra ("D"). Nós iremos utilizar as 
 funções ``chr()`` e ``ord()`` para converter entre letras e números.
 
+%XXX: erro no livro
 Por exemplo, a letra "A" é representada pelo número 65. A letra "m" é representada pelo número 109. A tabela com todos os códigos ASCII de 32 a 126 é apresentada na Tabela 14-1.
 
 
