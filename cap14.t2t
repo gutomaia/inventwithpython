@@ -295,9 +295,9 @@ arquivo como ``cifra.py``.
 
 =Como o código funciona: Linhas 1 a 28=
 
-Este código é muito mais curto comparado aos nossos outros jogos. Os processos de
-encriptar e decriptar são apenas o inverso um do outro, e mesmo assim 
-eles compartilham muito do mesmo código. Vamos ver o funcionamento do código, 
+Este código é bem mais curto do que os códigos dos nossos outros jogos. Os processos de
+encriptar e decriptar são o inverso um do outro, e
+compartilham muito do mesmo código. Vamos ver o funcionamento do código,
 linha por linha:
 ```
      1	# Cifra de Caesar
@@ -309,10 +309,10 @@ A primeira linha é um simples comentário. A Cifra de Caesar pertence a um tipo
 cifras chamado de cifras de substituição simples. Cifras de substituição simples
 são cifras que substituem um símbolo no texto puro por um (e apenas um) símbolo no
 texto cifrado. Assim, se um "G" foi substituído com "Z" na cifra, todo e qualquer
-"G" no texto puro deverá ser substituído com (e comente com) um "Z".
+"G" no texto puro deverá ser substituído com (e somente com) um "Z".
 
 MAX_KEY_SIZE é uma variável que armazena o número inteiro 26. MAX_KEY_SIZE nos
-lembra que nesse programa a chave usada em nossa cifra deveria ser um número entre
+lembra que nesse programa a chave usada em nossa cifra deve ser um número entre
 1 e 26.
 
 
@@ -335,12 +335,12 @@ minúsculas da string digitada pelo usuário) é armazenado em ``mode``. A cláu
 condicional ``if`` verifica se a string armazenada em ``mode`` existe na lista
 retornada por ``'encriptar c decriptar d'.split()``. A lista retornada é
 literalmente ``['encriptar', 'c', 'decriptar', 'd']``, mas é mais fácil
-para o programador digitar apenas ``'encrypt e decrypt d'.split()`` e não digitar
+para o programador digitar apenas ``'encrypt e decrypt d'.split()`` ao invés de digitar
 todas aquelas aspas e vírgulas. Mas você pode escolher e utilizar o que for mais
 fácil para você; pois ambas são avaliadas como a mesma lista.
 
 %XXX: erro no livro nesse parágrafo
-Essa função irá retornar o primeiro caracter em ``mode``, visto que ``mode`` é
+Essa função irá retornar o primeiro caractere em ``mode``, visto que ``mode`` é
 igual a ``'encriptar'``, ``'c'``, ``'decriptar'``, ou ``'d'``. Isso
 significa que ``getMode()`` irá retornar a string ``'e'`` ou a string ``'d'``.
 
@@ -353,9 +353,8 @@ significa que ``getMode()`` irá retornar a string ``'e'`` ou a string ``'d'``.
     13	    return input()
 ```
 
-A função ``getMessage()`` simplesmente obtém do usuário a mensagem para 
-encriptar ou decriptar e utiliza essa string como valor de
-retorno.
+A função ``getMessage()`` simplesmente obtém do usuário a mensagem a ser
+encriptada ou decriptada e utiliza essa string como valor de retorno.
 
 
 =Obtendo a chave do usuário=
@@ -373,14 +372,14 @@ retorno.
 A função ``getKey()`` permite ao usuário digitar a chave que irá utilizar
 para encriptar ou decriptar a mensagem. O laço ``while`` garante
 que a função somente irá retornar uma chave válida. Uma chave válida é uma
-chave cujo valor está entre os valores inteiros 1 e 26 (lembre que
-MAX_KEY_SIZE irá ter somente o valor 26, pois é uma constante). A função
-retorna então essa chave. Perceba que na linha 18, o valor da chave digitada
-pelo usuário foi convertida para o valor inteiro para ser armazenada, assim
+chave cujo valor esteja entre os valores inteiros 1 e 26 (lembre que
+MAX_KEY_SIZE irá conter somente o valor 26, pois é uma constante). A função
+retorna então essa chave. Perceba que, na linha 18, o valor da chave digitada
+pelo usuário foi convertida para o valor inteiro para ser armazenada. Assim,
 ``getKey()`` retorna um inteiro.
 
 
-=encriptar ou decriptar a mensagem com a chave fornecida=
+=Encriptar ou decriptar a mensagem com a chave fornecida=
 ``getTranslatedMessage()`` é a função que faz a a atividade de encriptar e
 decriptar em nosso programa. Ele tem três parâmetros. A variável ``mode``
 configura a função para o modo de criptografia ou para o modo de descriptografia.
