@@ -380,29 +380,35 @@ pelo usuário foi convertida para o valor inteiro para ser armazenada. Assim,
 
 
 =Encriptar ou decriptar a mensagem com a chave fornecida=
-``getTranslatedMessage()`` é a função que faz a a atividade de encriptar e
-decriptar em nosso programa. Ele tem três parâmetros. A variável ``mode``
-configura a função para o modo de criptografia ou para o modo de descriptografia.
-``message`` é o texto puro (ou texto cifrado) a ser criptografado (ou
-descriptografado). ``key`` é a chave que é utilizada para essa cifra.
+```
+    21	def getTranslatedMessage(mode, message, key):
+    22	    if mode[0] == 'd':
+    23	        key = -key
+    24	    translated = ''
+```
+``getTranslatedMessage()`` é a função que faz a encriptação e a
+decriptação em nosso programa. Ele recebe três parâmetros. A variável ``mode``
+configura a função para o modo de encriptação ou para o modo de decriptação.
+``message`` é o texto puro (ou texto cifrado) a ser encriptado (ou
+decriptado). ``key`` é a chave que será utilizada para essa cifra.
 
-A primeira linha na função ``getTranslatedMessage()`` determina se nós estamos
-em modo criptografia ou em modo descriptografia. Se a primeira letra na variável
-``mode`` for a string ``'d'``, então estaremos no modo de descriptografia. A
-única diferença entre os dois modos é que no modo de descriptografia, a chave
-é gravada para um valor negativo de si próprio. Se a chave era o inteiro 22, no
-modo de descriptografia nós setamos esse valor para -22. A razão para isso será
+A primeira linha na função ``getTranslatedMessage()`` verifica se nós estamos
+em modo encriptação ou em modo decriptação. Se a primeira letra na variável
+``mode`` for a string ``'d'``, então estamos no modo de decriptação. A
+única diferença entre os dois modos é que no modo de decriptação, a chave
+é gravada como um valor negativo de si próprio. Se a chave fosse o inteiro 22, no
+modo de decriptação nós alteramos esse valor para -22. O porquê disso será
 explicada posteriormente.
 
 ``translated`` é uma string que irá armazenar o resultado final: seja o texto
-cifrado (se estivermos criptografando) ou o texto puro (se estivemos
-descriptografando). Nessa variável iremos somente concatenar strings, por isso
+cifrado (se estivermos encriptando) ou o texto puro (se estivemos
+decriptando). Nessa variável iremos concatenar strings, por isso
 inicialmente armazenamos uma string vazia nela. (Uma variável deve ser definida
 com algum valor de string antes que possamos concatenar outra string a ela.)
 
 
 =O método isalpha()=
-O método ``isalpha()`` irá retornar ``True`` se a string for uma letra maiúscula
+O método ``isalpha()`` irá retornar ``True`` se a string testada for uma letra maiúscula
 ou minúscula de ``A`` a ``Z``. Se a string contiver quaisquer caracteres que não
 forem letras, a função ``isalpha()`` irá retornar ``False``. Experimente digitar
 os seguintes comandos no console interativo:
@@ -425,8 +431,8 @@ Como você pode ver, ``'Quarenta e dois'.isalpha()`` irá retornar ``False``
 porque ``'Quarenta e dois'`` possui espaços, que são caracteres que não são
 letras. ``'42'.isalpha()`` retorna ``False`` porque tanto ``'4'`` quanto ``'2'``
 são caracteres que não representam letras. E ``''.isalpha()`` retorna ``False``
-porque ``isalpha()`` somente retorna ``True`` se a string possui somente letras
-e se não for uma string vazia.
+porque ``isalpha()`` somente retorna ``True`` quando a string possuir somente letras
+e se tal string não for vazia.
 
 Nós iremos utilizar o método isalpha() em nosso programa nas próximas linhas.
 ```
@@ -437,9 +443,9 @@ Nós iremos utilizar o método isalpha() em nosso programa nas próximas linhas.
 ```
 
 O laço de repetição ``for`` da linha 25 itera sobre cada letra (lembre que em
-criptografia as chamamos de símbolos) na string ``message``. Em um laço ``for``,
+criptografia as chamamos de símbolos) na string armazenada em ``message``. Em um laço ``for``,
 as strings são tratadas como se fossem listas de caracteres, com um caractere
-por posição. Se ``message`` possui a string ``'Ola'``, então
+por posição. Se ``message`` possui a string ``'Ola'`` como conteúdo, então
 ``for symbol in 'Ola'`` seria o mesmo que ``for symbol in ['O', 'l', 'a']``. Em
 cada repetição através desse laço, a variável ``symbol`` terá o valor de uma
 das letras contidas em ``message``.
@@ -506,14 +512,13 @@ Nós queremos aplicar o mesmo código Python para todas as letras da string, o q
 O código acima verifica se o símbolo contido em ``symbol`` é uma letra
 maiúscula. Se for, existem dois casos especiais com os quais nós devemos nos
 preocupar. O que acontece se o valor de ``symbol`` for ``'z'`` e a chave for 4?
-Se ese for o caso, o valor de ``num`` passaria a ser ``'^'`` (o código ASCII de
+Se esse fosse o caso, o valor de ``num`` passaria a ser ``'^'`` (o código ASCII de
 ``'^'`` é 94). Mas, ``'^'`` sequer é uma letra. O que queremos é que, ao chegar
-ao final do alfabeto, o programa retorne ao início deste. 
-%TODO: melhorar a última frase
+ao final do alfabeto, o programa retorne ao início deste (ou seja, que após a letra 'z' venha a letra 'a' e que após a letra 'Z' venha a letra 'A' novamente).
 
-A forma que podemos fazer isso é checar se a chave possui um valor maior do que
-o maior código de letra na tabela ASCII (que é a letra "Z" maiúscula). Se for,
-então iremos subtrair 26 da variável ``num`` (pois existem 26 letras no total). Após fazer isso, o valor de ``num`` passa a ser 68, que é o código ASCII para
+Podemos fazer isso checando se a chave possui um valor maior do que
+o maior código de letra maiúscula na tabela ASCII (que corresponde à letra "Z"). Se for,
+então iremos **subtrair** 26 da variável ``num`` (pois existem 26 letras no total). Após fazer isso, o valor de ``num`` passa a ser 68, que é o código ASCII para
 ``'D'``.
 
 ```
@@ -523,15 +528,15 @@ então iremos subtrair 26 da variável ``num`` (pois existem 26 letras no total)
     37	                elif num < ord('a'):
     38	                    num += 26
 ```
+
 Se o símbolo contido na variável ``symbol`` for uma letra minúscula, o programa
 executa um código muito similar às linhas 29 a 33; A única diferença é que
 utilizamos ``ord('z')`` e ``ord(a)`` ao invés de ``ord('Z')`` e ``ord('A')``.
 
-Se estivéssemos em modo de descriptografia, a chave seria negativa. Então, nós
+Se estivéssemos em modo de decriptação, a chave seria negativa. Então, nós
 teríamos o caso especial no qual ``num -= 26`` seria menor que o menor valor
 possível (que é ``ord('A')``, isto é, 65). Se for esse o caso, nós iremos
-adicionar 26 a ``num`` para irmos para o fim do alfabeto.
-%TODO: melhorar a última frase
+adicionar 26 a ``num`` para darmos a volta para o fim do alfabeto.
 
 
 ```
@@ -541,11 +546,11 @@ adicionar 26 a ``num`` para irmos para o fim do alfabeto.
 ```
 
 A string ``translated`` terá acrescida a si o caractere encriptado/decriptado. Se
-o símbolo não era uma letra maiúscula ou minúscula, então o bloco ``else`` na
+o símbolo não for uma letra maiúscula e tampouco uma letra minúscula, então o bloco ``else`` na
 linha 40 será executado. Tudo o que o código contido no bloco ``else`` faz é
 acrescentar o símbolo original, não traduzido, à string traduzida. Isso
 significa que espaços, números, sinais de pontuação, e outros caracteres não
-serão des(criptografados).
+serão encriptados ou decriptados.
 
 ```
     42	   return translated
@@ -567,16 +572,16 @@ A última linha da função ``getTranslatedMessage()`` retorna a string traduzid
 ```
 
 Esta é a parte principal de nosso programa. Nela, nós chamamos cada uma das três
-funções que definimos acima, para obter o modo, a mensagem e a chave que o
+funções que definimos acima para obter o modo, a mensagem e a chave que o
 usuário pretende usar. Em seguida, nós passamos esses três valores como
 argumentos para ``getTranslatedMessage()``, cujo valor de retorno (a string
- traduzida) é impresso para o usuário.
+ ``translated``) é impresso para o usuário.
 
 
 =Força Bruta=
-E esse é o nosso programa de Cifra de Caesar. Entretanto, enquanto essa cifra
+Então, agora temos o nosso programa de Cifra de Caesar. Entretanto, enquanto essa cifra
 pode enganar algumas pessoas que não entendem de criptografia, ela não irá
-deixar a nossa mensagem secreta para pessoas que entendem de criptoanálise.
+deixar a nossa mensagem em segredo para pessoas que entendem de criptoanálise.
 Enquanto que criptografia é a ciência de criar códigos, **criptoanálise** é a
 ciência de quebrar códigos.
 
@@ -592,7 +597,7 @@ Lwcjba uig vwb jm xtmiaivb, jcb kmzbiqvbg qa ijaczl.
 ```
 
 O principal objetivo de encriptarmos algo é que se alguém obtém acesso
-indevido à mensagem criptografada, esse alguém não conseguirá obter a mensagem
+indevido à mensagem encriptada, esse alguém não conseguirá obter a mensagem
 original através dela. Vamos fingir que somos o quebrador de códigos e tudo que
 nós temos é o texto criptografado:
 
@@ -605,9 +610,9 @@ técnica de testar todas as chaves possíveis para decriptar uma mensagem.
 Se o criptoanalista conhece a cifra que a mensagem utiliza (ou se ao menos supor
 alguma), ele irá testar todas as chaves possíveis para descobrir a mensagem
 secreta. Como são somente 26 chaves possíveis, seria muito fácil para um
-criptoanalista escrever um programa que mostra na tela o texto descriptografado
+criptoanalista escrever um programa que mostra na tela o texto decriptado
 para todas as chaves possíveis, para verificar se alguma das frases geradas faz
-algum sentido. Vamos adicionar uma funcionalidade de força bruta ao nosso
+algum sentido. Vamos agora adicionar uma funcionalidade de força bruta ao nosso
 programa.
 
 
@@ -648,7 +653,7 @@ e a string traduzida é impressa na tela.
 
 Contudo, se estivermos no modo "força bruta", iremos executar um laço iterando
 de 1 até MAX_KEY_SIZE (26), chamando a função getTranslatedMessage(), passando o
-valor da iteração como argumento para a função. Lembre que quando a função
+valor da iteração como argumento para a função. Lembre que a função
 ``range()`` retorna uma lista de inteiros até, mas não incluindo, o segundo
 parâmetro, motivo pelo qual utilizamos MAX_KEY_SIZE + 1. Este programa irá
 imprimir na tela cada possível tradução da mensagem (incluindo o número da chave
@@ -667,9 +672,7 @@ Seu texto traduzido é:
 5 Grxewv pdb qrw eh sohdvdqw, exw fhuwdlqwb lv devxug.
 6 Fqwdvu oca pqv dg rngcucpv, dwv egtvckpva ku cduwtf.
 7 Epvcut nbz opu cf qmfbtbou, cvu dfsubjouz jt bctvse.
-
 8 Doubts may not be pleasant, but certainty is absurd.
-
 9 Cntasr lzx mns ad okdzrzms, ats bdqszhmsx hr zartqc.
 10 Bmszrq kyw lmr zc njcyqylr, zsr acpryglrw gq yzqspb.
 11 Alryqp jxv klq yb mibxpxkq, yrq zboqxfkqv fp xyproa.
@@ -691,8 +694,8 @@ Seu texto traduzido é:
 ```
 
 Após examinar cada linha, você poderá ver que a oitava mensagem não é composta
-por lixo, mas sim Inglês puro. O criptoanalista pode deduzir que a chave
-original para esse texto criptografado deve ter sido 8. Essa técnica de força
+por lixo, mas sim palavras em Inglês. O criptoanalista pode deduzir que a chave
+original para o texto encriptado deve ter sido 8. Essa técnica de força
 bruta teria sido difícil de aplicar na época de Caesar e do Império Romano, mas
 hoje nós possuímos computadores que podem testar rapidamente milhões ou até
 mesmo bilhões de chaves em um curto período de tempo. Você pode até escrever um
@@ -704,15 +707,15 @@ usando as chaves incorretas.
 =Resumo: Revisando Nosso Programa de Cifra de Caesar=
 Computadores são muito bons para realizar operações matemáticas. Quando criamos
 um programa para traduzir informações em números (assim como fazemos com texto e
-ASCII ou com o espaço e sistemas de coordenadas), podemos utilizar computadores
+e a tabela ASCII ou com o espaço e sistemas de coordenadas), podemos utilizar computadores
 para processar esses números de forma muito veloz e eficiente.
 
 Mas, enquanto nosso programa de Cifra de Caesar pode encriptar mensagens de
 forma a mantê-las em segredo de pessoas que irão tentar desvendá-las usando
-papel e caneta, ele não irá manter segredo de pessoas que conhecem como utilizar
+papel e caneta, ele não irá manter segredo de pessoas que conheçam como utilizar
 computadores para processar informações para si. (Nosso método de força bruta
 prova isso.) Existem outras cifras criptográficas que são tão avançadas que
-ninguém sabe como decriptar as mensagens secretas que elas geram. (Exceto
+ninguém consegue decriptar as mensagens secretas que elas geram. (Exceto
 as pessoas detentoras da chave!)
 
 Grande parte da tarefa de escrever um programa é descobrir como representar a
@@ -720,7 +723,7 @@ informação que você deseja manipular como números. Eu espero que esse capít
 tenha mostrado a você como fazer isso. O próximo capítulo irá apresentar o nosso
 último jogo, Reversi (também conhecido como Othello). A IA utilizada nesse jogo
 será muito mais avançada que a IA utilizada no //Jogo da Velha//, do capítulo 9.
-De fato, a IA é tão boa que você descobrirá que, na maioria das vezes, você não
+Na verdade, a IA é tão boa que você descobrirá que, na maioria das vezes, você não
 será capaz de ganhar dela!
 
 
