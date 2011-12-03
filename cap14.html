@@ -412,7 +412,7 @@ arquivo como <CODE>cifra.py</CODE>.
        4	    while True:
        5	        print('Você deseja encriptar ou decriptar uma mensagem?')
        6	        mode = input().lower()
-       7	        if mode in 'encriptar c decriptar d'.split():
+       7	        if mode in 'encriptar e decriptar d'.split():
        8	            return mode
        9	        else:
       10	            print('Digite "encriptar" ou "c" ou "decriptar" ou "d".')
@@ -485,13 +485,12 @@ linha por linha:
 A primeira linha é um simples comentário. A Cifra de Caesar pertence a um tipo de
 cifras chamado de cifras de substituição simples. Cifras de substituição simples
 são cifras que substituem um símbolo no texto puro por um (e apenas um) símbolo no
-texto cifrado. Assim, se um "G" foi substituído com "Z" na cifra, todo e qualquer
-"G" no texto puro deverá ser substituído com (e somente com) um "Z".
+texto cifrado. Assim, se um "G" foi substituído por um "Z" na cifra, todo e qualquer
+"G" no texto puro deverá ser substituído por um "Z" na cifra.
 </P>
 <P>
 MAX_KEY_SIZE é uma variável que armazena o número inteiro 26. MAX_KEY_SIZE nos
-lembra que nesse programa a chave usada em nossa cifra deve ser um número entre
-1 e 26.
+lembra que a chave usada em nossa cifra deverá ser um número entre 1 e 26.
 </P>
 
 <H1>Decidindo encriptar ou decriptar</H1>
@@ -501,26 +500,26 @@ lembra que nesse programa a chave usada em nossa cifra deve ser um número entre
        4	    while True:
        5	        print('Você deseja encriptar ou decriptar uma mensagem?')
        6	        mode = input().lower()
-       7	        if mode in 'encriptar c decriptar d'.split():
+       7	        if mode in 'encriptar e decriptar d'.split():
        8	            return mode
        9	        else:
       10	            print('Digite "encriptar" ou "c" ou "decriptar" ou "d".')
 </PRE>
 
 <P>
-A função <CODE>getMode()</CODE> irá permitir ao usuário que digite se ele deseja encriptar ou decriptar a mensagem. O valor de retorno de <CODE>input()</CODE> (que tem uma
+A função <CODE>getMode()</CODE> irá permitir ao usuário que informe se deseja encriptar ou decriptar a mensagem. O valor de retorno de <CODE>input()</CODE> (que tem uma
 chamada ao método <CODE>lower()</CODE> em si próprio, retornando assim a versão em
 minúsculas da string digitada pelo usuário) é armazenado em <CODE>mode</CODE>. A cláusula
 condicional <CODE>if</CODE> verifica se a string armazenada em <CODE>mode</CODE> existe na lista
-retornada por <CODE>'encriptar c decriptar d'.split()</CODE>. A lista retornada é
-literalmente <CODE>['encriptar', 'c', 'decriptar', 'd']</CODE>, mas é mais fácil
-para o programador digitar apenas <CODE>'encrypt e decrypt d'.split()</CODE> ao invés de digitar
-todas aquelas aspas e vírgulas. Mas você pode escolher e utilizar o que for mais
-fácil para você; pois ambas são avaliadas como a mesma lista.
+retornada por <CODE>'encriptar e decriptar d'.split()</CODE>. A lista retornada é
+literalmente <CODE>['encriptar', 'e', 'decriptar', 'd']</CODE>, mas é mais fácil
+para o programador digitar apenas <CODE>'encriptar e decriptar d'.split()</CODE> ao invés de digitar
+todas aquelas aspas e vírgulas. Mas, você pode escolher e utilizar o que for mais
+fácil para você, pois ambas são avaliadas como a mesma lista.
 </P>
 <P>
 Essa função irá retornar o primeiro caractere em <CODE>mode</CODE>, visto que <CODE>mode</CODE> é
-igual a <CODE>'encriptar'</CODE>, <CODE>'c'</CODE>, <CODE>'decriptar'</CODE>, ou <CODE>'d'</CODE>. Isso
+igual a <CODE>'encriptar'</CODE>, <CODE>'e'</CODE>, <CODE>'decriptar'</CODE>, ou <CODE>'d'</CODE>. Isso
 significa que <CODE>getMode()</CODE> irá retornar a string <CODE>'e'</CODE> ou a string <CODE>'d'</CODE>.
 </P>
 
@@ -571,7 +570,7 @@ pelo usuário foi convertida para o valor inteiro para ser armazenada. Assim,
 
 <P>
 <CODE>getTranslatedMessage()</CODE> é a função que faz a encriptação e a
-decriptação em nosso programa. Ele recebe três parâmetros. A variável <CODE>mode</CODE>
+decriptação em nosso programa. Ela recebe três parâmetros. A variável <CODE>mode</CODE>
 configura a função para o modo de encriptação ou para o modo de decriptação.
 <CODE>message</CODE> é o texto puro (ou texto cifrado) a ser encriptado (ou
 decriptado). <CODE>key</CODE> é a chave que será utilizada para essa cifra.
@@ -581,7 +580,7 @@ A primeira linha na função <CODE>getTranslatedMessage()</CODE> verifica se nó
 em modo encriptação ou em modo decriptação. Se a primeira letra na variável
 <CODE>mode</CODE> for a string <CODE>'d'</CODE>, então estamos no modo de decriptação. A
 única diferença entre os dois modos é que no modo de decriptação, a chave
-é gravada como um valor negativo de si próprio. Se a chave fosse o inteiro 22, no
+é gravada como um valor negativo de si próprio. Se a chave for o inteiro 22, no
 modo de decriptação nós alteramos esse valor para -22. O porquê disso será
 explicada posteriormente.
 </P>
@@ -589,7 +588,7 @@ explicada posteriormente.
 <CODE>translated</CODE> é uma string que irá armazenar o resultado final: seja o texto
 cifrado (se estivermos encriptando) ou o texto puro (se estivemos
 decriptando). Nessa variável iremos concatenar strings, por isso
-inicialmente armazenamos uma string vazia nela. (Uma variável deve ser definida
+inicialmente armazenamos nela uma string vazia. (Uma variável deve ser definida
 com algum valor de string antes que possamos concatenar outra string a ela.)
 </P>
 
@@ -649,7 +648,7 @@ A cláusula condicional <CODE>if</CODE> é utilizada na linha 26, porque nós ir
 encriptar ou decriptar somente letras na mensagem. Números, sinais, pontuação e todo
 o resto irá permanecer em sua forma não traduzida. A variável <CODE>num</CODE> irá
 armazenar o valor inteiro da letra armazenada em <CODE>symbol</CODE>. A linha 28
-"desloca" o valor contido em <CODE>num</CODE> em <CODE>key</CODE> espaços.
+"desloca" o valor de <CODE>num</CODE> em <CODE>key</CODE> espaços.
 </P>
 
 <H1>Os métodos isupper() e islower()</H1>
@@ -693,7 +692,7 @@ em um console interativo:
 
 <P>
 O processo de encriptar (ou decriptar) cada letra é bastante simples.
-Nós queremos aplicar o mesmo código Python para todas as letras da string, o que é o que as próximas linhas de código fazem.
+Nós queremos aplicar o mesmo código Python para todas as letras da string, que é o que as próximas linhas de código fazem.
 </P>
 
 <H2>Encriptando e decriptando cada letra</H2>
@@ -717,8 +716,7 @@ ao final do alfabeto, o programa retorne ao início deste (ou seja, que após a 
 <P>
 Podemos fazer isso checando se a chave possui um valor maior do que
 o maior código de letra maiúscula na tabela ASCII (que corresponde à letra "Z"). Se for,
-então iremos <B>subtrair</B> 26 da variável <CODE>num</CODE> (pois existem 26 letras no total). Após fazer isso, o valor de <CODE>num</CODE> passa a ser 68, que é o código ASCII para
-<CODE>'D'</CODE>.
+então iremos <B>subtrair</B> 26 da variável <CODE>num</CODE> (pois existem 26 letras no total). Após fazer isso, o valor de <CODE>num</CODE> passa a ser 68, que é o código ASCII para <CODE>'D'</CODE>.
 </P>
 
 <PRE>
@@ -839,7 +837,7 @@ Primeiramente, vamos modificar as linhas 5, 7 e 10.
        4	    while True:
        5	        print('Você deseja encriptar, decriptar ou realizar força bruta sobre uma mensagem?')
        6	        mode = input().lower()
-       7	        if mode in 'encriptar c decriptar d força bruta f'.split():
+       7	        if mode in 'encriptar e decriptar d força bruta f'.split():
        8	            return mode
        9	        else:
       10	            print('Digite "encriptar" ou "c" ou "decriptar" ou "d" ou "força bruta" ou "f".')
@@ -853,10 +851,10 @@ Agora, modifique e adicione as seguintes mudanças à parte principal do program
 <PRE>
       43  mode = getMode()
       44  message = getMessage()
-      45  if mode[0] != 'b':
+      45  if mode[0] != 'f':
       46      key = getKey()
       47  print('Seu texto traduzido é:')
-      48  if mode[0] != 'b':
+      48  if mode[0] != 'f':
       49      print(getTranslatedMessage(mode, message, key))
       50  else:
       51      for key in range(1, MAX_KEY_SIZE + 1):
@@ -916,12 +914,12 @@ utilizado na tradução). Segue um exemplo de execução do programa modificado:
 <P>
 Após examinar cada linha, você poderá ver que a oitava mensagem não é composta
 por lixo, mas sim palavras em Inglês. O criptoanalista pode deduzir que a chave
-original para o texto encriptado deve ter sido 8. Essa técnica de força
+original para o texto encriptado deve ter sido o número 8. Essa técnica de força
 bruta teria sido difícil de aplicar na época de Caesar e do Império Romano, mas
 hoje nós possuímos computadores que podem testar rapidamente milhões ou até
 mesmo bilhões de chaves em um curto período de tempo. Você pode até escrever um
 programa que reconheça quando foi encontrada uma mensagem escrita em Inglês,
-assim você não precisa ler todo o texto confuso gerado com a descriptografia
+de forma que não precise ler todo o texto confuso gerado com a decriptação
 usando as chaves incorretas.
 </P>
 
