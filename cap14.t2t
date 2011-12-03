@@ -355,9 +355,13 @@ todas aquelas aspas e vírgulas. Mas, você pode escolher e utilizar o que for m
 fácil para você, pois ambas são avaliadas como a mesma lista.
 
 %TODO: verificar erro. A função não retorna só o primeiro caractere.
-Essa função irá retornar o primeiro caractere em ``mode``, visto que ``mode`` é
-igual a ``'encriptar'``, ``'e'``, ``'decriptar'``, ou ``'d'``. Isso
-significa que ``getMode()`` irá retornar a string ``'e'`` ou a string ``'d'``.
+%Essa função irá retornar o primeiro caractere em ``mode``, visto que ``mode`` é
+%igual a ``'encriptar'``, ``'e'``, ``'decriptar'``, ou ``'d'``. Isso
+%significa que ``getMode()`` irá retornar a string ``'e'`` ou a string ``'d'``.
+
+Essa função irá retornar o texto digitado pelo usuário como modo de operação.
+Isso significa que ``getMode()`` irá retornar uma das seguintes strings:
+``'encriptar'``, ``'e'``, ``'decriptar'`` ou ``'d'``.
 
 
 =Obtendo a mensagem do jogador=
