@@ -1,0 +1,957 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<META NAME="generator" CONTENT="http://txt2tags.sf.net">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<TITLE>Capítulo 14</TITLE>
+</HEAD><BODY BGCOLOR="white" TEXT="black">
+<CENTER>
+<H1>Capítulo 14</H1>
+<FONT SIZE="4"><I>A Cifra de Caesar</I></FONT><BR>
+</CENTER>
+
+
+<H2>Tópicos cobertos neste capítulo</H2>
+
+<UL>
+<LI>Criptografia e cifras
+<LI>Encriptando e decriptando
+<LI>Texto cifrado, texto puro, chaves e símbolos
+<LI>A Cifra de Caesar
+<LI>Tabela ASCII
+<LI>As funções <CODE>chr()</CODE> e <CODE>ord()</CODE>
+<LI>O método <CODE>isalpha()</CODE>
+<LI>Os métodos <CODE>isupper()</CODE> e <CODE>islower()</CODE>
+<LI>Criptoanálise
+<LI>A técnica de força bruta
+</UL>
+
+<P>
+O programa deste capítulo não é bem um jogo, mas é divertido da mesma 
+forma. Nosso programa irá converter texto escrito em Português para um código 
+secreto, e 
+também irá fazer o inverso, converter códigos secretos de volta para Português. Somente alguém com 
+bons conhecimentos sobre códigos secretos será capaz de entender nossas 
+mensagens secretas.
+</P>
+<P>
+Como nosso programa irá manipular texto visando convertê-lo em mensagens 
+secretas, nós iremos conhecer várias funções e métodos que Python fornece para
+manipulação de Strings. Nós também iremos aprender como os programas podem 
+executar operações matemáticas com strings assim como se faz com números.
+</P>
+
+<H1>Sobre a Criptografia</H1>
+
+<P>
+A ciência de escrever códigos secretos é chamada <B>criptografia</B>. Criptografia
+tem sido usada por centenas de anos para envio de mensagens secretas, de forma que apenas
+o destinatário destas possa compreendê-las, mesmo que alguém capture o mensageiro e leia
+a mensagem codificada. Um sistema de código secreto é também chamado de <B>cifra</B>. 
+Existem milhares de cifras diferentes que tem sido utilizadas, sendo que cada uma delas utiliza 
+diferentes técnicas para manter as mensagens em segredo.
+</P>
+<P>
+Em criptografia, nós chamamos a mensagem que queremos que se torne secreta de 
+<B>texto puro</B>. A mensagem em texto puro poderia ser algo como o seguinte:
+</P>
+<P>
+<CODE>Alô pessoal! As chaves para a minha casa estão escondidas debaixo do vaso de flores vermelho.</CODE>
+</P>
+<P>
+Quando convertemos o texto puro em uma mensagem codificada, nós chamamos essa 
+operação de 
+<B>encriptar</B> o texto puro. O texto puro é encriptado, gerando o
+<B>texto cifrado</B>. O texto cifrado se parece com um conjunto de letras 
+aleatórias (também chamado de <B><I>garbage data</I></B> - lixo), de forma que nós não conseguimos
+descobrir o texto puro original apenas olhando o texto cifrado. Segue 
+um exemplo de um texto cifrado:
+</P>
+<P>
+<CODE>Ckkz fkx kj becqnejc kqp pdeo oaynap iaoowca!</CODE>
+</P>
+<P>
+Porém, se nós conhecermos a cifra utilizada para encriptar a mensagem, então nós
+poderemos <B>decriptar</B> o texto cifrado de volta para texto puro
+(decriptar é o oposto de encriptar).
+</P>
+<P>
+Muitas cifras também utilizam chaves. <B>Chaves</B> são valores secretos que 
+permitem que você decripte o texto que foi encriptado usando uma cifra 
+específica. Pense na cifra como sendo uma fechadura. Apesar de todas as 
+fechaduras do mesmo tipo serem construídas da mesma forma, você somente 
+conseguirá destravar uma fechadura se você possuir a chave construída para 
+aquela tranca.
+</P>
+
+<H1>A Cifra de Caesar</H1>
+
+<P>
+Quando encriptamos uma mensagem usando uma cifra, escolhemos a chave que
+será utilizada para encriptar e decriptar uma mensagem. Em nosso programa de Cifra de Caesar, a chave 
+será um número de 1 a 26. A menos que você conheça a
+chave (isto é, conheça o número), você não será capaz de decriptar a
+mensagem encriptada.
+</P>
+<P>
+<IMG ALIGN="middle" SRC="14-1.png" BORDER="0" ALT="">
+Figura 14-1: Deslocando letras por três espaços. Nesse caso, B se torna E.
+</P>
+<P>
+A <B>Cifra de Caesar</B> foi uma das primeiras cifras inventadas. Nessa cifra, você
+encripta a mensagem pegando cada letra do alfabeto (em criptografia, essas 
+letras são chamadas de <B>símbolos</B> porque podem ser letras, números ou 
+quaisquer outros símbolos) e substituindo pela letra "deslocada". Se você 
+desloca a letra A por um espaço, você obtém a letra B. Se você desloca a letra 
+A por dois espaços, você obtém a letra C. A Figura 14-1 mostra algumas letras
+sendo deslocadas em 3 espaços.
+</P>
+<P>
+Para obter cada letra deslocada, desenhe uma linha composta por divisões com 
+cada letra do alfabeto ocupando uma divisão. Então, desenhe uma segunda linha 
+com divisões exatamente abaixo desta, mas inicie o alfabeto com um certo número
+de espaços deslocados. Quando você terminar o alfabeto na linha de baixo, preencha o restante com 
+as letras que precedem a primeira letra do alfabeto deslocado no alfabeto 
+tradicional. Segue um exemplo com as letras deslocadas em três espaços:
+</P>
+<P>
+<IMG ALIGN="middle" SRC="14-2.png" BORDER="0" ALT="">
+Figura 14-2: O alfabeto inteiro deslocado por três espaços.
+</P>
+<P>
+O número de espaços que nós deslocamos é a chave da Cifra de Caesar. O exemplo 
+acima mostra a tradução de cada letra, usando a chave 3.
+</P>
+<P>
+Usando uma chave de 3, se encriptarmos o texto puro "Beleza", então o "B" se 
+torna "E". A letra "e" se torna "h". A letra "l" se torna "o". A letra "e" se 
+torna "h". A letra "z" se torna "c". Por fim, a letra "a" se torna "d". O texto 
+cifrado de "Beleza" com chave 3 se torna: "Ehohcd".
+</P>
+<P>
+Os caracteres que não representam letras serão mantidos inalterados na frase. Para 
+decriptar "Ehohcd" com chave 3, basta fazer o processo inverso, da linha
+de baixo para a de cima. A letra "E" se torna "B". A letra "h" se torna "e". A 
+letra "o" se torna "l". A letra "h" se torna "e". A letra "c" se torna "z". Por 
+fim, a letra "d" se torna "a", formando novamente a palavra "Beleza".
+</P>
+<P>
+Você pode encontrar mais sobre a Cifra de Caesar na Wikipedia, em: [<A HREF="http://pt.wikipedia.org/wiki/Cifra_de_C">http://pt.wikipedia.org/wiki/Cifra_de_C</A>ésar <A HREF="http://pt.wikipedia.org/wiki/Cifra_de_C">http://pt.wikipedia.org/wiki/Cifra_de_C</A>ésar]
+</P>
+
+<H1>ASCII, Usando Números para Representar Letras</H1>
+
+<P>
+Como vamos implementar esse deslocamento de letras em nosso programa? Nós 
+podemos fazer isso representando cada letra como um número (chamado de ordinal),
+e então adicionar ou subtrair valores desse número para formar um novo número
+(e, por consequência, uma nova letra). <B>ASCII</B> (que é pronunciado "asqui" e 
+que significa <I>American Standard Code for Information Interchange</I>) é um código
+que cria uma correspondência entre cada caractere e um número entre 32 e 127. Os números menores que 32
+se referem a caracteres "não-imprimíveis", então não iremos usá-los.
+</P>
+<P>
+As letras maiúsculas de "A" até "Z" possuem o código ASCII de 65 até 90. As letras
+minúsculas de "a" até "z" são representadas pelos códigos ASCII de 97 até 122. Os caracteres que
+representam os dígitos númericos de "0" até "9" possuem os números ASCII de 48
+até 57.
+</P>
+<P>
+Tabela 14-1. A Tabela ASCII 
+</P>
+
+<TABLE BORDER="1" CELLPADDING="4">
+<TR>
+<TD>32   (espaço)</TD>
+<TD>48    0</TD>
+<TD>64    @</TD>
+<TD>80    P</TD>
+<TD>96    `</TD>
+<TD>112    p</TD>
+</TR>
+<TR>
+<TD>33    !</TD>
+<TD>49    1</TD>
+<TD>65    A</TD>
+<TD>81    Q</TD>
+<TD>97    a</TD>
+<TD>113    q</TD>
+</TR>
+<TR>
+<TD>34    "</TD>
+<TD>50    2</TD>
+<TD>66    B</TD>
+<TD>82    R</TD>
+<TD>98    b</TD>
+<TD>114    r</TD>
+</TR>
+<TR>
+<TD>35    #</TD>
+<TD>51    3</TD>
+<TD>67    C</TD>
+<TD>83    S</TD>
+<TD>99    c</TD>
+<TD>115    s</TD>
+</TR>
+<TR>
+<TD>36    $</TD>
+<TD>52    4</TD>
+<TD>68    D</TD>
+<TD>84    T</TD>
+<TD>100    d</TD>
+<TD>116    t</TD>
+</TR>
+<TR>
+<TD>37    %</TD>
+<TD>53    5</TD>
+<TD>69    E</TD>
+<TD>85    U</TD>
+<TD>101    e</TD>
+<TD>117    u</TD>
+</TR>
+<TR>
+<TD>38    &amp;</TD>
+<TD>54    6</TD>
+<TD>70    F</TD>
+<TD>86    V</TD>
+<TD>102    f</TD>
+<TD>118    v</TD>
+</TR>
+<TR>
+<TD>39    '</TD>
+<TD>55    7</TD>
+<TD>71    G</TD>
+<TD>87    W</TD>
+<TD>103    g</TD>
+<TD>119    w</TD>
+</TR>
+<TR>
+<TD>40    (</TD>
+<TD>56    8</TD>
+<TD>72    H</TD>
+<TD>88    X</TD>
+<TD>104    h</TD>
+<TD>120    x</TD>
+</TR>
+<TR>
+<TD>41    )</TD>
+<TD>57    9</TD>
+<TD>73    I</TD>
+<TD>89    Y</TD>
+<TD>105    i</TD>
+<TD>121    y</TD>
+</TR>
+<TR>
+<TD>42    *</TD>
+<TD>58    :</TD>
+<TD>74    J</TD>
+<TD>90    Z</TD>
+<TD>106    j</TD>
+<TD>122    z</TD>
+</TR>
+<TR>
+<TD>43    +</TD>
+<TD>59    ;</TD>
+<TD>75    K</TD>
+<TD>91    [</TD>
+<TD>107    k</TD>
+<TD>123    {</TD>
+</TR>
+<TR>
+<TD>44    ,</TD>
+<TD>60    &lt;</TD>
+<TD>76    L</TD>
+<TD>92    \</TD>
+<TD>108    l</TD>
+<TD>124</TD>
+</TR>
+<TR>
+<TD>45    -</TD>
+<TD>61    =</TD>
+<TD>77    M</TD>
+<TD>93    ]</TD>
+<TD>109    m</TD>
+<TD>125    }</TD>
+</TR>
+<TR>
+<TD>46    .</TD>
+<TD>62    &gt;</TD>
+<TD>78    N</TD>
+<TD>94    ^</TD>
+<TD>110    n</TD>
+<TD>126    ~</TD>
+</TR>
+<TR>
+<TD>47    /</TD>
+<TD>63    ?</TD>
+<TD>79    O</TD>
+<TD>95    _</TD>
+<TD>111    o</TD>
+<TD>127</TD>
+</TR>
+</TABLE>
+
+<P>
+Então, se quiséssemos deslocar "A" por três espaços, primeiro devemos 
+convertê-lo para um número (65). Então, adicionamos 3 a 65, obtendo 68. Então,
+convertemos o número 68 de volta para letra ("D"). Nós iremos utilizar as 
+funções <CODE>chr()</CODE> e <CODE>ord()</CODE> para converter entre letras e números.
+</P>
+<P>
+Por exemplo, a letra "A" é representada pelo número 65. A letra "m" é representada pelo número 109. A tabela com todos os códigos ASCII de 32 a 126 é apresentada na Tabela 14-1.
+</P>
+
+<H1>As funções chr() e ord()</H1>
+
+<P>
+A função <CODE>chr()</CODE> (pronunciamos "char", de "character") recebe como parâmetro
+um número inteiro representando um código ASCII e retorna uma string contendo
+um único caractere. A função <CODE>ord()</CODE> recebe como parâmetro uma string contendo
+um único caractere, e retorna o número inteiro que representa o código ASCII
+para aquele caractere. Experimente digitar o seguinte código no console interativo:
+</P>
+
+<PRE>
+      &gt;&gt;&gt; chr(65)
+      'A'
+      &gt;&gt;&gt; ord('A')
+      65
+      &gt;&gt;&gt; chr(65+8)
+      'I'
+      &gt;&gt;&gt; chr(52)
+      '4'
+      &gt;&gt;&gt; chr(ord('F'))
+      'F'
+      &gt;&gt;&gt; ord(chr(68))
+      68
+      &gt;&gt;&gt;
+</PRE>
+
+<P>
+Na terceira linha de comando, <CODE>chr(65+8)</CODE> é interpretado como <CODE>chr(73)</CODE>. Se você
+olhar na tabela ASCII, você verá que 73 é o número ordinal para a letra "I". Na
+quinta linha, <CODE>chr(ord('F'))</CODE> é interpretado como <CODE>chr(70)</CODE>, que é interpretado como
+"F". Alimentando a função <CODE>chr()</CODE> com o resultado de <CODE>ord()</CODE> irá resultar no
+mesmo que o argumento original. O mesmo acontece se alimentarmos a função 
+<CODE>ord()</CODE> com o resultado de <CODE>chr()</CODE>, como mostrado pela sexta linha de 
+comando.
+</P>
+<P>
+As funções <CODE>chr()</CODE> e <CODE>ord()</CODE> vem bem a calhar em nosso programa de Cifra de
+Caesar. Elas também são muito úteis quando precisamos converter strings
+para números e números para strings.
+</P>
+
+<H1>Exemplo de Execução da Cifra de Caesar</H1>
+
+<P>
+Aqui segue um exemplo de execução do programa de Cifra de Caesar, encriptando
+uma mensagem:
+</P>
+
+<PRE>
+  Você deseja encriptar ou decriptar uma mensagem?
+  encriptar
+  Digite sua mensagem:
+  O ceu por cima do porto tinha a cor de uma TV que saiu do ar.
+  Entre um número de chave: (1-26)
+  13
+  Seu texto traduzido é:
+  B prh cbe pvzn qb cbegb gvaun n pbe qr hzn GI dhr fnvh qb ne.
+</PRE>
+
+<P>
+Agora iremos executar o programa e decriptar o texto que recém 
+encriptamos.
+</P>
+
+<PRE>
+  Você deseja encriptar ou decriptar uma mensagem?
+  decriptar
+  Digite sua mensagem:
+  B prh cbe pvzn qb cbegb gvaun n pbe qr hzn GI dhr fnvh qb ne.
+  Entre um número de chave: (1-26)
+  13
+  Seu texto traduzido é:
+  O ceu por cima do porto tinha a cor de uma TV que saiu do ar.
+</PRE>
+
+<P>
+Na próxima execução, vamos tentar decriptar o texto recém encriptado, 
+mas iremos utilizar uma chave incorreta. Lembre que se você não conhece a chave
+correta, o texto decriptado será irreconhecível.
+</P>
+
+<PRE>
+  Você deseja encriptar ou decriptar uma mensagem?
+  decriptar
+  Digite sua mensagem:
+  B prh cbe pvzn qb cbegb gvaun n pbe qr hzn GI dhr fnvh qb ne.
+  Entre um número de chave: (1-26)
+  15
+  Seu texto traduzido é:
+  Q egw rqt ekoc fq rqtvq vkpjc c eqt fg woc VX swg uckw fq ct.
+</PRE>
+
+<H1>Código-fonte da Cifra de Caesar</H1>
+
+<P>
+Aqui está o código-fonte para o programa da Cifra de Caesar. Se não quiser
+digitar todo esse código, você pode visitar o website do livro na URL 
+<A HREF="http://inventwithpython.com/chapter14">http://inventwithpython.com/chapter14</A> e seguir as instruções para baixar o código-fonte. Após digitar o código, salve o
+arquivo como <CODE>cifra.py</CODE>.
+</P>
+
+<PRE>
+       1	# Cifra de Caesar
+         
+       2	MAX_KEY_SIZE = 26
+         
+         
+       3	def getMode():
+       4	    while True:
+       5	        print('Você deseja encriptar ou decriptar uma mensagem?')
+       6	        mode = input().lower()
+       7	        if mode in 'encriptar c decriptar d'.split():
+       8	            return mode
+       9	        else:
+      10	            print('Digite "encriptar" ou "c" ou "decriptar" ou "d".')
+         
+         
+      11	def getMessage():
+      12	    print('Digite sua mensagem:')
+      13	    return input()
+         
+         
+      14	def getKey():
+      15	    key = 0
+      16	    while True:
+      17	        print('Digite o número da chave (1-%s)' % (MAX_KEY_SIZE))
+      18	        key = int(input())
+      19	        if (key &gt;= 1 and key &lt;= MAX_KEY_SIZE):
+      20	            return key
+         
+         
+      21	def getTranslatedMessage(mode, message, key):
+      22	    if mode[0] == 'd':
+      23	        key = -key
+      24	    translated = ''
+         
+      25	    for symbol in message:
+      26	        if symbol.isalpha():
+      27	            num = ord(symbol)
+      28	            num += key
+         
+      29	            if symbol.isupper():
+      30	                if num &gt; ord('Z'):
+      31	                    num -= 26
+      32	                elif num &lt; ord('A'):
+      33	                    num += 26
+      34	            elif symbol.islower():
+      35	                if num &gt; ord('z'):
+      36	                    num -= 26
+      37	                elif num &lt; ord('a'):
+      38	                    num += 26
+         
+      39	            translated += chr(num)
+      40	        else:
+      41	            translated += symbol
+      42	   return translated
+         
+      43	mode = getMode()
+      44	message = getMessage()
+      45	key = getKey()
+         
+      46	print('Seu texto traduzido é:')
+      47	print(getTranslatedMessage(mode, message, key))
+</PRE>
+
+<H1>Como o código funciona: Linhas 1 a 28</H1>
+
+<P>
+Este código é bem mais curto do que os códigos dos nossos outros jogos. Os processos de
+encriptar e decriptar são o inverso um do outro, e
+compartilham muito do mesmo código. Vamos ver o funcionamento do código,
+linha por linha:
+</P>
+
+<PRE>
+       1	# Cifra de Caesar
+         
+       2	MAX_KEY_SIZE = 26
+</PRE>
+
+<P>
+A primeira linha é um simples comentário. A Cifra de Caesar pertence a um tipo de
+cifras chamado de cifras de substituição simples. Cifras de substituição simples
+são cifras que substituem um símbolo no texto puro por um (e apenas um) símbolo no
+texto cifrado. Assim, se um "G" foi substituído com "Z" na cifra, todo e qualquer
+"G" no texto puro deverá ser substituído com (e somente com) um "Z".
+</P>
+<P>
+MAX_KEY_SIZE é uma variável que armazena o número inteiro 26. MAX_KEY_SIZE nos
+lembra que nesse programa a chave usada em nossa cifra deve ser um número entre
+1 e 26.
+</P>
+
+<H1>Decidindo encriptar ou decriptar</H1>
+
+<PRE>
+       3	def getMode():
+       4	    while True:
+       5	        print('Você deseja encriptar ou decriptar uma mensagem?')
+       6	        mode = input().lower()
+       7	        if mode in 'encriptar c decriptar d'.split():
+       8	            return mode
+       9	        else:
+      10	            print('Digite "encriptar" ou "c" ou "decriptar" ou "d".')
+</PRE>
+
+<P>
+A função <CODE>getMode()</CODE> irá permitir ao usuário que digite se ele deseja encriptar ou decriptar a mensagem. O valor de retorno de <CODE>input()</CODE> (que tem uma
+chamada ao método <CODE>lower()</CODE> em si próprio, retornando assim a versão em
+minúsculas da string digitada pelo usuário) é armazenado em <CODE>mode</CODE>. A cláusula
+condicional <CODE>if</CODE> verifica se a string armazenada em <CODE>mode</CODE> existe na lista
+retornada por <CODE>'encriptar c decriptar d'.split()</CODE>. A lista retornada é
+literalmente <CODE>['encriptar', 'c', 'decriptar', 'd']</CODE>, mas é mais fácil
+para o programador digitar apenas <CODE>'encrypt e decrypt d'.split()</CODE> ao invés de digitar
+todas aquelas aspas e vírgulas. Mas você pode escolher e utilizar o que for mais
+fácil para você; pois ambas são avaliadas como a mesma lista.
+</P>
+<P>
+Essa função irá retornar o primeiro caractere em <CODE>mode</CODE>, visto que <CODE>mode</CODE> é
+igual a <CODE>'encriptar'</CODE>, <CODE>'c'</CODE>, <CODE>'decriptar'</CODE>, ou <CODE>'d'</CODE>. Isso
+significa que <CODE>getMode()</CODE> irá retornar a string <CODE>'e'</CODE> ou a string <CODE>'d'</CODE>.
+</P>
+
+<H1>Obtendo a mensagem do jogador</H1>
+
+<PRE>
+      11	def getMessage():
+      12	    print('Digite sua mensagem:')
+      13	    return input()
+</PRE>
+
+<P>
+A função <CODE>getMessage()</CODE> simplesmente obtém do usuário a mensagem a ser
+encriptada ou decriptada e utiliza essa string como valor de retorno.
+</P>
+
+<H1>Obtendo a chave do usuário</H1>
+
+<PRE>
+      14	def getKey():
+      15	    key = 0
+      16	    while True:
+      17	        print('Digite o número da chave (1-%s)' % (MAX_KEY_SIZE))
+      18	        key = int(input())
+      19	        if (key &gt;= 1 and key &lt;= MAX_KEY_SIZE):
+      20	            return key
+</PRE>
+
+<P>
+A função <CODE>getKey()</CODE> permite ao usuário digitar a chave que irá utilizar
+para encriptar ou decriptar a mensagem. O laço <CODE>while</CODE> garante
+que a função somente irá retornar uma chave válida. Uma chave válida é uma
+chave cujo valor esteja entre os valores inteiros 1 e 26 (lembre que
+MAX_KEY_SIZE irá conter somente o valor 26, pois é uma constante). A função
+retorna então essa chave. Perceba que, na linha 18, o valor da chave digitada
+pelo usuário foi convertida para o valor inteiro para ser armazenada. Assim,
+<CODE>getKey()</CODE> retorna um inteiro.
+</P>
+
+<H1>Encriptar ou decriptar a mensagem com a chave fornecida</H1>
+
+<PRE>
+      21	def getTranslatedMessage(mode, message, key):
+      22	    if mode[0] == 'd':
+      23	        key = -key
+      24	    translated = ''
+</PRE>
+
+<P>
+<CODE>getTranslatedMessage()</CODE> é a função que faz a encriptação e a
+decriptação em nosso programa. Ele recebe três parâmetros. A variável <CODE>mode</CODE>
+configura a função para o modo de encriptação ou para o modo de decriptação.
+<CODE>message</CODE> é o texto puro (ou texto cifrado) a ser encriptado (ou
+decriptado). <CODE>key</CODE> é a chave que será utilizada para essa cifra.
+</P>
+<P>
+A primeira linha na função <CODE>getTranslatedMessage()</CODE> verifica se nós estamos
+em modo encriptação ou em modo decriptação. Se a primeira letra na variável
+<CODE>mode</CODE> for a string <CODE>'d'</CODE>, então estamos no modo de decriptação. A
+única diferença entre os dois modos é que no modo de decriptação, a chave
+é gravada como um valor negativo de si próprio. Se a chave fosse o inteiro 22, no
+modo de decriptação nós alteramos esse valor para -22. O porquê disso será
+explicada posteriormente.
+</P>
+<P>
+<CODE>translated</CODE> é uma string que irá armazenar o resultado final: seja o texto
+cifrado (se estivermos encriptando) ou o texto puro (se estivemos
+decriptando). Nessa variável iremos concatenar strings, por isso
+inicialmente armazenamos uma string vazia nela. (Uma variável deve ser definida
+com algum valor de string antes que possamos concatenar outra string a ela.)
+</P>
+
+<H1>O método isalpha()</H1>
+
+<P>
+O método <CODE>isalpha()</CODE> irá retornar <CODE>True</CODE> se a string testada for uma letra maiúscula
+ou minúscula de <CODE>A</CODE> a <CODE>Z</CODE>. Se a string contiver quaisquer caracteres que não
+forem letras, a função <CODE>isalpha()</CODE> irá retornar <CODE>False</CODE>. Experimente digitar
+os seguintes comandos no console interativo:
+</P>
+
+<PRE>
+  &gt;&gt;&gt; 'Ola'.isalpha()
+  True
+  &gt;&gt;&gt; 'Quarenta e dois'.isalpha()
+  False
+  &gt;&gt;&gt; 'Quarentaedois'.isalpha()
+  True
+  &gt;&gt;&gt; '42'.isalpha()
+  False
+  &gt;&gt;&gt; ''.isalpha()
+  False
+  &gt;&gt;&gt;
+</PRE>
+
+<P>
+Como você pode ver, <CODE>'Quarenta e dois'.isalpha()</CODE> irá retornar <CODE>False</CODE>
+porque <CODE>'Quarenta e dois'</CODE> possui espaços, que são caracteres que não são
+letras. <CODE>'42'.isalpha()</CODE> retorna <CODE>False</CODE> porque tanto <CODE>'4'</CODE> quanto <CODE>'2'</CODE>
+são caracteres que não representam letras. E <CODE>''.isalpha()</CODE> retorna <CODE>False</CODE>
+porque <CODE>isalpha()</CODE> somente retorna <CODE>True</CODE> quando a string possuir somente letras
+e se tal string não for vazia.
+</P>
+<P>
+Nós iremos utilizar o método isalpha() em nosso programa nas próximas linhas.
+</P>
+
+<PRE>
+      25	    for symbol in message:
+      26	        if symbol.isalpha():
+      27	            num = ord(symbol)
+      28	            num += key
+</PRE>
+
+<P>
+O laço de repetição <CODE>for</CODE> da linha 25 itera sobre cada letra (lembre que em
+criptografia as chamamos de símbolos) na string armazenada em <CODE>message</CODE>. Em um laço <CODE>for</CODE>,
+as strings são tratadas como se fossem listas de caracteres, com um caractere
+por posição. Se <CODE>message</CODE> possui a string <CODE>'Ola'</CODE> como conteúdo, então
+<CODE>for symbol in 'Ola'</CODE> seria o mesmo que <CODE>for symbol in ['O', 'l', 'a']</CODE>. Em
+cada repetição através desse laço, a variável <CODE>symbol</CODE> terá o valor de uma
+das letras contidas em <CODE>message</CODE>.
+</P>
+<P>
+A cláusula condicional <CODE>if</CODE> é utilizada na linha 26, porque nós iremos
+encriptar ou decriptar somente letras na mensagem. Números, sinais, pontuação e todo
+o resto irá permanecer em sua forma não traduzida. A variável <CODE>num</CODE> irá
+armazenar o valor inteiro da letra armazenada em <CODE>symbol</CODE>. A linha 28
+"desloca" o valor contido em <CODE>num</CODE> em <CODE>key</CODE> espaços.
+</P>
+
+<H1>Os métodos isupper() e islower()</H1>
+
+<P>
+Os métodos <CODE>isupper()</CODE> e <CODE>islower()</CODE> da classe string (presentes nas linhas
+29 e 34) funcionam de forma similar aos métodos <CODE>isdigit()</CODE> e <CODE>isalpha()</CODE>.
+<CODE>isupper()</CODE> irá retornar <CODE>True</CODE> se a string sobre a qual ela foi chamada
+contém ao menos uma letra maiúscula e nenhuma letra minúscula. <CODE>islower()</CODE> irá
+retornar <CODE>True</CODE> se a string sobre a qual ela foi chamada contém ao menos uma
+letra minúscula e nenhuma letra maiúscula. Caso contrário, ambos os métodos
+retornam <CODE>False</CODE>. A existência de caracteres como números e espaços na string
+não afeta o resultado. Strings que não contenham letra alguma, incluindo as
+strings vazias, irão também retornar <CODE>False</CODE>. Experimente digitar o seguinte
+em um console interativo:
+</P>
+
+<PRE>
+      &gt;&gt;&gt; 'OLA'.isupper()
+      True
+      &gt;&gt;&gt; 'ola'.isupper()
+      False
+      &gt;&gt;&gt; 'ola'.islower()
+      True
+      &gt;&gt;&gt; 'Ola'.islower()
+      False
+      &gt;&gt;&gt; 'FIQUE ATENTO!'.isupper()
+      True
+      &gt;&gt;&gt; '42'.isupper()
+      False
+      &gt;&gt;&gt; '42'.islower()
+      False
+      &gt;&gt;&gt; ''.isupper()
+      False
+      &gt;&gt;&gt; ''.islower()
+      False
+  &gt;&gt;&gt;
+</PRE>
+
+<H1>Como o código funciona: linhas 29 a 47</H1>
+
+<P>
+O processo de encriptar (ou decriptar) cada letra é bastante simples.
+Nós queremos aplicar o mesmo código Python para todas as letras da string, o que é o que as próximas linhas de código fazem.
+</P>
+
+<H2>Encriptando e decriptando cada letra</H2>
+
+<PRE>
+      29	            if symbol.isupper():
+      30	                if num &gt; ord('Z'):
+      31	                    num -= 26
+      32	                elif num &lt; ord('A'):
+      33	                    num += 26
+</PRE>
+
+<P>
+O código acima verifica se o símbolo contido em <CODE>symbol</CODE> é uma letra
+maiúscula. Se for, existem dois casos especiais com os quais nós devemos nos
+preocupar. O que acontece se o valor de <CODE>symbol</CODE> for <CODE>'z'</CODE> e a chave for 4?
+Se esse fosse o caso, o valor de <CODE>num</CODE> passaria a ser <CODE>'^'</CODE> (o código ASCII de
+<CODE>'^'</CODE> é 94). Mas, <CODE>'^'</CODE> sequer é uma letra. O que queremos é que, ao chegar
+ao final do alfabeto, o programa retorne ao início deste (ou seja, que após a letra 'z' venha a letra 'a' e que após a letra 'Z' venha a letra 'A' novamente).
+</P>
+<P>
+Podemos fazer isso checando se a chave possui um valor maior do que
+o maior código de letra maiúscula na tabela ASCII (que corresponde à letra "Z"). Se for,
+então iremos <B>subtrair</B> 26 da variável <CODE>num</CODE> (pois existem 26 letras no total). Após fazer isso, o valor de <CODE>num</CODE> passa a ser 68, que é o código ASCII para
+<CODE>'D'</CODE>.
+</P>
+
+<PRE>
+      34	            elif symbol.islower():
+      35	                if num &gt; ord('z'):
+      36	                    num -= 26
+      37	                elif num &lt; ord('a'):
+      38	                    num += 26
+</PRE>
+
+<P>
+Se o símbolo contido na variável <CODE>symbol</CODE> for uma letra minúscula, o programa
+executa um código muito similar às linhas 29 a 33; A única diferença é que
+utilizamos <CODE>ord('z')</CODE> e <CODE>ord(a)</CODE> ao invés de <CODE>ord('Z')</CODE> e <CODE>ord('A')</CODE>.
+</P>
+<P>
+Se estivéssemos em modo de decriptação, a chave seria negativa. Então, nós
+teríamos o caso especial no qual <CODE>num -= 26</CODE> seria menor que o menor valor
+possível (que é <CODE>ord('A')</CODE>, isto é, 65). Se for esse o caso, nós iremos
+adicionar 26 a <CODE>num</CODE> para darmos a volta para o fim do alfabeto.
+</P>
+
+<PRE>
+      39	            translated += chr(num)
+      40	        else:
+      41	            translated += symbol
+</PRE>
+
+<P>
+A string <CODE>translated</CODE> terá acrescida a si o caractere encriptado/decriptado. Se
+o símbolo não for uma letra maiúscula e tampouco uma letra minúscula, então o bloco <CODE>else</CODE> na
+linha 40 será executado. Tudo o que o código contido no bloco <CODE>else</CODE> faz é
+acrescentar o símbolo original, não traduzido, à string traduzida. Isso
+significa que espaços, números, sinais de pontuação, e outros caracteres não
+serão encriptados ou decriptados.
+</P>
+
+<PRE>
+      42	   return translated
+  
+</PRE>
+
+<P>
+A última linha da função <CODE>getTranslatedMessage()</CODE> retorna a string traduzida.
+</P>
+
+<H1>O início do programa</H1>
+
+<PRE>
+      43	mode = getMode()
+      44	message = getMessage()
+      45	key = getKey()
+         
+      46	print('Seu texto traduzido é:')
+      47	print(getTranslatedMessage(mode, message, key))
+</PRE>
+
+<P>
+Esta é a parte principal de nosso programa. Nela, nós chamamos cada uma das três
+funções que definimos acima para obter o modo, a mensagem e a chave que o
+usuário pretende usar. Em seguida, nós passamos esses três valores como
+argumentos para <CODE>getTranslatedMessage()</CODE>, cujo valor de retorno (a string
+ <CODE>translated</CODE>) é impresso para o usuário.
+</P>
+
+<H1>Força Bruta</H1>
+
+<P>
+Então, agora temos o nosso programa de Cifra de Caesar. Entretanto, enquanto essa cifra
+pode enganar algumas pessoas que não entendem de criptografia, ela não irá
+deixar a nossa mensagem em segredo para pessoas que entendem de criptoanálise.
+Enquanto que criptografia é a ciência de criar códigos, <B>criptoanálise</B> é a
+ciência de quebrar códigos.
+</P>
+
+<PRE>
+  Você deseja encriptar ou decriptar uma mensagem?
+  encriptar
+  Digite sua mensagem:
+  Doubts may not be pleasant, but certainty is absurd.
+  Digite o número da chave (1-26):
+  8
+  Seu texto traduzido é:
+  Lwcjba uig vwb jm xtmiaivb, jcb kmzbiqvbg qa ijaczl.
+</PRE>
+
+<P>
+O principal objetivo de encriptarmos algo é que se alguém obtém acesso
+indevido à mensagem encriptada, esse alguém não conseguirá obter a mensagem
+original através dela. Vamos fingir que somos o quebrador de códigos e tudo que
+nós temos é o texto criptografado:
+</P>
+
+<PRE>
+  Lwcjba uig vwb jm xtmiaivb, jcb kmzbiqvbg qa ijaczl.
+</PRE>
+
+<P>
+Um dos métodos de criptoanálise é chamado de força bruta. Força bruta é a
+técnica de testar todas as chaves possíveis para decriptar uma mensagem.
+Se o criptoanalista conhece a cifra que a mensagem utiliza (ou se ao menos supor
+alguma), ele irá testar todas as chaves possíveis para descobrir a mensagem
+secreta. Como são somente 26 chaves possíveis, seria muito fácil para um
+criptoanalista escrever um programa que mostra na tela o texto decriptado
+para todas as chaves possíveis, para verificar se alguma das frases geradas faz
+algum sentido. Vamos agora adicionar uma funcionalidade de força bruta ao nosso
+programa.
+</P>
+
+<H1>Adicionando o modo Força Bruta ao nosso programa</H1>
+
+<P>
+Primeiramente, vamos modificar as linhas 5, 7 e 10.
+</P>
+
+<PRE>
+       3	def getMode():
+       4	    while True:
+       5	        print('Você deseja encriptar, decriptar ou realizar força bruta sobre uma mensagem?')
+       6	        mode = input().lower()
+       7	        if mode in 'encriptar c decriptar d força bruta f'.split():
+       8	            return mode
+       9	        else:
+      10	            print('Digite "encriptar" ou "c" ou "decriptar" ou "d" ou "força bruta" ou "f".')
+</PRE>
+
+<P>
+Isso irá nos permitir selecionar "força bruta" como um modo para nosso programa.
+Agora, modifique e adicione as seguintes mudanças à parte principal do programa:
+</P>
+
+<PRE>
+      43  mode = getMode()
+      44  message = getMessage()
+      45  if mode[0] != 'b':
+      46      key = getKey()
+      47  print('Seu texto traduzido é:')
+      48  if mode[0] != 'b':
+      49      print(getTranslatedMessage(mode, message, key))
+      50  else:
+      51      for key in range(1, MAX_KEY_SIZE + 1):
+      52          print(key, getTranslatedMessage('decriptar', message, key))
+</PRE>
+
+<P>
+Essas alterações fazem com que nosso programa peça ao usuário uma chave, caso
+não esteja no modo "força bruta". Se ele não estiver no modo "força bruta",
+então nosso programa realiza uma chamada comum à função getTranslatedMessage()
+e a string traduzida é impressa na tela.
+</P>
+<P>
+Contudo, se estivermos no modo "força bruta", iremos executar um laço iterando
+de 1 até MAX_KEY_SIZE (26), chamando a função getTranslatedMessage(), passando o
+valor da iteração como argumento para a função. Lembre que a função
+<CODE>range()</CODE> retorna uma lista de inteiros até, mas não incluindo, o segundo
+parâmetro, motivo pelo qual utilizamos MAX_KEY_SIZE + 1. Este programa irá
+imprimir na tela cada possível tradução da mensagem (incluindo o número da chave
+utilizado na tradução). Segue um exemplo de execução do programa modificado:
+</P>
+
+<PRE>
+  Você deseja encriptar, decriptar ou realizar força bruta sobre uma mensagem?
+  força bruta
+  Digite sua mensagem:
+  Lwcjba uig vwb jm xtmiaivb, jcb kmzbiqvbg qa ijaczl.
+  Seu texto traduzido é:
+  1 Kvbiaz thf uva il wslhzhua, iba jlyahpuaf pz hizbyk.
+  2 Juahzy sge tuz hk vrkgygtz, haz ikxzgotze oy ghyaxj.
+  3 Itzgyx rfd sty gj uqjfxfsy, gzy hjwyfnsyd nx fgxzwi.
+  4 Hsyfxw qec rsx fi tpiewerx, fyx givxemrxc mw efwyvh.
+  5 Grxewv pdb qrw eh sohdvdqw, exw fhuwdlqwb lv devxug.
+  6 Fqwdvu oca pqv dg rngcucpv, dwv egtvckpva ku cduwtf.
+  7 Epvcut nbz opu cf qmfbtbou, cvu dfsubjouz jt bctvse.
+  8 Doubts may not be pleasant, but certainty is absurd.
+  9 Cntasr lzx mns ad okdzrzms, ats bdqszhmsx hr zartqc.
+  10 Bmszrq kyw lmr zc njcyqylr, zsr acpryglrw gq yzqspb.
+  11 Alryqp jxv klq yb mibxpxkq, yrq zboqxfkqv fp xyproa.
+  12 Zkqxpo iwu jkp xa lhawowjp, xqp yanpwejpu eo wxoqnz.
+  13 Yjpwon hvt ijo wz kgzvnvio, wpo xzmovdiot dn vwnpmy.
+  14 Xiovnm gus hin vy jfyumuhn, von wylnuchns cm uvmolx.
+  15 Whnuml ftr ghm ux iextltgm, unm vxkmtbgmr bl tulnkw.
+  16 Vgmtlk esq fgl tw hdwsksfl, tml uwjlsaflq ak stkmjv.
+  17 Uflskj drp efk sv gcvrjrek, slk tvikrzekp zj rsjliu.
+  18 Tekrji cqo dej ru fbuqiqdj, rkj suhjqydjo yi qrikht.
+  19 Sdjqih bpn cdi qt eatphpci, qji rtgipxcin xh pqhjgs.
+  20 Rciphg aom bch ps dzsogobh, pih qsfhowbhm wg opgifr.
+  21 Qbhogf znl abg or cyrnfnag, ohg pregnvagl vf nofheq.
+  22 Pagnfe ymk zaf nq bxqmemzf, ngf oqdfmuzfk ue mnegdp.
+  23 Ozfmed xlj yze mp awpldlye, mfe npceltyej td lmdfco.
+  24 Nyeldc wki xyd lo zvokckxd, led mobdksxdi sc klcebn.
+  25 Mxdkcb vjh wxc kn yunjbjwc, kdc lnacjrwch rb jkbdam.
+  26 Lwcjba uig vwb jm xtmiaivb, jcb kmzbiqvbg qa ijaczl.
+</PRE>
+
+<P>
+Após examinar cada linha, você poderá ver que a oitava mensagem não é composta
+por lixo, mas sim palavras em Inglês. O criptoanalista pode deduzir que a chave
+original para o texto encriptado deve ter sido 8. Essa técnica de força
+bruta teria sido difícil de aplicar na época de Caesar e do Império Romano, mas
+hoje nós possuímos computadores que podem testar rapidamente milhões ou até
+mesmo bilhões de chaves em um curto período de tempo. Você pode até escrever um
+programa que reconheça quando foi encontrada uma mensagem escrita em Inglês,
+assim você não precisa ler todo o texto confuso gerado com a descriptografia
+usando as chaves incorretas.
+</P>
+
+<H1>Resumo: Revisando Nosso Programa de Cifra de Caesar</H1>
+
+<P>
+Computadores são muito bons para realizar operações matemáticas. Quando criamos
+um programa para traduzir informações em números (assim como fazemos com texto e
+e a tabela ASCII ou com o espaço e sistemas de coordenadas), podemos utilizar computadores
+para processar esses números de forma muito veloz e eficiente.
+</P>
+<P>
+Mas, enquanto nosso programa de Cifra de Caesar pode encriptar mensagens de
+forma a mantê-las em segredo de pessoas que irão tentar desvendá-las usando
+papel e caneta, ele não irá manter segredo de pessoas que conheçam como utilizar
+computadores para processar informações para si. (Nosso método de força bruta
+prova isso.) Existem outras cifras criptográficas que são tão avançadas que
+ninguém consegue decriptar as mensagens secretas que elas geram. (Exceto
+as pessoas detentoras da chave!)
+</P>
+<P>
+Grande parte da tarefa de escrever um programa é descobrir como representar a
+informação que você deseja manipular como números. Eu espero que esse capítulo
+tenha mostrado a você como fazer isso. O próximo capítulo irá apresentar o nosso
+último jogo, Reversi (também conhecido como Othello). A IA utilizada nesse jogo
+será muito mais avançada que a IA utilizada no <I>Jogo da Velha</I>, do capítulo 9.
+Na verdade, a IA é tão boa que você descobrirá que, na maioria das vezes, você não
+será capaz de ganhar dela!
+</P>
+
+<!-- html code generated by txt2tags 2.6b1 (http://txt2tags.sf.net) -->
+<!-- cmdline: txt2tags -t html cap14.t2t -->
+</BODY></HTML>
