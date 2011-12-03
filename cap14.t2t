@@ -254,7 +254,7 @@ arquivo como ``cifra.py``.
      4	    while True:
      5	        print('Você deseja encriptar ou decriptar uma mensagem?')
      6	        mode = input().lower()
-     7	        if mode in 'encriptar c decriptar d'.split():
+     7	        if mode in 'encriptar e decriptar d'.split():
      8	            return mode
      9	        else:
     10	            print('Digite "encriptar" ou "c" ou "decriptar" ou "d".')
@@ -338,7 +338,7 @@ lembra que a chave usada em nossa cifra deverá ser um número entre 1 e 26.
      4	    while True:
      5	        print('Você deseja encriptar ou decriptar uma mensagem?')
      6	        mode = input().lower()
-     7	        if mode in 'encriptar c decriptar d'.split():
+     7	        if mode in 'encriptar e decriptar d'.split():
      8	            return mode
      9	        else:
     10	            print('Digite "encriptar" ou "c" ou "decriptar" ou "d".')
@@ -348,16 +348,16 @@ A função ``getMode()`` irá permitir ao usuário que informe se deseja encript
 chamada ao método ``lower()`` em si próprio, retornando assim a versão em
 minúsculas da string digitada pelo usuário) é armazenado em ``mode``. A cláusula
 condicional ``if`` verifica se a string armazenada em ``mode`` existe na lista
-retornada por ``'encriptar c decriptar d'.split()``. A lista retornada é
-literalmente ``['encriptar', 'c', 'decriptar', 'd']``, mas é mais fácil
-para o programador digitar apenas ``'encrypt e decrypt d'.split()`` ao invés de digitar
+retornada por ``'encriptar e decriptar d'.split()``. A lista retornada é
+literalmente ``['encriptar', 'e', 'decriptar', 'd']``, mas é mais fácil
+para o programador digitar apenas ``'encriptar e decriptar d'.split()`` ao invés de digitar
 todas aquelas aspas e vírgulas. Mas, você pode escolher e utilizar o que for mais
 fácil para você, pois ambas são avaliadas como a mesma lista.
 
 %TODO: verificar erro. A função não retorna só o primeiro caractere.
 Essa função irá retornar o primeiro caractere em ``mode``, visto que ``mode`` é
-igual a ``'encriptar'``, ``'c'``, ``'decriptar'``, ou ``'d'``. Isso
-significa que ``getMode()`` irá retornar a string ``'c'`` ou a string ``'d'``.
+igual a ``'encriptar'``, ``'e'``, ``'decriptar'``, ou ``'d'``. Isso
+significa que ``getMode()`` irá retornar a string ``'e'`` ou a string ``'d'``.
 
 
 =Obtendo a mensagem do jogador=
@@ -402,7 +402,7 @@ pelo usuário foi convertida para o valor inteiro para ser armazenada. Assim,
     24	    translated = ''
 ```
 ``getTranslatedMessage()`` é a função que faz a encriptação e a
-decriptação em nosso programa. Ele recebe três parâmetros. A variável ``mode``
+decriptação em nosso programa. Ela recebe três parâmetros. A variável ``mode``
 configura a função para o modo de encriptação ou para o modo de decriptação.
 ``message`` é o texto puro (ou texto cifrado) a ser encriptado (ou
 decriptado). ``key`` é a chave que será utilizada para essa cifra.
@@ -411,14 +411,14 @@ A primeira linha na função ``getTranslatedMessage()`` verifica se nós estamos
 em modo encriptação ou em modo decriptação. Se a primeira letra na variável
 ``mode`` for a string ``'d'``, então estamos no modo de decriptação. A
 única diferença entre os dois modos é que no modo de decriptação, a chave
-é gravada como um valor negativo de si próprio. Se a chave fosse o inteiro 22, no
+é gravada como um valor negativo de si próprio. Se a chave for o inteiro 22, no
 modo de decriptação nós alteramos esse valor para -22. O porquê disso será
 explicada posteriormente.
 
 ``translated`` é uma string que irá armazenar o resultado final: seja o texto
 cifrado (se estivermos encriptando) ou o texto puro (se estivemos
 decriptando). Nessa variável iremos concatenar strings, por isso
-inicialmente armazenamos uma string vazia nela. (Uma variável deve ser definida
+inicialmente armazenamos nela uma string vazia. (Uma variável deve ser definida
 com algum valor de string antes que possamos concatenar outra string a ela.)
 
 
@@ -470,7 +470,7 @@ A cláusula condicional ``if`` é utilizada na linha 26, porque nós iremos
 encriptar ou decriptar somente letras na mensagem. Números, sinais, pontuação e todo
 o resto irá permanecer em sua forma não traduzida. A variável ``num`` irá
 armazenar o valor inteiro da letra armazenada em ``symbol``. A linha 28
-"desloca" o valor contido em ``num`` em ``key`` espaços.
+"desloca" o valor de ``num`` em ``key`` espaços.
 
 
 =Os métodos isupper() e islower()=
@@ -510,7 +510,7 @@ em um console interativo:
 =Como o código funciona: linhas 29 a 47=
 
 O processo de encriptar (ou decriptar) cada letra é bastante simples.
-Nós queremos aplicar o mesmo código Python para todas as letras da string, o que é o que as próximas linhas de código fazem.
+Nós queremos aplicar o mesmo código Python para todas as letras da string, que é o que as próximas linhas de código fazem.
 
 
 %TODO: revisar indentação do código
@@ -533,8 +533,7 @@ ao final do alfabeto, o programa retorne ao início deste (ou seja, que após a 
 
 Podemos fazer isso checando se a chave possui um valor maior do que
 o maior código de letra maiúscula na tabela ASCII (que corresponde à letra "Z"). Se for,
-então iremos **subtrair** 26 da variável ``num`` (pois existem 26 letras no total). Após fazer isso, o valor de ``num`` passa a ser 68, que é o código ASCII para
-``'D'``.
+então iremos **subtrair** 26 da variável ``num`` (pois existem 26 letras no total). Após fazer isso, o valor de ``num`` passa a ser 68, que é o código ASCII para ``'D'``.
 
 ```
     34	            elif symbol.islower():
@@ -639,7 +638,7 @@ Primeiramente, vamos modificar as linhas 5, 7 e 10.
      4	    while True:
      5	        print('Você deseja encriptar, decriptar ou realizar força bruta sobre uma mensagem?')
      6	        mode = input().lower()
-     7	        if mode in 'encriptar c decriptar d força bruta f'.split():
+     7	        if mode in 'encriptar e decriptar d força bruta f'.split():
      8	            return mode
      9	        else:
     10	            print('Digite "encriptar" ou "c" ou "decriptar" ou "d" ou "força bruta" ou "f".')
@@ -651,10 +650,10 @@ Agora, modifique e adicione as seguintes mudanças à parte principal do program
 ```
     43  mode = getMode()
     44  message = getMessage()
-    45  if mode[0] != 'b':
+    45  if mode[0] != 'f':
     46      key = getKey()
     47  print('Seu texto traduzido é:')
-    48  if mode[0] != 'b':
+    48  if mode[0] != 'f':
     49      print(getTranslatedMessage(mode, message, key))
     50  else:
     51      for key in range(1, MAX_KEY_SIZE + 1):
@@ -710,12 +709,12 @@ Seu texto traduzido é:
 
 Após examinar cada linha, você poderá ver que a oitava mensagem não é composta
 por lixo, mas sim palavras em Inglês. O criptoanalista pode deduzir que a chave
-original para o texto encriptado deve ter sido 8. Essa técnica de força
+original para o texto encriptado deve ter sido o número 8. Essa técnica de força
 bruta teria sido difícil de aplicar na época de Caesar e do Império Romano, mas
 hoje nós possuímos computadores que podem testar rapidamente milhões ou até
 mesmo bilhões de chaves em um curto período de tempo. Você pode até escrever um
 programa que reconheça quando foi encontrada uma mensagem escrita em Inglês,
-assim você não precisa ler todo o texto confuso gerado com a descriptografia
+de forma que não precise ler todo o texto confuso gerado com a decriptação
 usando as chaves incorretas.
 
 
