@@ -73,7 +73,7 @@ será um número de 1 a 26. A menos que você conheça a
 chave (isto é, conheça o número), você não será capaz de decriptar a
 mensagem encriptada.
 
-[14-1.png]
+[chapter14/14-1.png]
 Figura 14-1: Deslocando letras por três espaços. Nesse caso, B se torna E.
 
 
@@ -92,7 +92,7 @@ de espaços deslocados. Quando você terminar o alfabeto na linha de baixo, pree
 as letras que precedem a primeira letra do alfabeto deslocado no alfabeto 
 tradicional. Segue um exemplo com as letras deslocadas em três espaços:
 
-[14-2.png]
+[chapter14/14-2.png]
 Figura 14-2: O alfabeto inteiro deslocado por três espaços.
 
 O número de espaços que nós deslocamos é a chave da Cifra de Caesar. O exemplo 
