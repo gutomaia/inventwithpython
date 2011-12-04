@@ -1,4 +1,4 @@
-# Chapter 1
+% Chapter 1
 Capítulo 1
 
 %!encoding: utf-8
@@ -20,24 +20,42 @@ Quando eu era uma criança, eu achei um livro como este que me ensinou como escr
 
 % Computers are very useful machines. The good news is that learning to program a computer is easy. If you can read this book, you can program a computer. A computer <span class='term'>program</span> is just a bunch of instructions run by a computer, just like a storybook is just a whole bunch of sentences read by the reader.
 
-% These instructions are like the turn-by-turn instructions you might get for walking to a friend's house. (Turn left at the light, walk two blocks, keep walking until you find the first blue house on the right.) The computer follows each instruction that you give it in the order that you give it. Video games are themselves nothing but computer programs. (And very fun computer programs!)
+Computadores são maquinas muito uteis. A boa notiica é que aprender como programar um computador é facil. Se você ler este livro, você conseguira programar um computador. Um programa de computador é apenas um punhado de instruções rodadas pelo computador, da mesma forma que um livro de histórias é apenas um punhado de sentences lidas pelo leitor.
+
+% These instructions are like the turn-by-turn instructions you might get for walking to a friend's house. (Turn left at the light, walk two blocks, keep walking until you find the first blue house on the right.) The computer follows each instruction that you give it in the  order that you give it. Video games are themselves nothing but computer programs. (And very fun computer programs!)
+
+Estas instruções são como as instruções passa-a-passo que você pode ter para ir até a cada de um amigo. (Virar a esquerda no semaforo, andar dois quarteirões, continuar andando até você encontrar a primeira casa azul a direita.) O computador segue estas instruções que você fornece na ordem em que você fornece. Video games são apenas programas de computador. (E programas muito divertidos!)
 
 % In this book, any words you need to know will look like <span class='term'>this</span>. For example, the word "program" is defined in the previous paragraph.
+
+TODO: Neste livro, qualquer palavra que você precise saber vai 
 
 % In order to tell a computer what you want it to do, you write a program in a language that the computer understands. The programming language this book teaches is named Python. There are many different programming languages including BASIC, Java, Pascal, Haskell, and C++ (pronounced, "c plus plus").
 
 % When I was a kid most people learned to program in BASIC as their first language. But new programming languages have been invented since then, including Python. Python is even easier to learn than BASIC and it's a serious programming language used by professional computer programmers. Many adults use Python in their work (and when programming just for fun).
 
+Quando eu era uma criança, a maior parte das pessoas aprendiam a BASIC como a sua primeira linguagem. Mas novas linguagens de programação foram inventadas desde então, incluindo Python. Python é mais facil de aprender do que BASIC e é uma linguagem de programação séria usada por programadores de computador profissionais. Muitos adultos usam Python em seu trabalho (e quando está programando apenas por diversão).
+
 % The first few games we'll create together in this book will probably seem simple compared to the games you've played on the Xbox, Playstation, or Wii. They don't have fancy graphics or music but that's because they're meant to teach you the basics. They're purposely simple so that we can focus on learning to program. Games don't have to be complicated to be fun. Hangman, Tic Tac Toe, and making secret codes are simple to program but are also fun.
+
+% TODO: melhor tradução para fancy
+Os primeiros jogos que nós vamos criar juntos neste livro vão provavelmente parecer simples se comparados aos que você joga no Xbox, Playstation ou Wii. Eles não tem graficos engracadinhos ou musica mas isto se deve por que eles tem a intenção de ensinar o basico. Eles são propositalmente simples para que possamos focar em aprender a programar. Jogos não precisam ser complicados para serem divertidos. Força, Jogo-da-Velha, e fazer codigos secretos são simples de programar e igualmente divertidos.
 
 % We'll also learn how to make the computer solve some math problems in the Python shell. (Don't worry if you don't know a lot of mathematics. If you know how to add and multiply, you know enough math to do programming. Programming is more about problem solving and making plans than it is about solving math problems.)
 
+Nós tambem vamos aprender como cirar programas para resolver alguns problemas matematicos no console do Python. (Não se preocupe se você não sabe muito de matemática. Se você sabe a somar e a multiplicar, você sabe o suficiente de matemática para programar. Programar é mais sobre resolver o problema e fazer planos do que resolver problemas matemáticos.)
 
 % Downloading and Installing Python
 
+Baixando e Instalando o Python
+
 % Before we can begin programming you'll need to install software called the Python interpreter. (You may need to ask an adult for help here.) The <span class='term'>interpreter</span> is a program that understands the instructions that you'll write in the Python language. Without the interpreter, your computer won't understand these instructions and your programs won't work. (We'll just refer to "the Python interpreter" as "Python" from now on.)
 
+Antes que nos possamos começar a programar, você vai precisar instalar um programa chamado interpretador Python. (Talvez você precise da ajuda de um adulto aqui.) O **interpretador** é um programa que entende as instruções que você ira escrever na linguagem Python. Sem o interpretador, seu computador não ira entender estas instruções e seus programas não iram funcionar. (Nos vamos nos referir ao "interpretador Python" como "Python" a partir de agora.)
+
 % Because we'll be writing our games in the Python language we need to download Python first, from the official website of the Python programming language, <a href='http://www.python.org'>http://www.python.org</a>
+
+%TODO como funcionam os links ?
 
 % I'm going to give you instructions for installing Python on Microsoft Windows, not because that's my favorite operating system but because chances are that's the operating system that your computer is running. You might want the help of someone else to download and install the Python software.
 
