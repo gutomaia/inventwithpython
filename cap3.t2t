@@ -1,0 +1,102 @@
+Capítulo 3
+Strings
+
+
+%!encoding: utf-8
+
+
+=Tópicos Cobertos Neste Capítulos=
+- Fluxo de execução
+- Strings
+- Concatenação de Strings
+- Tipos de dados (como strings ou inteiros)
+- Usando o IDLE para escrever código
+- Salvando e executando programas com o IDLE
+- A função ``print()``
+- A função ``input()``
+- Comentários
+%TODO: tradução para capitalizing
+- **Capitalizing** variáveis
+- Diferenças entre Maiúsculas e Minúsculas
+
+%That's enough of integers and math for now. Python is more than just a calculator. Now let's see what Python can do with text. In this chapter, we will learn how to store text in variables, combine text together, and display them on the screen. Many of our programs will use text to display our games to the player, and the player will enter text into our programs through the keyboard. We will also make our first program, which greets the user with the text, "Hello World!" and asks for the user's name.
+Chega de inteiros e matemática por enquanto. Python é muito mais do que uma calculadora. Agora, vamos ver o que Python pode fazer com texto. Neste capítulo, iremos aprender como armazenar texto em variáveis, combinar texto, e mostrar texto na tela. Muitos de nossos programas irão utilizar texto para apresentar nossos jogos para o jogador, e este, por sua vez, irá digitar texto para nossos programas através do teclado. Iremos, também, criar o nosso primeiro programa, que sauda o usuário com o texto "Alo Mundo!" e solicita ao usuário o seu nome.
+
+%Strings
+=Strings=
+
+%In Python, we work with little chunks of text called strings. We can store string values inside variables just like we can store number values inside variables. When we type strings, we put them in between two single quotes ('), like this:
+Em Python, trabalhamos com pequenos trechos de texto chamados de **strings**. Nós podemos armazenar strings em variáveis assim como podemos armazenar números dentro de variáveis. Quando nós digitamos strings, colocamos elas entre duas aspas (') simples, assim como:
+
+```
+>>> spam = 'hello'
+>>>
+```
+
+%The single quotes are there only to tell the computer where the string begins and ends (and are not part of the string value).
+As aspas simples estão ali somente para informar ao computador onde a string começa e onde ela termina (e não são parte do conteúdo da string em si).
+
+%Now, if you type spam into the shell, you should see the contents of the spam variable (the 'hello' string.) This is because Python will evaluate a variable to the value stored inside the variable (in this case, the string 'Hello').
+Agora, se você digitar ``spam``` no console interativo, você deve ver o conteúdo da variável ``spam`` (a string ``'hello'``). Isso porque Python irá interpretar a variável como o valor armazenado dentro da variável (neste caso, a string ``'hello'``).
+
+```
+>>> spam = 'hello'
+>>> spam
+'hello'
+>>>
+```
+
+%Strings can have almost any keyboard character in them. (Strings can't have single quotes inside of them without using escape characters. Escape characters are described later.) These are all examples of strings:
+Strings podem conter quase que qualquer caracter do teclado. (Strings não podem conter aspas simples dentro delas sem a utilização de caracteres de escape. Caracteres de escape serão descritos mais tarde .) Abaixo, temos alguns exemplos de strings:
+
+```
+'hello'
+'Hi there!'
+'KITTENS'
+'7 apples, 14 oranges, 3 lemons'
+'Anything not pertaining to elephants is irrelephant.'
+'A long time ago in a galaxy far, far away...'
+'O*&#wY%*&OCfsdYO*&gfC%YO*&%3yc8r2'
+```
+
+%As we did with numerical values in the previous chapter, we can also combine string values together with operators to make expressions.
+Assim como fizemos com valores numéricos no capítulo anterior, com strings nós também podemos combinar valores com operadores para formar expressões.
+
+
+=Concatenação de Strings=
+
+%You can add one string to the end of another by using the + operator, which is called string concatenation. Try entering 'Hello' + 'World!' into the shell:
+Você pode adicionar uma string ao final de outro utilizando o operador ``+``, que é chamado de concatenação de strings. Experimente digitar ``'Alo' + 'Mundo!'`` no console:
+
+```
+>>> 'Alo' + 'Mundo!'
+'AloMundo!'
+>>>
+```
+
+%To keep the strings separate, put a space at the end of the 'Hello' string, before the single quote, like this:
+Para manter as duas palavras em separado, coloque um espaço no final da string ``'Alo'``, antes da aspa simples, como o exemplo:
+
+```
+>>> 'Alo ' + 'Mundo!'
+'Alo Mundo!'
+>>>
+```
+
+%The + operator works differently on strings and integers because they are different data types. All values have a data type. The data type of the value 'Hello' is a string. The data type of the value 5 is an integer. The data type of the data that tells us (and the computer) what kind of data the value is.
+O operador ``+`` trabalha de forma diferente com strings e com inteiros, pois eles são **tipos de dados** diferentes. Todos os valores possuem um tipo de dados. O tipo de dados do valor ``'Alo'`` é string. O tipo de dados do valor 5 é inteiro. O tipo de um dado informa a nós (e ao computador) qual o tipo de dados de um determinado valor.
+
+
+
+%Writing Programs in IDLE's File Editor
+=Escrevendo Programas no IDLE=
+
+%Until now we have been typing instructions one at a time into the interactive shell. When we write programs though, we type in several instructions and have them run all at once. Let's write our first program!
+Até agora, nós digitávemos as instruções, uma por vez, no console interativo. Quando escrevemos programas, nós digitamos muitas instruções e executamos todas elas de uma só vez. Vamos escrever o nosso primeiro programa!
+
+%The name of the program that provides the interactive shell is called IDLE, the Interactive DeveLopement Environment. IDLE also has another part called the file editor.
+O programa que fornece o console interativo é chamado IDLE, o ambiente de desenvolvimento interativo (//Interactive DeveLopment Environment//). O IDLE possui uma outra parte chamada de editor de arquivos.
+
+
+%Click on the File menu at the top of the Python Shell window, and select New Window. A new blank window will appear for us to type our program in. This window is the file editor.
+Clique no menu **Arquivo** no topo da janela do Console Python, e selecione **Nova Janela**. Uma nova janela em branco irá aparecer para que nós digitemos nosso programa dentro. Essa janela é o editor de arquivos.
