@@ -13,7 +13,7 @@ pageTracker._trackPageview();
 } catch(err) {}</script>
 
 <meta http-equiv="Content-Type" content="text/html;charset=us-ascii" />
-<title>ISPJCcP, Cap&iacute;tulo 2 - A Shell Interativa</title>
+<title>ISPJCcP, Cap&iacute;tulo 2 - O Console Interativo</title>
 <link rel="stylesheet" href="inventbook.css" type="text/css" media="all" />
 </head>
 <body>
@@ -37,31 +37,32 @@ pageTracker._trackPageview();
 
 <p>Antes de come&ccedil;armos a escrever jogos de computador, n&oacute;s devemos, primeiro, aprender alguns conceitos b&aacute;sicos de programa&ccedil;&atilde;o. Estes conceitos s&atilde;o: valores, operadores, express&otilde;es e vari&aacute;veis. N&oacute;s n&atilde;o vamos come&ccedil;ar a programar nesse cap&iacute;tulo, mas conhecer estes conceitos e nome das coisas far&aacute; com que aprender a programar seja muito mais f&aacute;cil. Isso porque a maior parte da programa&ccedil;&atilde;o se resume a combinar alguns poucos conceitos simples para formar programas mais avan&ccedil;ados.</p>
 
-<p>Vamos come&ccedil;ar aprendendo como usar a <i>shell</i> interativa do <i>Python</i>.</p>
+<p>Vamos come&ccedil;ar aprendendo como usar o console interativo do <i>Python</i>.</p>
 
-<h2 id="SomeSimpleMathStuff">Some Simple Math Stuff</h2>
+<h2 id="SomeSimpleMathStuff">Algumas coisas simples de matem&aacute;tica</h2>
 
-<p>To open IDLE on Windows, click on <span class='menuname'>Start</span>, then <span class='menuname'>Programs</span>, then <span class='menuname'>Python 3.1</span>, then <span class='menuname'>IDLE (Python GUI)</span>. With IDLE open, let's do some simple math with Python. The interactive shell can work just like a calculator. Type <span class='m'>2+2</span> into the shell and press the Enter key on your keyboard. (On some keyboards, this is the Return key.) As you can see in Figure 2-1, the computer should respond with the number 4; the sum of 2+2.</p>
+<p>Para abrir o IDLE no Windows, clique em <span class='menuname'>Iniciar</span>, depois em <span class='menuname'>Programas</span>, depois em <span class='menuname'>Python 3.1</span> e, finalmente, em <span class='menuname'>IDLE (Python GUI)</span>. Com o IDLE aberto, vamos fazer um pouco de matemática básica com Python. O console interativo pode funcionar como se fosse uma calculadora. Digite <span class='m'>2+2</span> no console e aperte a tecla Enter do seu teclado (em alguns teclados, ela pode se chamar Return ou Retorno). Como você pode ver na figura 2-1, o computador deve respoder com o número 4; a soma de 2+2.</p>
 
 <p class='centeredImageP'><img src='images/2-1.png' alt='' class='centeredImage' /><br />
-Figure 2-1: Type <span class='m'>2+2</span> into the shell.</p>
+Figura 2-1: Digite <span class='m'>2+2</span> no console.</p>
 
-<p>As you can see, we can use the Python shell just like a calculator. This isn't a program by itself because we are just learning the basics right now. The <span class='m'>+</span> sign tells the computer to add the numbers 2 and 2. To subtract numbers use the <span class='m'>-</span> sign, and to multiply numbers use an asterisk (<span class='m'>*</span>), like so:</p>
+<p>Como você pode ver, nós podemos usar o console interativo do Python exatamente como se fosse uma calculadora. Isso ainda não é um programa porque nós ainda estamos aprendendo o básico nesse momento. O sinal de <span class='m'>+</span> diz ao computador para somar os números 2 e 2. Para subtrair números use o sinal de <span class='m'>-</span>, e para multiplicar use um asterisco (<span class='m'>*</span>), assim:</p>
 
 <table class='centertable simpletable' style='width: 200px; text-align: center;'>
-<caption>Table 2-1: The various math operators in Python.</caption>
-<tr><td class='simpletd'><span class='m'>2+2</span></td><td class='simpletd'>addition</td></tr>
-<tr><td class='simpletd'><span class='m'>2-2</span></td><td class='simpletd'>subtraction</td></tr>
-<tr><td class='simpletd'><span class='m'>2*2</span></td><td class='simpletd'>multiplication</td></tr>
-<tr><td class='simpletd'><span class='m'>2/2</span></td><td class='simpletd'>division</td></tr>
+<caption>Tabela 2-1: Os vários operadores matemáticos do Python.</caption>
+<tr><td class='simpletd'><span class='m'>2+2</span></td><td class='simpletd'>adição</td></tr>
+<tr><td class='simpletd'><span class='m'>2-2</span></td><td class='simpletd'>subtração</td></tr>
+<tr><td class='simpletd'><span class='m'>2*2</span></td><td class='simpletd'>multiplicação</td></tr>
+<tr><td class='simpletd'><span class='m'>2/2</span></td><td class='simpletd'>divisão</td></tr>
 </table>
 
-<p>When used in this way, +, -, *, and / are called <span class='term'>operators</span> because they tell the computer to perform the specified operation on the numbers surrounding them.</p>
+<p>Quando usados dessa forma, +, -, *, e / são chamados de <span class='term'>operadores</span> porque eles dizem ao computador realizar a operação escolhida nos números quem estão em volta dele.</p>
 
-<h3 id="IntegersandFloatingPointNumbers">Integers and Floating Point Numbers</h3>
+<h3 id="IntegersandFloatingPointNumbers">Números Inteiros e de Ponto Flutuante</h3>
 
-<p>In programming (and also in mathematics), whole numbers like 4, 0, and 99 are called <span class='term'>integers</span>. Numbers with fractions or decimal points (like 3.5 and 42.1 and 5.0) are not integers. In Python, the number 5 is an integer, but if we wrote it as 5.0 it would not be an integer. Numbers with a decimal point are called <span class='term'>floating point numbers</span>. In mathematics, 5.0 is still considered an integer and the same as the number 5, but in computer programming the computer considers any number with a decimal point as not an integer.</p>
+<p>Em programação (e também na matemática), números como 4, 0 e 99 são chamados de <span class='term'>inteiros</span>. Números com fração ou casas decimais (como 3,5 e 42,1 e 5,0) não são inteiros. Em Python, o número 5 é um inteiro, mas se nós escrevermos ele como 5.0 ele não será mais um inteiro. Números com casas decimais são chamados <span class='term'>números de ponto flutuante</span>. Na matemática, 5,0 ainda é considerado um inteiro e é igual ao número 5, mas em programação o computador considera qualquer número com casa decimal como um número não inteiro.</p>
 
+<!-- Esse seção não faz sentido em português pois não usamos vírgula como separador de milhar. Mas ela me motivou a adicionar a próxima seção --> 
 <!-- Decided to remove this since it was important enough.
 <h3 id="DontUseCommasinNumbers">Don't Use Commas in Numbers</h3>
 
@@ -79,6 +80,23 @@ Figure 2-1: Type <span class='m'>2+2</span> into the shell.</p>
 
 <p>In Python, we don't put commas inside numbers. We type <span class='m'>2063</span> instead of <span class='m'>2,063</span>. The computer can do what you tell it to very quickly, but it needs you to tell it in a very specific way. Computer programming is all about writing out precise instructions to get the computer to do exactly what you want because really computers are dumb. We need to tell them exactly what to do.</p>
 //-->
+
+<h3 id="DontUseCommasinNumbers">Não use vírgula nos números</h3>
+
+<p>O console interativo do Python é útil para resolver problemas matemáticos rapidamente. Por exemple, tente colocar <span class='m'>2.063 * 0.3581</span>.</p>
+
+<p>Quando eu digo "colocar" eu quero dizer digite alguma coisa no IDLE e então aperte a tecla Enter ou Retorno (Return) do seu teclado. O resulta será algo do tipo:</p>
+
+<div class='sourceblurb'>
+&gt;&gt;&gt; 2.063 * 0.3581<br />
+0.7387603<br />
+&gt;&gt;&gt;<br />
+</div>
+
+<p>Isso foi muito mais rápido do que resolvar não mão! Resolver contas rapidamente foi o motivo pelo qual os computadores foram criados. Mas para que o Python entendo que conta nós queremos fazer, nós devemos escreve-lás em um formato específico.</p>
+
+<p>Em Python, nós não usamos vírgula nos números. Nós escrevemos <span class='m'>2.063</span> ao invés de <span class='m'>2,063</span>. O computador pode fazer o que você pedir para ele rapidamente, mas ele precisa que você diga a ele em um formato específico. Programar um computador é escrever instruções precisas para fazer com que o computador faça exatamente o que você quer porque, na realidade, computadore são burros. Nós precisamos dizer a eles exatamente o que queremos fazer.</p>
+
 
 <h3 id="Expressions">Expressions</h3>
 
