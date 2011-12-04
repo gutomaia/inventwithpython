@@ -282,9 +282,9 @@ Figura 2-5: As variáveis "fizz" e "eggs" possuem valores armazenados dentro del
 
 <p>O valor em <span class='m'>spam</span> é agora <span class='m'>25</span> pois quando nós somamos <span class='m'>fizz</span> e <span class='m'>eggs</span> nós estamos somando os valores armazenados dentro de <span class='m'>fizz</span> e <span class='m'>eggs</span>.</p>
 
-<h3>Overwriting Variables</h3>
+<h3>Sobrescrevendo Variáveis</h3>
 
-<p>Changing the value stored inside a variable is easy. Just perform another assignment statement with the same variable. Look what happens when you enter the following code into the interactive shell:</p>
+<p>Mudar o valor armazenado dentro de uma variável é simples. Apenas execute outra declaração de associação com a mesma variável. Veja o que acontece quando você executa o seguinte comando no console interativo:</p>
 
 <div class='sourceblurb'>
 &gt;&gt;&gt; spam = 42<br />
@@ -295,9 +295,9 @@ Figura 2-5: As variáveis "fizz" e "eggs" possuem valores armazenados dentro del
 Hello<br />
 </div>
 
-<p>Initially, the <span class='m'>spam</span> variable had the integer <span class='m'>42</span> placed inside of it. This is why the first <span class='m'>print(spam)</span> prints out <span class='m'>42</span>. But when we execute <span class='m'>spam = 'Hello'</span>, the <span class='m'>42</span> value is tossed out of the variable and forgotten as the new <span class='m'>'Hello'</span> string value is placed inside the <span class='m'>spam</span> variable.</p>
+<p>Inicialmente, a variável <span class='m'>spam</span> tinha um inteiro <span class='m'>42</span> guardado dentro dela. Por isso que o primeiro <span class='m'>print(spam)</span> imprime <span class='m'>42</span>. Mas quando nós executamos <span class='m'>spam = 'Hello'</span>, o valor <span class='m'>42</span> é jogado fora da variável e esquecido pois o novo valor da string <span class='m'>'Hello'</span> é armazenada dentro da variável <span class='m'>spam</span>.</p>
 
-<p>Replacing the value in a variable with a new value is called <span class='term'>overwriting</span> the value. It is important to know that the old value is permanently forgotten. If you want to remember this value so you can use it later in your program, store it in a different variable before overwriting the value:</p>
+<p>Substituindo o valor de uma variável com um novo calor é chamado <span class='term'>sobrescrever</span> o valor. É importante saber que o valor antigo é permanentemente esquecido. Se você quiser lembrar esse valor para poder usá-lo mais tarde no seu programa, guarde-o em uma variável diferente antes de sobrescrever o valor:</p>
 
 <div class='sourceblurb'>
 &gt;&gt;&gt; spam = 42<br />
@@ -311,7 +311,7 @@ Hello<br />
 42<br />
 </div>
 
-<p>In the above example, before overwriting the value in <span class='m'>spam</span>, we copy that value to a variable named <span class='m'>oldSpam</span>. At that point, both <span class='m'>spam</span> and <span class='m'>oldSpam</span> store the value <span class='m'>42</span>. On the next line, the string <span class='m'>'Hello'</span> is stored in <span class='m'>spam</span> but <span class='m'>oldSpam</span> is left untouched.</p>
+<p>No exemplo acima, antes de sobrescrever o valor em <span class='m'>spam</span>, nós copiamos esse valor em uma variável chamada <span class='m'>oldSpam</span>. Nesse momento, tanto <span class='m'>spam</span> quanto  <span class='m'>oldSpam</span> guardam o valor  <span class='m'>42</span>. Na linha seguinte, a string <span class='m'>'Hello'</span> é armazenada em <span class='m'>spam</span> mas <span class='m'>oldSpam</span> permanece igual.</p>
 
 <h2 id="Summary">Summary</h2>
 
