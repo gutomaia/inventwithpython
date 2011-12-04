@@ -127,22 +127,22 @@ Figura 2-3: Uma expressão é formada por valores e operadores.</p>
 
 <p>No próximo capítulo, nós vamos aprender como trabahar com texto nas expressões. Python não é limitado apenas à números. É muito mais do que uma calculadora rebuscada!</p>
 
-<h2 id="EvaluatingExpressions">Evaluating Expressions</h2>
+<h2 id="EvaluatingExpressions">Avaliando Expressões</h2>
 
-<p>When a computer solves the expression <span class='m'>10 + 5</span> and gets the value <span class='m'>15</span>, we say it has <span class='term'>evaluated</span> the expression. Evaluating an expression reduces the expression to a single value, just like solving a math problem reduces the problem to a single number: the answer.</p>
+<p>Quando um computador resolve a expressão <span class='m'>10 + 5</span> e encontra o valor <span class='m'>15</span>, nós dizemos que ele <span class='term'>avaliou</span> a expressão. Avaliar uma expressão reduz a expressão a um único valor, da mesma forma que resolver um problema matemático reduz o problema a um único número: a resposta.</p>
 
-<p>The expressions <span class='m'>10 + 5</span> and <span class='m'>10 + 3 + 2</span> have the same value, because they both evaluate to <span class='m'>15</span>. Even single values are considered expressions: The expression <span class='m'>15</span> evaluates to the value <span class='m'>15</span>.</p>
+<p>As expressões <span class='m'>10 + 5</span> e  <span class='m'>10 + 3 + 2</span> possuem o mesmo valor, pois as duas são avaliadas em <span class='m'>15</span>. Até mesmo valores únicos são considerados expressões: a expressão <span class='m'>15</span> é avaliada para o valor <span class='m'>15</span>.</p>
 
-<p>However, if you just type <span class='m'>5 +</span> into the interactive shell, you will get an error message.</p>
+<p>Entretanto, se nós apenas digitarmos <span class='m'>5 +</span> no console interativo, você receberá uma mensagem de erro.</p>
 
 <div class='sourceblurb'>
 &gt;&gt;&gt; 5 +<br />
 SyntaxError: invalid syntax<br />
 </div>
 
-<p>This error happened because <span class='m'>5 +</span> is not an expression. Expressions have values connected by operators, but the + operator always expects to connect two things in Python. We have only given it one. This is why the error message appeared. A syntax error means that the computer does not understand the instruction you gave it because you typed it incorrectly. Python will always display an error message if you enter an instruction that it cannot understand.</p>
+<p>Esse erro ocorreu pois <span class='m'>5 +</span> não é uma expressão. Expressões possum valores conectados por operadores, mas o operador + sempre espera conectar duas coisas em Python. Nós demos a ele apenas um. Por isso a mensagem de erro apareceu. Um erro de sintaxe significa que o computador não entende a instrução que você deu a ele porque você a digitou incorretamente. Python sempre irá mostrar uma mensagem de erro se você enviar uma instrução que ele não consegue entender.</p>
 
-<p>This may not seem important, but a lot of computer programming is not just telling the computer what to do, but also knowing exactly how to tell the computer to do it.</p>
+<p>Isso pode não parecer importante, mas grande parte da programação de computadores não é apenas dizer ao computador o que ele deve fazer, mas também saber exatamente como dizer isso ao computador.</p>
 
 <h3 id="ExpressionsInsideOtherExpressions">Expressions Inside Other Expressions</h3>
 
