@@ -83,9 +83,9 @@ Figura 2-1: Digite <span class='m'>2+2</span> no console.</p>
 
 <h3 id="DontUseCommasinNumbers">Não use vírgula nos números</h3>
 
-<p>O console interativo do Python é útil para resolver problemas matemáticos rapidamente. Por exemple, tente colocar <span class='m'>2.063 * 0.3581</span>.</p>
+<p>O console interativo do Python é útil para resolver problemas matemáticos rapidamente. Por exemple, tente executar <span class='m'>2.063 * 0.3581</span>.</p>
 
-<p>Quando eu digo "colocar" eu quero dizer digite alguma coisa no IDLE e então aperte a tecla Enter ou Retorno (Return) do seu teclado. O resulta será algo do tipo:</p>
+<p>Quando eu digo "executar" eu quero dizer digite alguma coisa no IDLE e então aperte a tecla Enter ou Retorno (Return) do seu teclado. O resulta será algo do tipo:</p>
 
 <div class='sourceblurb'>
 &gt;&gt;&gt; 2.063 * 0.3581<br />
@@ -112,7 +112,7 @@ Figura 2-1: Digite <span class='m'>2+2</span> no console.</p>
 <p>Figura 2-2 mostra como o console interativo no IDLE irá ficar depois que você digitar as instruções acima.</p>
 
 <p class='centeredImageP'><img src='images/2-2.png' alt='' class='centeredImage' /><br />
-Figura 2-2: Como a janela do IDLE ficará depois de colocar as instruções.</p>
+Figura 2-2: Como a janela do IDLE ficará depois de executar as instruções.</p>
 
 <p style='float: right;' class='centeredImageP'><img src='images/2-3.png' alt='' class='centeredImage' /><br />
 Figura 2-3: Uma expressão é formada por valores e operadores.</p>
@@ -150,11 +150,11 @@ SyntaxError: invalid syntax<br />
 
 <p>Pense em uma expressão como se fosse uma pilha de panquecas. Se você colocar duas pilhas de panquecas juntas, você ainda terá uma pilha de panquecas. E uma grande pilha de panquecas pode ser formada de pilhas menores de panquecas que foram colocadas juntas. Da mesma forma, expressões podem ser combinadas para formar expressões maiores. Mas não importa o quão grande uma expressão é, ela também será avaliada em uma única resposta, exatamente como <span class='m'>2 + 5 + 8</span> é avaliada em <span class='m'>15</span>.</p>
 
-<h2 id="StoringValuesinVariables">Storing Values in Variables</h2>
+<h2 id="StoringValuesinVariables">Guardando Valores em Variáveis</h2>
 
-<p>When we program, we will often want to save the values that our expressions evaluate to so we can use them later in the program. We can store values in <span class='term'>variables</span>.</p>
+<p>Quando nós programamos, frequentemente nós iremos querer salvar os valores em que as nossas expressões são avaliadas para que nós possamos utilizá-los mais tarde em nosso programa. Nós podemos guardar valores em <span class='term'>variáveis</span>.</p>
 
-<p>Think of variables like a box that can hold values. You can store values inside variables with the = sign (called the <span class='term'>assignment operator</span>). For example, to store the value 15 in a variable named "spam", enter <span class='m'>spam = 15</span> into the shell:</p>
+<p>Pense nas variáveis como uma caixa que pode guardar valores. Você pode guardar valores dentro de variáveis com o símbolo = (chamado de <span class='term'>operador de atribuição</span>). Por exemplo, para guardar o valor 15 em uma variável chamada "spam", digite <span class='m'>spam = 15</span> no console:</p>
 
 <div class='sourceblurb'>
 &gt;&gt;&gt; spam = 15<br />
@@ -162,23 +162,23 @@ SyntaxError: invalid syntax<br />
 </div>
 
 <p style='float: right;' class='centeredImageP'><img src='images/2-4.png' alt='' class='centeredImage' /><br />
-Figure 2-4: Variables are like boxes that can hold values in them.</p>
+Figura 2-4: Variáveis são como caixas que podem guardar valores dentro delas.</p>
 
-<p>You can think of the variable like a box with the value 15 inside of it (as shown in Figure 2-4). The variable name "spam" is the label on the box (so we can tell one variable from another) and the value stored in it is like a small note inside the box.</p>
+<p>Você pode pensar em uma variável como uma caixa com o valor 15 dentro dela (como mostrada na Figura 2-4). O nome da variável "spam" é a etiqueta na caixa (para que nós possamos diferenciar uma variável da outra) e o valor armazenado dentro dela é como se fosse um bilhete dentro da caixa.</p>
 
-<p>When you press Enter you won't see anything in response, other than a blank line. Unless you see an error message, you can assume that the instruction has been executed successfully. The next &gt;&gt;&gt; prompt will appear so that you can type in the next instruction.</p>
+<p>Quando você apertar Enter, você não verá nada como resposta, exceto uma linha em branco. A menos que você veja uma mensagem de erro, você pode assumir que a execução da instrução foi bem sucedida. O próximo &gt;&gt;&gt; irá aparecer para que você possa digitar a próxima instrução.</p>
 
-<p>This instruction (called an <span class='term'>assignment statement</span>) creates the variable <span class='m'>spam</span> and stores the value <span class='m'>15</span> in it. Unlike expressions, <span class='term'>statements</span> are instructions that do not evaluate to any value, which is why there is no value displayed on the next line in the shell.</p>
+<p>Essa instrução (chamada de <span class='term'>declaração de atribuição</span>) cria uma variável <span class='m'>spam</span> e guarda o valor <span class='m'>15</span> nela. Diferentemente das expressões, <span class='term'>declarações</span> são instruções que não são avaliadas a nenhum valor, por isso que nenhum valor é exibido na próxima linha do console.</p>
 
-<p>It might be confusing to know which instructions are expressions and which are statements. Just remember that if the instruction evaluates to a single value, it's an expression. If the instruction does not, then it's a statement.</p>
+<p>Pode ser confuso saber quais instruções são expressões e quais são declarações. Apenas lembre-se que se uma instrução for avaliada em único valor, é uma expressão. Caso contrário, é uma declaração.</p>
 
-<p>An assignment statement is written as a variable, followed by the = equal sign, followed by an expression. The value that the expression evaluates to is stored inside the variable. The value <span class='m'>15</span> by itself is an expression. Expressions made up of a single value by itself are easy to evaluate. These expressions just evaluate to the value itself. For example, the expression <span class='m'>15</span> evaluates to <span class='m'>15!</span></p>
+<p>Uma declaração de atribuição é escrito como uma variável, seguida de um símbolo de igual =, seguida de uma expressão. O valor em que a expressão é avaliada é aramzenada dentro da variável. O valor <span class='m'>15</span> por si só é uma expressão. Expressões formadas por um único valor são fáceis de se avaliar. Estar expressões são avaliadas apenas em seu próprio valor. Por exemplo, a expressão <span class='m'>15</span> é avaliada em <span class='m'>15</span>!</p>
 
-<p>Remember, variables store values, not expressions. For example, if we had the statement, <span class='m'>spam = 10 + 5</span>, then the expression <span class='m'>10 + 5</span> would first be evaluated to <span class='m'>15</span> and then the value <span class='m'>15</span> would be stored in the variable, <span class='m'>spam</span>.</p>
+<p>Lembre-se, variáveis guardam valores, não expressões. Por exemple, se nós tivéssemos a declaração, <span class='m'>spam = 10 + 5</span>, então a expressão <span class='m'>10 + 5</span> seria primeiro avaliada em <span class='m'>15</span> e então o valor <span class='m'>15</span> seria armazenado na variável <span class='m'>spam</span>.</p>
 
-<p>The first time you store a value inside a variable by using an assignment statement, Python will create that variable. Each time after that, an assignment statement will only replace the value stored in the variable.</p>
+<p>A primeira vez que você armazenar um valor em uma variável usando uma declaração de atribuição, Python irá criar essa variável. Todas as vezes depois disso, uma declaração de atribuição irá apenas substituir o valor aramzenado naquela variável.</p>
 
-<p>Now let's see if we've created our variable properly. If we type <span class='m'>spam</span> into the shell by itself, we should see what value is stored inside the variable <span class='m'>spam</span>.</p>
+<p>Agora vamos ver se nós criamos a nossa variável corretamente. Se nós digitarmos apenas <span class='m'>spam</span> no console, deveremos ver que valor está armezenado dentro desta variável <span class='m'>spam</span>.</p>
 
 <div class='sourceblurb'>
 &gt;&gt;&gt; spam = 15<br />
@@ -187,9 +187,9 @@ Figure 2-4: Variables are like boxes that can hold values in them.</p>
 &gt;&gt;&gt;<br />
 </div>
 
-<p>Now, <span class='m'>spam</span> evaluates to the value inside the variable, 15.</p>
+<p>Agora, <span class='m'>spam</span> é avaliado para o valor armazenado dentro da variável, 15.</p>
 
-<p>And here's an interesting twist. If we now enter <span class='m'>spam + 5</span> into the shell, we get the integer <span class='m'>20</span>, like so.</p>
+<p>E aqui está uma mudança interessante. Se nós agora digitarmos <span class='m'>spam + 5</span> no console, nós recebemos o inteiro <span class='m'>20</span>, assim.</p>
 
 <div class='sourceblurb'>
 &gt;&gt;&gt; spam = 15<br />
@@ -198,11 +198,11 @@ Figure 2-4: Variables are like boxes that can hold values in them.</p>
 &gt;&gt;&gt;<br />
 </div>
 
-<p>That may seem odd but it makes sense when we remember that we set the value of spam to <span class='m'>15</span>. Because we've set the value of the variable <span class='m'>spam</span> to <span class='m'>15</span>, writing <span class='m'>spam + 5</span> is like writing the expression <span class='m'>15 + 5</span>.</p>
+<p>Isso pode parecer estranho mas faz todo o sentido quando nós lembramos que nós associamos o valor de spam para <span class='m'>15</span>. Como nós associamos o valor da variável <span class='m'>spam</span> para <span class='m'>15</span>, escrevendo <span class='m'>spam + 5</span> é como escrever a expressão <span class='m'>15 + 5</span>.</p>
 
-<p>If you try to use a variable before it has been created, Python will give you an error because no such variable would exist yet. This also happens if you mistype the name of the variable.</p>
+<p>Se você tentar usar uma variável antes de criá-la, Python lhe dará um erro porque nenhuma variável com aquele nome foi criada ainda. Isso também acontece se você digitar o nome errado de uma variável</p>
 
-<p>We can change the value stored in a variable by entering another assignment statement. For example, try the following:</p>
+<p>Nós podemos mudar o valor armazenado em uma variável executando uma outra declaração de associação. Por exemplo, tente o seguinte:</p>
 
 <div class='sourceblurb'>
 &gt;&gt;&gt; spam = 15<br />
@@ -214,11 +214,11 @@ Figure 2-4: Variables are like boxes that can hold values in them.</p>
 &gt;&gt;&gt;<br />
 </div>
 
-<p>The first time we enter <span class='m'>spam + 5</span>, the expression evaluates to <span class='m'>20</span>, because we stored the value <span class='m'>15</span> inside the variable <span class='m'>spam</span>. But when we enter <span class='m'>spam = 3</span>, the value <span class='m'>15</span> is replaced, or overwritten, with the value <span class='m'>3</span>. Now, when we enter <span class='m'>spam + 5</span>, the expression evaluates to <span class='m'>8</span> because the value of <span class='m'>spam</span> is now 3.</p>
+<p>Na primeira vez em que executamos <span class='m'>spam + 5</span>, a expressão é avaliada em <span class='m'>20</span>, pois nós armazenamos o valor <span class='m'>15</span> dentro da variável <span class='m'>spam</span>. Mas quando nós executamos <span class='m'>spam = 3</span>, o valor <span class='m'>15</span> é substituído, ou sobrescrito, com o valor <span class='m'>3</span>. Agora, quando nós executamos <span class='m'>spam + 5</span>, a expressão é avaliada em <span class='m'>8</span> porque o valor de <span class='m'>spam</span> agora é 3.</p>
 
-<p>To find out what the current value is inside a variable, just enter the variable name into the shell.</p>
+<p>Para descobrir qual o valor atual armazenado em uma variável, apenas digite o nome da variável no console e aperte Enter.
 
-<p>Now here's something interesting. Because a variable is only a name for a value, we can write expressions with variables like this:</p>
+<p>Agora aqui está algo interessanto. Como uma variável é apenas um nome para um valor, nós podemos escrever expressões com variáveis dessa forma:</p>
 
 <div class='sourceblurb'>
 &gt;&gt;&gt; spam = 15<br />
@@ -229,9 +229,9 @@ Figure 2-4: Variables are like boxes that can hold values in them.</p>
 &gt;&gt;&gt;<br />
 </div>
 
-<p>When the variable <span class='m'>spam</span> has the integer value <span class='m'>15</span> stored in it, entering <span class='m'>spam + spam</span> is the same as entering <span class='m'>15 + 15</span>, which evaluates to <span class='m'>30</span>. And <span class='m'>spam - spam</span> is the same as <span class='m'>15 - 15</span>, which evaluates to <span class='m'>0</span>. The expressions above use the variable <span class='m'>spam</span> twice. You can use variables as many times as you want in expressions. Remember that Python will evaluate a variable name to the value that is stored inside that variable, each time the variable is used.</p>
+<p>Quando a variável <span class='m'>spam</span> tem o valor inteiro <span class='m'>15</span> armezenado nela, executando <span class='m'>spam + spam</span> é o mesmo que executar <span class='m'>15 + 15</span>, que é avaliado em <span class='m'>30</span>. E <span class='m'>spam - spam</span> é o mesmo que <span class='m'>15 - 15</span>, que é avaliado em <span class='m'>0</span>. As expressões acima usam a variável <span class='m'>spam</span> duas vezes. Você pode usar variáveis quantas vezes você quiser em expressões. Lembre-se que o Python irá avaliar o nome da variável ao valor que está armazenado dentro da variável, todas as vezes que a variável é utilizada.</p>
 
-<p>We can even use the value in the <span class='m'>spam</span> variable to assign <span class='m'>spam</span> a new value:</p>
+<p>Nós podemos até usar o valor amrmazenado na variável <span class='m'>spam</span> para associar à <span class='m'>spam</span> um novo valor:</p>
 
 <div class='sourceblurb'>
 &gt;&gt;&gt; spam = 15<br />
@@ -240,7 +240,7 @@ Figure 2-4: Variables are like boxes that can hold values in them.</p>
 &gt;&gt;&gt;<br />
 </div>
 
-<p>The assignment statement <span class='m'>spam = spam + 5</span> is like saying, "the new value of the <span class='m'>spam</span> variable will be the current value of <span class='m'>spam</span> plus five." Remember that the variable on the left side of the <span class='m'>=</span> sign will be assigned the value that the expression on the right side evaluates to. We can also keep increasing the value in <span class='m'>spam</span> by <span class='m'>5</span> several times:</p>
+<p>A declaração de associação <span class='m'>spam = spam + 5</span> é como dizer, "o novo valor da variável <span class='m'>spam</span> será o valor atual de <span class='m'>spam</span> mais cinco." Lembre-se que a variável do lado esquerdo do símbolo <span class='m'>=</span> será associado ao valor que a expressão do lado direito é avaliada. Nós podemos inclusive continuar aumentando o valor armazenado em <span class='m'>spam</span> em <span class='m'>5</span> várias vezes:</p> 
 
 <div class='sourceblurb'>
 &gt;&gt;&gt; spam = 15<br />
