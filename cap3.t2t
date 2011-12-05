@@ -17,6 +17,7 @@ Strings
 - Comentários
 %TODO: tradução para capitalizing
 - **Capitalizing** variáveis
+%TODO: tradução para case-sensitive
 - Diferenças entre Maiúsculas e Minúsculas
 
 
@@ -301,40 +302,64 @@ A função chamada ``input()`` não necessita entrada alguma (diferentemente da 
 Na última linha do programa nós temos novamente a função ``print()``. Dessa vez, nós usamos o operador mais (+) para concatenar a string ``Muito bom conhecer voce,`` e a string armazenada na variável ``meuNome``, que é o nome que nosso usuário digitou quando o programa solicitou. É assim que nós fazemos com que o programa nos cumprimente pelo nome.
 
 
-
 %Ending the Program
-
+=Encerrando o programa=
 %Once the program executes the last line, it stops. At this point it has terminated or exited and all of the variables are forgotten by the computer, including the string we stored in myName. If you try running the program again with a different name, like Carolyn, it will think that's your name.
+Após executar a última linha, o programa para. Nesse ponto ele terminou e todas as variáveis do programa são esquecidas pelo computador, incluindo a string que armazenamos em ``meuNome``. Se você experimentar executar o programa novamente, com um nome diferente, como ``Carolyn``, ele irá pensar que esse é o seu nome.
+
 %Hello world!
 %What is your name?
 %Carolyn
 %It is good to meet you, Carolyn
+```
+Alo mundo!
+Qual é o seu nome?
+Carolyn
+Muito bom conhecer voce, Carloyn
+```
 
 %Remember, the computer only does exactly what you program it to do. In this, our first program, it is programmed to ask you for your name, let you type in a string, and then say hello and display the string you typed.
+Lembre, o computador faz exatamente o que você programou ele para fazer. Neste caso, nosso primeiro programa, ele é programado para perguntar seu nome, permitir que você digite uma string, e então falar ``Alo`` e mostrar a string que você digitou.
 
 %But computers are dumb. The program doesn't care if you type in your name, someone else's name, or just something dumb. You can type in anything you want and the computer will treat it the same way:
+Mas computadores são burros. O programa não está nem aí se você forneceu como seu nome o nome de outra pessoa, ou então algo idiota. Você pode digitar o que quiser e o computador irá tratar da mesma forma:
+
 %Hello world!
 %What is your name?
 %poop
 %It is good to meet you, poop
 %Variable Names
+```
+Alo mundo!
+Qual é o seu nome?
+cocô
+Muito bom conhecer voce, cocô
+```
 
 %The computer doesn't care what you name your variables, but you should. Giving variables names that reflect what type of data they contain makes it easier to understand what a program does. Instead of name, we could have called this variable abrahamLincoln or nAmE. The computer will run the program the same (as long as you consistently use abrahamLincoln or nAmE).
+O computador não se importa com a forma que você nomeia suas variáveis, mas você deveria. Se dermos nomes de variáveis que reflitam qual tipo de dados que elas contém, estaremos tornando mais fácil o entendimento de o que o nosso programa faz. Ao invés de ``meuNome``, poderíamos ter chamado esta variável de ``abrahamLincoln`` ou ``mEuNoMe``. O computador irá sempre executar o programa da mesma forma (desde que você use consistentemente ``abrahamLincoln`` ou ``mEuNoMe``).
 
 %Variable names (as well as everything else in Python) are case-sensitive. Case-sensitive means the same variable name in a different case is considered to be an entirely separate variable name. So spam, SPAM, Spam, and sPAM are considered to be four different variables in Python. They each can contain their own separate values.
+Nomes de variáveis (assim como tudo em Python) são **//case-sensitive//**. //Case-sensitive// significa que um mesmo nome de variável em maiúsculas e minúsculas representam uma variável completamente diferente. Assim, ``spam``, ``SPAM``, ``Spam``, e ``sPAM`` são consideradas quatro variáveis diferentes em Python. Cada uma pode conter seus valores individuais.
 
 %It's a bad idea to have differently-cased variables in your program. If you stored your first name in the variable name and your last name in the variable NAME, it would be very confusing when you read your code weeks after you first wrote it. Did name mean first and NAME mean last, or the other way around?
+Não é uma boa idéia ter variáveis com mesmo nome, com diferenças apenas no tamanho das letras que compõem o nome das variáveis (se são maiúsculas ou minúsculas) em seu programa. Se você armazena seu primeiro nome na variável ``nome`` e seu último nome na variável ``NOME``, seria bem confuso entender o código algumas semanas após você tê-lo escrito. ``nome`` significa primeiro e ``NOME`` significa último nome, ou o contrário?
 
 %If you accidentally switch the name and NAME variables, then your program will still run (that is, it won't have any syntax errors) but it will run incorrectly. This type of flaw in your code is called a bug. It is very common to accidentally make bugs in your programs while you write them. This is why it is important that the variable names you choose make sense.
+Se, sem querer, você trocar as variáveis ``nome`` e ``NOME``, seu programa continuará rodando (isto é, não terá erros de sintaxe), mas irá rodar de forma incorreta. Este tipo de falha no seu código é chamado de //**bug**//. É muito comum criar //bugs// em seus programas, sem querer, enquanto você os escreve. É por isso que é importante que os nomes de variáveis que você escolhe façam sentido.
 
 %It also helps to capitalize variable names if they include more than one word. If you store a string of what you had for breakfast in a variable, the variable name whatIHadForBreakfastThisMorning is much easier to read than whatihadforbreakfastthismorning. This is a convention (that is, an optional but standard way of doing things) in Python programming. (Although even better would be something simple, like todaysBreakfast. Capitalizing the first letter of each word in variable names makes the program more readable.
+Algo que também ajuda é escrever nomes de variáveis com letras maiúsculas se elas incluem mais de uma palavra. Se você armazena uma string que contém o que você comeu no cafá da manhã em uma variável, o nome ``oQueEuComiNoCafeDaManhaHoje`` é muito mais fácil de ler do que ``oqueeucominocafedamanhahoje``. Isto é uma ``convenção`` (isto é, um forma opcional, mas padronizada de fazer as coisas) para programas escritos em Python. (Embora fosse melhor ter um nome mais simples, como ``cafeDeHoje``.) Escrever a primeira letra de cada palavra com letra maiúscula em nomes de variáveis faz com que o nosso programa se torne mais legível.
 
 
 %Summary
+=Resumo=
 
 %Now that we have learned how to deal with text, we can start making programs that the user can run and interact with. This is important because text is the main way the user and the computer will communicate with each other. The player will enter text to the program through the keyboard with the input() function. And the computer will display text on the screen when the print() function is executed.
+Agora que aprendemos a lidar com texto, nós podemos começar a fazer programas com os quais o usuário possa interagir. Isso é importante porque o texto é a principal forma de comunicação entre o usuário e o computador. O jogador irá digitar texto para nossos programas através do teclado, com a função ``input()``. E o computador irá mostrar texto na tela quando a função ``print()`` é executada.
 
 %Strings are just a different data type that we can use in our programs. We can use the + operator to concatenate strings together. Using the + operator to concatenate two strings together to form a new string is just like using the + operator to add two integers to form a new integer (the sum).
+Strings são apenas um tipo de dados que podemos utilizar em nossos programas. Nós podemos usar o operador ``+`` para juntar strings (concatenar). Usar o operador ``+`` para concatenar duas strings para formar uma nova string é como usar o operador ``+`` para somar dois inteiros para formar um novo inteiro (a soma).
 
 %In the next chapter, we will learn more about variables so that our program will remember the text and numbers that the player enters into the program. Once we have learned how to use text, numbers, and variables, we will be ready to start creating games.
-
+No próximo capítulo, iremos aprender mais sobre variáveis, de forma que nosso programa irá lembrar texto e números que o usuário fornecer para o programa. Após aprendermos a utilizar texto, números, e variáveis. estaremos prontos para começar a criar jogos.
