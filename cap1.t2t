@@ -12,7 +12,8 @@ Capítulo 1
 
 % Hello! This is a book that will teach you how to program by showing you how
 % to create computer games. Once you learn how the games in this book work, 
-% you'll be able to create your own games. All you'll need is a computer, some % software called the Python Interpreter, and this book. The software you'll 
+% you'll be able to create your own games. All you'll need is a computer, some 
+% software called the Python Interpreter, and this book. The software you'll 
 % need is free and you can download it from the Internet.
 
 Oi! Este livro ira lhe ensinar como programar mostrando como criar jogos de 
@@ -138,76 +139,154 @@ nos referir ao "interpretador Python" como "Python" a partir de agora.)
 
 %TODO como funcionam os links no txt2tags?
 
-% I'm going to give you instructions for installing Python on Microsoft Windows, not because that's my favorite operating system but because chances are that's the operating system that your computer is running. You might want the help of someone else to download and install the Python software.
+% I'm going to give you instructions for installing Python on Microsoft 
+% Windows, not because that's my favorite operating system but because chances 
+% are that's the operating system that your computer is running. You might 
+% want the help of someone else to download and install the Python software.
 
-Eu vou dar instruções de como instalar o Python no Microsoft Windows, não por que é mu sistema operacional favorito, mas por que é o provavel sistema operacional que o seu computador está utililizando. Você pode precisar da ajuda de alguem para baixar e instalar o Python no seu computador.
+Eu vou dar instruções de como instalar o Python no Microsoft Windows, não por 
+que é mu sistema operacional favorito, mas por que é o provavel sistema 
+operacional que o seu computador está utililizando. Você pode precisar da 
+ajuda de alguem para baixar e instalar o Python no seu computador.
 
-% When you get to python.org, you should see a list of links on the left (About, News, Documentation, Download, and so on.) Click on the <span class='menuname'>Download</span> link to go to the download page, then look for the file called <b>Python 3.1 Windows Installer</b> (Windows binary -- does not include source) and click on its link to download Python for Windows.
+% When you get to python.org, you should see a list of links on the left (
+% About, News, Documentation, Download, and so on.) Click on the <span class='
+% menuname'>Download</span> link to go to the download page, then look for the 
+% file called <b>Python 3.1 Windows Installer</b> (Windows binary -- does not 
+% include source) and click on its link to download Python for Windows.
 
 % TODO: ver a questão do menuname;
 
-Quando você acessa o python.org, você eve ver uma lista de links na esquerda (Sobre, Noticias, Documentação, Download e por aê vai.) Clique no link Download par ir a página de download. então procure por um arquivo chamado **Python 3.1 Windows Installer** (Um binario Windows -- não inclue os fontes) e então clique neste link para baixar o Python para windows.
+Quando você acessa o python.org, você eve ver uma lista de links na esquerda (
+Sobre, Noticias, Documentação, Download e por aê vai.) Clique no link Download 
+par ir a página de download. então procure por um arquivo chamado **Python 3.1 
+Windows Installer** (Um binario Windows -- não inclue os fontes) e então 
+clique neste link para baixar o Python para windows.
 
-% <p class='centeredImageP'><img src='images/1-1.png' alt='' class='centeredImage' /><br />
-% Figure 1-1: Click the Windows installer link to download Python for Windows from <a href='http://www.python.org'>http://www.python.org</a></p>
+% <p class='centeredImageP'><img src='images/1-1.png' alt='' class=' 
+% centeredImage' /><br />
+% Figure 1-1: Click the Windows installer link to download Python for Windows 
+% from <a href='http://www.python.org'>http://www.python.org</a></p>
 
 % TODO: ver a questão das imagens.
 
-% Double-click on the <span class='filename'>python-3.1.msi</span> file that you've just downloaded to start the Python installer. (If it doesn't start, try right-clicking the file and choosing Install.) Once the installer starts up, click the <span class='menuname'>Next</span> button and just accept the choices in the installer as you go (no need to make any changes). When the install is finished, click <span class='menuname'>Finish</span>.
+% Double-click on the <span class='filename'>python-3.1.msi</span> file that 
+% you've just downloaded to start the Python installer. (If it doesn't start, 
+% try right-clicking the file and choosing Install.) Once the installer starts 
+% up, click the <span class='menuname'>Next</span> button and just accept the 
+% choices in the installer as you go (no need to make any changes). When the 
+% install is finished, click <span class='menuname'>Finish</span>.
 
-$ TODO: ver como fazer a tag filename
-Efetue um duplo clique no arquivo python-3.1.msi que você acabou de baixar. (Se a instalçao não iniciar, tente clicar com o botão direito do mouse e escolher a opção "Instalar"). Uma vez que o instalador for iniciado, clique no botão "Next" e apenas aceitas as opções
+% TODO: ver como fazer a tag filename
+Efetue um duplo clique no arquivo python-3.1.msi que você acabou de baixar. (
+Se a instalçao não iniciar, tente clicar com o botão direito do mouse e 
+escolher a opção "Instalar"). Uma vez que o instalador for iniciado, clique no 
+botão "Next" e apenas aceitas as opções
 
-% <b>Important Note!</b> Be sure to install Python 3, and not Python 2. The programs in this book use Python 3, and you'll get errors if you try to run them with Python 2.
+% <b>Important Note!</b> Be sure to install Python 3, and not Python 2. The 
+% programs in this book use Python 3, and you'll get errors if you try to run 
+% them with Python 2.
 
-** Importante !** Tenha certeza de ter instalado o Python 3 e não o Python 2. Os programas apresentados neste livro usam Python 3, você ira obter alguns erros se tentar rodar eles com Python 2.
+** Importante !** Tenha certeza de ter instalado o Python 3 e não o Python 2. 
+Os programas apresentados neste livro usam Python 3, você ira obter alguns 
+erros se tentar rodar eles com Python 2.
 
-% The installation for Mac OS is similar. Instead of downloading the .msi file from the Python website, download the .dmg Mac Installer Disk Image file instead. The link to this file will look something like "Mac Installer disk image (3.1.1)" on the "Download Python Software" web page.
+% The installation for Mac OS is similar. Instead of downloading the .msi file 
+% from the Python website, download the .dmg Mac Installer Disk Image file 
+% instead. The link to this file will look something like "Mac Installer disk 
+% image (3.1.1)" on the "Download Python Software" web page.
 
-A instalaçaão para Mac OS é similar. Ao invez de baixar o arquivo python-3.1.msi do site, baixe o arquivo python-3-1-1.dmg. O link para este arquivo vai parecer algo como "Mac Instaler disk image (3.1.1)" na pagina de download ("Dowload Python Software").
+A instalaçaão para Mac OS é similar. Ao invez de baixar o arquivo 
+python-3.1.msi do site, baixe o arquivo python-3-1-1.dmg. O link para este 
+arquivo vai parecer algo como "Mac Instaler disk image (3.1.1)" na pagina de 
+download ("Dowload Python Software").
 
-% If your operating system is Ubuntu, you can install Python by opening a terminal window (click on Applications &gt; Accessories &gt; Terminal) and entering <span class='m'>sudo apt-get install python3</span> then pressing Enter. You will need to enter the root password to install Python, so ask the person who owns the computer to type in this password.
+% If your operating system is Ubuntu, you can install Python by opening a 
+% terminal window (click on Applications &gt; Accessories &gt; Terminal) and 
+% entering <span class='m'>sudo apt-get install python3</span> then pressing 
+% Enter. You will need to enter the root password to install Python, so ask 
+% the person who owns the computer to type in this password.
 
 %TODO:
 Se o seu sistema operacional é um Linux Ubuntu, você pode instalar o Python 
 
-% There may be a newer version of Python available than 3.1. If so, then just download the latesta version. The game programs in this book will work just the same. If you have any problems, you can always Google for "installing Python on &lt;your operating system's name&gt;". Python is a very popular language, so you should have no difficulty finding help.
+% There may be a newer version of Python available than 3.1. If so, then just 
+% download the latesta version. The game programs in this book will work just 
+% the same. If you have any problems, you can always Google for "installing 
+% Python on &lt;your operating system's name&gt;". Python is a very popular 
+% language, so you should have no difficulty finding help.
 
 %TODO: será que posso adicionar a python-brasil como uma fonte de ajuda?
-Pode haver disponível uma versão mais nova do que a versão 3.1 do Python. Se isso ocorrer, apenas baixe a versão mais atual. Os programas de jogos neste livro irão funcionar igualmente. Se você tiver qualquer problema, você pode sempre procurar no Google por "instalar python 3 no <seu sistema operacional>". Python é uma linguagem muito popular, logo não deve ser dificil encontrar ajuda.
+Pode haver disponível uma versão mais nova do que a versão 3.1 do Python. Se 
+isso ocorrer, apenas baixe a versão mais atual. Os programas de jogos neste 
+livro irão funcionar igualmente. Se você tiver qualquer problema, você pode 
+sempre procurar no Google por "instalar python 3 no <seu sistema operacional>
+". Python é uma linguagem muito popular, logo não deve ser dificil encontrar 
+ajuda.
 
-% TODO: comment -- A video tutorial of how to install Python is available from this book's website at <a href='http://inventwithpython.com/videos/'>http://inventwithpython.com/videos/</a>.</p>
+% TODO: comment -- A video tutorial of how to install Python is available from % this book's website at <a href='http://inventwithpython.com/videos/'>
+% http://inventwithpython.com/videos/</a>.</p>
 
 % Starting Python
 
 =Começando com o Python=
 
-% If your operating system is Windows XP, you should be able to run Python by choosing <span class='menuname'>Start</span>, <span class='menuname'>Programs</span>, <span class='menuname'>Python 3.1</span>, <span class='menuname'>IDLE (Python GUI)</span>. When it's running it should looking something like Figure 1-2. (But different operating systems will look slightly different.)
+% If your operating system is Windows XP, you should be able to run Python by % choosing <span class='menuname'>Start</span>, <span class='menuname'>Programs
+% </span>, <span class='menuname'>Python 3.1</span>, <span class='menuname'>
+% IDLE (Python GUI)</span>. When it's running it should looking something like 
+% Figure 1-2. (But different operating systems will look slightly different.)
 
-% <p class='centeredImageP'><img src='images/1-2.png' alt='' class='centeredImage' /><br />
+% <p class='centeredImageP'><img src='images/1-2.png' alt='' class='
+% centeredImage' /><br />
 % Figure 1-2: The IDLE program's interactive shell on Windows.</p>
 
-% IDLE stands for <b>I</b>nteractive <b>D</b>eve<b>L</b>opment <b>E</b>nvironment. The development environment is software that makes it easy to write Python programs. We will be using IDLE to type in our programs and run them.
+% IDLE stands for <b>I</b>nteractive <b>D</b>eve<b>L</b>opment <b>E</b>
+% nvironment. The development environment is software that makes it easy to 
+% write Python programs. We will be using IDLE to type in our programs and run 
+% them.
 
-% The window that appears when you first run IDLE is called the interactive shell. A shell is a program that lets you type instructions into the computer. The Python shell lets you type Python instructions, and the shell sends these instructions to software called the Python interpreter to perform. We can type Python instructions into the shell and, because the shell is interactive, the computer will read our instructions and respond in some way. (Ideally in a way that we expect but that will depend on whether we write the correct instructions.)
+% The window that appears when you first run IDLE is called the interactive 
+% shell. A shell is a program that lets you type instructions into the 
+% computer. The Python shell lets you type Python instructions, and the shell 
+% sends these instructions to software called the Python interpreter to 
+% perform. We can type Python instructions into the shell and, because the 
+% shell is interactive, the computer will read our instructions and respond in 
+% some way. (Ideally in a way that we expect but that will depend on whether 
+% we write the correct instructions.)
 
 
 % How to Use This Book<
 
-% There are a few things you should understand about this book before you get started. "Invent with Python" is different from other programming books because it focuses on the complete source code for different games. Instead of teaching you programming concepts and leaving it up to you to figure out how to make fun games with those concepts, this book shows you fun games and then explains how they are put together.
+% There are a few things you should understand about this book before you get 
+% started. "Invent with Python" is different from other programming books 
+% because it focuses on the complete source code for different games. Instead 
+% of teaching you programming concepts and leaving it up to you to figure out 
+% how to make fun games with those concepts, this book shows you fun games and 
+% then explains how they are put together.
 
 
 % The Featured Programs
 
-% Most chapters begin with a sample run of the featured program. This sample run shows you what the program's output looks like, with what the user types in shown as <b>bold</b> print. This will give you an idea of what the complete game will look like when you have entered the code and run it.
+% Most chapters begin with a sample run of the featured program. This sample 
+% run shows you what the program's output looks like, with what the user types 
+% in shown as <b>bold</b> print. This will give you an idea of what the 
+% complete game will look like when you have entered the code and run it.
 
-% Some chapters also show the complete source code of the game, but remember: you don't have to enter every line of code right now. Instead, you can read the chapter first to understand what each line of code does and then try entering it later.
+% Some chapters also show the complete source code of the game, but remember: 
+% you don't have to enter every line of code right now. Instead, you can read 
+% the chapter first to understand what each line of code does and then try 
+% entering it later.
 
-% You can also download the source code file from this book's website. Go to the URL <a href='http://inventwithpython.com/source'>http://inventwithpython.com/source</a> and follow the instructions to download the source code file.
+% You can also download the source code file from this book's website. Go to 
+% the URL <a href='http://inventwithpython.com/source'>
+% http://inventwithpython.com/source</a> and follow the instructions to 
+% download the source code file.
 
 % Line Numbers and Spaces
 
-% When entering the source code yourself, do <b>not</b> type the line numbers that appear at the beginning of each line. For example, if you see this in the book:
+% When entering the source code yourself, do <b>not</b> type the line numbers 
+% that appear at the beginning of each line. For example, if you see this in 
+% the book:
 
 % <div class='sourceblurb'>
 % <ol start='9'>
@@ -215,17 +294,28 @@ Pode haver disponível uma versão mais nova do que a versão 3.1 do Python. Se 
 % </ol>
 % </div>
 
-% You do not need to type the "9." on the left side, or the space that immediately follows it. Just type it like this:<
+% You do not need to type the "9." on the left side, or the space that 
+% immediately follows it. Just type it like this:<
 
 % <div class='sourceblurb'>
 % number = random.randint(1, 20)
 % </div>
 
-% Those numbers are only used so that this book can refer to specific lines in the code. They are not a part of the actual program.
+% Those numbers are only used so that this book can refer to specific lines in 
+% the code. They are not a part of the actual program.
 
-% Aside from the line numbers, be sure to enter the code exactly as it appears. Notice that some of the lines don't begin at the leftmost edge of the page, but are indented by four or eight spaces. Be sure to put in the correct number of spaces at the start of each line. (Since each character in IDLE is the same width, you can count the number of spaces by counting the number of characters above or below the line you're looking at.)
+% Aside from the line numbers, be sure to enter the code exactly as it 
+% appears. Notice that some of the lines don't begin at the leftmost edge of 
+% the page, but are indented by four or eight spaces. Be sure to put in the 
+% correct number of spaces at the start of each line. (Since each character in 
+% IDLE is the same width, you can count the number of spaces by counting the 
+% number of characters above or below the line you're looking at.)
 
-% For example, you can see that the second line is indented by four spaces because the four characters ("<span class='m'>whil</span>") on the line above are over the indented space. The third line is indented by another four spaces (the four characters, "<span class='m'>if n</span>" are above the third line's indented space):
+% For example, you can see that the second line is indented by four spaces 
+% because the four characters ("<span class='m'>whil</span>") on the line 
+% above are over the indented space. The third line is indented by another 
+% four spaces (the four characters, "<span class='m'>if n</span>" are above 
+% the third line's indented space):
 
 % <div class='sourceblurb'>
 % while guesses &lt; 10:<br />
@@ -235,9 +325,13 @@ Pode haver disponível uma versão mais nova do que a versão 3.1 do Python. Se 
 
 % Text Wrapping in This Book
 
-% Some lines of code are too long to fit on one line on the page, and the text of the code will wrap around to the next line. When you type these lines into the file editor, enter the code all on one line without pressing Enter.
+% Some lines of code are too long to fit on one line on the page, and the text 
+% of the code will wrap around to the next line. When you type these lines 
+% into the file editor, enter the code all on one line without pressing Enter.
 
-% You can tell when a new line starts by looking at the line numbers on the left side of the code. For example, the code below has only two lines of code, even though the first line wraps around:
+% You can tell when a new line starts by looking at the line numbers on the 
+% left side of the code. For example, the code below has only two lines of 
+% code, even though the first line wraps around:
 
 % <div class='sourceblurb'>
 % <ol>
@@ -249,30 +343,61 @@ Pode haver disponível uma versão mais nova do que a versão 3.1 do Python. Se 
 
 % <h3 id="TracingtheProgramOnline">Tracing the Program Online</h3>
 
-% <p>You can visit <a href='http://inventwithpython.com/traces'>http://inventwithpython.com/traces</a> to see a trace through each of the programs in this book. Tracing a program means to step through the code one line at a time, in the same way that a computer would execute it. The traces web page has notes and helpful reminders at each step of the trace to explain what the program is doing, so it can help you better understand why these programs work the way they do.</p>
+% <p>You can visit <a href='http://inventwithpython.com/traces'>
+% http://inventwithpython.com/traces</a> to see a trace through each of the 
+% programs in this book. Tracing a program means to step through the code one 
+% line at a time, in the same way that a computer would execute it. The traces 
+% web page has notes and helpful reminders at each step of the trace to 
+% explain what the program is doing, so it can help you better understand why 
+% these programs work the way they do.</p>
 
 % <!--<p>For a demonstration video of how to use the online tracing, go to this web video: <a href='TODO'>TODO</a></p>-->
 
 % <h3 id="CheckingYourCodeOnline">Checking Your Code Online</h3>
 
-% <p>Some of the games in this book are a little long. Although it is very helpful to learn Python by typing out the source code for these games, you may accidentally make typos that cause your game programs to crash. It may not be obvious where the typo is.</p>
+% <p>Some of the games in this book are a little long. Although it is very 
+% helpful to learn Python by typing out the source code for these games, you 
+% may accidentally make typos that cause your game programs to crash. It may 
+% not be obvious where the typo is.</p>
 
-% <p>You can copy and paste the text of your source code to the online diff tool on the book's website. The diff tool will show any differences between the source code in the book and the source code you've typed. This is an easy way of finding any typos in your program.</p>
+% <p>You can copy and paste the text of your source code to the online diff 
+% tool on the book's website. The diff tool will show any differences between 
+% the source code in the book and the source code you've typed. This is an 
+% easy way of finding any typos in your program.</p>
 
-% <p>Copying and pasting text is a very useful computer skill, especially for computer programming. There is a video tutorial on copying and pasting at this book's website at <a href='http://inventwithpython.com/videos/'>http://inventwithpython.com/videos/</a>.
+% <p>Copying and pasting text is a very useful computer skill, especially for 
+% computer programming. There is a video tutorial on copying and pasting at 
+% this book's website at <a href='http://inventwithpython.com/videos/'>
+% http://inventwithpython.com/videos/</a>.
 
-% <p>The online diff tool is at this web page: <a href='http://inventwithpython.com/diff'>http://inventwithpython.com/diff</a>. A video tutorial of how to use the diff tool is available from this book's website at <a href='http://inventwithpython.com/videos/'>http://inventwithpython.com/videos/</a>.</p>
+% <p>The online diff tool is at this web page: <a href='
+% http://inventwithpython.com/diff'>http://inventwithpython.com/diff</a>. A 
+% video tutorial of how to use the diff tool is available from this book's 
+% website at <a href='http://inventwithpython.com/videos/'>
+% http://inventwithpython.com/videos/</a>.</p>
 
-% <!--<p>If you would like to see a video demonstration of how to use this book's website's online diff tool, view this YouTube video: <a href='TODO'>TODO</a></p>-->
+% <!--<p>If you would like to see a video demonstration of how to use this 
+% book's website's online diff tool, view this YouTube video: <a href='TODO'>
+% TODO</a></p>-->
 
-% <!--<p>If you do not know how to copy and paste text, you can learn by watching this YouTube demonstration video: <a href='TODO'>TODO</a></p>-->
+% <!--<p>If you do not know how to copy and paste text, you can learn by 
+% watching this YouTube demonstration video: <a href='TODO'>TODO</a></p>-->
 
 % <h2 id="Summary">Summary</h2>
 
-% <p>This chapter has helped you get started with the Python software by showing you the python.org website where you can download it for free. After installing and starting the Python IDLE software, we will be ready to learn programming starting in the next chapter.</p>
+% <p>This chapter has helped you get started with the Python software by 
+% showing you the python.org website where you can download it for free. After 
+% installing and starting the Python IDLE software, we will be ready to learn 
+% programming starting in the next chapter.</p>
 
-% <p>This book's website at <a href='http://inventwithpython.com'>http://inventwithpython.com</a> has more information on each of the chapters, including an online tracing website that can help you understand what exactly each line of the programs do.</p>
+% <p>This book's website at <a href='http://inventwithpython.com'>
+% http://inventwithpython.com</a> has more information on each of the 
+% chapters, including an online tracing website that can help you understand 
+% what exactly each line of the programs do.</p>
 
 
-% <table border='0' width='100%'><tr><td></td><td align='right'><a href='chapter2.html'>Go to Chapter 2 - The Interactive Shell</a></td></tr></table>
-% <div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
+% <table border='0' width='100%'><tr><td></td><td align='right'><a href='
+% chapter2.html'>Go to Chapter 2 - The Interactive Shell</a></td></tr></table>
+% <div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-
+% Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='
+% right'></a></div>
