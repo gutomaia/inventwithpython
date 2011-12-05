@@ -100,3 +100,47 @@ O programa que fornece o console interativo é chamado IDLE, o ambiente de desen
 
 %Click on the File menu at the top of the Python Shell window, and select New Window. A new blank window will appear for us to type our program in. This window is the file editor.
 Clique no menu **Arquivo** no topo da janela do Console Python, e selecione **Nova Janela**. Uma nova janela em branco irá aparecer para que nós digitemos nosso programa dentro. Essa janela é o editor de arquivos.
+
+[3-1.png]
+Figura 3-1: A janela do editor de arquivos
+
+
+%Hello World!
+=Alô Mundo!=
+
+%A tradition for programmers learning a new language is to make their first program display the text "Hello world!" on the screen. We'll create our own Hello World program now.
+Uma tradição para programadores aprendendo uma nova linguagem é fazer seu primeiro programa mostrar o texto "Alô mundo!" na tela. Nós iremos criar nosso próprio programa ``Alô mundo!`` agora.
+
+%When you enter your program, don't enter the numbers at the left side of the code. They're there so we can refer to each line by number in our explanation. If you look at the bottom-right corner of the file editor window, it will tell you which line the cursor is currently on.
+Quando você digitar seu programa, não digite os números que aparecem do lado esquerdo do código. Eles estão ali para que possamos nos referir a cada linha do código pelo número, para facilitar a explicação. Se você olhar no canto inferior direito da janela do editor de arquivos, verá que o editor está lhe mostrando em qual linha o cursor está atualmente.
+
+%Enter the following text into the new file editor window. We call this text the program's source code because it contains the instructions that Python will follow to determine exactly how the program should behave. (Remember, don't type in the line numbers!)
+Digite o texto a seguir em uma janela nova do editor de arquivos. Nós chamamos esse texto de código-fonte do programa, pois ele contem as instruções que Python irá seguit para determinar exatamente como o programa deverá se comportar. (Lembre, não digite a numeração de linhas!)
+
+%IMPORTANT NOTE! The following program should be run by the Python 3 interpreter, not the Python 2.6 (or any other 2.x version). Be sure that you have the correct version of Python installed. (If you already have Python 2 installed, you can have Python 3 installed at the same time.) To download Python 3, go to http://python.org/download/releases/3.1.1/ and install this version.
+**NOTA IMPORTANTE!** O programa a seguir deve ser executado pelo intepretador Python 3, não Python 2.6 (ou qualquer outra versão 2.x). Certifique-se de que você possui a versão correta do Python instalada. (Se você já possui Python 2 instalado, você pode ter Python 3 instalado concomitantemente.) Para baixar o Python 3, vá até [http://python.org/download/releases/3.1.1/ http://python.org/download/releases/3.1.1/] e instale essa versão.
+
+%hello.py
+%This code can be downloaded from http://inventwithpython.com/hello.py
+%If you get errors after typing this code in, compare it to the book's code with the online diff tool at http://inventwithpython.com/diff or email the author at al@inventwithpython.com
+%# This program says hello and asks for my name.
+%print('Hello world!')
+%print('What is your name?')
+%myName = input()
+%print('It is good to meet you, ' + myName)
+
+```
+    1.  # Este programa fala Alo mundo! e pede meu nome
+    2.  print('Alo mundo!')
+    3.  print('Qual é o seu nome?')
+    4.  meuNome = input()
+    5.  print('Muito bom conhecer voce, ' + meuNome)
+```
+
+%The IDLE program will give different types of instructions different colors. After you are done typing this code in, the window should look like this:
+O IDLE dá diferentes cores aos diferentes tipos de instruções. Depois que você terminar de digitar esse código, a janela deverá se parecer com o seguinte:
+
+[3-3.png]
+%Figure 3-3: The file editor window will look like this after you type in the code.
+Figura 3-3: A janela do editor de arquivos se parecerá com isso depois que você digitar o código.
+
