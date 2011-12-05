@@ -222,6 +222,7 @@ e instale essa versão.
 %print('Hello world!') print('What is your name?') myName = input() print('It is
 %good to meet you, ' + myName)
 
+**alo.py**
 ``` 
     1.  # Este programa fala Alô mundo! e pede meu nome 
     2.  print('Alô mundo!')
