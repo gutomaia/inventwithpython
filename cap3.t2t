@@ -34,7 +34,7 @@ iremos aprender como armazenar texto em variáveis, combinar texto, e mostrar
 texto na tela. Muitos de nossos programas irão utilizar texto para apresentar
 nossos jogos para o jogador, e este, por sua vez, irá digitar texto para nossos
 programas através do teclado. Iremos, também, criar o nosso primeiro programa,
-que saúda o usuário com o texto "Alo Mundo!" e solicita ao usuário o seu nome.
+que saúda o usuário com o texto "Alô Mundo!" e solicita ao usuário o seu nome.
 
 
 %Strings
@@ -68,7 +68,8 @@ a variável como o valor armazenado dentro dela (neste caso, a string
 ``'hello'``).
 
 ```
->>> spam = 'hello' spam
+>>> spam = 'hello'
+>>> spam
 'hello'
 >>>
 ```
@@ -102,23 +103,23 @@ também podemos combinar valores com operadores para formar expressões.
 %You can add one string to the end of another by using the + operator, which is
 %called string concatenation. Try entering 'Hello' + 'World!' into the shell:
 Você pode adicionar uma string ao final de outra utilizando o operador ``+``,
-que é chamado de concatenação de strings. Experimente digitar ``'Alo' +
+que é chamado de concatenação de strings. Experimente digitar ``'Alô' +
 'Mundo!'`` no console:
 
 ```
->>> 'Alo' + 'Mundo!'
-'AloMundo!'
+>>> 'Alô' + 'Mundo!'
+'AlôMundo!'
 >>>
 ```
 
 %To keep the strings separate, put a space at the end of the 'Hello' string,
 %before the single quote, like this:
 Para manter as duas palavras em separado, coloque um espaço no final da string
-``'Alo'``, antes da aspa simples, como o exemplo:
+``'Alô'``, antes da aspa simples, como o exemplo:
 
 ```
->>> 'Alo ' + 'Mundo!'
-'Alo Mundo!'
+>>> 'Alô ' + 'Mundo!'
+'Alô Mundo!'
 >>>
 ```
 
@@ -128,7 +129,7 @@ Para manter as duas palavras em separado, coloque um espaço no final da string
 %of the data that tells us (and the computer) what kind of data the value is.
 O operador ``+`` trabalha de forma diferente com strings e com inteiros, pois
 eles são **tipos de dados** diferentes. Todos os valores possuem um tipo de
-dados. O tipo de dados do valor ``'Alo'`` é string. O tipo de dados do valor 5 é
+dados. O tipo de dados do valor ``'Alô'`` é string. O tipo de dados do valor 5 é
 inteiro. O tipo de um dado informa a nós (e ao computador) qual o tipo de dados
 de um determinado valor.
 
@@ -210,8 +211,9 @@ irá seguir para determinar exatamente como o programa deverá se comportar.
 Python 3, não Python 2.6 (ou qualquer outra versão 2.x). Certifique-se de que
 você possui a versão correta do Python instalada. (Se você já possui Python 2
 instalado, você pode ter Python 3 instalado concomitantemente.) Para baixar o
-Python 3, vá até [http://python.org/download/releases/3.1.1/
-http://python.org/download/releases/3.1.1/] e instale essa versão.
+Python 3, vá até 
+[python.org/download/releases/3.1.1/ python.org/download/releases/3.1.1/]
+e instale essa versão.
 
 %hello.py This code can be downloaded from http://inventwithpython.com/hello.py
 %If you get errors after typing this code in, compare it to the book's code with
@@ -220,9 +222,13 @@ http://python.org/download/releases/3.1.1/] e instale essa versão.
 %print('Hello world!') print('What is your name?') myName = input() print('It is
 %good to meet you, ' + myName)
 
-``` 1.  # Este programa fala Alo mundo! e pede meu nome 2.  print('Alô mundo!')
-3.  print('Qual é o seu nome?') 4.  meuNome = input() 5.  print('Muito bom
-conhecer você, ' + meuNome) ```
+``` 
+    1.  # Este programa fala Alô mundo! e pede meu nome 
+    2.  print('Alô mundo!')
+    3.  print('Qual é o seu nome?') 
+    4.  meuNome = input() 
+    5.  print('Muito bom conhecer você, ' + meuNome) 
+```
 
 %The IDLE program will give different types of instructions different colors.
 %After you are done typing this code in, the window should look like this:
@@ -268,8 +274,8 @@ mouse.
 %A video tutorial of how to use the file editor is available from this book's
 %website at http://inventwithpython.com/videos/.
 Um tutorial, em vídeo, sobre como usar o editor de arquivos está disponível no
-website deste livro em: [http://inventwithpython.com/videos/
-http://inventwithpython.com/videos/].
+website deste livro em: 
+[http://inventwithpython.com/videos/ http://inventwithpython.com/videos/].
 
 %If you get an error that looks like this:
 Se você receber um erro que parece com isso:
@@ -277,9 +283,14 @@ Se você receber um erro que parece com isso:
 %Hello world!  What is your name?  Albert Traceback (most recent call last):
 %File "C:/Python26/test1.py", line 4, in <module> myName = input() File
 %"<string>", line 1, in <module> NameError: name 'Albert' is not defined
-``` Alo mundo!  Qual é o seu nome?  Albert Traceback (most recent call last):
+```
+Alô mundo!
+Qual é o seu nome?
+Albert 
+Traceback (most recent call last):
 File "C:/Python26/alo.py", line 4, in <module> myName = input() File "<string>",
-line 1, in <module> NameError: name 'Albert' is not defined ```
+line 1, in <module> NameError: name 'Albert' is not defined 
+```
 
 %...then this means you are running the program with Python 2, instead of Python
 %3. You can either install Python 3, or convert the source code in this book to
@@ -320,7 +331,7 @@ a Figura 3-5:
 
 %Figure 3-5: What the interactive shell looks like when running the "Hello
 %World" program.
-Figura 3-5: O console interativo quando executamos o programa "Alo Mundo".
+Figura 3-5: O console interativo quando executamos o programa "Alô Mundo".
 
 %Now, when you push Enter, the program should greet you (the user) by name.
 %Congratulations! You've written your first program. You are now a beginning
@@ -426,7 +437,8 @@ seguido pela string 'Alô mundo' e um fecha-parênteses.
 
 %    print('Hello world!') print('What is your name?')
 ```
-    2.  print('Alô mundo!') 3.  print('Qual é o seu nome?')
+    2.  print('Alô mundo!')
+    3.  print('Qual é o seu nome?')
 ```
 
 %This line is a call to the print function, usually written as print() (with the
@@ -488,7 +500,7 @@ função ``print()``), que é o motivo de não termos nada entre parênteses.
 
 %    print('It is good to meet you, ' + myName)
 ```
-5.  print('Muito bom conhecer você, ' + meuNome)
+    5.  print('Muito bom conhecer você, ' + meuNome)
 ```
 
 %On the last line we have a print() function again. This time, we use the plus
@@ -515,7 +527,10 @@ com um nome diferente, como ``Carolyn``, ele irá pensar que esse é o seu nome.
 
 %Hello world!  What is your name?  Carolyn It is good to meet you, Carolyn
 ```
-Alô mundo!  Qual é o seu nome?  Carolyn Muito bom conhecer você, Carloyn
+Alô mundo!
+Qual é o seu nome?
+Carolyn
+Muito bom conhecer você, Carolyn
 ```
 
 %Remember, the computer only does exactly what you program it to do. In this,
@@ -533,12 +548,17 @@ Mas computadores são burros. O programa não está nem aí se você forneceu co
 seu nome o nome de outra pessoa, ou então algo idiota. Você pode digitar o que
 quiser e o computador irá tratar da mesma forma:
 
-%Hello world!  What is your name?  poop It is good to meet you, poop Variable
-%Names
+%Hello world!  What is your name?  poop It is good to meet you, poop 
+
 ```
-Alô mundo!  Qual é o seu nome?  cocô Muito bom conhecer você, cocô
+Alô mundo!
+Qual é o seu nome?
+cocô
+Muito bom conhecer você, cocô
 ```
 
+
+=Nomes de Variáveis=
 %The computer doesn't care what you name your variables, but you should. Giving
 %variables names that reflect what type of data they contain makes it easier to
 %understand what a program does. Instead of name, we could have called this
