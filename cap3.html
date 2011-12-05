@@ -1,0 +1,518 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<META NAME="generator" CONTENT="http://txt2tags.sf.net">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<TITLE>Capítulo 3</TITLE>
+</HEAD><BODY BGCOLOR="white" TEXT="black">
+<CENTER>
+<H1>Capítulo 3</H1>
+<FONT SIZE="4"><I>Strings</I></FONT><BR>
+</CENTER>
+
+
+<H1>Tópicos Cobertos Neste Capítulos</H1>
+
+<UL>
+<LI>Fluxo de execução
+<LI>Strings
+<LI>Concatenação de Strings
+<LI>Tipos de dados (como strings ou inteiros)
+<LI>Usando o IDLE para escrever código
+<LI>Salvando e executando programas com o IDLE
+<LI>A função <CODE>print()</CODE>
+<LI>A função <CODE>input()</CODE>
+<LI>Comentários
+<LI><B>Capitalizing</B> variáveis
+<LI>Diferenças entre Maiúsculas e Minúsculas
+</UL>
+
+<P>
+Chega de inteiros e matemática por enquanto. Python é muito mais do que uma
+calculadora. Agora, vamos ver o que Python pode fazer com texto. Neste capítulo,
+iremos aprender como armazenar texto em variáveis, combinar texto, e mostrar
+texto na tela. Muitos de nossos programas irão utilizar texto para apresentar
+nossos jogos para o jogador, e este, por sua vez, irá digitar texto para nossos
+programas através do teclado. Iremos, também, criar o nosso primeiro programa,
+que saúda o usuário com o texto "Alô Mundo!" e solicita ao usuário o seu nome.
+</P>
+
+<H1>Strings</H1>
+
+<P>
+Em Python, trabalhamos com pequenos trechos de texto chamados de <B>strings</B>.
+Nós podemos armazenar strings em variáveis assim como podemos armazenar números
+dentro de variáveis. Quando nós digitamos strings, colocamos elas entre duas
+aspas (') simples, assim como:
+</P>
+
+<PRE>
+  &gt;&gt;&gt; spam = 'hello'
+  &gt;&gt;&gt;
+</PRE>
+
+<P>
+As aspas simples estão ali somente para informar ao computador onde a string
+começa e onde ela termina (e não são parte do conteúdo da string em si).
+</P>
+<P>
+Agora, se você digitar <CODE>spam</CODE> no console interativo, você deve ver o conteúdo
+da variável <CODE>spam</CODE> (a string <CODE>'hello'</CODE>). Isso porque Python irá interpretar
+a variável como o valor armazenado dentro dela (neste caso, a string
+<CODE>'hello'</CODE>).
+</P>
+
+<PRE>
+  &gt;&gt;&gt; spam = 'hello'
+  &gt;&gt;&gt; spam
+  'hello'
+  &gt;&gt;&gt;
+</PRE>
+
+<P>
+Strings podem conter quase que qualquer caracter do teclado. (Strings não podem
+conter aspas simples dentro delas sem a utilização de caracteres de escape.
+Caracteres de escape serão descritos mais tarde .) Abaixo, temos alguns exemplos
+de strings:
+</P>
+
+<PRE>
+  'hello'
+  'Hi there!'
+  'KITTENS'
+  '7 apples, 14 oranges, 3 lemons'
+  'Anything not pertaining to elephants is irrelephant.'
+  'A long time ago in a galaxy far, far away...'
+  'O*&amp;#wY%*&amp;OCfsdYO*&amp;gfC%YO*&amp;%3yc8r2'
+</PRE>
+
+<P>
+Assim como fizemos com valores numéricos no capítulo anterior, com strings nós
+também podemos combinar valores com operadores para formar expressões.
+</P>
+
+<H1>Concatenação de Strings</H1>
+
+<P>
+Você pode adicionar uma string ao final de outra utilizando o operador <CODE>+</CODE>,
+que é chamado de concatenação de strings. Experimente digitar ``'Alô' +
+'Mundo!'`` no console:
+</P>
+
+<PRE>
+  &gt;&gt;&gt; 'Alô' + 'Mundo!'
+  'AlôMundo!'
+  &gt;&gt;&gt;
+</PRE>
+
+<P>
+Para manter as duas palavras em separado, coloque um espaço no final da string
+<CODE>'Alô'</CODE>, antes da aspa simples, como o exemplo:
+</P>
+
+<PRE>
+  &gt;&gt;&gt; 'Alô ' + 'Mundo!'
+  'Alô Mundo!'
+  &gt;&gt;&gt;
+</PRE>
+
+<P>
+O operador <CODE>+</CODE> trabalha de forma diferente com strings e com inteiros, pois
+eles são <B>tipos de dados</B> diferentes. Todos os valores possuem um tipo de
+dados. O tipo de dados do valor <CODE>'Alô'</CODE> é string. O tipo de dados do valor 5 é
+inteiro. O tipo de um dado informa a nós (e ao computador) qual o tipo de dados
+de um determinado valor.
+</P>
+
+<H1>Escrevendo Programas no IDLE</H1>
+
+<P>
+Até agora, nós digitávemos as instruções, uma por vez, no console interativo.
+Quando escrevemos programas, nós digitamos muitas instruções e executamos todas
+elas de uma só vez. Vamos escrever o nosso primeiro programa!
+</P>
+<P>
+O programa que fornece o console interativo é chamado IDLE, o ambiente de
+desenvolvimento interativo (<I>Interactive DeveLopment Environment</I>). O IDLE
+possui uma outra parte chamada de editor de arquivos.
+</P>
+<P>
+Clique no menu <B>Arquivo</B> no topo da janela do Console Python, e selecione
+<B>Nova Janela</B>. Uma nova janela em branco irá aparecer para que nós digitemos
+nosso programa dentro. Essa janela é o editor de arquivos.
+</P>
+<P>
+<IMG ALIGN="middle" SRC="chapter3/3-1.png" BORDER="0" ALT="">
+</P>
+<P>
+Figura 3-1: A janela do editor de arquivos
+</P>
+
+<H1>Alô Mundo!</H1>
+
+<P>
+Uma tradição para programadores aprendendo uma nova linguagem é fazer seu
+primeiro programa mostrar o texto "Alô mundo!" na tela. Nós iremos criar nosso
+próprio programa <CODE>Alô mundo!</CODE> agora.
+</P>
+<P>
+Quando você digitar seu programa, não digite os números que aparecem do lado
+esquerdo do código. Eles estão ali para que possamos nos referir a cada linha do
+código pelo número, para facilitar a explicação. Se você olhar no canto inferior
+direito da janela do editor de arquivos, verá que o editor está lhe mostrando em
+qual linha o cursor está atualmente.
+</P>
+<P>
+<IMG ALIGN="middle" SRC="chapter3/3-2.png" BORDER="0" ALT="">
+</P>
+<P>
+Figura 3-2: O canto inferior direito da janela do editor de arquivos mostra onde
+o cursor está. O cursor está atualmente na linha 12.
+</P>
+<P>
+Digite o texto a seguir em uma janela nova do editor de arquivos. Nós chamamos
+esse texto de código-fonte do programa, pois ele contem as instruções que Python
+irá seguir para determinar exatamente como o programa deverá se comportar.
+(Lembre, não digite a numeração de linhas!)
+</P>
+<P>
+<B>NOTA IMPORTANTE!</B> O programa a seguir deve ser executado pelo intepretador
+Python 3, não Python 2.6 (ou qualquer outra versão 2.x). Certifique-se de que
+você possui a versão correta do Python instalada. (Se você já possui Python 2
+instalado, você pode ter Python 3 instalado concomitantemente.) Para baixar o
+Python 3, vá até 
+<A HREF="python.org/download/releases/3.1.1/">python.org/download/releases/3.1.1/</A>
+e instale essa versão.
+</P>
+<P>
+<B>alo.py</B>
+</P>
+
+<PRE>
+      1.  # Este programa fala Alô mundo! e pede meu nome 
+      2.  print('Alô mundo!')
+      3.  print('Qual é o seu nome?') 
+      4.  meuNome = input() 
+      5.  print('Muito bom conhecer você, ' + meuNome) 
+</PRE>
+
+<P>
+O IDLE dá diferentes cores aos diferentes tipos de instruções. Depois que você
+terminar de digitar esse código, a janela deverá se parecer com o seguinte:
+</P>
+<P>
+<IMG ALIGN="middle" SRC="chapter3/3-3.png" BORDER="0" ALT="">
+</P>
+<P>
+Figura 3-3: A janela do editor de arquivos se parecerá com isso depois que você
+digitar o código.
+</P>
+
+<H2>Salvando o seu programa</H2>
+
+<P>
+<IMG ALIGN="middle" SRC="chapter3/3-4.png" BORDER="0" ALT="">
+</P>
+<P>
+Figura 3-4: Salvando o programa.
+</P>
+<P>
+Após ter digitado seu código-fonte, salve-o, de forma que você não precise
+reescrever ele a cada vez que inicia o IDLE. Para isso, escolha o menu "Arquivo"
+no topo da janela do Editor de Arquivos, e então clique em "Salvar Como". A
+janela Salvar Como deverá ser aberta. Digite alo.py na caixa "Nome do Arquivo" e
+clique em "Salvar". (Veja a Figura 3-4.)
+</P>
+<P>
+Você deve salvar os seus programas de tempos em tempos, enquanto os escreve.
+Dessa forma, se o computador travar ou se você sair do IDLE sem querer, você
+perderá somente o texo que você digitou após o último salvamento. Utilize o
+atalho Ctrl-S para salvar seus programas rapidamente, sem precisar utilizar o
+mouse.
+</P>
+<P>
+Um tutorial, em vídeo, sobre como usar o editor de arquivos está disponível no
+website deste livro em: 
+<A HREF="http://inventwithpython.com/videos/">http://inventwithpython.com/videos/</A>.
+</P>
+<P>
+Se você receber um erro que parece com isso:
+</P>
+
+<PRE>
+  Alô mundo!
+  Qual é o seu nome?
+  Albert 
+  Traceback (most recent call last):
+  File "C:/Python26/alo.py", line 4, in &lt;module&gt; myName = input() File "&lt;string&gt;",
+  line 1, in &lt;module&gt; NameError: name 'Albert' is not defined 
+</PRE>
+
+<P>
+... significa que você está executando o programa com Python 2, ao invés de
+Python 3. Você pode escolher entre instalar Python 3, ou converter o
+código-fonte deste livro para Python 2. O Apêndice A lista as diferenças entre
+Python 2 e 3 que você precisa conhecer para utilizar este livro.
+</P>
+
+<H2>Abrindo os programas que você salvou</H2>
+
+<P>
+Para abrir um programa salvo anteriormente, clique em Arquivo &gt; Abrir. Faça
+isso, e na janela que abrir, escolha <CODE>alo.py</CODE> e clique o botão Abrir. Seu
+programa <CODE>alo.py</CODE> deverá ser aberto na janela do editor de arquivos.
+</P>
+<P>
+Agora é hora de rodar nosso programa. Clique Executar &gt; Executar módulo, ou
+apenas pressione a tecla F5 do seu teclado. Seu programa seré executado na
+janela do console que apareceu quando você iniciou o IDLE. Lembre, você deve
+pressionar F5 na janela do editor de arquivos, não na janela do console
+interativo.
+</P>
+<P>
+Quando o seu programa pergunta seu nome, vá em frente e digite ele, como mostra
+a Figura 3-5:
+</P>
+<P>
+<IMG ALIGN="middle" SRC="chapter3/3-5.png" BORDER="0" ALT="">
+</P>
+<P>
+Figura 3-5: O console interativo quando executamos o programa "Alô Mundo".
+</P>
+<P>
+Quando você pressionar Enter, o programa deverá cumprimentar você (o
+<B>usuário</B>) pelo nome. Parabéns! Você escreveu seu primeiro programa. Agora
+você pode ser considerado um programador iniciante. (Você pode rodar este
+programa novamente pressionando a tecla F5.)
+</P>
+
+<H1>Como funciona o programa "Alô Mundo"</H1>
+
+<P>
+Como funciona esse programa? Bem, cada linha que digitamos é uma instrução para
+o computador que é interpretada pelo Python de um jeito que o computador irá
+entender. Um programa de computador é muito parecido com uma receita. Faça
+primeiro o primeiro passo, depois o segundo, e assim por diante até chegar ao
+final. Cada instrução é seguida em sequência, iniciando pelo topo do programa e
+descendo pela lista de instruções. Depois que o programa executa a primeira
+linha de instruções, ele move e executa a segunda linha, depois a terceira, e
+assim por diante.
+</P>
+<P>
+Este passo a passo que o programa segue é chamado de <B>fluxo de execução</B>, ou
+somente <B>execução</B>.
+</P>
+<P>
+Agora vamos dar uma olhada em nosso programa, linha por linha, para ver o que
+ele está fazendo, começando pela linha 1.
+</P>
+
+<H2>Comentários</H2>
+
+<PRE>
+      1.  # Este programa fala Alô mundo! e pede meu nome
+</PRE>
+
+<P>
+Essa linha é chamada de comentário. Qualquer texto que vier precedido de um
+sinal # (chamado de <I>cerquilha</I>) é um comentário. Comentários não são feitos
+para o computador, mas para você, o programador. O computador os ignora. Eles
+são utilizados para lembrar você do que o programa faz ou para informar a outras
+pessoas que virem seu código fonte sobre o que o seu código está tentando fazer.
+</P>
+<P>
+Programadores usualmente colocam um comentário no topo dos seus códigos para dar
+um título aos seus programas. O IDLE mostra os comentários em vermelho para
+ajudá-los a se destacarem.
+</P>
+
+<H2>Funções</H2>
+
+<P>
+Uma <B>função</B> é tipo um mini-programa dentro de seu programa. Ela contém linhas
+de código que são executadas de cima para baixo. Python nos oferece algumas
+funções embutidas (<I>built-in</I>) que nós podemos utilizar em nossos programas. O
+mais legal sobre funções é que nós somente precisamos saber o que a função faz,
+mas não como ela faz isso. (Você precisa saber que a função <CODE>print()</CODE> mostra
+um texto na tela, mas você não precisa saber como ela faz isso.)
+</P>
+<P>
+Uma <B>chamada de função</B> é um pedaço de código que informa ao nosso programa
+para executar o código de dentro de uma função. Por exemplo, seu programa pode
+chamar a função <CODE>print()</CODE> toda vez que você quiser mostrar uma string na tela.
+A função <CODE>print()</CODE> recebe como entrada a string que você digitar entre
+parênteses e mostra o texto na tela. Como queremos mostrar <CODE>Alô mundo!</CODE> na
+tela, nós escrevemos o nome da função <CODE>print</CODE>, seguido de um abre-parênteses,
+seguido pela string 'Alô mundo' e um fecha-parênteses.
+</P>
+
+<H2>A função print()</H2>
+
+<PRE>
+      2.  print('Alô mundo!')
+      3.  print('Qual é o seu nome?')
+</PRE>
+
+<P>
+A linha 2 mostra uma chamada a função <CODE>print</CODE>, comumente escrita como
+<CODE>print()</CODE> (com a string a ser mostrada na tela dentro dos parênteses).
+</P>
+<P>
+Nós adicionamos parênteses ao final de nomes de funções para deixar claro que
+nós estamos nos referindo a uma função chamada <CODE>print()</CODE>, não a uma variável
+chamada <CODE>print</CODE>. Os parênteses ao final da função nos informam que estamos
+lidando com uma função, assim como as aspas ao redor do número <CODE>'42'</CODE> nos
+informam que estamos lidando com a string <CODE>'42'</CODE> e não com o inteiro 42.
+</P>
+<P>
+A linha 3 é outra chamada a função <CODE>print()</CODE>. Agora, o programa mostra 
+<CODE>"Qual é o seu nome?"</CODE>.
+</P>
+
+<H2>A função input()</H2>
+
+<PRE>
+      4.  meuNome = input() 
+</PRE>
+
+<P>
+Esta linha possui uma atribuição com uma variável (<CODE>meuNome</CODE>) e uma chamada de
+função (<CODE>input()</CODE>). Quando <CODE>input()</CODE> é chamada, o programa aguarda por
+entrada do usuário. A string que o usuário digitar (seu nome) se torna o valor
+de saída da função.
+</P>
+<P>
+Assim como expressões, chamadas de funções são interpretadas como um único
+valor. O valor que é interpretado como a chamada a função é chamado de 
+<B>valor de retorno</B>. 
+(Na verdade, nós podemos utilizar a palavra <I>"retorna"</I> com o
+mesmo significado que <I>"é interpretada"</I>.) Nesse caso, o valor de retorno de
+<CODE>input()</CODE> é a string que o usuário digitar como seu nome. Se o usuário digitou
+<I>Albert</I>, a chamada de função <CODE>input()</CODE> retorna a string 'Albert'.
+</P>
+<P>
+A função chamada <CODE>input()</CODE> não necessita entrada alguma (diferentemente da
+função <CODE>print()</CODE>), que é o motivo de não termos nada entre parênteses.
+</P>
+
+<PRE>
+      5.  print('Muito bom conhecer você, ' + meuNome)
+</PRE>
+
+<P>
+Na última linha do programa nós temos novamente a função <CODE>print()</CODE>. Dessa vez,
+nós usamos o operador mais (+) para concatenar a string
+<CODE>Muito bom conhecer você,</CODE> e a string armazenada na variável <CODE>meuNome</CODE>,
+que é o nome que nosso
+usuário digitou quando o programa solicitou. É assim que nós fazemos com que o
+programa nos cumprimente pelo nome.
+</P>
+
+<H2>Encerrando o programa</H2>
+
+<P>
+Após executar a última linha, o programa para. Nesse ponto ele terminou e todas
+as variáveis do programa são esquecidas pelo computador, incluindo a string que
+armazenamos em <CODE>meuNome</CODE>. Se você experimentar executar o programa novamente,
+com um nome diferente, como <CODE>Carolyn</CODE>, ele irá pensar que esse é o seu nome.
+</P>
+
+<PRE>
+  Alô mundo!
+  Qual é o seu nome?
+  Carolyn
+  Muito bom conhecer você, Carolyn
+</PRE>
+
+<P>
+Lembre, o computador faz exatamente o que você programou ele para fazer. Neste
+caso, nosso primeiro programa, ele é programado para perguntar seu nome,
+permitir que você digite uma string, e então falar <CODE>Alô</CODE> e mostrar a string
+que você digitou.
+</P>
+<P>
+Mas computadores são burros. O programa não está nem aí se você forneceu como
+seu nome o nome de outra pessoa, ou então algo idiota. Você pode digitar o que
+quiser e o computador irá tratar da mesma forma:
+</P>
+
+<PRE>
+  Alô mundo!
+  Qual é o seu nome?
+  cocô
+  Muito bom conhecer você, cocô
+</PRE>
+
+<H1>Nomes de Variáveis</H1>
+
+<P>
+O computador não se importa com a forma que você nomeia suas variáveis, mas você
+deveria. Se dermos nomes de variáveis que reflitam qual tipo de dados que elas
+contém, estaremos tornando mais fácil o entendimento de o que o nosso programa
+faz. Ao invés de <CODE>meuNome</CODE>, poderíamos ter chamado esta variável de
+<CODE>abrahamLincoln</CODE> ou <CODE>mEuNoMe</CODE>. O computador irá sempre executar o programa
+da mesma forma (desde que você use consistentemente <CODE>abrahamLincoln</CODE> ou
+<CODE>mEuNoMe</CODE>).
+</P>
+<P>
+Nomes de variáveis (assim como tudo em Python) são <B><I>case-sensitive</I></B>.
+<I>Case-sensitive</I> significa que um mesmo nome de variável em maiúsculas e
+minúsculas representam variáveis completamente diferentes. Assim, <CODE>spam</CODE>,
+<CODE>SPAM</CODE>, <CODE>Spam</CODE>, e <CODE>sPAM</CODE> são consideradas quatro variáveis diferentes em
+Python. Cada uma pode conter seus valores individuais.
+</P>
+<P>
+Não é uma boa idéia ter variáveis com mesmo nome, com diferenças apenas no
+tamanho das letras que compõem o nome das variáveis (se são maiúsculas ou
+minúsculas) em seu programa. Se você armazena seu primeiro nome na variável
+<CODE>nome</CODE> e seu último nome na variável <CODE>NOME</CODE>, seria bem confuso entender o
+código algumas semanas após você tê-lo escrito. <CODE>nome</CODE> significa primeiro e
+<CODE>NOME</CODE> significa último nome, ou o contrário?
+</P>
+<P>
+Se, sem querer, você trocar as variáveis <CODE>nome</CODE> e <CODE>NOME</CODE>, seu programa
+continuará rodando (isto é, não terá erros de sintaxe), mas irá rodar de forma
+incorreta. Este tipo de falha no seu código é chamado de <I><B>bug</B></I>. É muito
+comum criar <I>bugs</I> em seus programas, sem querer, enquanto você os escreve. É
+por isso que é importante que os nomes de variáveis que você escolhe façam
+sentido.
+</P>
+<P>
+Algo que também ajuda é escrever nomes de variáveis com letras maiúsculas, se
+elas incluem mais de uma palavra. Se você armazena uma string que contém o que
+você comeu no cafá da manhã em uma variável, o nome
+<CODE>oQueEuComiNoCafeDaManhaHoje</CODE> é muito mais fácil de ler do que
+<CODE>oqueeucominocafedamanhahoje</CODE>. Isto é uma <B>convenção</B> (isto é, um forma
+opcional, mas padronizada de fazer as coisas) para programas escritos em Python.
+(Embora fosse melhor ter um nome mais simples, como <CODE>cafeDeHoje</CODE>.) Escrever a
+primeira letra de cada palavra com letra maiúscula em nomes de variáveis faz com
+que o nosso programa se torne mais legível.
+</P>
+
+<H1>Resumo</H1>
+
+<P>
+Agora que aprendemos a lidar com texto, nós podemos começar a fazer programas
+com os quais o usuário possa interagir. Isso é importante porque o texto é a
+principal forma de comunicação entre o usuário e o computador. O jogador irá
+digitar texto para nossos programas através do teclado, com a função
+<CODE>input()</CODE>. E o computador irá mostrar texto na tela quando a função
+<CODE>print()</CODE> é executada.
+</P>
+<P>
+Strings são apenas um tipo de dados que podemos utilizar em nossos programas.
+Nós podemos usar o operador <CODE>+</CODE> para juntar strings (concatenar). Usar o
+operador <CODE>+</CODE> para concatenar duas strings para formar uma nova string é como
+usar o operador <CODE>+</CODE> para somar dois inteiros para formar um novo inteiro (a
+soma).
+</P>
+<P>
+No próximo capítulo, iremos aprender mais sobre variáveis, de forma que nosso
+programa irá armazenar e lembrar de textos e números que o usuário fornecer para
+o programa. Após aprendermos a utilizar texto, números, e variáveis, estaremos
+prontos para começar a criar jogos.
+</P>
+
+<!-- html code generated by txt2tags 2.6b1 (http://txt2tags.sf.net) -->
+<!-- cmdline: txt2tags -t html cap3.t2t -->
+</BODY></HTML>
