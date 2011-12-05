@@ -244,7 +244,7 @@ digitar o código.
 
 
 %Saving Your Program
-=Salvando o seu programa=
+==Salvando o seu programa==
 
 [chapter3/3-4.png]
 
@@ -303,7 +303,7 @@ Python 2 e 3 que você precisa conhecer para utilizar este livro.
 
 
 %Opening The Programs You've Saved
-=Abrindo os programas que você salvou=
+==Abrindo os programas que você salvou==
 %To load a saved program, choose File > Open. Do that now, and in the window
 %that appears choose hello.py and press the Open button. Your saved hello.py
 %program should open in the File Editor window.
@@ -375,7 +375,7 @@ ele está fazendo, começando pela linha 1.
 
 
 %Comments
-=Comentários=
+==Comentários==
 %    # This program says hello and asks for my name.
 ```
     1.  # Este programa fala Alô mundo! e pede meu nome
@@ -401,7 +401,7 @@ ajudá-los a se destacarem.
 
 
 %Functions
-=Funções=
+==Funções==
 
 %TODO: tradução de built-in -> embutido A function is kind of like a
 %mini-program inside your program. It contains lines of code that are executed
@@ -433,7 +433,7 @@ seguido pela string 'Alô mundo' e um fecha-parênteses.
 
 
 %The print() Function
-=A função print()=
+==A função print()==
 
 %    print('Hello world!') print('What is your name?')
 ```
@@ -459,12 +459,12 @@ informam que estamos lidando com a string ``'42'`` e não com o inteiro 42.
 
 %Line 3 is another print() function call. This time, the program displays "What
 %is your name?"
-A linha 3 é outra chamada a função ``print()``. Agora, o programa mostra ``"Qual
-é o seu nome?"``.
+A linha 3 é outra chamada a função ``print()``. Agora, o programa mostra 
+``"Qual é o seu nome?"``.
 
 
 %The input() Function
-=A função input()=
+==A função input()==
 
 %    myName = input()
 ```
@@ -487,8 +487,9 @@ de saída da função.
 %in-their name. If the user typed in Albert, the input() function call evaluates
 %to the string 'Albert'.
 Assim como expressões, chamadas de funções são interpretadas como um único
-valor. O valor que é interpretado como a chamada a função é chamado de **valor
-de retorno**. (Na verdade, nós podemos utilizar a palavra //"retorna"// com o
+valor. O valor que é interpretado como a chamada a função é chamado de 
+**valor de retorno**. 
+(Na verdade, nós podemos utilizar a palavra //"retorna"// com o
 mesmo significado que //"é interpretada"//.) Nesse caso, o valor de retorno de
 ``input()`` é a string que o usuário digitar como seu nome. Se o usuário digitou
 //Albert//, a chamada de função ``input()`` retorna a string 'Albert'.
@@ -508,14 +509,15 @@ função ``print()``), que é o motivo de não termos nada entre parênteses.
 %string stored in the myName variable, which is the name that our user input
 %into the program. This is how we get the program to greet us by name.
 Na última linha do programa nós temos novamente a função ``print()``. Dessa vez,
-nós usamos o operador mais (+) para concatenar a string ``Muito bom conhecer
-você,`` e a string armazenada na variável ``meuNome``, que é o nome que nosso
+nós usamos o operador mais (+) para concatenar a string
+``Muito bom conhecer você,`` e a string armazenada na variável ``meuNome``,
+que é o nome que nosso
 usuário digitou quando o programa solicitou. É assim que nós fazemos com que o
 programa nos cumprimente pelo nome.
 
 
 %Ending the Program
-=Encerrando o programa=
+==Encerrando o programa==
 %Once the program executes the last line, it stops. At this point it has
 %terminated or exited and all of the variables are forgotten by the computer,
 %including the string we stored in myName. If you try running the program again
