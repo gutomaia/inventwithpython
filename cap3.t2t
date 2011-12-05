@@ -246,36 +246,63 @@ Programadores usualmente colocam um comentário no topo dos seus códigos para d
 
 
 %Functions
+=Funções=
 
 %A function is kind of like a mini-program inside your program. It contains lines of code that are executed from top to bottom. Python provides some built-in functions that we can use. The great thing about functions is that we only need to know what the function does, but not how it does it. (You need to know that the print() function displays text on the screen, but you don't need to know how it does this.)
+Uma **função** é tipo um mini-programa dentro de seu programa. Ela contém linhas de código que são executadas de cima para baixo. Python nos oferece algumas funções embutidas (//built-in//) que nós podemos utilizar em nossos programas. O mais legal sobre funções é que nós somente precisamos saber o que a função faz, mas não como ela faz isso. (Você precisa saber que a função ``print()`` mostra um texto na tela, mas você não precisa saber como ela faz isso.)
 
 %A function call is a piece of code that tells our program to run the code inside a function. For example, your program can call the print() function whenever you want to display a string on the screen. The print() function takes the string you type in between the parentheses as input and displays the text on the screen. Because we want to display Hello world! on the screen, we type the print function name, followed by an opening parenthesis, followed by the 'Hello world!' string and a closing parenthesis.
+Uma **chamada de função** é um pedaço de código que informa ao nosso programa para executar o código de dentro de uma função. Por exemplo, seu programa pode chamar a função ``print()`` toda vez que você quiser mostrar uma string na tela. A função ``print()`` recebe como entrada a string que você digitar entre parênteses e mostra o texto na tela. Como queremos mostrar ``Alo mundo!`` na tela, nós escrevemos o nome da função ``print``, seguido de um abre-parênteses, seguido pela string 'Alo mundo' e um fecha-parênteses.
+
 
 %The print() Function
+=A função print()=
 
 %    print('Hello world!')
 %    print('What is your name?')
+```
+    2.  print('Alo mundo!')
+    3.  print('Qual é o seu nome?')
+```
 
 %This line is a call to the print function, usually written as print() (with the string to be printed going inside the parentheses).
+A linha 2 mostra uma chamada a função ``print``, comumente escrita como ``print()`` (com a string a ser mostrada na tela dentro dos parênteses).
 
 %We add parentheses to the end of function names to make it clear that we're referring to a function named print(), not a variable named print. The parentheses at the end of the function let us know we are talking about a function, much like the quotes around the number '42' tell us that we are talking about the string '42' and not the integer 42.
+Nós adicionamos parêntese ao final de nomes de funções para deixar claro que nós estamos nos referindo a uma função chamada ``print()``, não a uma variável chamada ``print``. Os parênteses ao final da função nos informam que estamos lidando com uma função, assim como as aspas ao redor do número ``'42'`` nos informam que estamos lidando com a string ``'42'`` e não com o inteiro 42.
 
 %Line 3 is another print() function call. This time, the program displays "What is your name?"
+A linha 3 é outra chamada a função ``print()``. Agora, o programa mostra ``"Qual é o seu nome?"``.
+
 
 %The input() Function
+=A função input()=
 
 %    myName = input()
+```
+     4.  meuNome = input()
+```
 
 %This line has an assignment statement with a variable (myName) and a function call (input()). When input() is called, the program waits for input; for the user to enter text. The text string that the user enters (your name) becomes the function's output value.
+Esta linha possui uma atribuição com uma variável (``meuNome``) e uma chamada de função (``input()``). Quando ``input()`` é chamada, o programa aguarda por entrada do usuário. A string que o usuário digitar (seu nome) se torna o valor de saída da função.
 
 %Like expressions, function calls evaluate to a single value. The value that the function call evaluates to is called the return value. (In fact, we can also use the word "returns" to mean the same thing as "evaluates".) In this case, the return value of the input() function is the string that the user typed in-their name. If the user typed in Albert, the input() function call evaluates to the string 'Albert'.
+Assim como expressões, chamadas de funções são interpretadas como um único valor. O valor que é interpretado como a chamada a função é chamado de **valor de retorno**. (Na verdade, nós podemos utilizar a palavra //"retorna"// com o mesmo significado que ``é interpretado``.) Nesse caso, o valor de retorno de ``input()``é a string que o usuário digitar como seu nome. Se o usuário digitou //Albert//, a chamada de função ``input()`` retorna a string 'Albert'.
 
 %The function named input() does not need any input (unlike the print() function), which is why there is nothing in between the parentheses.
+A função chamada ``input()`` não necessita entrada alguma (diferentemente da função ``print()``), que é o motivo de não termos nada entre parênteses.
 
 %    print('It is good to meet you, ' + myName)
+```
+    5.  print('Muito bom conhecer voce, ' + meuNome)
+```
 
 %On the last line we have a print() function again. This time, we use the plus operator (+) to concatenate the string 'It is good to meet you, ' and the string stored in the myName variable, which is the name that our user input into the program. This is how we get the program to greet us by name.
-Ending the Program
+Na última linha do programa nós temos novamente a função ``print()``. Dessa vez, nós usamos o operador mais (+) para concatenar a string ``Muito bom conhecer voce,`` e a string armazenada na variável ``meuNome``, que é o nome que nosso usuário digitou quando o programa solicitou. É assim que nós fazemos com que o programa nos cumprimente pelo nome.
+
+
+
+%Ending the Program
 
 %Once the program executes the last line, it stops. At this point it has terminated or exited and all of the variables are forgotten by the computer, including the string we stored in myName. If you try running the program again with a different name, like Carolyn, it will think that's your name.
 %Hello world!
