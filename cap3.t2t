@@ -19,8 +19,10 @@ Strings
 - **Capitalizing** variáveis
 - Diferenças entre Maiúsculas e Minúsculas
 
+
 %That's enough of integers and math for now. Python is more than just a calculator. Now let's see what Python can do with text. In this chapter, we will learn how to store text in variables, combine text together, and display them on the screen. Many of our programs will use text to display our games to the player, and the player will enter text into our programs through the keyboard. We will also make our first program, which greets the user with the text, "Hello World!" and asks for the user's name.
 Chega de inteiros e matemática por enquanto. Python é muito mais do que uma calculadora. Agora, vamos ver o que Python pode fazer com texto. Neste capítulo, iremos aprender como armazenar texto em variáveis, combinar texto, e mostrar texto na tela. Muitos de nossos programas irão utilizar texto para apresentar nossos jogos para o jogador, e este, por sua vez, irá digitar texto para nossos programas através do teclado. Iremos, também, criar o nosso primeiro programa, que sauda o usuário com o texto "Alo Mundo!" e solicita ao usuário o seu nome.
+
 
 %Strings
 =Strings=
@@ -101,7 +103,8 @@ O programa que fornece o console interativo é chamado IDLE, o ambiente de desen
 %Click on the File menu at the top of the Python Shell window, and select New Window. A new blank window will appear for us to type our program in. This window is the file editor.
 Clique no menu **Arquivo** no topo da janela do Console Python, e selecione **Nova Janela**. Uma nova janela em branco irá aparecer para que nós digitemos nosso programa dentro. Essa janela é o editor de arquivos.
 
-[3-1.png]
+[chapter3/3-1.png]
+
 Figura 3-1: A janela do editor de arquivos
 
 
@@ -113,6 +116,11 @@ Uma tradição para programadores aprendendo uma nova linguagem é fazer seu pri
 
 %When you enter your program, don't enter the numbers at the left side of the code. They're there so we can refer to each line by number in our explanation. If you look at the bottom-right corner of the file editor window, it will tell you which line the cursor is currently on.
 Quando você digitar seu programa, não digite os números que aparecem do lado esquerdo do código. Eles estão ali para que possamos nos referir a cada linha do código pelo número, para facilitar a explicação. Se você olhar no canto inferior direito da janela do editor de arquivos, verá que o editor está lhe mostrando em qual linha o cursor está atualmente.
+
+[chapter3/3-2.png]
+
+%Figure 3-2: The bottom right of the file editor window tells you where the cursor is. The cursor is currently on line 12.
+Figura 3-2: O canto inferior direito da janela do editor de arquivos mostra onde o cursor está. O cursor está atualmente na linha 1.
 
 %Enter the following text into the new file editor window. We call this text the program's source code because it contains the instructions that Python will follow to determine exactly how the program should behave. (Remember, don't type in the line numbers!)
 Digite o texto a seguir em uma janela nova do editor de arquivos. Nós chamamos esse texto de código-fonte do programa, pois ele contem as instruções que Python irá seguit para determinar exatamente como o programa deverá se comportar. (Lembre, não digite a numeração de linhas!)
@@ -140,7 +148,8 @@ Digite o texto a seguir em uma janela nova do editor de arquivos. Nós chamamos 
 %The IDLE program will give different types of instructions different colors. After you are done typing this code in, the window should look like this:
 O IDLE dá diferentes cores aos diferentes tipos de instruções. Depois que você terminar de digitar esse código, a janela deverá se parecer com o seguinte:
 
-[3-3.png]
+[chapter3/3-3.png]
+
 %Figure 3-3: The file editor window will look like this after you type in the code.
 Figura 3-3: A janela do editor de arquivos se parecerá com isso depois que você digitar o código.
 
