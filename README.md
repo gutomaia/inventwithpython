@@ -6,10 +6,10 @@ Projeto colaborativo de tradução do livro Invent With Python.
 
 ## Como Colaborar
 
-1º - Faça um fork do repositório: git://github.com/gutomaia/inventwithpython.git
-
-2º - Abra uma issue indicando o capítulo que quer traduzir: https://github.com/gutomaia/inventwithpython/issues
-
-3º - Leia as boas práticas de tradução: https://github.com/gutomaia/inventwithpython/wiki
-
-4º - Envie um pull-request com a tua tradução.
+1. Faça um **fork** do [repositório do Guto]
+(https://github.com/gutomaia/inventwithpython.git`).
+2. Clone o **seu** repositório.
+3. Instale o *pre-commit hook* com o comando `cp contrib/pre-commit .git/hooks/`
+4. [Crie uma issue](https://github.com/gutomaia/inventwithpython/issues) para
+indicando o capítulo que quer traduzir.
+5. Envie um *pull request* com o que você traduziu.
