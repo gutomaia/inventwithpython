@@ -22,7 +22,7 @@ Strings
 
 
 %That's enough of integers and math for now. Python is more than just a calculator. Now let's see what Python can do with text. In this chapter, we will learn how to store text in variables, combine text together, and display them on the screen. Many of our programs will use text to display our games to the player, and the player will enter text into our programs through the keyboard. We will also make our first program, which greets the user with the text, "Hello World!" and asks for the user's name.
-Chega de inteiros e matemática por enquanto. Python é muito mais do que uma calculadora. Agora, vamos ver o que Python pode fazer com texto. Neste capítulo, iremos aprender como armazenar texto em variáveis, combinar texto, e mostrar texto na tela. Muitos de nossos programas irão utilizar texto para apresentar nossos jogos para o jogador, e este, por sua vez, irá digitar texto para nossos programas através do teclado. Iremos, também, criar o nosso primeiro programa, que sauda o usuário com o texto "Alo Mundo!" e solicita ao usuário o seu nome.
+Chega de inteiros e matemática por enquanto. Python é muito mais do que uma calculadora. Agora, vamos ver o que Python pode fazer com texto. Neste capítulo, iremos aprender como armazenar texto em variáveis, combinar texto, e mostrar texto na tela. Muitos de nossos programas irão utilizar texto para apresentar nossos jogos para o jogador, e este, por sua vez, irá digitar texto para nossos programas através do teclado. Iremos, também, criar o nosso primeiro programa, que saúda o usuário com o texto "Alo Mundo!" e solicita ao usuário o seu nome.
 
 
 %Strings
@@ -40,7 +40,7 @@ Em Python, trabalhamos com pequenos trechos de texto chamados de **strings**. N�
 As aspas simples estão ali somente para informar ao computador onde a string começa e onde ela termina (e não são parte do conteúdo da string em si).
 
 %Now, if you type spam into the shell, you should see the contents of the spam variable (the 'hello' string.) This is because Python will evaluate a variable to the value stored inside the variable (in this case, the string 'Hello').
-Agora, se você digitar ``spam``` no console interativo, você deve ver o conteúdo da variável ``spam`` (a string ``'hello'``). Isso porque Python irá interpretar a variável como o valor armazenado dentro da variável (neste caso, a string ``'hello'``).
+Agora, se você digitar ``spam`` no console interativo, você deve ver o conteúdo da variável ``spam`` (a string ``'hello'``). Isso porque Python irá interpretar a variável como o valor armazenado dentro dela (neste caso, a string ``'hello'``).
 
 ```
 >>> spam = 'hello'
@@ -69,7 +69,7 @@ Assim como fizemos com valores numéricos no capítulo anterior, com strings nó
 =Concatenação de Strings=
 
 %You can add one string to the end of another by using the + operator, which is called string concatenation. Try entering 'Hello' + 'World!' into the shell:
-Você pode adicionar uma string ao final de outro utilizando o operador ``+``, que é chamado de concatenação de strings. Experimente digitar ``'Alo' + 'Mundo!'`` no console:
+Você pode adicionar uma string ao final de outra utilizando o operador ``+``, que é chamado de concatenação de strings. Experimente digitar ``'Alo' + 'Mundo!'`` no console:
 
 ```
 >>> 'Alo' + 'Mundo!'
@@ -121,10 +121,10 @@ Quando você digitar seu programa, não digite os números que aparecem do lado 
 [chapter3/3-2.png]
 
 %Figure 3-2: The bottom right of the file editor window tells you where the cursor is. The cursor is currently on line 12.
-Figura 3-2: O canto inferior direito da janela do editor de arquivos mostra onde o cursor está. O cursor está atualmente na linha 1.
+Figura 3-2: O canto inferior direito da janela do editor de arquivos mostra onde o cursor está. O cursor está atualmente na linha 12.
 
 %Enter the following text into the new file editor window. We call this text the program's source code because it contains the instructions that Python will follow to determine exactly how the program should behave. (Remember, don't type in the line numbers!)
-Digite o texto a seguir em uma janela nova do editor de arquivos. Nós chamamos esse texto de código-fonte do programa, pois ele contem as instruções que Python irá seguit para determinar exatamente como o programa deverá se comportar. (Lembre, não digite a numeração de linhas!)
+Digite o texto a seguir em uma janela nova do editor de arquivos. Nós chamamos esse texto de código-fonte do programa, pois ele contem as instruções que Python irá seguir para determinar exatamente como o programa deverá se comportar. (Lembre, não digite a numeração de linhas!)
 
 %IMPORTANT NOTE! The following program should be run by the Python 3 interpreter, not the Python 2.6 (or any other 2.x version). Be sure that you have the correct version of Python installed. (If you already have Python 2 installed, you can have Python 3 installed at the same time.) To download Python 3, go to http://python.org/download/releases/3.1.1/ and install this version.
 **NOTA IMPORTANTE!** O programa a seguir deve ser executado pelo intepretador Python 3, não Python 2.6 (ou qualquer outra versão 2.x). Certifique-se de que você possui a versão correta do Python instalada. (Se você já possui Python 2 instalado, você pode ter Python 3 instalado concomitantemente.) Para baixar o Python 3, vá até [http://python.org/download/releases/3.1.1/ http://python.org/download/releases/3.1.1/] e instale essa versão.
@@ -140,10 +140,10 @@ Digite o texto a seguir em uma janela nova do editor de arquivos. Nós chamamos 
 
 ```
     1.  # Este programa fala Alo mundo! e pede meu nome
-    2.  print('Alo mundo!')
+    2.  print('Alô mundo!')
     3.  print('Qual é o seu nome?')
     4.  meuNome = input()
-    5.  print('Muito bom conhecer voce, ' + meuNome)
+    5.  print('Muito bom conhecer você, ' + meuNome)
 ```
 
 %The IDLE program will give different types of instructions different colors. After you are done typing this code in, the window should look like this:
@@ -213,14 +213,14 @@ Quando o seu programa pergunta seu nome, vá em frente e digite ele, como mostra
 [chapter3/3-5.png]
 
 %Figure 3-5: What the interactive shell looks like when running the "Hello World" program.
-Figura 3-5: O console interativo quando executamo o programa "Alo Mundo".
+Figura 3-5: O console interativo quando executamos o programa "Alo Mundo".
 
 %Now, when you push Enter, the program should greet you (the user) by name. Congratulations! You've written your first program. You are now a beginning computer programmer. (You can run this program again if you like by pressing F5 again.)
-Quando você pressionar Enter, o programa deverá cumprimentar você (o **usuário**) pelo nome. Parabéns! Você escreveu seu primeiro programa. Agora você é um programador iniciante. (Você pode rodar este programa novamente pressionando a tecla F5.)
+Quando você pressionar Enter, o programa deverá cumprimentar você (o **usuário**) pelo nome. Parabéns! Você escreveu seu primeiro programa. Agora você pode ser considerado um programador iniciante. (Você pode rodar este programa novamente pressionando a tecla F5.)
 
 
 %How the "Hello World" Program Works
-=Como funciona o programa "Alo Mundo"=
+=Como funciona o programa "Alô Mundo"=
 
 %How does this program work? Well, each line that we entered is an instruction to the computer that is interpreted by Python in a way that the computer will understand. A computer program is a lot like a recipe. Do the first step first, then the second, and so on until you reach the end. Each instruction is followed in sequence, beginning from the very top of the program and working down the list of instructions. After the program executes the first line of instructions, it moves on and executes the second line, then the third, and so on.
 Como funciona esse programa? Bem, cada linha que digitamos é uma instrução para o computador que é interpretada pelo Python de um jeito que o computador irá entender. Um programa de computador é muito parecido com uma receita. Faça primeiro o primeiro passo, depois o segundo, e assim por diante até chegar ao final. Cada instrução é seguida em sequência, iniciando pelo topo do programa e descendo pela lista de instruções. Depois que o programa executa a primeira linha de instruções, ele move e executa a segunda linha, depois a terceira, e assim por diante.
@@ -236,11 +236,11 @@ Agora vamos dar uma olhada em nosso programa, linha por linha, para ver o que el
 =Comentários=
 %    # This program says hello and asks for my name.
 ```
-    1.  # Este programa fala Alo mundo! e pede meu nome
+    1.  # Este programa fala Alô mundo! e pede meu nome
 ```
 
 %This line is called a comment. Any text following a # sign (called the pound sign) is a comment. Comments are not for the computer, but for you, the programmer. The computer ignores them. They're used to remind you of what the program does or to tell others who might look at your code what it is that your code is trying to do.
-Essa linha é chamada de comentário. Qualquer texto que vier precediro de um sinal # (chamado de //cerquilha//) é um comentário. Comentários não são feitos para o computador, mas para você, o programador. O computador os ignora. Eles são utilizados para lembrar você do que o programa faz ou para informar a outras pessoas, que possam ver seu código fonte, sobre o que o seu código está tentando fazer.
+Essa linha é chamada de comentário. Qualquer texto que vier precedido de um sinal # (chamado de //cerquilha//) é um comentário. Comentários não são feitos para o computador, mas para você, o programador. O computador os ignora. Eles são utilizados para lembrar você do que o programa faz ou para informar a outras pessoas que virem seu código fonte sobre o que o seu código está tentando fazer.
 
 %Programmers usually put a comment at the top of their code to give their program a title. The IDLE program displays comments in red to help them stand out.
 Programadores usualmente colocam um comentário no topo dos seus códigos para dar um título aos seus programas. O IDLE mostra os comentários em vermelho para ajudá-los a se destacarem.
@@ -249,11 +249,12 @@ Programadores usualmente colocam um comentário no topo dos seus códigos para d
 %Functions
 =Funções=
 
+%TODO: tradução de built-in -> embutido
 %A function is kind of like a mini-program inside your program. It contains lines of code that are executed from top to bottom. Python provides some built-in functions that we can use. The great thing about functions is that we only need to know what the function does, but not how it does it. (You need to know that the print() function displays text on the screen, but you don't need to know how it does this.)
 Uma **função** é tipo um mini-programa dentro de seu programa. Ela contém linhas de código que são executadas de cima para baixo. Python nos oferece algumas funções embutidas (//built-in//) que nós podemos utilizar em nossos programas. O mais legal sobre funções é que nós somente precisamos saber o que a função faz, mas não como ela faz isso. (Você precisa saber que a função ``print()`` mostra um texto na tela, mas você não precisa saber como ela faz isso.)
 
 %A function call is a piece of code that tells our program to run the code inside a function. For example, your program can call the print() function whenever you want to display a string on the screen. The print() function takes the string you type in between the parentheses as input and displays the text on the screen. Because we want to display Hello world! on the screen, we type the print function name, followed by an opening parenthesis, followed by the 'Hello world!' string and a closing parenthesis.
-Uma **chamada de função** é um pedaço de código que informa ao nosso programa para executar o código de dentro de uma função. Por exemplo, seu programa pode chamar a função ``print()`` toda vez que você quiser mostrar uma string na tela. A função ``print()`` recebe como entrada a string que você digitar entre parênteses e mostra o texto na tela. Como queremos mostrar ``Alo mundo!`` na tela, nós escrevemos o nome da função ``print``, seguido de um abre-parênteses, seguido pela string 'Alo mundo' e um fecha-parênteses.
+Uma **chamada de função** é um pedaço de código que informa ao nosso programa para executar o código de dentro de uma função. Por exemplo, seu programa pode chamar a função ``print()`` toda vez que você quiser mostrar uma string na tela. A função ``print()`` recebe como entrada a string que você digitar entre parênteses e mostra o texto na tela. Como queremos mostrar ``Alô mundo!`` na tela, nós escrevemos o nome da função ``print``, seguido de um abre-parênteses, seguido pela string 'Alô mundo' e um fecha-parênteses.
 
 
 %The print() Function
@@ -262,7 +263,7 @@ Uma **chamada de função** é um pedaço de código que informa ao nosso progra
 %    print('Hello world!')
 %    print('What is your name?')
 ```
-    2.  print('Alo mundo!')
+    2.  print('Alô mundo!')
     3.  print('Qual é o seu nome?')
 ```
 
@@ -270,7 +271,7 @@ Uma **chamada de função** é um pedaço de código que informa ao nosso progra
 A linha 2 mostra uma chamada a função ``print``, comumente escrita como ``print()`` (com a string a ser mostrada na tela dentro dos parênteses).
 
 %We add parentheses to the end of function names to make it clear that we're referring to a function named print(), not a variable named print. The parentheses at the end of the function let us know we are talking about a function, much like the quotes around the number '42' tell us that we are talking about the string '42' and not the integer 42.
-Nós adicionamos parêntese ao final de nomes de funções para deixar claro que nós estamos nos referindo a uma função chamada ``print()``, não a uma variável chamada ``print``. Os parênteses ao final da função nos informam que estamos lidando com uma função, assim como as aspas ao redor do número ``'42'`` nos informam que estamos lidando com a string ``'42'`` e não com o inteiro 42.
+Nós adicionamos parênteses ao final de nomes de funções para deixar claro que nós estamos nos referindo a uma função chamada ``print()``, não a uma variável chamada ``print``. Os parênteses ao final da função nos informam que estamos lidando com uma função, assim como as aspas ao redor do número ``'42'`` nos informam que estamos lidando com a string ``'42'`` e não com o inteiro 42.
 
 %Line 3 is another print() function call. This time, the program displays "What is your name?"
 A linha 3 é outra chamada a função ``print()``. Agora, o programa mostra ``"Qual é o seu nome?"``.
@@ -288,18 +289,18 @@ A linha 3 é outra chamada a função ``print()``. Agora, o programa mostra ``"Q
 Esta linha possui uma atribuição com uma variável (``meuNome``) e uma chamada de função (``input()``). Quando ``input()`` é chamada, o programa aguarda por entrada do usuário. A string que o usuário digitar (seu nome) se torna o valor de saída da função.
 
 %Like expressions, function calls evaluate to a single value. The value that the function call evaluates to is called the return value. (In fact, we can also use the word "returns" to mean the same thing as "evaluates".) In this case, the return value of the input() function is the string that the user typed in-their name. If the user typed in Albert, the input() function call evaluates to the string 'Albert'.
-Assim como expressões, chamadas de funções são interpretadas como um único valor. O valor que é interpretado como a chamada a função é chamado de **valor de retorno**. (Na verdade, nós podemos utilizar a palavra //"retorna"// com o mesmo significado que ``é interpretado``.) Nesse caso, o valor de retorno de ``input()``é a string que o usuário digitar como seu nome. Se o usuário digitou //Albert//, a chamada de função ``input()`` retorna a string 'Albert'.
+Assim como expressões, chamadas de funções são interpretadas como um único valor. O valor que é interpretado como a chamada a função é chamado de **valor de retorno**. (Na verdade, nós podemos utilizar a palavra //"retorna"// com o mesmo significado que //"é interpretada"//.) Nesse caso, o valor de retorno de ``input()`` é a string que o usuário digitar como seu nome. Se o usuário digitou //Albert//, a chamada de função ``input()`` retorna a string 'Albert'.
 
 %The function named input() does not need any input (unlike the print() function), which is why there is nothing in between the parentheses.
 A função chamada ``input()`` não necessita entrada alguma (diferentemente da função ``print()``), que é o motivo de não termos nada entre parênteses.
 
 %    print('It is good to meet you, ' + myName)
 ```
-    5.  print('Muito bom conhecer voce, ' + meuNome)
+    5.  print('Muito bom conhecer você, ' + meuNome)
 ```
 
 %On the last line we have a print() function again. This time, we use the plus operator (+) to concatenate the string 'It is good to meet you, ' and the string stored in the myName variable, which is the name that our user input into the program. This is how we get the program to greet us by name.
-Na última linha do programa nós temos novamente a função ``print()``. Dessa vez, nós usamos o operador mais (+) para concatenar a string ``Muito bom conhecer voce,`` e a string armazenada na variável ``meuNome``, que é o nome que nosso usuário digitou quando o programa solicitou. É assim que nós fazemos com que o programa nos cumprimente pelo nome.
+Na última linha do programa nós temos novamente a função ``print()``. Dessa vez, nós usamos o operador mais (+) para concatenar a string ``Muito bom conhecer você,`` e a string armazenada na variável ``meuNome``, que é o nome que nosso usuário digitou quando o programa solicitou. É assim que nós fazemos com que o programa nos cumprimente pelo nome.
 
 
 %Ending the Program
@@ -312,14 +313,14 @@ Após executar a última linha, o programa para. Nesse ponto ele terminou e toda
 %Carolyn
 %It is good to meet you, Carolyn
 ```
-Alo mundo!
+Alô mundo!
 Qual é o seu nome?
 Carolyn
-Muito bom conhecer voce, Carloyn
+Muito bom conhecer você, Carloyn
 ```
 
 %Remember, the computer only does exactly what you program it to do. In this, our first program, it is programmed to ask you for your name, let you type in a string, and then say hello and display the string you typed.
-Lembre, o computador faz exatamente o que você programou ele para fazer. Neste caso, nosso primeiro programa, ele é programado para perguntar seu nome, permitir que você digite uma string, e então falar ``Alo`` e mostrar a string que você digitou.
+Lembre, o computador faz exatamente o que você programou ele para fazer. Neste caso, nosso primeiro programa, ele é programado para perguntar seu nome, permitir que você digite uma string, e então falar ``Alô`` e mostrar a string que você digitou.
 
 %But computers are dumb. The program doesn't care if you type in your name, someone else's name, or just something dumb. You can type in anything you want and the computer will treat it the same way:
 Mas computadores são burros. O programa não está nem aí se você forneceu como seu nome o nome de outra pessoa, ou então algo idiota. Você pode digitar o que quiser e o computador irá tratar da mesma forma:
@@ -333,14 +334,14 @@ Mas computadores são burros. O programa não está nem aí se você forneceu co
 Alo mundo!
 Qual é o seu nome?
 cocô
-Muito bom conhecer voce, cocô
+Muito bom conhecer você, cocô
 ```
 
 %The computer doesn't care what you name your variables, but you should. Giving variables names that reflect what type of data they contain makes it easier to understand what a program does. Instead of name, we could have called this variable abrahamLincoln or nAmE. The computer will run the program the same (as long as you consistently use abrahamLincoln or nAmE).
 O computador não se importa com a forma que você nomeia suas variáveis, mas você deveria. Se dermos nomes de variáveis que reflitam qual tipo de dados que elas contém, estaremos tornando mais fácil o entendimento de o que o nosso programa faz. Ao invés de ``meuNome``, poderíamos ter chamado esta variável de ``abrahamLincoln`` ou ``mEuNoMe``. O computador irá sempre executar o programa da mesma forma (desde que você use consistentemente ``abrahamLincoln`` ou ``mEuNoMe``).
 
 %Variable names (as well as everything else in Python) are case-sensitive. Case-sensitive means the same variable name in a different case is considered to be an entirely separate variable name. So spam, SPAM, Spam, and sPAM are considered to be four different variables in Python. They each can contain their own separate values.
-Nomes de variáveis (assim como tudo em Python) são **//case-sensitive//**. //Case-sensitive// significa que um mesmo nome de variável em maiúsculas e minúsculas representam uma variável completamente diferente. Assim, ``spam``, ``SPAM``, ``Spam``, e ``sPAM`` são consideradas quatro variáveis diferentes em Python. Cada uma pode conter seus valores individuais.
+Nomes de variáveis (assim como tudo em Python) são **//case-sensitive//**. //Case-sensitive// significa que um mesmo nome de variável em maiúsculas e minúsculas representam variáveis completamente diferentes. Assim, ``spam``, ``SPAM``, ``Spam``, e ``sPAM`` são consideradas quatro variáveis diferentes em Python. Cada uma pode conter seus valores individuais.
 
 %It's a bad idea to have differently-cased variables in your program. If you stored your first name in the variable name and your last name in the variable NAME, it would be very confusing when you read your code weeks after you first wrote it. Did name mean first and NAME mean last, or the other way around?
 Não é uma boa idéia ter variáveis com mesmo nome, com diferenças apenas no tamanho das letras que compõem o nome das variáveis (se são maiúsculas ou minúsculas) em seu programa. Se você armazena seu primeiro nome na variável ``nome`` e seu último nome na variável ``NOME``, seria bem confuso entender o código algumas semanas após você tê-lo escrito. ``nome`` significa primeiro e ``NOME`` significa último nome, ou o contrário?
@@ -349,7 +350,7 @@ Não é uma boa idéia ter variáveis com mesmo nome, com diferenças apenas no 
 Se, sem querer, você trocar as variáveis ``nome`` e ``NOME``, seu programa continuará rodando (isto é, não terá erros de sintaxe), mas irá rodar de forma incorreta. Este tipo de falha no seu código é chamado de //**bug**//. É muito comum criar //bugs// em seus programas, sem querer, enquanto você os escreve. É por isso que é importante que os nomes de variáveis que você escolhe façam sentido.
 
 %It also helps to capitalize variable names if they include more than one word. If you store a string of what you had for breakfast in a variable, the variable name whatIHadForBreakfastThisMorning is much easier to read than whatihadforbreakfastthismorning. This is a convention (that is, an optional but standard way of doing things) in Python programming. (Although even better would be something simple, like todaysBreakfast. Capitalizing the first letter of each word in variable names makes the program more readable.
-Algo que também ajuda é escrever nomes de variáveis com letras maiúsculas se elas incluem mais de uma palavra. Se você armazena uma string que contém o que você comeu no cafá da manhã em uma variável, o nome ``oQueEuComiNoCafeDaManhaHoje`` é muito mais fácil de ler do que ``oqueeucominocafedamanhahoje``. Isto é uma ``convenção`` (isto é, um forma opcional, mas padronizada de fazer as coisas) para programas escritos em Python. (Embora fosse melhor ter um nome mais simples, como ``cafeDeHoje``.) Escrever a primeira letra de cada palavra com letra maiúscula em nomes de variáveis faz com que o nosso programa se torne mais legível.
+Algo que também ajuda é escrever nomes de variáveis com letras maiúsculas, se elas incluem mais de uma palavra. Se você armazena uma string que contém o que você comeu no cafá da manhã em uma variável, o nome ``oQueEuComiNoCafeDaManhaHoje`` é muito mais fácil de ler do que ``oqueeucominocafedamanhahoje``. Isto é uma **convenção** (isto é, um forma opcional, mas padronizada de fazer as coisas) para programas escritos em Python. (Embora fosse melhor ter um nome mais simples, como ``cafeDeHoje``.) Escrever a primeira letra de cada palavra com letra maiúscula em nomes de variáveis faz com que o nosso programa se torne mais legível.
 
 
 %Summary
@@ -362,4 +363,4 @@ Agora que aprendemos a lidar com texto, nós podemos começar a fazer programas 
 Strings são apenas um tipo de dados que podemos utilizar em nossos programas. Nós podemos usar o operador ``+`` para juntar strings (concatenar). Usar o operador ``+`` para concatenar duas strings para formar uma nova string é como usar o operador ``+`` para somar dois inteiros para formar um novo inteiro (a soma).
 
 %In the next chapter, we will learn more about variables so that our program will remember the text and numbers that the player enters into the program. Once we have learned how to use text, numbers, and variables, we will be ready to start creating games.
-No próximo capítulo, iremos aprender mais sobre variáveis, de forma que nosso programa irá lembrar texto e números que o usuário fornecer para o programa. Após aprendermos a utilizar texto, números, e variáveis. estaremos prontos para começar a criar jogos.
+No próximo capítulo, iremos aprender mais sobre variáveis, de forma que nosso programa irá armazenar e lembrar de textos e números que o usuário fornecer para o programa. Após aprendermos a utilizar texto, números, e variáveis, estaremos prontos para começar a criar jogos.
