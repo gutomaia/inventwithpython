@@ -1,0 +1,255 @@
+Capítulo 5
+Piadas
+
+
+%!encoding: utf-8
+%!preproc: 'STRINGS' 'sequências de caracteres'
+%!preproc: 'STRING' 'sequência de caracteres'
+%!postproc(html): {{(.*?)}} <\1>
+
+
+==Tópicos cobertos neste capítulo==
+- Usando o argumento ``end`` para o ``print()`` para pular quebras de linhas
+- Escapar caracteres
+- Usando aspas simples e aspas duplas para STRINGS
+
+
+=Tire o máximo de print()=
+
+A maioria dos jogos neste ligro terão texto simples como entrada e saída.
+A entrada é digitada pelo usuário no teclado escrevendo no computador.
+A saída é o texto mostrada na tela.
+Em Python, a função ``print()`` pode ser usada para mostrar saída textual na
+tela.  Nós aprendemos o básico dessa função, mas há mais para aprender sobre
+como funcionam a ``print()`` e STRINGS em Python.
+
+
+==Rodando o programa Piadas==
+
+
+```
+Qual o resultado de cruzar um cachorro com um gato?
+
+Uma baita duma briga!
+
+Qual a diferença entre Brasília e uma caixa d'água?
+
+Na caixa d'água só tem um ladrão...
+
+Toque toque!
+
+Quem é?
+
+A vaca interrompida!
+
+Que vaca interromp-MUUUUU!!
+```
+
+==Código fonte do Piadas==
+
+Aqui está o código-fonte do nosso pequeno programa Piadas.
+Se você não quer digitar todo esse código, você pode baixar o código-fonte na
+página deste livro aqui: [piadas.py chapter5/piadas.py]
+
+**NOTA IMPORTANTE!** O programa a seguir deve ser executado pelo intepretador
+Python 3, não Python 2.6 (ou qualquer outra versão 2.x). Certifique-se de que
+você possui a versão correta do Python instalada. (Se você já possui Python 2
+instalado, você pode ter Python 3 instalado concomitantemente.) Para baixar o
+Python 3, vá até 
+[python.org/download/releases/3.1.1/ python.org/download/releases/3.1.1/]
+e instale essa versão.
+
+
++ print('Qual o resultado de cruzar um cachorro com um gato?')
++ input()
++ print('Uma baita duma briga!')
++ print()
++ print('Qual a diferença entre Brasília e uma caixa d\'água?')
++ input()
++ print('Na caixa d\'água só tem um ladrão...')
++ print()
++ print('Toque toque!')
++ input()
++ print('Quem é?')
++ input()
++ print('A vaca interrompida!')
++ input()
++ print('Que vaca interromp-', end='')
++ print('MUUUUU!!')
+
+
+Não se preocupe se você não entende tudo no programa. Apenas salve e rode o
+programa.
+
+
+= Como o código funciona =
+
+Vamos dar uma olhada no código mais de perto.
+
++ print('Qual o resultado de cruzar um cachorro com um gato?')
++ input()
++ print('Uma baita duma briga!')
++ print()
+
+Aqui nós temos três chamadas à função ``print``
+Como nós não queremos dizer ao jogador o final da piada, nós precisamos chamar a
+função ``input()`` depois do primeiro ``print()``. O jogador pode ler a primeira
+linha, apertar Enter, e então ler o final da piada.
+
+O usuário pode ainda digitar uma STRING e apertar Enter, mas como nós não
+estamos armazenando essa STRING em nenhuma variável, o programa simplesmente
+esquecerá ela e continuar para a próxima linha de código.
+
+A última chamada à função ``print()`` não tem nenhum argumento. Isso faz com que
+o programa apenas mostre uma linha em branco. Linhas em branco podem ser úteis
+para não deixar nosso texto todo amontoado.
+
+
+==Caracteres de escape==
+
+{{OL start="5"}}
+{{LI}}print('Qual a diferença entre Brasília e uma caixa d\'água?'){{/LI}}
+{{LI}}input(){{/LI}}
+{{LI}}print('Na caixa d\'água só tem um ladrão...'){{/LI}}
+{{LI}}print(){{/LI}}
+{{/OL}}
+
+No primeiro ``print()`` acima, você notará que temos uma barra logo antes a
+aspa simples (isto é, o apóstrofo). Esta barra invertida (\ é uma barra
+invertida - //backslash//, / barra é uma barra normal - //slash//) nos diz que a
+letra logo a seguir é um ``caractere de escape``. Um caractere de escape nos
+ajuda a mostrar na tela letras que são difíceis de escrever no código-fonte.
+Existem vários caracteres de escape, mas na nossa chamada a ``print()`` o
+caractere de escape é a aspa simples.
+
+Nós precisamos ter o caractere de escape de aspas simples porque se não, o
+interpretador Python pensaria que esta aspa significa o fim da STRING, mas nós
+queremos que esta aspa seja parte da STRING. Quando mostramos essa STRING, a
+barra invertida não aparecerá.
+
+
+==Alguns outros caracteres de escape==
+
+E se você quiser realmente mostrar uma barra invertida? Esta linha de código não
+funcionaria:
+
+``>>> print('He flew away in a green\teal helicopter.')``
+
+A função ``print()`` mostraria:
+
+``He flew away in a green	eal helicopter.``
+
+Isto é porque o "t" em "teal" foi interpretado como um caractere de escape, já
+que veio depois de uma barra invertida. O caractere de escape **t** simula uma
+tecla TAB do seu teclado. Os caracteres de escape existem para que as STRINGS
+possam ter caracteres que não podem ser digitados.
+
+Tente agora esta linha:
+
+``>>> print('He flew away in a green\\teal helicopter.')``
+
+Aqui está uma lista de caracteres de escape em Python:
+
+|| Caractere de Escape | O que é realmente mostrado |
+| \\ | Backslash (\) |
+| \' | Single quote (') |
+| \" | Double quote (") |
+| \n | Newline |
+| \t | Tab |
+
+
+=Aspas Simples e Aspas Duplas=
+
+Em python, STRINGS não precisam estar sempre entre aspas simples.
+Você também pode usar elas entre aspas duplas. Estas duas linhas mostram a mesma
+coisa:
+
+```
+>>> print('Alô mundo')
+Alô mundo
+>>> print("Alô mundo")
+Alô mundo
+```
+
+Mas você não pode misturar aspas. Esta linha dará erro se você tentar usá-la:
+
+```
+>>> print('Alô mundo")
+SyntaxError: EOL while scanning single-quoted string
+>>>
+```
+
+Eu gosto de usar aspas simples porque não preciso ter que apertar a tecla shif
+no meu teclado para digitá-las. É mais fácil de digitar, e o computador não se
+importa de qualquer forma.
+
+Mas lembre-se, assim como você precisa usar o caractere de escape \' para usar
+uma aspa simples em uma STRING envolta por aspas simples, você precisa do
+caractere de escape \" para ter uma aspa dupla em uma STRING envolta por aspas
+duplas. Por exemplo, olhe para estas duas linhas:
+
+%TODO: precisa traduzir essas frases?
+```
+>>> print('Convidei minha amiga para ir ao Mcdonald\'s. Ela disse, "Pode apostar."')
+Convidei minha amiga para ir ao Mcdonald's. Ela disse, "Pode apostar."
+>>> print("He said, \"I can't believe you let him borrow your car.\"")
+He said, "I can't believe you let him borrow your car."
+```
+
+Você notou que nas STRINGS com aspas simples você não precisa "escapar" as aspas
+simples, e nas STRINGS com aspas duplas você não precisa escapar as aspas
+simples? O interpretador Python é esperto o suficiente para saber que se uma
+STRING começa com uma aspa de um tipo, o outro tipo de aspa não significa que a
+STRING está terminando.
+
+
+=O argumento chave end=
+
+{{OL start="9"}}
+{{LI}}print('Toque toque!'){{/LI}}
+{{LI}}input(){{/LI}}
+{{LI}}print('Quem é?'){{/LI}}
+{{LI}}input(){{/LI}}
+{{LI}}print('A vaca interrompida!'){{/LI}}
+{{LI}}input(){{/LI}}
+{{LI}}print('Que vaca interromp-', end=''){{/LI}}
+{{LI}}print('MUUUUU!!'){{/LI}}
+{{/OL}}
+
+Você notou que o segundo parâmetro no ``print()`` da linha 15? Normalmente,
+``print()`` adiciona um caractere de quebra de linha no fim da STRING que ele
+mostra. (É por isso que uma chamada a ``print()`` em branco irá apenas mostra
+uma quebra de linha.) Mas a função ``print()`` pode opcionalmente ter um segundo
+parâmetro (que tem o nome ``end``.) A STRING vazia que estamos passando é
+chamada um ``argumento chave``. O parâmetro ``end`` tem um nome específico, e
+para passar um argumento para este parâmetro específico nós precisamos usar a
+sintaxe ``end=``.
+
+Note que quando você digita a chave e o argumento chave, você usa apenas um
+sinal =. É ``end=''``, e não ``end==''``.
+
+Passando uma STRING vazia para o //end//, nós dizemos à função ``print()`` não
+adicionar a quebra de linha no final da STRING, e sim uma STRING vazia. É por
+isso que ``'MUUUUU!!'`` aparece junto da linha anterior, em vez de numa nova
+linha. Não houve nenhuma quebra de linha a ser mostrada depois da STRING
+``'Que vaca interromp-'``.
+
+
+=Resumo=
+
+Este capítulo explora as maneiras diferentes que você pode usar a função
+``print()``. Caracteres de escape são usados para caracteres que são difíceis or
+impossíveis de digitar no código com o teclado. Eles são digitados nas STRINGS
+começando com uma barra invertida \ seguida de uma letra para o caractere de
+escape. Por exemplo, ``\n`` seria uma quebra de linha. Para incluir uma barra
+invertida em uma STRING, você usaria o caractere de escape \\.
+
+A função ``print()`` adiciona automaticamente um caractere de quebra de linha no
+final da STRING que nós passamos para ser mostrada na tela. A maior parte do
+tempo, isto é desejável. Mas às vezes nós não queremos um caractere de quebra de
+linha no fim. Para mudar isso, nós passamos o argumento chave ``end`` com uma
+STRING vazia. Por exemplo, para mostrar "spam" na tela sem quebra de linha, você
+usaria ``print('spam', end='')``.
+
+Adicionando este novo nível de controle ao texto que mostramos na tela, temos
+muito mais maneiras flexíveis de mostrar o texto exatamente como queremos.
