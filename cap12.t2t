@@ -4,31 +4,23 @@ Capítulo 12  - Coordenadas Cartesianas
 %!encoding: utf-8
 
 ==Tópicos cobertos neste capítulo==
-% Cartesian coordinate systems.
 - Sistemas de coordenadas Cartesianas.
-% The X-axis and Y-axis.
+% Cartesian coordinate systems.
 - Os eixos X e Y
-% The Commutative Property of Addition.
+% The X-axis and Y-axis.
 :: A Propriedade Comutativa da Adição
+% The Commutative Property of Addition.
 % Absolute values and the abs() function.
 - Valores absolutos e a função ``abs()``
 
 % Chapter 12
 
+Este capítulo não apresenta um novo jogo, ao invés disso, revisa alguns 
+conceitos matemáticos simples que usaremos no resto dos jogos nesse livro.
+
 % This chapter does not introduce a new game, but instead goes over some 
 % simple mathematical concepts that we will use in the rest of the games in 
 % this book.
-
-Este capítulo não apresenta um novo jogo, ao invés disso, revisa alguns 
-conceitos simples matemáticos que usaremos no resto dos jogos nesse livro.
-
-% When you look at 2D games (such as Tetris or old Super Nintendo or Sega 
-% Genesis games) you can see that most of the graphics on the screen can 
-% move left or right (the first dimension) and up or down (the second 
-% dimension, hence 2D). In order for us to create games that have objects 
-% moving around two dimensions (such as the two dimensional computer screen),
-% we need a system that can translate a place on the screen to integers that 
-% our program can deal with.
  
 Quando você olha jogos 2D (tais como Tetris ou jogos antigos de Super 
 Nintendo ou Sega Genesis) você pode ver que a maioria dos gráfcos na tela 
@@ -38,9 +30,19 @@ objetos se movendo nas duas dimensões (como a tela bi-dimencional do
 computador), nós precisamos de um sistema que possa traduzir um lugar na 
 tela em números inteiros que nosso programa possa lidar.
 
+% When you look at 2D games (such as Tetris or old Super Nintendo or Sega 
+% Genesis games) you can see that most of the graphics on the screen can 
+% move left or right (the first dimension) and up or down (the second 
+% dimension, hence 2D). In order for us to create games that have objects 
+% moving around two dimensions (such as the two dimensional computer screen),
+% we need a system that can translate a place on the screen to integers that 
+% our program can deal with.
+
+% Traduzir o termo Keep track
 Aqui é onde o sistema de coordenadas Cartesianas entra. As coordenadas podem 
 apontar para um ponto muito específico na tela para que nosso programa possa 
 KEEP TRACK das diferentes áreas da tela.
+
 % This is where Cartesian coordinate systems come in. The coordinates can 
 % point to a very specific point on the screen so that our program can keep 
 % track of different areas on the screen.
@@ -91,7 +93,6 @@ linha 7 e na coluna c estão vazios.
 % We can also see that every space on row 7 and every space in column c is 
 % empty.
 
-% TODO: Ver uma tradução melhor que rótulo e rotular para label
 Uma grade com linhas e colunas identificadas por um rótulo como o tabuleiro
 de xadrez é um sistema de coordenadas Cartesianas. Utilizando um rótulo 
 de linha e um de coluna nós podemos dar uma coordenada que é para um, e 
@@ -115,7 +116,7 @@ Figura 12-2: O mesmo tabuleiro de xadrez porém com coordenadas numéricas
 para ambas, linhas e colunas.
 
 % <p style='float: right;' class='centeredImageP'><img src='images/12-2.png' alt='' class='centeredImage' /><br />
-%Figure 12-2: The same chessboard but with<br />numeric coordinates for both rows and columns.</p>
+% Figure 12-2: The same chessboard but with<br />numeric coordinates for both rows and columns.</p>
 
 % TODO: Ver uma tradução melhor para 'not be confused with'
 Os números indo da esquerda para a direita e descrevem as colunas são parte 
@@ -123,7 +124,6 @@ do eixo-X. Os números indo de cima para baixo e que descrevem as linhas são
 parte da coordenada-Y. Isto significa que o cavaleiro branco na figura 
 anterior está localizado na coordenada 5, 6 (e não 6, 5). O cavaleiro preto 
 está localizado na coordenada 1, 4 (não confunda com 4, 1). 
-
 
 % The numbers going left and right that describe the columns are part of the 
 % <span class='term'>X-axis</span>. The numbers going up and down that 
@@ -226,7 +226,7 @@ expressão 4 - 6, como na Figura 12-5:
 % knight starting at position 4 and moving 6 spaces to the left, like in 
 % Figure 12-5:
 
-Figura 12-5: Movendo o cavaleiro branco para a esquerda subtrai na coordenada.
+Figura 12-5: Movendo o cavaleiro branco para a esquerda diminui na coordenada.
 
 % <p class='centeredImageP createspace'><img width='570' height='131' src='images/12-5.png' alt='' class='centeredImage' /><br />
 % Figure 12-5: Moving the white knight to the left subtracts from the coordinate.</p>
@@ -235,6 +235,7 @@ Figura 12-5: Movendo o cavaleiro branco para a esquerda subtrai na coordenada.
 
 % TODO: Ver tradução exata de THAT MEANS.
 O cavaleiro branco acaba na posição -2. THAT MEANS 4 - 6 é igual a -2.
+
 % The white knight ends up at position -2. That means 4 - 6 equals -2.
 
 Se adicionamos ou subtraimos um número negativo, o cavaleiro branco se moveria
@@ -259,7 +260,7 @@ movendo-o para a direita ainda aumenta na coordenada.
 % <p class='centeredImageP noncreatespace'><img src='images/12-6.png' alt='' class='centeredImage' /><br />
 % Figure 12-6: Even if the white knight starts at a negative coordinate, moving right still adds to the coordinate.</p>
 
-Figura 12-7: Colocando duas linhas de número juntas cria um sistema de 
+Figura 12-7: Colocando duas retas numéricas juntas cria um sistema de 
 coordenadas Cartesianas.
 
 % <p class='centeredImageP'><img src='images/12-7.png' alt='' class='centeredImage' /><br />
@@ -270,7 +271,7 @@ de cima para baixo, ao invés da esquerda para a direita, ela iria modelar o
 eixo-Y. Adicionando um número positivo (ou subtraindo de um número negativo)
 moveria o cavaleiro para cima na reta numérica, e subtraindo de um número 
 positivo (ou adicionando um número negativo) moveria o cavaleiro para baixo
-na reta.
+na reta. A coordenada 0, 0 tem um nome especial: origem.
 
 % The number line is the same as the X-axis. If we made the number line go up
 % and down instead of left and right, it would model the Y-axis. Adding a 
@@ -284,11 +285,10 @@ na reta.
 ==Truques Matemáticos==
 % <h2 id="MathTricks">Math Tricks</h2>
 
-% TODO: Ver se a tradução está concisa, correta.
 Subtraindo ou adicionando números negativos parece ser fácil quando você tem 
 uma reta numérica na sua frente, mas pode também ser fácil quando você tem 
-somente os números. Aqui estão três truques que você pode fazer para tornar a 
-avaliação dessas expressões mais fáceis.
+somente os números. Aqui estão três truques que você pode fazer para tornar 
+mais fáceis as avaliações dessas expressões.
 
 % Subtracting negative numbers or adding negative numbers seems easy when you
 % have a number line in front of you, but it can be easy when you only have 
@@ -298,11 +298,12 @@ avaliação dessas expressões mais fáceis.
 ===Truque 1: "Um Menos Come o Sinal de Mais à sua Esquerda"===
 % <h3 id="Trick1AMinusEatsthePlusSignonitsLeft">Trick 1: "A Minus Eats the Plus Sign on its Left"</h3>
 
-% TODO: Ver a possibilidade de remover a redundância do parágrafo.
+% TODO: Removi a redundância desse parágrafo - ver se tem algum problema 
+% nisso com os usuários do grupo python-brasil.
+
 O primeiro é se você está adicionando um número negativo, por exemplo; 4 + -2.
-O primeiro truque é "um menos come o sinal de mais à sua esquerda. Quando 
-você vê um sinal de menos com um sinal de mais à esquerda na esquerda, você pode
-substituí-lo com um sinal de menos. A respostta permanece a mesma, porque 
+Quando você vê um sinal de menos com um sinal de mais à esquerda, você pode
+substituí-lo por um sinal de menos. A resposta permanece a mesma, porque 
 adicionar um valor negativo é o mesmo que subtrair um valor positivo. 
 4 + -2 e 4 - 2 ambos resultam em 2.
 
@@ -321,8 +322,11 @@ Figura 12-8: Truque 1 - Adicionando um número positivo e um negativo.
 %<h3 id="Trick2TwoMinusesCombineIntoaPlus">Trick 2: "Two Minuses Combine Into a Plus"</h3>
 
 % TODO: Ver se tem como substituir as palavras 'eles' no final do parágrafo
+% TODO: Removi a redundância desse parágrafo - ver se tem algum problema 
+% nisso com os usuários do grupo python-brasil.
+
 O segundo truque é se você está subtraindo um número negativo, por exemplo, 
-4 - -2. Quando você vê dois sinais de menos um do lado do outro sem um número
+4 - -2. Quando você vê dois sinais de menos um ao lado do outro sem um número
 entre eles, eles podem combinar em um sinal de mais. O resultado permanece o
 mesmo, porque subtrair um valor negativo é o mesmo que adicionar um valor 
 positivo.
@@ -337,14 +341,14 @@ Figura 12-9: Truque 2 - Subtraindo um número positivo e um negativo.
 % <p class='centeredImageP'><img src='images/12-9.png' alt='' class='centeredImage' /><br />
 % Figure 12-9: Trick 2 - Subtracting a positive and negative number.</p>
 
-===A Propriedade Comutativa da Adição===
+===Truque 3: A Propriedade Comutativa da Adição===
 % <h3 id="Trick3TheCommutativePropertyofAddition">Trick 3: The Commutative Property of Addition</h3>
 
 Um terceiro truque é para lembrar que quando você adiciona dois números como
 6 e 4, não importa em qual ordem eles estão. (Isto é chamado de propriedade
 comutativa da adição). Isso significa que 6 + 4 e 4 + 6 são ambos iguais ao 
 mesmo valor, 10. Se você contar as caixas na figura abaixo, poderá ver que
-não importa que ordem você tem os números para adicionar.
+não importa qual ordem você tem os números para adicionar.
 
 % A third trick is to remember that when you add two numbers like 6 and 4, it
 % doesn't matter what order they are in. (This is called the 
@@ -358,13 +362,14 @@ Figura 12-10: Truque 3 - A propriedade comutativa da adição.
 % Figure 12-10: Trick 3 - The commutative property of addition.</p>
 
 % TODO: Ver uma tradução melhor para 'But this means that'
+
 Digamos que você está adicionando um número negativo e um positivo, como 
 -6 + 8. Já que você está adicionando números, você pode mudar a ordem dos 
 números sem alterar o resultado. -6 + 8 é o mesmo que 8 + -6. Porém, quando 
 você vê 8 + -6, repara que o sinal de menos pode comer o sinal de mais à sua
 esquerda, resultando na expressão 8 - 6 = 2. Mas isso significa que -6 + 8 
 também é 2! Nós rearranjamos a expressão para obtermos o mesmo resultado, mas 
-tornamos mais fácil para resolvê-lo sem usar uma calculadora ou o computador.
+tornamos mais fácil para resolvê-la sem usar uma calculadora ou o computador.
 
 % Say you are adding a negative number and a positive number, like -6 + 8. 
 % Because you are adding numbers, you can swap the order of the numbers 
@@ -422,9 +427,7 @@ de -7 é 7. O valor absoluto de 5 (que é positivo) é simplesmente 5.
 % absolute value of -4 is 4. The absolute value of -7 is 7. The absolute 
 % value of 5 (which is positive) is just 5.
 
-# Parei aqui: Podemos saber quão distantes duas coisas em um
-
-Nós podemos saber quão distantes das outras duas coisas estão em uma reta 
+Podemos saber quão distantes das outras duas coisas estão em uma reta 
 numérica obtendo o valor absoluto das suas diferenças. Imagine que o 
 cavaleiro branco está na posição 4 e o cavaleiro preto na posição -2. Para
 descobrir a distância entre eles, você poderia achar a diferença subtraindo
@@ -436,10 +439,29 @@ suas posições e obtendo o valor absoluto desse número.
 % the distance between them, you would find the difference by subtracting 
 % their positions and taking the absolute value of that number.
 
-<p>It works no matter what the order of the numbers is. -2 - 4 (that is, negative two minus four) is -6, and the absolute value of -6 is 6. However, 4 - -2 (that is, four minus negative two) is 6, and the absolute value of 6 is 6. Using the absolute value of the difference is a good way of finding the distance between two points on a number line (or axis).</p>
+Isso funciona não importando em que ordem os números estão. -2 - 4 (isso é, 
+2 negativo menos 4) é igual a -6, e o valor absoluto de -6 é 6. Contudo, 
+4 - -2 (ou seja, 4 menos 2 negativo) é 6, e seu valor absoluto é 6. Usar o 
+valor absoluto da diferença é uma boa maneira de achar a distância entre dois
+pontos em uma reta numérica (ou eixo).
 
-<p>The <span class='m'>abs()</span> function can be used to return the absolute value of an integer. The <span class='m'>abs()</span> function is a built-in function, so you do not need to import any modules to use it. Pass it an integer or float value and it will return the absolute value:</p>
+% It works no matter what the order of the numbers is. -2 - 4 (that is, 
+% negative two minus four) is -6, and the absolute value of -6 is 6. However, 
+% 4 - -2 (that is, four minus negative two) is 6, and the absolute value of 6
+% is 6. Using the absolute value of the difference is a good way of finding 
+% the distance between two points on a number line (or axis).
 
+A função ``abs()`` pode ser usada para retornar o valor absoluto de um 
+inteiro. Como ``abs()`` é uma função embutida, você não precisa importar 
+nenhum módulo para poder usá-la. Passe um valor inteiro ou float e ela 
+irá retornar seu valor absoluto:
+
+% The <span class='m'>abs()</span> function can be used to return the absolute
+% value of an integer. The <span class='m'>abs()</span> function is a built-in
+% function, so you do not need to import any modules to use it. Pass it an 
+% integer or float value and it will return the absolute value:
+
+% TODO: Formatar isso para txt2tags
 <div class='sourceblurb'>
 &gt;&gt;&gt; abs(-5)<br />
 5<br />
@@ -449,39 +471,81 @@ suas posições e obtendo o valor absoluto desse número.
 10.5<br />
 </div>
 
-<h2 id="CoordinateSystemofaComputerMonitor">Coordinate System of a Computer Monitor</h2>
+==Sistema de Coordenadas de um Monitor de Computador==
+% <h2 id="CoordinateSystemofaComputerMonitor">Coordinate System of a Computer Monitor</h2>
 
-<p style='float: right;' class='centeredImageP'><img src='images/12-12.png' alt='' class='centeredImage' /><br />
-Figure 12-12: The Cartesian coordinate system on a computer monitor.</p>
+% TODO: Ver se é 'sistema cartesiano de coordenadas' ou 'sistema de coordenadas cartesianas' 
+% e substituir as ocorrências caso estejam incorretas.
 
-<p>It is common that computer monitors use a coordinate system that has the origin (0, 0) at the top left corner of the screen, which increases going down and to the right. There are no negative coordinates. This is because text is printed starting at the top left, and is printed going to the right and downwards. Most computer graphics use this coordinate system, and we will use it in our games. Also it is common to assume that monitors can display 80 text characters per row and 25 text characters per column (look at Figure 12-12). This used to be the maximum screen size that monitors could support. While today's monitors can usually display much more text, we will not assume that the user's screen is bigger than 80 by 25.</p>
+Figure 12-12: O sistema Cartesiano de coordenadas de um monitor de computador.
+% <p style='float: right;' class='centeredImageP'><img src='images/12-12.png' alt='' class='centeredImage' /><br />
+% Figure 12-12: The Cartesian coordinate system on a computer monitor.</p>
 
+É comum que monitores de computador usem um sistema de coordenadas que 
+têm origem (0, 0) no canto superior esquerdo da tela, e aumentam à medida
+que vão para baixo e à direita. Não há coordenadas negativas. Isso é devido
+a textos serem impressos iniciando no topo esquerdo, seguindo para a direita
+e para baixo. A maioria dos gráficos de computadores usam esse sistema de 
+coordenadas, e vamos usá-lo nos nossos jogos. É também comum assumir que 
+monitores podem exibir textos com 80 caracteres por linha e 25 caracteres 
+por coluna (veja a Figura 12-12). Este costumava ser o tamanho máximo que 
+monitores podiam suportar. Apesar dos monitores de hoje normalmente poderem 
+exibir muito mais texto, nós não assumiremos que a tela do usuário é maior do
+que 80 por 25.
 
+% It is common that computer monitors use a coordinate system that has the
+origin (0, 0) at the top left corner of the screen, which increases going down
+and to the right. There are no negative coordinates. This is because text is 
+printed starting at the top left, and is printed going to the right and 
+downwards. Most computer graphics use this coordinate system, and we will use
+it in our games. Also it is common to assume that monitors can display 80 text
+characters per row and 25 text characters per column (look at Figure 12-12). 
+This used to be the maximum screen size that monitors could support. While 
+today's monitors can usually display much more text, we will not assume that 
+the user's screen is bigger than 80 by 25.
 
+==Sumário: Usando essa Matemática em Jogos==
+%<h2 id="SummaryUsingthisMathinGames">Summary: Using this Math in Games</h2>
 
-<h2 id="SummaryUsingthisMathinGames">Summary: Using this Math in Games</h2>
+% TODO: Traduzir parágrafo
+This hasn't been too much math to learn for programming. In fact, most 
+programming does not require understanding a lot of math. Up until this 
+chapter, we have been getting by on simple addition and multiplication.
 
-<p>This hasn't been too much math to learn for programming. In fact, most programming does not require understanding a lot of math. Up until this chapter, we have been getting by on simple addition and multiplication.</p>
+Sistemas de coordenadas Cartesianas são necessárias para descrever exatamente 
+onde em uma área bi-dimensional uma certa posição está. Coordenadas são 
+formadas por dois números: a coordenada-X e a coordenada-Y. O eixo-X vai da 
+esquerda para a direita, enquanto o eixo-Y de cima para baixo. Em uma tela 
+de computador (e na maioria da programação de computadores), o eixo-X se 
+inicia em 0 no lado esquerdo e aumenta para o lado direito. O eixo-Y se
+inicia em 0 no topo da tela e aumenta para baixo.
 
-:: Sistemas de coordenadas Cartesianas são necessárias para descreve exatamente onde em uma área bi-dimensional uma certa posição está. Coordenadas são formadas por dois números: a coordenada X e a coordenada Y. O eixo-X vai da esquerda para a direita, enquanto o eixo-Y de cima para baixo. Em uma tela de computador (e na maioria da programação de computadores), o eixo-X se inicia em 0 no lado esquerdo e aumenta ON THE WAY para a direita. O eixo-Y se inicia em 0 no topo da tela e aumenta ON THE WAY para baixo.
-<p>Cartesian coordinate systems are needed to describe exactly where in a two dimensional area a certain position is. Coordinates are made up of two numbers: the X-coordinate and the Y-coordinate. The X-axis runs left and right and the Y-axis runs up and down. On a computer screen (and in most computer programming), the X-axis starts at 0 at the left side and increases on the way to the right. The Y-axis starts at 0 on the top of the screen and increases on the way down.</p>
+% Cartesian coordinate systems are needed to describe exactly where in a two
+% dimensional area a certain position is. Coordinates are made up of two 
+% numbers: the X-coordinate and the Y-coordinate. The X-axis runs left and 
+% right and the Y-axis runs up and down. On a computer screen (and in most
+% computer programming), the X-axis starts at 0 at the left side and increases
+% on the way to the right. The Y-axis starts at 0 on the top of the screen and
+% increases on the way down.
 
-:: Os três truques que aprendemos nesse capítulo torna muito fácil adicionar númeors inteiros positivos e negativos. O primeiro truque é que o sinal de menos vai comer o sinal de mais à sua esquerda. O segundo é que dois sinais de menos juntos irão combinar em um sinal de mais. E o terceiro truque é que você pode trocar a posição dos números que você está adicionando. Isto é chamado de Propriedade Comutativa da Adição.
-<p>The three tricks we learned in this chapter make it very easy to add positive and negative integers. The first trick is that a minus sign will eat the plus sign on its left. The second trick is that two minuses next to each other will combine into a plus sign. And the third trick is that you can swap the position of the numbers you are adding. This is called the commutative property of addition.</p>
+Os três truques que aprendemos nesse capítulo torna muito fácil adicionar 
+números inteiros positivos e negativos. O primeiro truque é que o sinal de 
+menos vai comer o sinal de mais à sua esquerda. O segundo é que dois sinais 
+de menos juntos irão combinar em um sinal de mais. E o terceiro truque é que 
+você pode mudar a posição dos números que você está adicionando. Isto é 
+chamado de Propriedade Comutativa da Adição.
 
-:: Para o resto do livro, nós iremos usar os conceitos aprendidos nesse capítulo em nosso jogos porque eles possuem áreas bi-dimencionais neles. Todos os jogos gráficos requerem o entendimento de como as coordenadas Cartesianas funcionam.
-<p>For the rest of the book, we will use the concepts we learned in this chapter in our games because they have two dimensional areas in them. All graphical games require understanding how Cartesian coordinates work.</p>
+% The three tricks we learned in this chapter make it very easy to add 
+% positive and negative integers. The first trick is that a minus sign will 
+% eat the plus sign on its left. The second trick is that two minuses next to
+% each other will combine into a plus sign. And the third trick is that you 
+%can swap the position of the numbers you are adding. This is called the 
+% commutative property of addition.
 
+Para o resto do livro, nós iremos usar os conceitos aprendidos nesse capítulo 
+em nosso jogos porque eles possuem áreas bi-dimencionais neles. Todos os jogos
+gráficos requerem o entendimento de como as coordenadas Cartesianas funcionam.
 
-
-
-
-
-<table border='0' width='100%'><tr><td><a href='chapter11.html'>Go to Chapter 11 - Bagels</a></td><td align='right'><a href='chapter13.html'>Go to Chapter 13 - Sonar Treasure Hunt</a></td></tr></table>
-<div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
-
-
-
-
-</body>
-</html>
+% For the rest of the book, we will use the concepts we learned in this 
+% chapter in our games because they have two dimensional areas in them. All 
+% graphical games require understanding how Cartesian coordinates work.
