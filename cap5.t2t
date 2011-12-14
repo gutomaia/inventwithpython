@@ -16,7 +16,7 @@ Piadas
 
 =Tire o máximo de print()=
 
-A maioria dos jogos neste ligro terão texto simples como entrada e saída.
+A maioria dos jogos neste livro terão texto simples como entrada e saída.
 A entrada é digitada pelo usuário no teclado escrevendo no computador.
 A saída é o texto mostrada na tela.
 Em Python, a função ``print()`` pode ser usada para mostrar saída textual na
@@ -44,6 +44,7 @@ A vaca interrompida!
 
 Que vaca interromp-MUUUUU!!
 ```
+
 
 ==Código fonte do Piadas==
 
@@ -91,7 +92,7 @@ Vamos dar uma olhada no código mais de perto.
 + print('Uma baita duma briga!')
 + print()
 
-Aqui nós temos três chamadas à função ``print``
+Aqui nós temos três chamadas à função ``print``.
 Como nós não queremos dizer ao jogador o final da piada, nós precisamos chamar a
 função ``input()`` depois do primeiro ``print()``. O jogador pode ler a primeira
 linha, apertar Enter, e então ler o final da piada.
@@ -114,7 +115,7 @@ para não deixar nosso texto todo amontoado.
 {{LI}}print(){{/LI}}
 {{/OL}}
 
-No primeiro ``print()`` acima, você notará que temos uma barra logo antes a
+No primeiro ``print()`` acima, você notará que temos uma barra logo antes da
 aspa simples (isto é, o apóstrofo). Esta barra invertida (\ é uma barra
 invertida - //backslash//, / barra é uma barra normal - //slash//) nos diz que a
 letra logo a seguir é um ``caractere de escape``. Um caractere de escape nos
@@ -179,7 +180,7 @@ SyntaxError: EOL while scanning single-quoted string
 >>>
 ```
 
-Eu gosto de usar aspas simples porque não preciso ter que apertar a tecla shif
+Eu gosto de usar aspas simples porque não preciso ter que apertar a tecla shift
 no meu teclado para digitá-las. É mais fácil de digitar, e o computador não se
 importa de qualquer forma.
 
@@ -197,12 +198,12 @@ He said, "I can't believe you let him borrow your car."
 ```
 
 Você notou que nas STRINGS com aspas simples você não precisa "escapar" as aspas
-simples, e nas STRINGS com aspas duplas você não precisa escapar as aspas
+duplas, e nas STRINGS com aspas duplas você não precisa escapar as aspas
 simples? O interpretador Python é esperto o suficiente para saber que se uma
 STRING começa com uma aspa de um tipo, o outro tipo de aspa não significa que a
 STRING está terminando.
 
-
+%TODO: não seria melhor "O argumento end"?
 =O argumento chave end=
 
 {{OL start="9"}}
@@ -238,7 +239,7 @@ linha. Não houve nenhuma quebra de linha a ser mostrada depois da STRING
 =Resumo=
 
 Este capítulo explora as maneiras diferentes que você pode usar a função
-``print()``. Caracteres de escape são usados para caracteres que são difíceis or
+``print()``. Caracteres de escape são usados para caracteres que são difíceis ou
 impossíveis de digitar no código com o teclado. Eles são digitados nas STRINGS
 começando com uma barra invertida \ seguida de uma letra para o caractere de
 escape. Por exemplo, ``\n`` seria uma quebra de linha. Para incluir uma barra
