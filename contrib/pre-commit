@@ -7,7 +7,7 @@ EXITCODE=0
 for FILE in $(git diff --cached --name-only);
 do
     # Thanks to http://aurelio.net
-    COUNT=$(cat $FILE | awk 'length($0) > 80' | wc -l | tr -d [:blank:])
+    COUNT=$(git show :$FILE | awk 'length($0) > 80' | wc -l | tr -d [:blank:])
     if [ "$COUNT" -gt 0 ]
     then
         echo "Error: $FILE have $COUNT lines with more than 80 columns."
