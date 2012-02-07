@@ -12,7 +12,7 @@ var pageTracker = _gat._getTracker("UA-5459430-3");
 pageTracker._trackPageview();
 } catch(err) {}</script>
 
-<meta http-equiv="Content-Type" content="text/html;charset=us-ascii" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <title>IYOCGwP, Chapter 1 - Installing Python</title>
 <link rel="stylesheet" href="inventbook.css" type="text/css" media="all" />
 </head>
@@ -24,59 +24,62 @@ pageTracker._trackPageview();
 
 <div style='height: 350px;'><img src='images/chap1.png'></div>
 
-<div class='inthischapter'><h3 id="TopicsCoveredInThisChapter">Topics Covered In This Chapter:</h3>
+<div class='inthischapter'><h3 id="TopicsCoveredInThisChapter">Tópicos cobertos neste capítulo:</h3>
 <ul>
-<li>Downloading and installing the Python interpreter.</li>
-<li>Using IDLE's interactive shell to run instructions.</li>
-<li>How to use this book.</li>
-<li>The book's website at <a href='http://inventwithpython.com'>http://inventwithpython.com</a></li>
+<li>Baixando e instalando o interpretador Python.</li>
+<li>Usando o console iterativo para rodar instruções.</li>
+<li>Como usar este livro.</li>
+<li>O <i>website</i> do livro em <a href='http://inventwithpython.com'>http://inventwithpython.com</a> (em inglês)</li>
 </ul></div>
 
-<p>Hello! This is a book that will teach you how to program by showing you how to create computer games. Once you learn how the games in this book work, you'll be able to create your own games. All you'll need is a computer, some software called the Python Interpreter, and this book. The software you'll need is free and you can download it from the Internet.</p>
+<p>Olá! Este livro irá lhe ensinar como programar, mostrando a você como criar jogos de computador. Uma vez que você aprenda como os jogos neste livro funcionam, será capaz de criar os seus próprios <i>games</i>. Tudo o que você precisa é um computador, um programa chamado interpretador Python e este livro. O programa que você precisará é livre e pode ser baixado da internet.</p.
 
-<p>When I was a kid, I found a book like this that taught me how to write my first programs and games. It was fun and easy. Now as an adult, I still have fun programming computers, and I get paid for it. But even if you don't become a computer programmer when you grow up, programming is a useful and fun skill to have.</p>
+<p>Quando eu era uma criança, achei um livro como este que me ensinou como escrever meus primeiros programas e jogos. Aquilo foi divertido e fácil. Agora, como um adulto, eu ainda me divirto programando computadores e sou pago para fazer isso. Mas mesmo que você não venha a se tornar um programador quando crescer, a capacidade de programar um computador é uma habilidade muito útil.</p>
 
-<p>Computers are very useful machines. The good news is that learning to program a computer is easy. If you can read this book, you can program a computer. A computer <span class='term'>program</span> is just a bunch of instructions run by a computer, just like a storybook is just a whole bunch of sentences read by the reader.</p>
+<p>Computadores são máquinas muito úteis. A boa notícia é que aprender como programá-los é facil. Se você pode ler este livro, você pode programar um computador. Um <span class='term'>programa</span> é apenas um punhado de instruções executadas pelo computador, da mesma forma que um livro de histórias é apenas um punhado de sentenças lidas pelo leitor.</b>
 
-<p>These instructions are like the turn-by-turn instructions you might get for walking to a friend's house. (Turn left at the light, walk two blocks, keep walking until you find the first blue house on the right.) The computer follows each instruction that you give it in the order that you give it. Video games are themselves nothing but computer programs. (And very fun computer programs!)</p>
+<p>Essas instruções são como um passa-a-passo que você pode seguir para ir até a casa de um amigo. (Virar a esquerda no semaforo, andar dois quarteirões, continuar andando até você encontrar a primeira casa azul a direita.) O computador segue cada instrução que você fornece na ordem em que você a fornece. Vídeo games são apenas programas de computador. (E programas muito divertidos!)
 
-<p>In this book, any words you need to know will look like <span class='term'>this</span>. For example, the word "program" is defined in the previous paragraph.</p>
+<p>Neste livro, qualquer palavra que você precisar saber vai aparecer <span class='term'>assim</span>. Por exemplo, como a palavra "programa" é definida no parágrafo anterior.</p>
 
-<p>In order to tell a computer what you want it to do, you write a program in a language that the computer understands. The programming language this book teaches is named Python. There are many different programming languages including BASIC, Java, Pascal, Haskell, and C++ (pronounced, "c plus plus").</p>
+<p>Para dizer ao computador o que você quer fazer, você escreve um programa em uma linguagem que o computador entenda. A linguagem de programação ensinada neste livro chama-se Python. Há muitas linguagens de programação diferentes, incluindo BASIC, Java, Pascal, Haskell e C++ (pronuncia-se "c mais mais").</p>
 
-<p>When I was a kid most people learned to program in BASIC as their first language. But new programming languages have been invented since then, including Python. Python is even easier to learn than BASIC and it's a serious programming language used by professional computer programmers. Many adults use Python in their work (and when programming just for fun).</p>
+<p>Quando eu era criança, a maior parte das pessoas aprendiam a BASIC como a sua primeira linguagem. Mas novas linguagens de programação foram inventadas desde então, incluindo Python. Python é mais facil de aprender do que BASIC e é uma linguagem de programação séria usada por programadores de computador profissionais. Muitos adultos usam Python em seu trabalho (e quando estão programando apenas por diversão).</p>
 
-<p>The first few games we'll create together in this book will probably seem simple compared to the games you've played on the Xbox, Playstation, or Wii. They don't have fancy graphics or music but that's because they're meant to teach you the basics. They're purposely simple so that we can focus on learning to program. Games don't have to be complicated to be fun. Hangman, Tic Tac Toe, and making secret codes are simple to program but are also fun.</p>
+<p>Os primeiros jogos que nós vamos criar neste livro vão provavelmente parecer simples se comparados aos que você joga no Xbox, Playstation ou Wii. Eles não têm graficos bonitos ou música mas isto por que eles têm a intenção de ensinar o básico. São propositalmente simples para que possamos focar em aprender a programar. Jogos não precisam ser complicados para ser divertidos. Forca, Jogo-da-Velha e jogos de códigos secretos são simples de programar, mas também são divertidos.</p>
 
-<p>We'll also learn how to make the computer solve some math problems in the Python shell. (Don't worry if you don't know a lot of mathematics. If you know how to add and multiply, you know enough math to do programming. Programming is more about problem solving and making plans than it is about solving math problems.)</p>
+<p>Nós também vamos aprender como fazer o computador resolver problemas matemáticos no console do Python. (Não se preocupe se você não sabe muita matemática. Se sabe somar e multiplicar, você sabe o suficiente para programar. Programar é mais sobre resolução de problemas e traçar planos do que problemas matemáticos.)</p>
 
+<h2 id="DownloadingandInstallingPython">Baixando e Instalando o Python</h2>
 
-<h2 id="DownloadingandInstallingPython">Downloading and Installing Python</h2>
+<p>Antes de começar a programar você vai precisar instalar um programa chamado interpretador Python. (Talvez você precise da ajuda de um adulto aqui.) O <span class='term'>interpretador</span> é um programa que entende as instruções que você escreverá na linguagem Python. Sem o interpretador, seu computador não entenderá essas instruções e seus programas não funcionarão. (Vamos nos referir ao "interpretador Python" apenas como "Python" a partir de agora.)</p>
 
-<p>Before we can begin programming you'll need to install software called the Python interpreter. (You may need to ask an adult for help here.) The <span class='term'>interpreter</span> is a program that understands the instructions that you'll write in the Python language. Without the interpreter, your computer won't understand these instructions and your programs won't work. (We'll just refer to "the Python interpreter" as "Python" from now on.)</p>
+<p>Como escreveremos nossos jobos na linguagem Python, será necessário primeiro baixar o Python do <i>website</i> oficial da linguagem Python, <a href='http://www.python.org'>http://www.python.org</a></p>
 
-<p>Because we'll be writing our games in the Python language we need to download Python first, from the official website of the Python programming language, <a href='http://www.python.org'>http://www.python.org</a></p>
+<p>Eu vou dar instruções de como instalar o Python no Microsoft Windows, não por que é meu sistema operacional favorito, mas por que é o provável sistema operacional que o seu computador está utililizando. Você pode precisar da ajuda de alguém para baixar e instalar o Python no seu computador.</p>
 
-<p>I'm going to give you instructions for installing Python on Microsoft Windows, not because that's my favorite operating system but because chances are that's the operating system that your computer is running. You might want the help of someone else to download and install the Python software.</p>
-
-<p>When you get to python.org, you should see a list of links on the left (About, News, Documentation, Download, and so on.) Click on the <span class='menuname'>Download</span> link to go to the download page, then look for the file called <b>Python 3.1 Windows Installer</b> (Windows binary -- does not include source) and click on its link to download Python for Windows.</p>
+<p>Ao acessar o python.org, você deve ver uma lista de links na esquerda (Sobre, Noticias, Documentação, Download e por aí vai.) Clique no link <span class='menuname'>Download</span> para ir à página de download, então procure por um arquivo chamado <b>Python 3.1 Windows Installer</b> (Um binario Windows -- não inclue os fontes) e então clique neste link para baixar o Python para windows.</p>
 
 <p class='centeredImageP'><img src='images/1-1.png' alt='' class='centeredImage' /><br />
 Figure 1-1: Click the Windows installer link to download Python for Windows from <a href='http://www.python.org'>http://www.python.org</a></p>
 
-<p>Double-click on the <span class='filename'>python-3.1.msi</span> file that you've just downloaded to start the Python installer. (If it doesn't start, try right-clicking the file and choosing Install.) Once the installer starts up, click the <span class='menuname'>Next</span> button and just accept the choices in the installer as you go (no need to make any changes). When the install is finished, click <span class='menuname'>Finish</span>.</p>
+<p>Dê dois cliques no arquivo <span class='filename'>python-3.1.msi</span> que você acabou de baixar. (Se a instalação não iniciar, tente clicar com o botão direito do mouse e escolher a opção "Instalar"). Quando o instalador iniciar, clique no botão <span class='menuname'>Next</span> e aceite as opções de instalação (não é necessário fazer nenhuma mudança). Quando a instalação finalizar, clique <span class='menuname'>Finalizar</span>.</p>
 
-<p><b>Important Note!</b> Be sure to install Python 3, and not Python 2. The programs in this book use Python 3, and you'll get errors if you try to run them with Python 2.</p>
+<p><b>Importante!</b> Tenha certeza de ter instalado o Python 3 e não o Python 2. Os programas deste livro usam Python 3, você obterá alguns erros se tentar executá-los com Python 2.</p>
 
-<p>The installation for Mac OS is similar. Instead of downloading the .msi file from the Python website, download the .dmg Mac Installer Disk Image file instead. The link to this file will look something like "Mac Installer disk image (3.1.1)" on the "Download Python Software" web page.</p>
+<p>A instalaçaão para Mac OS é similar. Em vez de baixar o arquivo python-3.1.msi do site, baixe o arquivo python-3-1-1.dmg. O link para este arquivo vai parecer algo como "Mac Instaler disk image (3.1.1)" na página de download ("Dowload Python Software").</p>
 
-<p>If your operating system is Ubuntu, you can install Python by opening a terminal window (click on Applications &gt; Accessories &gt; Terminal) and entering <span class='m'>sudo apt-get install python3</span> then pressing Enter. You will need to enter the root password to install Python, so ask the person who owns the computer to type in this password.</p>
+<p>Se o seu sistema operacional for o Ubuntu, você pode instalar o Python abrindo uma janela do termina (clique em Aplicações &gt; Acessórios &gt; Terminal) e digite <span class='m'>sudo apt-get install python3</span> e tecle <i>enter</i>. Será necessário digitar a senha do usuário ou a senha de root para instalar o Python, portanto pergunte para o dono do computador para digitar sua senha.</p>
 
-<p>There may be a newer version of Python available than 3.1. If so, then just download the latest version. The game programs in this book will work just the same. If you have any problems, you can always Google for "installing Python on &lt;your operating system's name&gt;". Python is a very popular language, so you should have no difficulty finding help.</p>
+<p>Pode haver uma versão mais nova do que a versão 3.1 do Python. Se isso ocorrer, baixe a versão mais atual. Os programas deste livro funcionarão igualmente. Se você tiver qualquer problema, pode sempre procurar no Google por "instalar python 3 no <seu sistema operacional>". Python é uma linguagem muito popular, logo não deve ser dificil encontrar ajuda.</p>
 
+<!-- TODO video não está traduzido
 <p>A video tutorial of how to install Python is available from this book's website at <a href='http://inventwithpython.com/videos/'>http://inventwithpython.com/videos/</a>.</p>
+-->
 
-<h2 class='pagebreaker' id="StartingPython">Starting Python</h2>
+<!-- TODO traduzir o resto
+
+<h2 class='pagebreaker' id="StartingPython">Iniciando o Python</h2>
 
 <p>If your operating system is Windows XP, you should be able to run Python by choosing <span class='menuname'>Start</span>, <span class='menuname'>Programs</span>, <span class='menuname'>Python 3.1</span>, <span class='menuname'>IDLE (Python GUI)</span>. When it's running it should looking something like Figure 1-2. (But different operating systems will look slightly different.)</p>
 
@@ -147,8 +150,6 @@ xxxxxxxxxxxx')</li>
 
 <p>You can visit <a href='http://inventwithpython.com/traces'>http://inventwithpython.com/traces</a> to see a trace through each of the programs in this book. Tracing a program means to step through the code one line at a time, in the same way that a computer would execute it. The traces web page has notes and helpful reminders at each step of the trace to explain what the program is doing, so it can help you better understand why these programs work the way they do.</p>
 
-<!--<p>For a demonstration video of how to use the online tracing, go to this web video: <a href='TODO'>TODO</a></p>-->
-
 <h3 id="CheckingYourCodeOnline">Checking Your Code Online</h3>
 
 <p>Some of the games in this book are a little long. Although it is very helpful to learn Python by typing out the source code for these games, you may accidentally make typos that cause your game programs to crash. It may not be obvious where the typo is.</p>
@@ -159,17 +160,13 @@ xxxxxxxxxxxx')</li>
 
 <p>The online diff tool is at this web page: <a href='http://inventwithpython.com/diff'>http://inventwithpython.com/diff</a>. A video tutorial of how to use the diff tool is available from this book's website at <a href='http://inventwithpython.com/videos/'>http://inventwithpython.com/videos/</a>.</p>
 
-<!--<p>If you would like to see a video demonstration of how to use this book's website's online diff tool, view this YouTube video: <a href='TODO'>TODO</a></p>-->
-
-<!--<p>If you do not know how to copy and paste text, you can learn by watching this YouTube demonstration video: <a href='TODO'>TODO</a></p>-->
-
 <h2 id="Summary">Summary</h2>
 
 <p>This chapter has helped you get started with the Python software by showing you the python.org website where you can download it for free. After installing and starting the Python IDLE software, we will be ready to learn programming starting in the next chapter.</p>
 
 <p>This book's website at <a href='http://inventwithpython.com'>http://inventwithpython.com</a> has more information on each of the chapters, including an online tracing website that can help you understand what exactly each line of the programs do.</p>
 
-
+-->
 <table border='0' width='100%'><tr><td></td><td align='right'><a href='chapter2.html'>Go to Chapter 2 - The Interactive Shell</a></td></tr></table>
 <div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
 
