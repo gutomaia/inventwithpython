@@ -12,162 +12,166 @@ var pageTracker = _gat._getTracker("UA-5459430-3");
 pageTracker._trackPageview();
 } catch(err) {}</script>
 
-<meta http-equiv="Content-Type" content="text/html;charset=us-ascii" />
-<title>IYOCGwP, Chapter 4 - Guess the Number</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>IYOCGwP, Capítulo 4 - Adivinhe o Número</title>
 <link rel="stylesheet" href="inventbook.css" type="text/css" media="all" />
 </head>
 <body class='chapter4body'>
 
-<table border='0' width='100%'><tr><td><a href='chapter3.html'>Go to Chapter 3 - Strings</a></td><td align='right'><a href='chapter5.html'>Go to Chapter 5 - Jokes</a></td></tr></table>
+<table border='0' width='100%'><tr><td><a href='chapter3.html'>Ir ao Capítulo 3 - Strings</a></td><td align='right'><a href='chapter5.html'>Ir ao Capítulo 5 - Piadas</a></td></tr></table>
 <div style='height: 310px;'><a href='http://www.amazon.com/Invent-Your-Computer-Games-Python/dp/0982106017/'><img src='images/buyad.png' align='right'></a></div>
 
 
 <div style='height: 350px;'><img src='images/chap4.png' /></div>
 
-<div class='inthischapter'><h3 id="TopicsCoveredInThisChapter">Topics Covered In This Chapter:</h3>
+<div class='inthischapter'><h3 id="TopicsCoveredInThisChapter">Tópicos Abordados neste Capítulo</h3>
 <ul>
-<li><span class='m'>import</span> statements</li>
-<li>Modules</li>
-<li>Arguments</li>
-<li><span class='m'>while</span> statements</li>
-<li>Conditions</li>
-<li>Blocks</li>
-<li>Booleans</li>
-<li>Comparison operators</li>
-<li>The difference between <span class='m'>=</span> and <span class='m'>==</span>.</li>
-<li><span class='m'>if</span> statements</li>
-<li>The <span class='m'>break</span> keyword.</li>
-<li>The <span class='m'>str()</span> and <span class='m'>int()</span> functions.</li>
-<li>The <span class='m'>random.randint()</span> function.</li>
+<li>A declaração <span class='m'>import</span></li>
+<li>Módulos</li>
+<li>Argumentos</li>
+<li>A declaração <span class='m'>while</span></li>
+<li>Condições</li>
+<li>Blocos</li>
+<li>Booleanos</li>
+<li>Operadores de comparação</li>
+<li>A diferença entre <span class='m'>=</span> e <span class='m'>==</span>.</li>
+<li>A declaração <span class='m'>if</span></li>
+<li>O <span class='m'>break</span>.</li>
+<li>As funções <span class='m'>str()</span> e <span class='m'>int()</span>.</li>
+<li>A função <span class='m'>random.randint()</span>.</li>
 </ul></div>
 
-<h2 id="TheGuesstheNumberGame">The "Guess the Number" Game</h2>
+<h2 id="TheGuesstheNumberGame">O Jogo "Adivinhe o Número"</h2>
 
-<p>We are going to make a "Guess the Number" game. In this game, the computer will think of a random number from 1 to 20, and ask you to guess the number. You only get six guesses, but the computer will tell you if your guess is too high or too low. If you guess the number within six tries, you win.</p>
+<p>Vamos fazer o jogo "Adivinhe o Número". Neste jogo, o computador pensará um número aleatóreo de 1 a 20 e pedirá que você adivinhe o número. Você tem apenas seis chances, mas o computador dirá se o seu palpite é muito alto ou muito baixo. Se acertar o número em seis tentativas, você ganha.</p>
 
-<p>This is a good game for you to start with because it uses random numbers, loops, and input from the user in a fairly short program. As you write this game, you will learn how to convert values to different data types (and why you would need to do this).</p>
+<p>Este é um bom jogo para começar a programar, pois usa números aleatóreos, laços (loops) e entrada de dados do usuário em um programa mais ou menos curto. Enquanto você escreve este jogo, aprenderá como converter valores para diferentes tipos de dados (e porque você precisaria fazer isso).</p>
 
-<p>Because this program is a game, we'll call the user the <span class='term'>player</span>, but the word "user" would be correct too.</p>
+<p>Como este programa é um jogo, nós chamaremos o usuário de <span class='term'>jogador</span>, mas o termo "usuário" é correto também.</p>
 
-<h2 id="SampleRunofGuesstheNumber">Sample Run of "Guess the Number"</h2>
+<h2 id="SampleRunofGuesstheNumber">Exemplo de execução do "Adivinhe o Número"</h2>
 
-<p>Here is what our game will look like to the player when the program is run. The text that the player types in is in <b>bold</b>.</p>
+<p>É dessa forma que nosso jogo será apresentado ao jogador quando o programa for executado. O texto que o jogador escreve está em <b>negrito</b>.</p>
 
 <div class='sourceblurb'>
-Hello! What is your name?<br />
-<b>Albert</b><br />
-Well, Albert, I am thinking of a number between 1 and 20.<br />
-Take a guess.<br />
+Olá! Qual é o seu nome?<br />
+<b>Alberto</b><br />
+Bem, Alberto, eu estou pensando em um número entre 1 e 20.<br />
+Tente adivinhar.<br />
 <b>10</b><br />
-Your guess is too high.<br />
-Take a guess.<br />
+Seu palpite é muito alto.<br />
+Tente adivinhar<br />
 <b>2</b><br />
-Your guess is too low.<br />
-Take a guess.<br />
+Seu palpite é muito baixo.<br />
+Tente adivinhar.<br />
 <b>4</b><br />
-Good job, Albert! You guessed my number in 3 guesses!<br />
+Bom trabalho, Alberto! Você acertou o meu número em 3 tentativas!<br />
 </div>
 
-<p>Enter this code exactly as it appears here, and then save it by clicking on the <span class='menuname'>File</span> menu and then <span class='menuname'>Save As</span>. Give it a file name like <span class='filename'>guess.py</span> then run it by pressing the F5 key. Don't worry if you don't understand the code now, I'll explain it step by step.</p>
+<p>Entre esse código exatamente como ele está aqui, então salve-o clicando no menu <span class='menuname'>Arquivo</span> e então <span class='menuname'>Salvar Como</span>. Dê ao arquivo um nome como <span class='filename'>adivinhe.py</span> e então execute apertando a tecla F5. Não se preocupe se você não entender o código agora, eu explicarei passo a passo.</p>
 
+<h2 id="GuesstheNumbersSourceCode">Código fonte do Adivinhe o Número</h2>
 
-<h2 id="GuesstheNumbersSourceCode">Guess the Number's Source Code</h2>
+<p>Aqui está o código fonte do nosso jogo Adivinhe o Número. Quando você entrar esse código no editor, preste atenção ao espaçamento no início de algumas das linhas. Algumas linhas têm quatro ou oito espaçõs no início. Depois de digitar o código, salve o arquivo como <span class='filename'>adivinhe.py</span>. Você pode rodar o programa do editor de texto apertando F5. Se aparecer uma menssagem de erro, verifique se você digitou o programa exatamente como está escrito.</p>
 
-<p>Here is the source code for our Guess the Number game. When you enter this code into the file editor, be sure to pay attention to the spacing at the front of some of the lines. Some lines have four or eight spaces in front of them. After you have typed in the code, save the file as <span class='filename'>guess.py</span>. You can run the program from the file editor by pressing F5. If you see an error message, check that you have typed the program in exactly as written.</p>
+<p>Se você não quer digitar todo esse código, pode baixá-lo do <i>website</i>do livro na URL <a href='http://inventwithpython.com/chapter4'>http://inventwithpython.com/chapter4</a>.</p><!-- TODO URL do codigo fonte em portugues -->
 
-<p>If you don't want to type all this code, you can download it from this book's website at the URL <a href='http://inventwithpython.com/chapter4'>http://inventwithpython.com/chapter4</a>.</p>
+<p><b>Nota Importante!</b> Certifique-se de rodar este programa com o Python 3 e não Python 2. Os programas deste livro usam Python 3, e você verá erros se tentar rodá-los com Python 2. Você pode clicar em <span class='menuname'>Ajuda</span> e então em <span class='menuname'>Sobre o IDLE</span> para descobrir que vresão do Python você tem.</p>
 
-<p><b>Important Note!</b> Be sure to run this program with Python 3, and not Python 2. The programs in this book use Python 3, and you'll get errors if you try to run them with Python 2. You can click on <span class='menuname'>Help</span> and then <span class='menuname'>About IDLE</span> to find out what version of Python you have.</p>
-
-<div class='sourcecode pagebreaker'><span class='sourcecodeHeader'>guess.py</span><br /><span class='sourcecodeSubHeader'>This code can be downloaded from <a href='http://inventwithpython.com/guess.py'>http://inventwithpython.com/guess.py</a><br />If you get errors after typing this code in, compare it to the book's code with the online diff tool at <a href='http://inventwithpython.com/diff'>http://inventwithpython.com/diff</a> or email the author at <a href="mailto:al@inventwithpython.com">al@inventwithpython.com</a></span><br /><ol start='1'>
-<li><span class='comment'># This is a guess the number game.</span></li>
+<!-- TODO traduzir (repetitivo, as crianças vão passar batido por tudo isso e vão direto pro código! :-) -->
+<div class='sourcecode pagebreaker'><span class='sourcecodeHeader'>adivinhe.py</span><br /><span class='sourcecodeSubHeader'>This code can be downloaded from <a href='http://inventwithpython.com/guess.py'>http://inventwithpython.com/guess.py</a><br />If you get errors after typing this code in, compare it to the book's code with the online diff tool at <a href='http://inventwithpython.com/diff'>http://inventwithpython.com/diff</a> or email the author at <a href="mailto:al@inventwithpython.com">al@inventwithpython.com</a></span><br /><ol start='1'>
+<li><span class='comment'># Este é o jogo adivinhe o número.</span></li>
 <li>import random</li>
 <li></li>
-<li>guessesTaken = 0</li>
+<li>tentativas = 0</li>
 <li></li>
-<li>print('Hello! What is your name?')</li>
-<li>myName = input()</li>
+<li>print('Olá! Qual é o seu nome?')</li>
+<li>meuNome = input()</li>
 <li></li>
-<li>number = random.randint(1, 20)</li>
-<li>print('Well, ' + myName + ', I am thinking of a number between 1 and 20.')</li>
+<li>numero = random.randint(1, 20)</li>
+<li>print('Bem, ' + meuNome + ', eu estou pensando em um número entre 1 e 20.')</li>
 <li></li>
-<li>while guessesTaken &lt; 6:</li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Take a guess.') <span class='comment'># There are four spaces in front of print.</span></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;guess = input()</li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;guess = int(guess)</li>
+<li>while tentativas &lt; 6:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Tente adivinhar.') <span class='comment'># Há quatro espaços na frente do print.</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;palpite = input()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;palpite = int(palpite)</li>
 <li></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;guessesTaken = guessesTaken + 1</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;tentativas = tentativas + 1</li>
 <li></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;if guess &lt; number:</li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Your guess is too low.') <span class='comment'># There are eight spaces in front of print.</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if palpite &lt; numero:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Seu palpite é muito baixo.') <span class='comment'># Há oito espaços na frente do print.</span></li>
 <li></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;if guess &gt; number:</li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Your guess is too high.')</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if palpite &gt; numero:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Seu palpite é muito alto.')</li>
 <li></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;if guess == number:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;if palpite == numero:</li>
 <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</li>
 <li></li>
-<li>if guess == number:</li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;guessesTaken = str(guessesTaken)</li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Good job, ' + myName + '! You guessed my number in ' + guessesTaken + ' guesses!')</li>
+<li>if palpite == numero:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;tentativas = str(tentativas)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Bom trabalho, ' + meuNome + '! Você acertou o meu número em ' + tentativas + ' tentativas!')</li>
 <li></li>
-<li>if guess != number:</li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;number = str(number)</li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Nope. The number I was thinking of was ' + number)</li>
+<li>if palpite != numero:</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;numero = str(numero)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Não. O número que eu estava pensando era ' + numero)</li>
 </ol></div>
 
-<p>Even though we are entering our source code into a new file editor window, we can return to the shell to enter individual instructions in order to see what they do. The interactive shell is very good for experimenting with different instructions when we are not running a program. You can return to the interactive shell by clicking on its window or on its taskbar button. In Windows or Mac OS X, the taskbar or dock is on the bottom of the screen. On Linux the taskbar may be located along the top of the screen.</p>
+<p>Mesmo que estejamos entrando nosso código fonte em uma nova janela do editor, podemos retornar ao console para entrar instruções individuais para ver o que elas fazem. O console interativo é muito bom para experimentar com diferentes instruções quando não estamos rodando um programa. Você pode retornar ao console interativo clicando na sua janela ou no botão da barra de tarefas. No Windows ou Mac OS X, a barra de tarefas <!-- TODO or dock --> está no rodapé da tela. No Linux pode estar no topo da tela.</p>
 
+<!-- TODO traduzir, as crianças vão passar batido aqui -->
 <p>If the program doesn't seem to work after you've typed it, check to see if you have typed the code exactly as it appears in this book. You can also copy and paste your code to the online "diff" tool at <a href='http://inventwithpython.com/diff'>http://inventwithpython.com/diff</a>. The diff tool will show you how your code is different from the source code in this book. In the file editor, press Ctrl-A to "Select All" the text you've typed, then press Ctrl-C to copy the text to the clipboard. Then, paste this text by clicking in the diff tool's text field on the website and click the "Compare" button. The website will show you any differences between your code and the code in this book.</p>
 
+<!-- TODO traduzir, as crianças vão passar batido aqui -->
 <p>There is a diff tool for each program in this book on the <a href='http://inventwithpython.com'>http://inventwithpython.com</a> website. A video tutorial of how to use the diff tool is available from this book's website at <a href='http://inventwithpython.com/videos/'>http://inventwithpython.com/videos/</a>.</p>
 
-<h2 id="TheimportStatement">The <span class='m'>import</span> Statement</h2>
+<h2 id="TheimportStatement">A declaração <span class='m'>import</span></h2>
 
-<p>Let's look at each line of code in turn to see how this program works.</p>
+<p>Vamos olhar cada linha de código para ver como este programa funciona.</p>
 
 <div class='sourcecode'><ol start='1'>
-<li><span class='comment'># This is a guess the number game.</span></li>
+<li><span class='comment'># Este é o jogo adivinhe o número.</span></li>
 </ol></div>
 
-<p>This line is a comment. Comments were introduced in our Hello World program in Chapter 3. Remember that Python will ignore everything after the <span class='m'>#</span> sign. This just reminds us what this program does.</p>
+<p>Esta linha é um comentário. Comentários foram introduzidos no nosso programa Alô Mundo no capítulo três. Lembre-se que o Python ignora tudo depois do sinal <span class='m'>#</span>. Isto apenas nos lembra o que este programa faz.</p>
 
 <div class='sourcecode'><ol start='2'>
 <li>import random</li>
 </ol></div>
 
-<p>This is an <span class='term'>import statement</span>. Statements are not functions (notice that neither <span class='m'>import</span> nor <span class='m'>random</span> has parentheses after its name). Remember, statements are instructions that perform some action but do not evaluate to a value. You have already seen statements: assignment statements store a value into a variable (but the statement does not evaluate to anything).</p>
+<p>Esta é uma <span class='term'>declaração de importação</span>. Declarações não são funções (note que nem o <span class='m'>import</span> nem o <span class='m'>random</span> têm parênteses depois do seu nome). Lembre-se, declarações são instruções que fazem alguma ação mas não avaliam para um valor. Você já viu declarações: declarações de associação armazenam o valor em uma variável (mas a declaração não avalia para nada).</p>
 
-<p>While Python includes many built-in functions, some functions exist in separate programs called modules. <span class='term'>Modules</span> are Python programs that contain additional functions. We use the functions of these modules by bringing them into our programs with the <span class='m'>import</span> statement. In this case, we're importing the module <span class='m'>random</span>.</p>
+<p>Enquanto Python inclue muitas funções nativas, algumas funções existem em programas separados chamados de módulos. <span class='term'>Módulos</span> são programas em Python que contêm funções adicionais. Nós usamos as funções desses módulos chamando-as para dentro do nosso programa com a declaração <span class='m'>import</span>. Neste caso, estamos importando o módulo <span class='m'>random</span> (random, em inglês, significa "aleatóreo").</p.
 
-<p>The <span class='m'>import</span> statement is made up of the <span class='m'>import</span> keyword followed by the module name. Together, the keyword and module name make up the statement. Line 2 then is an <span class='m'>import</span> statement that imports the module named <span class='m'>random</span> which contains several functions related to random numbers. (We'll use one of these functions later to have the computer come up with a random number for us to guess.)</p>
+<p>A declaração de importação é feita da palavra <span class='m'>import</span> seguida do nome do módulo. Juntas o <span class='m'>import</span> e o nome do módulo compõe a declaração. Então a linha 2 é uma declaraçao de importação que importa o módulo chamado <span class='m'>random</span> que contém diversas funções relacionadas a números aleatóreos. (Vamos usar uma dessas funções mais tarde para que o computador tenha um número aleatóreo para adivinharmos.)</p>
 
 <div class='sourcecode'><ol start='4'>
-<li>guessesTaken = 0</li>
+<li># tentativas = 0</li.
 </ol></div>
 
-<p>This line creates a new variable named <span class='m'>guessesTaken</span>. We'll store the number of guesses the player makes in this variable. Since the player hasn't made any guesses so far, we store the integer <span class='m'>0</span> here.</p>
+<p>Esta linha cria uma nova variável chamada <span clas='m>tentativas</span>. Nós vamos armazenar o número de tentativas que o jogador faz nessa variável. Como o jogador ainda não fez nenhuma tentativa ainda, vamos armazenar o inteiro <span class='m'>0</span>.</p>
 
 <div class='sourcecode'><ol start='6'>
-<li>print('Hello! What is your name?')</li>
-<li>myName = <span class='m'>input()</span></li>
+<li>print('Olá! Qual é o seu nome?')</li>
+<li>meuNome = <span class='m'>input()</span></li>
 </ol></div>
 
-<p>Lines 6 and 7 are the same as the lines in the Hello World program that we saw in Chapter 3. Programmers often reuse code from their other programs when they need the program to do something that they've already coded before.</p>
+<p>As linhas 6 e 7 são as mesmas linhas do programa Alô Mundo que vimos no capítulo 3. Programadores costumam reutilizar código de seus outros programas quando eles precisam programar alguma coisa que já programaram antes.</p>
 
-<p>Line 6 is a function call to the <span class='m'>print()</span> function. Remember that a function is like a mini-program that our program runs, and when our program calls a function it runs this mini-program. The code inside the <span class='m'>print()</span> function displays the string you passed it inside the parentheses on the screen.</p>
+<p>A linha 6 é a chamada da função <span class='m'>print()</span>. Lembre-se que a função é como um mini-programa que nosso programa executa, e quando nosso programa chama a função ele roda esse mini-programa. O código dentro da função <span class='m'>print()</span> mostra na tela o string que você passou a ela dentro dos parênteses.</p>
 
-<p>When these two lines finish executing, the string that is the player's name will be stored in the <span class='m'>myName</span> variable. (Remember, the string might not really be the player's name. It's just whatever string the player typed in. Computers are dumb and just follow their programs no matter what.)</p>
+<p>Quando essas duas linhas terminarem de executar, o string que é o nome do jogador será armazenado na variável <span class='m'>meuNome</span>. (Lembre-se, o string pode não ser realmente o nome do jogador. Ele é apenas qualquer string que o jogador digitou. Computadores são estúpidos e apenas seguem o seu programa, não importa o quê.)</p>
 
-<h2 id="TherandomrandintFunction">The <span class='m'>random.randint()</span> Function</h2>
+<h2 id="TherandomrandintFunction">A função <span class='m'>random.randint()</span></h2>
 
 <div class='sourcecode'><ol start='9'>
-<li>number = random.randint(1, 20)</li>
+<li>numero = random.randint(1, 20)</li>
 </ol></div>
 
-<p>In Line 9 we call a new function named <span class='m'>randint()</span>, and then store the return value in a variable named <span class='m'>number</span>. Remember that function calls are expressions because they evaluate to a value. We call this value the function call's return value.</p>
+<p>Na linha 9 nós chamamos uma nova função chamada <span class='m'>randint()</span>, e então armazenamos o valor retornado na variável chamada <span class='m'>numero</span>. Lembre-se que chamadas de funções são expressões porque elas avaliam para um valor. Nós chamamos esse valor de valor de retorno.</p>
 
-<p>Because the <span class='m'>randint()</span> function is provided by the <span class='m'>random</span> module, we precede it with <span class='m'>random.</span> (don't forget the period!) to tell our program that the function <span class='m'>randint()</span> is in the random module.</p>
+<p>Como a função <span class='m'>randint()</span> é fornecida pelo módulo <span class='m'>random</span>, nós a precedemos com <span class='m'>random.</span> (não esqueça o ponto!) para avisar nosso programa que a função  <span class='m'>randint()</span> está no módulo <span class='m'>random</span>.</p>
+
+<!-- TODO parei aqui -->
 
 <p>The <span class='m'>randint()</span> function will return a random integer between (and including) the two integers we give it. Here, we give it the integers <span class='m'>1</span> and <span class='m'>20</span> between the parentheses that follow the function name (separated by a comma). The random integer that <span class='m'>randint()</span> returns is stored in a variable named <span class='m'>number</span>; this is the secret number the player is trying to guess.</p>
 
