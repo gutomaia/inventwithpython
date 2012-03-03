@@ -80,7 +80,6 @@ Bom trabalho, Alberto! Você acertou o meu número em 3 tentativas!<br />
 
 <!-- TODO traduzir (repetitivo, as crianças vão passar batido por tudo isso e vão direto pro código! :-) -->
 <div class='sourcecode pagebreaker'><span class='sourcecodeHeader'>adivinhe.py</span><br /><span class='sourcecodeSubHeader'>This code can be downloaded from <a href='http://inventwithpython.com/guess.py'>http://inventwithpython.com/guess.py</a><br />If you get errors after typing this code in, compare it to the book's code with the online diff tool at <a href='http://inventwithpython.com/diff'>http://inventwithpython.com/diff</a> or email the author at <a href="mailto:al@inventwithpython.com">al@inventwithpython.com</a></span><br /><ol start='1'>
-<li><span class='comment'># coding: utf-8</span></li>
 <li><span class='comment'># Este é o jogo adivinhe o número.</span></li>
 <li>import random</li>
 <li></li>
@@ -130,13 +129,12 @@ Bom trabalho, Alberto! Você acertou o meu número em 3 tentativas!<br />
 <p>Vamos olhar cada linha de código para ver como este programa funciona.</p>
 
 <div class='sourcecode'><ol start='1'>
-<li><span class='comment'># coding: utf-8</span></li>
 <li><span class='comment'># Este é o jogo adivinhe o número.</span></li>
 </ol></div>
 
-<p>Estas linhas são comentários. Comentários foram introduzidos no nosso programa Alô Mundo no capítulo três. Lembre-se que o Python ignora tudo depois do sinal <span class='m'>#</span>. Isto apenas nos lembra o que este programa faz. A primeira linha, que tem escrito "coding: utf-8" é necessária no começo do programa sempre que quisermos utilizar acentos no nosso código fonte (na verdade esse assunto é bem mais complicado, mas isso vai além do escopo desse livro e você não precisa se preocupar).</p>
+<p>Estas linhas são comentários. Comentários foram introduzidos no nosso programa Alô Mundo no capítulo três. Lembre-se que o Python ignora tudo depois do sinal <span class='m'>#</span>. Isto apenas nos lembra o que este programa faz. </p>
 
-<div class='sourcecode'><ol start='3'>
+<div class='sourcecode'><ol start='2'>
 <li>import random</li>
 </ol></div>
 
@@ -144,32 +142,32 @@ Bom trabalho, Alberto! Você acertou o meu número em 3 tentativas!<br />
 
 <p>Enquanto Python inclue muitas funções nativas, algumas funções existem em programas separados chamados de módulos. <span class='term'>Módulos</span> são programas em Python que contêm funções adicionais. Nós usamos as funções desses módulos chamando-as para dentro do nosso programa com a declaração <span class='m'>import</span>. Neste caso, estamos importando o módulo <span class='m'>random</span> (random, em inglês, significa "aleatóreo").</p.
 
-<p>A declaração de importação é feita da palavra <span class='m'>import</span> seguida do nome do módulo. Juntas o <span class='m'>import</span> e o nome do módulo compõe a declaração. Então a linha 3 é uma declaraçao de importação que importa o módulo chamado <span class='m'>random</span> que contém diversas funções relacionadas a números aleatóreos. (Vamos usar uma dessas funções mais tarde para que o computador tenha um número aleatóreo para adivinharmos.)</p>
+<p>A declaração de importação é feita da palavra <span class='m'>import</span> seguida do nome do módulo. Juntas o <span class='m'>import</span> e o nome do módulo compõe a declaração. Então a linha 2 é uma declaraçao de importação que importa o módulo chamado <span class='m'>random</span> que contém diversas funções relacionadas a números aleatóreos. (Vamos usar uma dessas funções mais tarde para que o computador tenha um número aleatóreo para adivinharmos.)</p>
 
-<div class='sourcecode'><ol start='5'>
+<div class='sourcecode'><ol start='4'>
 <li># tentativas = 0</li.
 </ol></div>
 
 <p>Esta linha cria uma nova variável chamada <span clas='m>tentativas</span>. Nós vamos armazenar o número de tentativas que o jogador faz nessa variável. Como o jogador ainda não fez nenhuma tentativa ainda, vamos armazenar o inteiro <span class='m'>0</span>.</p>
 
-<div class='sourcecode'><ol start='7'>
+<div class='sourcecode'><ol start='6'>
 <li>print('Olá! Qual é o seu nome?')</li>
 <li>meuNome = <span class='m'>input()</span></li>
 </ol></div>
 
-<p>As linhas 7 e 8 são as mesmas linhas do programa Alô Mundo que vimos no capítulo 3. Programadores costumam reutilizar código de seus outros programas quando eles precisam programar alguma coisa que já programaram antes.</p>
+<p>As linhas 6 e 7 são as mesmas linhas do programa Alô Mundo que vimos no capítulo 3. Programadores costumam reutilizar código de seus outros programas quando eles precisam programar alguma coisa que já programaram antes.</p>
 
-<p>A linha 7 é a chamada da função <span class='m'>print()</span>. Lembre-se que a função é como um mini-programa que nosso programa executa, e quando nosso programa chama a função ele roda esse mini-programa. O código dentro da função <span class='m'>print()</span> mostra na tela o string que você passou a ela dentro dos parênteses.</p>
+<p>A linha 6 é a chamada da função <span class='m'>print()</span>. Lembre-se que a função é como um mini-programa que nosso programa executa, e quando nosso programa chama a função ele roda esse mini-programa. O código dentro da função <span class='m'>print()</span> mostra na tela o string que você passou a ela dentro dos parênteses.</p>
 
 <p>Quando essas duas linhas terminarem de executar, o string que é o nome do jogador será armazenado na variável <span class='m'>meuNome</span>. (Lembre-se, o string pode não ser realmente o nome do jogador. Ele é apenas qualquer string que o jogador digitou. Computadores são estúpidos e apenas seguem o seu programa, não importa o quê.)</p>
 
 <h2 id="TherandomrandintFunction">A função <span class='m'>random.randint()</span></h2>
 
-<div class='sourcecode'><ol start='10'>
+<div class='sourcecode'><ol start='9'>
 <li>numero = random.randint(1, 20)</li>
 </ol></div>
 
-<p>Na linha 10 nós chamamos uma nova função chamada <span class='m'>randint()</span>, e então armazenamos o valor retornado na variável chamada <span class='m'>numero</span>. Lembre-se que chamadas de funções são expressões porque elas avaliam para um valor. Nós chamamos esse valor de valor de retorno.</p>
+<p>Na linha 9 nós chamamos uma nova função chamada <span class='m'>randint()</span>, e então armazenamos o valor retornado na variável chamada <span class='m'>numero</span>. Lembre-se que chamadas de funções são expressões porque elas avaliam para um valor. Nós chamamos esse valor de valor de retorno.</p>
 
 <p>Como a função <span class='m'>randint()</span> é fornecida pelo módulo <span class='m'>random</span>, nós a precedemos com <span class='m'>random.</span> (não esqueça o ponto!) para avisar nosso programa que a função  <span class='m'>randint()</span> está no módulo <span class='m'>random</span>.</p>
 
@@ -209,21 +207,21 @@ Bom trabalho, Alberto! Você acertou o meu número em 3 tentativas!<br />
 &gt;&gt;&gt;<br />
 </div>
 
-<p>Nós podemos mudar levemente o código do jogo para fazê-lo se comportar diferente. Tente mudar as linhas 10 e 11 de:</p>
+<p>Nós podemos mudar levemente o código do jogo para fazê-lo se comportar diferente. Tente mudar as linhas 9 e 10 de:</p>
 
-<div class='sourcecode'><ol start='10'>
+<div class='sourcecode'><ol start='9'>
 <li>numero = random.randint(1, <b>20</b>)</li>
 <li>print('Bem, ' + meuNome + ', eu estou pensando em um número entre 1 e 20.')</li>
 </ol></div>
 
 <p>para essas linhas:</p>
 
-<div class='sourcecode'><ol start='10'>
+<div class='sourcecode'><ol start='9'>
 <li>numero = random.randint(1, <b>100</b>)</li>
 <li>print('Bem, ' + meuNome + ', eu estou pensando em um número entre 1 e 100.')</li>
 </ol></div>
 
-<p>E agora o computador pensará em um inteiro entre <span class='m'>1</span> e <span class='m'>100</span>.Mudando a linha 10 o intervalo do número aleatóreo mudará, mas lembre-se de mudar a linha 11 para que o jogo também avise o jogador do novo intervalo em vez do antigo.</p>
+<p>E agora o computador pensará em um inteiro entre <span class='m'>1</span> e <span class='m'>100</span>.Mudando a linha 9 o intervalo do número aleatóreo mudará, mas lembre-se de mudar a linha 10 para que o jogo também avise o jogador do novo intervalo em vez do antigo.</p>
 
 <h3 id="CallingFunctionsthatareInsideModules">Chamando Funções que estão dentro de Módulos</h3>
 
@@ -273,19 +271,19 @@ TypeError: randint() takes exactly 3 positional arguments (4 given)<br />
 
 <h2 id="WelcomingthePlayer">Boas vindas ao Jogador</h2>
 
-<p>Ns linhas 11 e 13 o programa saúda o jogador e conta a ele sobre o jogo, e então começa deixando o jogador adivinhar o número secreto. A linha 11 é bem simples, mas a linha 13 introduz um conceito útil chamado loop.</p>
+<p>Ns linhas 10 e 12 o programa saúda o jogador e conta a ele sobre o jogo, e então começa deixando o jogador adivinhar o número secreto. A linha 10 é bem simples, mas a linha 12 introduz um conceito útil chamado loop.</p>
 
-<div class='sourcecode'><ol start='11'>
+<div class='sourcecode'><ol start='9'>
 <li>print('Bem, ' + meuNome + ', eu estou pensando em um número entre 1 e 100.')</li>
 </ol></div>
 
-<p>Na linha 11 e a função <span class='m'>print()</span> saúda o jogador pelo seu nome, e então diz a ele que o computador está pensando em um número aleatóreo.</p>
+<p>Na linha 10 e a função <span class='m'>print()</span> saúda o jogador pelo seu nome, e então diz a ele que o computador está pensando em um número aleatóreo.</p>
 
 <p>Mas espere - eu não disse que a função <span class='m'>print()</span> aceita apenas um string? Pode parecer que tem mais de um string lá. Mas preste atenção na linha. Os sinais de mais juntam os três strings para avaliar para apenas um string, e esse é o único string que a função <span class='m'>print()</span> mostra. Pode parecer que as vírgulas estão separando os strings, mas se você prestar atenção verá que as vírgulas estão <i>dentro</i> das aspas, e são parte dos próprios strings.</p>
 
 <h2 id="Loops">Loops</h2>
 
-<p>A linha 13 tem algo que chamamos de um comando <span class='m'>while</span>, que indica o começo de um loop "while" ("while", em inglês, significa "enquanto", e pronuncia-se mais ou menos "uaiou"). <span class='term'>Loops</span> são partes do código que ficam sendo executadas e executadas de novo. Mas antes de aprendermos sobre os loops <span class='m'>while</span>, precisamos aprender alguns conceitos primeiro. Esses conceitos são blocos, Booleanos, operadores de comparação, condições e, finalmente, o comando <span class='m'>while</span>.</p>
+<p>A linha 12 tem algo que chamamos de um comando <span class='m'>while</span>, que indica o começo de um loop "while" ("while", em inglês, significa "enquanto", e pronuncia-se mais ou menos "uaiou"). <span class='term'>Loops</span> são partes do código que ficam sendo executadas e executadas de novo. Mas antes de aprendermos sobre os loops <span class='m'>while</span>, precisamos aprender alguns conceitos primeiro. Esses conceitos são blocos, Booleanos, operadores de comparação, condições e, finalmente, o comando <span class='m'>while</span>.</p>
 
 <h2 id="Blocks">Blocos</h2>
 
@@ -298,15 +296,15 @@ TypeError: randint() takes exactly 3 positional arguments (4 given)<br />
 <p class='centeredImageP'><img src='images/4-1.png' alt='' class='centeredImage' /><br />
 Figura 4-1: Blocos e sua identação. Os pontos pretos representam espaços.</p>
 
-<p>Por exemplo, veja o código na Figura 4-1. Os espaços foram substituídos por quadrados escuros para facilitar a sua contagem. A linha 13 tem uma identação de zero espaços e não está dentro de nenhum bloco. A linha 14 tem uma identação de 4 espaços. Como essa identação é maior que a identação da linha anterior, podemos dizer um novo bloco começou. As linhas 15, 16, 17 e 19 também têm quatro espaços de identação. Todas essas linhas têm a mesma quantidade de identação que a linha anterior, então sabemos que elas estão no mesmo bloco. (Nós não contamos linhas em branco quando procuramos pela identação.)</p>
+<p>Por exemplo, veja o código na Figura 4-1. Os espaços foram substituídos por quadrados escuros para facilitar a sua contagem. A linha 12 tem uma identação de zero espaços e não está dentro de nenhum bloco. A linha 13 tem uma identação de 4 espaços. Como essa identação é maior que a identação da linha anterior, podemos dizer um novo bloco começou. As linhas 14, 15, 17 e 19 também têm quatro espaços de identação. Todas essas linhas têm a mesma quantidade de identação que a linha anterior, então sabemos que elas estão no mesmo bloco. (Nós não contamos linhas em branco quando procuramos pela identação.)</p>
 
-<p>A linha 21 tem uma identação de oito espaços. Oito espaços é mais que quatro espaços, então sabemos que um novo bloco começou. Esse é um bloco que está dentro de outro bloco.</p>
+<p>A linha 20 tem uma identação de oito espaços. Oito espaços é mais que quatro espaços, então sabemos que um novo bloco começou. Esse é um bloco que está dentro de outro bloco.</p>
 
-<p>A linha 23 tem apenas quatro espaços. A linha antes da 23 tinha um número maior de espaços. Como a identação diminuiu, sabemos que aquele bloco terminou. A linha 23 está no mesmo bloco das outras linhas com quatro espaços.</p>
+<p>A linha 22 tem apenas quatro espaços. A linha antes da 22 tinha um número maior de espaços. Como a identação diminuiu, sabemos que aquele bloco terminou. A linha 22 está no mesmo bloco das outras linhas com quatro espaços.</p>
 
-<p>A linha 24 aumenta a identação para oito espaços, então novamente começou um novo bloco.</p>
+<p>A linha 23 aumenta a identação para oito espaços, então novamente começou um novo bloco.</p>
 
-<p>Para relembrar, a linha 13 não está em nenhum bloco. As linhas 14 e 24 estão todas em um bloco (marcado com o 1 circulado). A linha 21 está em um bloco em um bloco (marcada com o 2 circulado). E a linha 24 é a única linha em outro bloco em um bloco (marcada com um 3 circulado).</p>
+<p>Para relembrar, a linha 12 não está em nenhum bloco. As linhas 13 a 23 estão todas em um bloco (marcado com o 1 circulado). A linha 20 está mum bloco dentro de outro bloco (marcada com o 2 circulado). E a linha 23 é a única linha de outro bloco dentro de bloco (marcada com um 3 circulado).</p>
 
 <p>Quando você digita código no IDLE, cada letra tem a mesma largura. Você pode contar o número de letras acima ou abaixo da linha para ver quantos espaços você colocou na frente daquela linha de código.</p>
 
@@ -318,9 +316,9 @@ Figura 4-1: Blocos e sua identação. Os pontos pretos representam espaços.</p>
 
 <h2 id="ComparisonOperators">Operadores de Comparação</h2>
 
-<p>Na linha 13 do nosso programa, a linha de código contendo o comando <span class='m'>while</span>:</p>
+<p>Na linha 12 do nosso programa, a linha de código contendo o comando <span class='m'>while</span>:</p>
 
-<div class='sourcecode'><ol start='13'>
+<div class='sourcecode'><ol start='12'>
 <li>while tentativas &lt; 6:</li>
 </ol></div>
 
@@ -347,7 +345,7 @@ Figura 4-1: Blocos e sua identação. Os pontos pretos representam espaços.</p>
 
 <p>Condições sempre avaliam para um valor Booleano: <span class='m'>True</span> ou <span class='m'>False</span>. Por exemplo, a condição no nosso código <span class='m'>tentativas &lt; 6</span> pergunta "o valor armazenado em <span class='m'>tentativas</span> é menor que o número <span class='m'>6</span>?". Se sim, então a condição avalia para <span class='m'>True</span> (verdadeiro). Senão, a condição avalia para <span class='m'>False</span>.</p>
 
-<p>No caso do nosso jogo Adivinhe o Número, na linha 5 armazenamos o valor <span class='m'>0</span> em <span class='m'>tentativas</span>. Como <span class='m'>0</span> é menor que <span class='m'>6</span>, essa condição avalia para o valor Booleano <span class='m'>True</span> (verdadeiro). Lembre-se, uma condição é apenas um nome para uma expressão que usa operadores de comparação como <span class='m'>&lt;</span> or <span class='m'>!=</span>.</p>
+<p>No caso do nosso jogo Adivinhe o Número, na linha 4 armazenamos o valor <span class='m'>0</span> em <span class='m'>tentativas</span>. Como <span class='m'>0</span> é menor que <span class='m'>6</span>, essa condição avalia para o valor Booleano <span class='m'>True</span> (verdadeiro). Lembre-se, uma condição é apenas um nome para uma expressão que usa operadores de comparação como <span class='m'>&lt;</span> or <span class='m'>!=</span>.</p>
 
 <h2 id="ExperimentwithBooleansComparisonOperatorsandConditions">Experimente com Booleanos, Operadores de Comparação e Condições</h2>
 
