@@ -12,7 +12,7 @@ var pageTracker = _gat._getTracker("UA-5459430-3");
 pageTracker._trackPageview();
 } catch(err) {}</script>
 
-<meta http-equiv="Content-Type" content="text/html;charset=us-ascii" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <title>IYOCGwP, Chapter 3 - Strings, and Your First Program</title>
 <link rel="stylesheet" href="inventbook.css" type="text/css" media="all" />
 </head>
@@ -26,34 +26,39 @@ pageTracker._trackPageview();
 
 <div class='inthischapter'><h3 id="TopicsCoveredInThisChapter">Topics Covered In This Chapter:</h3>
 <ul>
-<li>Flow of execution</li>
+<ul>
+<li>Fluxo de execução</li>
 <li>Strings</li>
-<li>String concatenation</li>
-<li>Data types (such as strings or integers)</li>
-<li>Using IDLE to write source code.</li>
-<li>Saving and running programs in IDLE.</li>
-<li>The <span class='m'>print()</span> function.</li>
-<li>The <span class='m'>input()</span> function.</li>
-<li>Comments</li>
-<li>Capitalizing variables</li>
-<li>Case-sensitivity</li>
+<li>Concatenação de Strings</li>
+<li>Tipos de dados (como strings ou inteiros)</li>
+<li>Usando o IDLE para escrever código</li>
+<li>Salvando e executando programas com o IDLE</li>
+<li>A função <span class='m'>print()</span></li>
+<li>A função <span class='m'>input()</span></li>
+<li>Comentários</li>
+<!-- TODO: tradução para capitalizing -->
+<li>**Capitalizing** variáveis</li>
+<!-- TODO: tradução para case-sensitive -->
+<li>Diferenças entre Maiúsculas e Minúsculas</li>
 </ul></div>
 
-<p>That's enough of integers and math for now. Python is more than just a calculator. Now let's see what Python can do with text. In this chapter, we will learn how to store text in variables, combine text together, and display them on the screen. Many of our programs will use text to display our games to the player, and the player will enter text into our programs through the keyboard. We will also make our first program, which greets the user with the text, "Hello World!" and asks for the user's name.</p>
+<p>Chega de inteiros e matemática por enquanto. Python é muito mais do que uma calculadora. Agora, vamos ver o que Python pode fazer com texto. Neste capítulo, iremos aprender como armazenar texto em variáveis, combinar textos e mostrá-los na tela. Muitos de nossos programas utilizarão texto para apresentar nossos jogos ao jogador, que por sua vez digitará texto para nossos programas através do teclado. Também criaremos nosso primeiro programa, que saúda o usuário com o texto "Alô Mundo!" e solicita ao usuário o seu nome.</p>
 
 <h2 id="Strings">Strings</h2>
 
+<p>Em Python, trabalhamos com pequenos trechos de texto chamados de <span class='term'>strings</span>. Nós podemos armazenar strings em variáveis assim como podemos armazenar números dentro de variáveis. Quando digitamos strings, colocamos elas entre duas aspas (') simples, assim:
 
-<p>In Python, we work with little chunks of text called <span class='term'>strings</span>. We can store string values inside variables just like we can store number values inside variables. When we type strings, we put them in between two single quotes ('), like this:</p>
 
 <div class='sourceblurb'>
-&gt;&gt;&gt; spam = 'hello'<br />
+&gt;&gt;&gt; spam = 'alô'<br />
 &gt;&gt;&gt;<br />
 </div>
 
-<p>The single quotes are there only to tell the computer where the string begins and ends (and are not part of the string value).</p>
+<p>As aspas simples estão ali somente para informar ao computador onde a string começa e onde ela termina (e não são parte do conteúdo da string em si).</p>
 
 <p>Now, if you type <span class='m'>spam</span> into the shell, you should see the contents of the <span class='m'>spam</span> variable (the <span class='m'>'hello'</span> string.) This is because Python will evaluate a variable to the value stored inside the variable (in this case, the string <span class='m'>'Hello'</span>).</p>
+<p>Agora, se você digitar <span class='m'>spam</span> no console interativo, você deve ver o conteúdo da variável ``spam`` (a string ``'hello'``). Isso porque Python irá interpretar a variável como o valor armazenado dentro dela (neste caso, a string ``'hello'``).
+
 
 <div class='sourceblurb'>
 &gt;&gt;&gt; spam = 'hello'<br />

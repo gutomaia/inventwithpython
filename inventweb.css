@@ -1,0 +1,159 @@
+body {
+	background-color: #4b822a;
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+	text-align: left;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 12px;
+}
+
+img {
+	border: none;
+}
+
+a {
+	color: #007700;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #007700;
+	text-decoration: underline;
+}
+
+.indented {
+	padding-left: 1cm;
+}
+
+ul li {
+	padding-bottom: 5px;
+}
+
+h1 {
+	font-size: 28px;
+	color: #000000;
+	margin-bottom: 30px;
+	line-height: 100%;
+}
+
+h2 {
+	font-size: 18px;
+	color: #000000;
+	margin-bottom: 15px;
+	margin-top: 25px;
+}
+
+#center {
+	text-align: left;
+	margin-left: auto;
+	margin-right: auto;
+	width: 959px;
+}
+
+#headerimage {
+	padding: 0px;
+	margin: 30px 0px 20px 60px;
+	border: none;
+}
+
+#headerarea {
+	width: 1059px;
+	background: url('images/mainback.gif') repeat-y;
+}
+
+#mainarea {
+	width: 1058px;
+	border-right: 1px solid black;
+}
+
+#sidebar {
+  width: 108px;
+	float: left;
+	padding: 10px;
+
+	text-align: right;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 12px;
+	line-height: 20px;
+}
+
+#sidebar ul {
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+#sidebar ul li {
+	margin: 0px;
+	padding: 2px;
+	padding-right: 7px;
+	width: 100%;
+}
+
+/*
+#sidebar ul li:hover {
+	margin: 0px;
+	padding: 2px;
+	width: 100%;
+	padding-right: 7px;
+	background-color: #014585;
+}
+*/
+#sidebar ul li a {
+	text-decoration: none;
+	color: white;
+}
+
+#sidebar ul li a:hover {
+	color: white;
+	text-decoration: underline;
+}
+
+#contentarea { 
+    min-height: 500px;
+	margin-left: 128px;
+	padding: 10px;
+	padding-left: 20px;
+	padding-right: 40px;
+	line-height: 18px;
+	border-bottom: 1px solid black;
+	border-left: 1px solid black;
+	background-color: #FFFFFF;
+}
+
+
+.copyright {
+	text-align: center;
+	font-size: 75%;
+}
+
+.zebra {
+	background-color: #EEEEEE;
+}
+
+
+.bookcover {
+	-moz-box-shadow: 10px 10px 5px #888;
+	-webkit-box-shadow: 10px 10px 5px #888;
+	box-shadow: 10px 10px 5px #888;
+	border: 1px solid black;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	float: left;
+}
+
+.relatedcontentlink {
+	font-size: 80%;
+}
+
+.chapterlink {
+	font-size: 130%;
+}
+
+.bigfont {
+	font-size: 130%;
+}
+
+.borderedimages img { 
+	border: solid black 1px; 
+}
