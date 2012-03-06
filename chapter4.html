@@ -171,7 +171,6 @@ Bom trabalho, Alberto! Você acertou o meu número em 3 tentativas!<br />
 
 <p>Como a função <span class='m'>randint()</span> é fornecida pelo módulo <span class='m'>random</span>, nós a precedemos com <span class='m'>random.</span> (não esqueça o ponto!) para avisar nosso programa que a função  <span class='m'>randint()</span> está no módulo <span class='m'>random</span>.</p>
 
-<!-- TODO parei aqui -->
 <p>A função <span class='m'>randint()</span> retornará um número inteiro entre (e incluindo) os dois inteiros passados pra ela. Aqui, nós passamos a ela os inteiros <span class='m'>1</span> e <span class='m'>20</span> entre os parênteses que seguem o nome da função (separados por vírgula). O número inteiro que <span class='m'>randint()</span> retorna é armazenado em uma variável chamada <span class='m'>numero</span>; este é o número secreto que o jogador está tentando adivinhar.</p>
 
 <p>Apenas por um momento, volte ao console interativo e digite <span class='m'>import random</span> para importar o módulo "random". Então digite <span class='m'>random.randint(1, 20)</span> para ver o que será avaliado dessa função. Ela deve retornar um número inteiro entre <span class='m'>1</span> e <span class='m'>20</span>. Agora, repita o mesmo código novamente e a função provavelmente retornará um número inteiro diferente. Isso porque cada vez que a função <span class='m'>randint()</span> é chamada, ela retorna um número aleatóreo, como quando você joga um dado você tem um número aleatóreo cada vez.</p>
@@ -402,95 +401,148 @@ False<br />
 False<br />
 </div>
 
-<h2 id="LoopingwithWhileStatements">Looping with <span class='m'>while</span> Statements</h2>
+<h2 id="LoopingwithWhileStatements"><i>Looping</i> com o Comando <span class='m'>while</span></h2>
 
-
+<!--
 <p>The <span class='m'>while</span> statement marks the beginning of a loop. Sometimes in our programs, we want the program to do something over and over again. When the execution reaches a <span class='m'>while</span> statement, it evaluates the condition next to the <span class='m'>while</span> keyword. If the condition evaluates to <span class='m'>True</span>, the execution moves inside the while-block. (In our program, the while-block begins on line 13.) If the condition evaluates to <span class='m'>False</span>, the execution moves all the way past the while-block. (In our program, the first line after the while-block is line 28.)</p>
+-->
+<p>O comando <span class='m'>while</span> ("enquanto", em inglês) marca o começo de um <i>loop</i>. Algumas vezes nos nossos programas, queremos que o programa faça alguma coisa repetidas vezes. Quando a execução chega em um comando <span class='m'>while</span>, ela avalia a condição próxima à palavra <span class='m'>while</span>. Se a condição avaliar para <span class='m'>True</span> (verdadeiro), a execução vai para dentro do bloco-while. (No nosso programa, o bloco-while começa na linha 13). Se a condição avalia para <span class='m'>False</span>, a execução vai para depois do bloco-while. (No nosso programa, a primeira linha depois do bloco-while é a linha 28).</p>
 
+<!--
 <p>A <span class='m'>while</span> statement always has a colon (the : sign) after the condition.</p>
+-->
+<p>Um comando <span class='m'>while</span> sempre tem um sinal de dois pontos (o sinal :) depois da condição.</p>
 
 <div class='sourcecode'><ol start='12'>
-<li>while guessesTaken &lt; 6:</li>
+<li>while tentativas &lt; 6:</li>
 </ol></div>
 
 
 <p class='centeredImageP'><img src='images/4-2.png' alt='' class='centeredImage' /><br />
-Figure 4-2: The <span class='m'>while</span> loop's condition.</p>
+Figura 4-2: A condição de loop do <span class='m'>while</span>.</p>
 
+<!--
 <p>Figure 4-2 shows how the execution flows depending on the condition. If the condition evaluates to <span class='m'>True</span> (which it does the first time, because the value of <span class='m'>guessesTaken</span> is <span class='m'>0</span>), execution will enter the while-block at line 13 and keep going down. Once the program reaches the end of the while-block, instead of going down to the next line, it jumps back up to the <span class='m'>while</span> statement's line (line 12). It then re-evaluates the condition, and if it still evaluates to <span class='m'>True</span> we enter the while-block again.</p>
+-->
+<p>A Figura 4-2 mostra como a execução flui dependendo da condição. Se a condição avalia para <span class='m'>True</span> (o que acontece na primeira vez, porque o valor de <span class='m'>tentativas</span> é <span class='m'>0</span>), a execução entrará no bloco-while na linha 13 e continuará dali. Quando o programa chegar ao final do bloco-while, em vez de continuar para a próxima linha, ele pulará de volta para a linha do comando <span class='m'>while</span> (linha 12). Então ele reavalia a condição, e se ela ainda avaliar para <span class='m'>True</span> entramos no bloco-while de novo.</p>
 
+<!--
 <p>This is how the loop works. As long as the condition is <span class='m'>True</span>, the program keeps executing the code inside the while-block repeatedly until we reach the end of the while-block and the condition is <span class='m'>False</span>. And, until <span class='m'>guessesTaken</span> is equal to or greater than <span class='m'>6</span>, we will keep looping.</p>
+-->
+<p>É assim que o loop funciona. Enquanto a condição é <span class='m'>True</span>, o programa continua executando o código dentro do bloco-while repetidamente, até que chegue ao final do bloco-while e a condição seja <span class='m'>False</span>. E, até que <span class='m'>tentativas</span> seja igual ou maior que <span class='m'>6</span>, vamos continuar em loop.</p>
 
+<!--
 <p>Think of the <span class='m'>while</span> statement as saying, "while this condition is true, keep looping through the code in this block".</p>
+-->
+<p>While, em inglês, significa "enquanto". Pense no comando <span class='m'>while</span> como se dissesse "enquanto essa condição é verdadeira, continue executando o código desse bloco em loop".</p>
 
+<!--
 <p>You can make this game harder or easier by changing the number of guesses the player gets. All you have to do is change this line:</p>
+-->
+<p>Você pode fazer esse jogo mais difícil ou mais fácil mudando o número de tentativas que o jogador tem. Tudo o que vc tem que fazer é mudar essa linha:</p>
 
 <div class='sourcecode'><ol start='12'>
-<li>while guessesTaken &lt; <b>6</b>:</li>
+<li>while tentativas &lt; <b>6</b>:</li>
 </ol></div>
 
+<!--
 <p>into this line:</p>
+-->
+<p>para essa outra:</p>
 
 <div class='sourcecode'><ol start='12'>
-<li>while guessesTaken &lt; <b>4</b>:</li>
+<li>while tentativas &lt; <b>4</b>:</li>
 </ol></div>
 
+<!--
 <p>...and now the player only gets four guesses instead of six guesses. By setting the condition to <span class='m'>guessesTaken &lt; 4</span>, we ensure that the code inside the loop only runs four times instead of six. This makes the game much more difficult. To make the game easier, set the condition to <span class='m'>guessesTaken &lt; 8</span> or <span class='m'>guessesTaken &lt; 10</span>, which will cause the loop to run a few more times than before and accept more guesses from the player.</p>
+-->
+<p>...e agora o jogador tem apenas quatro tentativas em vez de seis. Ao mudar a condição para <span class='m'>tentativas &lt; 4</span>, nós asseguramos que o código dentro do loop vai rodar quatro vezes em vez de seis. Isso torna o jogo muito mais difícil. Para tornar o jogo mais fácil, mude a condição para <span class='m'>tentativas &lt; 8</span> ou <span class='m'>tentativas &lt; 10</span>, o que fará com que o loop rode algumas vezes a mais e aceite mais tentativas do jogador.</p>
 
+<!--
 <p>Of course, if we removed line 17 (<span class='m'>guessesTaken = guessesTaken + 1</span>) altogether then the <span class='m'>guessesTaken</span> would never increase and the condition would always be <span class='m'>True</span>. This would give the player an unlimited number of guesses.</p>
+-->
+<p>Claro que, se removermos a linha 17 (<span class='m'>tentativas = tentativas + 1</span>) então <span class='m'>tentativas</span> nunca aumentaria e a condição sempre seria <span class='m'>True</span>. Isso daria ao jogador um número ilimitado de tentativas.</p>
 
+<!--
 <h2 id="ThePlayerGuesses">The Player Guesses</h2>
+-->
+<h2 id="ThePlayerGuesses">As tentativas do jogador</h2>
 
+<!--
 <p>Lines 13 to 17 ask the player to guess what the secret number is and lets them enter their guess. We store this guess in a variable, and then convert that string value into an integer value.</p>
+-->
+<p>As linhas 13 a 17 pedem ao jogador para adivinhar qual é o número secreto e permite a ele entrar seu palpite. Nós armazenamos esse palpite em uma variável, e então convertemos aquele valor de string em um valor inteiro.</p>
 
 <div class='sourcecode'><ol start='13'>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Take a guess.') <span class='comment'># There are four spaces in front of print.</span></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;guess = input()</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;print('Tente adivinhar.') <span class='comment'># Há quatro espaços na frente do print.</span></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;palpite = input()</li>
 </ol></div>
 
+<!--
 <p>The program now asks us for a guess. We type in our guess and that number is stored in a variable named <span class='m'>guess</span>.</p>
+-->
+<p>O programa agora nos pede um palpite. Nós digitamos nosso palpite e esse número é armazenado em uma variável chamada <span class='m'>palpite</span>.</p>
 
+<!--
 <h3 id="ConvertingStringstoIntegerswiththeintFunction">Converting Strings to Integers with the <span class='m'>int()</span> Function</h3>
+-->
+<h3 id="ConvertingStringstoIntegerswiththeintFunction">Convertendo Strings para Inteiros com a Função <span class='m'>int()</span></h3>
 
 <div class='sourcecode'><ol start='15'>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;guess = int(guess)</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;palpite = int(palpite)</li>
 </ol></div>
 
+<!--
 <p>In line 15, we call a new function called <span class='m'>int()</span>. The <span class='m'>int()</span> function takes one argument. The <span class='m'>input()</span> function returned a string of text that player typed. But in our program, we will want an integer, not a string. If the player enters 5 as their guess, the <span class='m'>input()</span> function will return the string value <span class='m'>'5'</span> and not the integer value <span class='m'>5</span>. Remember that Python considers the string <span class='m'>'5'</span> and the integer <span class='m'>5</span> to be different values. So the <span class='m'>int()</span> function will take the string value we give it and return the integer value form of it.</p>
+-->
+<p>Na linha 15, chamamos uma nova função chamada <span class='m'>int()</span>. A função <span class='m'>int()</span> recebe um argumento. A função <span class='m'>input()</span> retornou um string com texto que o jogador digitou. Mas no nosso programa queremos um inteiro, não um string. Se o jogador entra o número 5 no seu palpite, a função <span class='m'>input()</span> retornará o valor string <span class='m'>'5'</span> e não o valor inteiro <span class='m'>5</span>. Lembre-se que o Python considera que string <span class='m'>'5'</span> e o inteiro <span class='m'>5</span> são valores diferentes. Então a função <span class='m'>int()</span> pegará o valor string que passamos a ela e retornará a forma de inteiro desse valor.</p>
 
-
+<!--
 <p>Let's experiment with the <span class='m'>int()</span> function in the interactive shell. Try typing the following:</p>
+-->
+<p>Vamos experimentar com função <span class='m'>int()</span> no console interativo. Tente digitar o seguinte:</p>
 
 <div class='sourceblurb'>
 &gt;&gt;&gt; int('42')<br />
 42<br />
 &gt;&gt;&gt; int(42)<br />
 42<br />
-&gt;&gt;&gt; int('hello')<br />
+&gt;&gt;&gt; int('oi')<br />
 <br />
 Traceback (most recent call last):<br />
 &nbsp;&nbsp;File "&lt;pyshell#4&gt;", line 1, in &lt;module&gt;<br />
-int('forty-two')<br />
-ValueError: invalid literal for int() with base 10: 'hello'<br />
-&gt;&gt;&gt; int('forty-two')<br />
+int('oi')<br />
+ValueError: invalid literal for int() with base 10: 'oi'<br />
+&gt;&gt;&gt; int('quarenta-e-dois')<br />
 <br />
 Traceback (most recent call last):<br />
 &nbsp;&nbsp;File "&lt;pyshell#5&gt;", line 1, in &lt;module&gt;<br />
-int('forty-two')<br />
-ValueError: invalid literal for int() with base 10: 'forty-two'<br />
+int('quarenta-e-dois')<br />
+ValueError: invalid literal for int() with base 10: 'quarenta-e-dois'<br />
 &gt;&gt;&gt; int(' 42 ')<br />
 42<br />
 &gt;&gt;&gt; 3 + int('2')<br />
 5<br />
 </div>
 
+<!--
 <p>We can see that the <span class='m'>int('42')</span> call will return the integer value <span class='m'>42</span>, and that <span class='m'>int(42)</span> will do the same (though it is kind of pointless to convert an integer to an integer). However, even though you can pass a string to the <span class='m'>int()</span> function, you cannot just pass any string. For example, passing <span class='m'>'hello'</span> to <span class='m'>int()</span> (like we do in the <span class='m'>int('hello')</span> call) will result in an error. The string we pass to <span class='m'>int()</span> must be made up of numbers.</p>
+-->
+<p>Podemos ver que a chamada de <span class='m'>int('42')</span> retornará o valor inteiro <span class='m'>42</span>, e que <span class='m'>int(42)</span> fará o mesmo (apesar de não fazer sentido converter um inteiro em um inteiro). Porém, mesmo que você possa passar um string para a função <span class='m'>int()</span>, você não pode passar qualquer string. Por exemplo, ao passar <span class='m'>'oi'</span> para <span class='m'>int()</span> (como fizemos na chamada <span class='m'>int('oi')</span>) resultará em erro. O string que passamos para <span class='m'>int()</span> deve ser feito de números.</p>
 
+<!--
 <p>The integer we pass to <span class='m'>int()</span> must also be numerical, rather than text, which is why <span class='m'>int('forty-two')</span> also produces an error. That said, the <span class='m'>int()</span> function is slightly forgiving; if our string has spaces on either side, it will still run without error. This is why the <span class='m'>int(' 42 ')</span> call works.</p>
+-->
+<p>O inteiro que passamos para <span class='m'>int()</span> também deve ser numérico, em vez de texto, por isso <span class='m'>int('quarenta-e-dois')</span> também produz um error. Dito isso, a função é um pouquinho flexível; se nosso string tem espaços em algum lado, ela ainda vai retornar sem erro. É por isso que a chamada <span class='m'>int(' 42 ')</span> funciona.</p>
 
+<!--
 <p>The <span class='m'>3 + int('2')</span> line shows an expression that adds an integer <span class='m'>3</span> to the return value of <span class='m'>int('2')</span> (which is the integer <span class='m'>2</span>). The expression evaluates to <span class='m'>3 + 2</span>, which then evaluates to 5. So even though we cannot add an integer and a string (<span class='m'>3 + '2'</span> would show us an error), we can add an integer to a string that has been converted to an integer.</p>
+-->
 
+<p>A linha <span class='m'>3 + int('2')</span> mostra uma expressão que soma um inteiro <span class='m'>3</span> ao valor retornado por <span class='m'>int('2')</span> (que é o inteiro <span class='m'>2</span>). A expressão avalia para <span class='m'>3 + 2</span>, que então avalia para 5. Então mesmo que não possamos somar um inteiro e um string (<span class='m'>3 + '2'</span> daria um erro), nós podemos somar um inteiro e um string que foi convertido para um inteiro.</p>
 
+<!-- TODO PAREI AQUI -->
 <p>Remember, back in our program on line 15 the <span class='m'>guess</span> variable originally held the string value of what the player typed. We will overwrite the string value stored in <span class='m'>guess</span> with the integer value returned by the <span class='m'>int()</span> function. This is because we will later compare the player's guess with the random number the computer came up with. We can only compare two integer values to see if one is greater (that is, higher) or less (that is, lower) than the other. We cannot compare a string value with an integer value to see if one is greater or less than the other, even if that string value is numeric such as <span class='m'>'5'</span>.</p>
 
 <p>In our Guess the Number game, if the player types in something that is not a number, then the function call <span class='m'>int()</span> will result in an error and the program will crash. In the other games in this book, we will add some more code to check for error conditions like this and give the player another chance to enter a correct response.</p>
