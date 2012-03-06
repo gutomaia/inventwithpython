@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html lang="en">
+
+<head>
+<base href="http://inventwithpython.com/" />
+<title>Invent Your Own Computer Games with Python - Source</title>
+<script type="text/javascript" src="dojo.js"></script> <!-- dojo needed for $ function -->
+<script type="text/javascript" src="sourceCodes.js"></script>
+<script type="text/javascript">
+var $ = dojo.byId;
+
+function populateSourceArea() {
+	$('sourcearea').value = sourceCodes[$('programSelect').value];
+}
+</script>
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+    try {
+    var pageTracker = _gat._getTracker("UA-5459430-3");
+    pageTracker._trackPageview();
+    } catch(err) {}</script>
+
+    <meta name="description" content="Invent Your Own Computer Games with Python is a free ebook programming tutorial for the Python programming language. Learn how to program by making fun games!" />
+    <meta name="keywords" content="Python, Invent Your Own Computer Games with Python, Invent with Python, tutorial, object-oriented, programming, documentation, book, free, ebook, Dive Into Python">
+    <meta name="author" content="Al Sweigart" />
+
+    <link rel="stylesheet" type="text/css" href="inventweb.css" />
+</head>
+<body onload="populateSourceArea();">
+  <div id='headerarea'>
+    <a href="index.html"><img src="images/header.png" id="headerimage" /></a>
+    <a href="index.html"><img src="images/otherbooks1.png" style="margin-left: 80px; margin-bottom: 30px; padding-right: 0px;" /></a><a href="pygame/index.html"><img src="images/otherbooks2.png" style="margin-bottom: 30px; padding-left: 0px;" /></a>
+  </div>
+
+
+
+  <div id='mainarea'>
+    <div id='sidebar'>
+        <ul>
+        <li><a href="chapters">Read It Online</a></li>
+        <li><a href="http://www.amazon.com/gp/product/0982106017?ie=UTF8&tag=playwithpyth-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=0982106017">Buy the Book</a></li>
+        <!--<li><a href="#">Forum</a></li>-->
+        <br />
+        <li><a href="blog"><strong>Book's Blog</strong></a></li>
+        <br />
+        <li><a href="source">Source Code</a></li>
+        <!-- <li><a href="wiki">Wiki</a></li>-->
+        <li><a href="resources">Resources</a></li>
+        <!-- not done yet <li><a href="buggy">Buggy Code</a></li>-->
+        <li><a href="traces" >Traces</a></li>
+        <li><a href="diff" >Diff Tool</a></li>
+        <li><a href="videos" >Videos</a></li>
+        <li><a href="extra" >Extra Content</a></li>
+        <li><a href="errata" >Errata</a></li>
+        <br/>
+        <li><a href="about.html">About the Author</a></li>
+        <li><a href="http://coffeeghost.net" >Author's Blog</a></li>
+
+        <div><br /><form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+        <input type="hidden" name="cmd" value="_s-xclick">
+        <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+        ">
+        <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+        <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+        </form>
+        </div>
+        </ul>
+    </div>
+    <div id='contentarea'>
+
+
+
+
+
+<h1>Código Fonte</h1>
+
+<h2>Download</h2>
+
+<!--
+<p><a href="inventwithpython_src.zip">Source code for all programs.</a></p>
+-->
+
+<ul>
+<!--
+<li><a href="hello.py">hello.py</a> (Capítulo 3, Strings)</li>
+-->
+<li><a href="guess.py">adivinhe.py</a> (Capítulo 4, Guess the Number)</li>
+<!--
+<li><a href="jokes.py">jokes.py</a> (Capítulo 5, Jokes)</li>
+<li><a href="dragon.py">dragon.py</a> (Capítulo 6, Dragon Realm)</li>
+<li><a href="hangman.py">hangman.py</a> (Capítulo 9, Hangman)</li>
+<li><a href="tictactoe.py">tictactoe.py</a> (Capítulo 10, Tic Tac Toe)</li>
+<li><a href="bagels.py">bagels.py</a> (Capítulo 11, Bagels)</li>
+<li><a href="sonar.py">sonar.py</a> (Capítulo 13, Sonar)</li>
+<li><a href="cipher.py">cipher.py</a> (Capítulo 14, Caesar Cipher)</li>
+<li><a href="reversi.py">reversi.py</a> (Capítulo 15, Reversi)</li>
+<li><a href="AISim1.py">AISim1.py</a> (Capítulo 16, AI Simulation)</li>
+<li><a href="AISim2.py">AISim2.py</a> (Capítulo 16, AI Simulation)</li>
+<li><a href="AISim3.py">AISim3.py</a> (Capítulo 16, AI Simulation)</li>
+<li><a href="pygameHelloWorld.py">pygameHelloWorld.py</a> (Capítulo 17, Graphics and Animation)</li>
+<li><a href="animation.py">animation.py</a> (Capítulo 17, Graphics and Animation)</li>
+<li><a href="collisionDetection.py">collisionDetection.py</a> (Capítulo 18, Collision Detection and Input)</li>
+<li><a href="pygameInput.py">pygameInput.py</a> (Capítulo 18, Collision Detection and Input)</li>
+<li><a href="spritesAndSounds.py">spritesAndSounds.py</a> <a href="spritesAndSounds.zip">[graphics files]</a> (Capítulo 19, Sound and Images)</li>
+<li><a href="dodger.py">dodger.py</a> <a href="dodger.zip">[graphics files]</a> (Capítulo 20, Dodger)</li>
+-->
+</ul>
+
+<!--
+<p>Chapter 1 - Installing Python<br />
+&nbsp;&nbsp;&nbsp;&nbsp;(No programs in this chapter.)</p>
+<p>Chapter 2 - The Interactive Shell<br />
+&nbsp;&nbsp;&nbsp;&nbsp;(No programs in this chapter.)</p>
+<p>Chapter 3 - Strings<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="hello.py">hello.py</a></p>
+<p>Chapter 4 - Guess the Number<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="guess.py">guess.py</a></p>
+<p>Chapter 5 - Jokes<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="jokes.py">jokes.py</a></p>
+<p>Chapter 6 - Dragon Realm<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="dragon.py">dragon.py</a></p>
+<p>Chapter 7 - Flow Charts<br />
+&nbsp;&nbsp;&nbsp;&nbsp;(No programs in this chapter.)</p>
+<p>Chapter 8 - Hangman<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="hangman.py">hangman.py</a></p>
+<p>Chapter 9 - Tic Tac Toe<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="tictactoe.py">tictactoe.py</a></p>
+<p>Chapter 10 - Bagels<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="bagels.py">bagels.py</a></p>
+<p>Chapter 11 - Cartesian Coordinates<br />
+&nbsp;&nbsp;&nbsp;&nbsp;(No programs in this chapter.)</p>
+<p>Chapter 12 - Sonar<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="sonar.py">sonar.py</a></p>
+<p>Chapter 13 - Caesar Cipher<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="cipher.py">cipher.py</a></p>
+<p>Chapter 14 - Reversi<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="reversi.py">reversi.py</a></p>
+<p>Chapter 15 - AI Simulation<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="AISim1.py">AISim1.py</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="AISim2.py">AISim2.py</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="AISim3.py">AISim3.py</a></p>
+<p>Chapter 16 - Graphics and Animation<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="animation.py">animation.py</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="pygameHelloWorld.py">pygameHelloWorld.py</a></p>
+<p>Chapter 17 - Collision Detection and Input<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="collisionDetection.py">collisionDetection.py</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="pygameInput.py">pygameInput.py</a></p>
+<p>Chapter 18 - Sound and Images<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="spritesAndSounds.py">spritesAndSounds.py</a></p>
+<p>Chapter 19 - Dodger<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="dodger.py">dodger.py</a></p>
+-->
+
+<h2>Copy and Paste</h2>
+<p>If you don't want to download the files, you can select the program you want from this dropdown menu and copy & paste the source code from the text area below.</p>
+
+<p>First, click inside the text field. Then press Ctrl-A to Select All, then press Ctrl-C to Copy the selected text. Then paste the text into IDLE or your text editor.</p>
+<select name='programSelect' id='programSelect' onchange='populateSourceArea();'>
+<option value='AISim1'>AISim1.py</option>
+<option value='AISim2'>AISim2.py</option>
+<option value='AISim3'>AISim3.py</option>
+<option value='animation'>animation.py</option>
+<option value='bagels'>bagels.py</option>
+<option value='cipher'>cipher.py</option>
+<option value='collisionDetection'>collisionDetection.py</option>
+<option value='dodger'>dodger.py</option>
+<option value='dragon'>dragon.py</option>
+<option value='guess'>guess.py</option>
+<option value='hangman'>hangman.py</option>
+<option value='hello'>hello.py</option>
+<option value='jokes'>jokes.py</option>
+<option value='pygameHelloWorld'>pygameHelloWorld.py</option>
+<option value='pygameInput'>pygameInput.py</option>
+<option value='reversi'>reversi.py</option>
+<option value='sonar'>sonar.py</option>
+<option value='spritesAndSounds'>spritesAndSounds.py</option>
+<option value='tictactoe'>tictactoe.py</option>
+</select> (Click on the text field, press Ctrl-A to select all, then Ctrl-C to copy.)<br />
+<textarea id="sourcearea" style="width:100%;height:300px"></textarea>
+
+
+
+
+    </div> <!-- /content -->
+  </div> <!-- /mainarea -->
+<br/><br/><br/><br/>
+</body>
+</html>
